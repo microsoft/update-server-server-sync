@@ -48,16 +48,16 @@ localRepo.MergeQueryResult(categories);
 localRepo.MergeQueryResult(updates);
 ```
 
-More examples are available [in the wiki pages](https://github.com/microsoft/server-server-update-sync/wiki/Library-examples)
+More examples are available [in the wiki pages](https://github.com/microsoft/update-server-server-sync/wiki/Library-examples)
 
 ## Using the upsync utility
 A command line utility (upsync in src\sync-tool) is provided as a sample for using the library. This tool can be used to browse Microsoft's update catalog, selectively sync updates and export updates to a WSUS server. 
 
-See this wiki entry for information on how to [run the .NET Core upsync tool](https://github.com/microsoft/server-server-update-sync/wiki/Running-the-upsync-tool)
+See this wiki entry for information on how to [run the .NET Core upsync tool](https://github.com/microsoft/update-server-server-sync/wiki/Running-the-upsync-tool)
 
-See the wiki for [command line options reference](https://github.com/microsoft/server-server-update-sync/wiki/UpSync-tool-command-line-options)
+See the wiki for [command line options reference](https://github.com/microsoft/update-server-server-sync/wiki/UpSync-tool-command-line-options)
 
-See the wiki for [samples on running the upsync tool](https://github.com/microsoft/server-server-update-sync/wiki/UpSync-tool-examples)
+See the wiki for [samples on running the upsync tool](https://github.com/microsoft/update-server-server-sync/wiki/UpSync-tool-examples)
 
 # Contributing
 
