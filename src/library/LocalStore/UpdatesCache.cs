@@ -144,18 +144,16 @@ namespace Microsoft.UpdateServices.LocalCache
                 {
                     Updates.Add(newUpdate.Identity, newUpdate);
 
-                    // Save the XML metadata blob separately. It does not get serialized as JSON
+                    // Prepare the path where to save the XML metadata
                     var xmlFilePath = ParentRepository.GetUpdateXmlPath(newUpdate);
-                    if (!File.Exists(xmlFilePath))
+                    var parentDirectory = Path.GetDirectoryName(xmlFilePath);
+                    if (!Directory.Exists(parentDirectory))
                     {
-                        var parentDirectory = Path.GetDirectoryName(xmlFilePath);
-                        if (!Directory.Exists(parentDirectory))
-                        {
-                            Directory.CreateDirectory(parentDirectory);
-                        }
-
-                        File.WriteAllText(xmlFilePath, newUpdate.XmlData);
+                        Directory.CreateDirectory(parentDirectory);
                     }
+
+                    // Move the XML metadata file from the query result location to this repo
+                    File.Move(queryResult.GetUpdateXmlPath(newUpdate), xmlFilePath);
 
                     changed = true;
                 }

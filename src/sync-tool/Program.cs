@@ -48,11 +48,12 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
             var server = new UpstreamServerClient(Endpoint.Default, serviceConfig, cachedToken);
             server.MetadataQueryProgress += Server_MetadataQueryProgress;
-            var newCategories = server.GetCategories(localRepo.Categories).GetAwaiter().GetResult();
-
-            Console.Write("Merging the query result and commiting the changes...");
-            localRepo.MergeQueryResult(newCategories);
-            ConsoleOutput.WriteGreen("Done!");
+            using (var newCategories = server.GetCategories(localRepo.Categories).GetAwaiter().GetResult())
+            {
+                Console.Write("Merging the query result and commiting the changes...");
+                localRepo.MergeQueryResult(newCategories);
+                ConsoleOutput.WriteGreen("Done!");
+            }
 
             localRepo.CacheAccessToken(server.AccessToken);
             localRepo.CacheServiceConfiguration(server.ConfigData);
@@ -230,11 +231,12 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             var server = new UpstreamServerClient(Endpoint.Default, serviceConfig, cachedToken);
             server.MetadataQueryProgress += Server_MetadataQueryProgress;
 
-            var newUpdates = server.GetUpdates(filter, localRepo.Updates).GetAwaiter().GetResult();
-
-            Console.Write("Merging the query result and commiting the changes...");
-            localRepo.MergeQueryResult(newUpdates);
-            ConsoleOutput.WriteGreen("Done!");
+            using (var newUpdates = server.GetUpdates(filter, localRepo.Updates).GetAwaiter().GetResult())
+            {
+                Console.Write("Merging the query result and commiting the changes...");
+                localRepo.MergeQueryResult(newUpdates);
+                ConsoleOutput.WriteGreen("Done!");
+            }
 
             localRepo.CacheAccessToken(server.AccessToken);
             localRepo.CacheServiceConfiguration(server.ConfigData);

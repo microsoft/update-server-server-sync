@@ -148,18 +148,15 @@ namespace Microsoft.UpdateServices
             progress.Current = 0;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var categoryDataQueryResult = await GetUpdateDataForIds(
-                updatesToRetrieveDataFor.Select(id => id.Raw).ToList());
+            var queryResult = Query.QueryResult.CreateCategoriesQueryResult(categoryQueryResult.anchor);
+
+            await GetUpdateDataForIds(
+                updatesToRetrieveDataFor.Select(id => id.Raw).ToList(), queryResult);
 
             progress.CurrentTask = QuerySubTaskTypes.GetUpdateMetadataEnd;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var categoriesList = categoryDataQueryResult
-                .Updates
-                .Select(rawUpdate => MicrosoftUpdate.FromServerSyncUpdateData(rawUpdate, categoryDataQueryResult.Files))
-                .ToList();
-
-            return Query.QueryResult.CreateCategoriesQueryResult(categoriesList, categoryQueryResult.anchor);
+            return queryResult;
         }
 
         /// <summary>
@@ -216,18 +213,15 @@ namespace Microsoft.UpdateServices
             progress.Current = 0;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var updateDataQueryResult = await GetUpdateDataForIds(
-                updatesToRetrieveDataFor.Select(id => id.Raw).ToList());
+            var queryResult = Query.QueryResult.CreateUpdatesQueryResult(effectiveFilter, updatesQueryResult.anchor);
+
+            await GetUpdateDataForIds(
+                updatesToRetrieveDataFor.Select(id => id.Raw).ToList(), queryResult);
 
             progress.CurrentTask = QuerySubTaskTypes.GetUpdateMetadataEnd;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var updatesList = updateDataQueryResult
-                .Updates
-                .Select(rawUpdate => MicrosoftUpdate.FromServerSyncUpdateData(rawUpdate, updateDataQueryResult.Files))
-                .ToList();
-
-            return Query.QueryResult.CreateUpdatesQueryResult(effectiveFilter, updatesList, updatesQueryResult.anchor);
+            return queryResult;
         }
 
         /// <summary>
@@ -316,12 +310,9 @@ namespace Microsoft.UpdateServices
         /// Retrieves update data for the list of update ids
         /// </summary>
         /// <param name="updateIds">The ids to retrieve data for</param>
-        /// <returns>A pair of lists, one for content URLs and one for update data</returns>
-        private async Task<(List<ServerSyncUpdateData> Updates, List<UpdateFileUrl> Files)> GetUpdateDataForIds(List<UpdateIdentity> updateIds)
+        /// <param name="result">A QueryResult to which retrieved update metadata is appended</param>
+        private async Task GetUpdateDataForIds(List<UpdateIdentity> updateIds, Query.QueryResult result)
         {
-            var filesList = new List<UpdateFileUrl>();
-            var updateDataList = new List<ServerSyncUpdateData>();
-
             // Data retrieval is done is done in batches of upto MaxNumberOfUpdatesPerRequest
             var retrieveBatches = CreateBatchedListFromFlatList(updateIds, ConfigData.MaxNumberOfUpdatesPerRequest);
 
@@ -343,8 +334,14 @@ namespace Microsoft.UpdateServices
                     throw new Exception("Failed to get update metadata");
                 }
 
-                updateDataList.AddRange(updateDataReply.GetUpdateDataResponse1.GetUpdateDataResult.updates);
-                filesList.AddRange(updateDataReply.GetUpdateDataResponse1.GetUpdateDataResult.fileUrls.Select(rawFile => new UpdateFileUrl(rawFile)));
+                // Parse the list of raw files into a more usable format
+                var filesList = new List<UpdateFileUrl>(updateDataReply.GetUpdateDataResponse1.GetUpdateDataResult.fileUrls.Select(rawFile => new UpdateFileUrl(rawFile)));
+
+                // Add the updates to the result, converting them to a higher level representation
+                foreach (var overTheWireUpdate in updateDataReply.GetUpdateDataResponse1.GetUpdateDataResult.updates)
+                {
+                    result.AddUpdate(MicrosoftProduct.FromServerSyncUpdateData(overTheWireUpdate, filesList));
+                }
 
                 // Track progress
                 batchesDone++;
@@ -355,8 +352,6 @@ namespace Microsoft.UpdateServices
 
             progress.IsComplete = true;
             MetadataQueryComplete?.Invoke(this, progress);
-
-            return (updateDataList, filesList);
         }
 
         /// <summary>
