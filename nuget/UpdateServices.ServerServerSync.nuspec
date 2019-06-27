@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>UpdateServices.ServerServerSync</id>
+    <version>1.0.2-alpha</version>
+    <title>Microsoft Update Services: Server-Server Sync</title>
+    <summary>Provides programmatic access to the Microsoft Update catalog from .NET Core</summary>
+    <authors>Cristian Petruta</authors>
+    <owners>Cristian Petruta</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/microsoft/update-server-server-sync</projectUrl>
+    <description>Sample implementation of the Microsoft Update Server-Server Sync protocol. The protocol enables programatic access to Microsoft Update catalog.</description>
+    <releaseNotes>Implement client side of the Server-Server sync protocol. Supports authentication, sync of categories and update metadata, metadata persistence in a local repository, export updates to WSUS format.</releaseNotes>
+    <tags>Windows Update WSUS WU MS-WSUSSS</tags>
+    <repository type="GIT" url="https://github.com/microsoft/update-server-server-sync" />
+    <dependencies>
+      <group targetFramework=".NETCoreApp2.1">
+        <dependency id="Newtonsoft.Json" version="12.0.2" exclude="Build,Analyzers" />
+        <dependency id="System.ServiceModel.Duplex" version="4.5.3" exclude="Build,Analyzers" />
+        <dependency id="System.ServiceModel.Http" version="4.5.3" exclude="Build,Analyzers" />
+        <dependency id="System.ServiceModel.NetTcp" version="4.5.3" exclude="Build,Analyzers" />
+        <dependency id="System.ServiceModel.Security" version="4.5.3" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\src\library\bin\Release\netcoreapp2.1\server-server-sync-lib.dll" target="lib\netcoreapp2.1\server-server-sync-lib.dll" />
+    <file src="readme.txt" target="\readme.txt" />
+  </files>
+</package>
