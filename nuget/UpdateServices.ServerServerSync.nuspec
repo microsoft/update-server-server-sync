@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>UpdateServices.ServerServerSync</id>
-    <version>1.0.2-alpha</version>
+    <version>1.0.3-alpha</version>
     <title>Microsoft Update Services: Server-Server Sync</title>
     <summary>Provides programmatic access to the Microsoft Update catalog from .NET Core</summary>
     <authors>Cristian Petruta</authors>
@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/microsoft/update-server-server-sync</projectUrl>
-    <description>Sample implementation of the Microsoft Update Server-Server Sync protocol. The protocol enables programatic access to Microsoft Update catalog.</description>
+    <description>Provides programmatic access to the Microsoft Update catalog from .NET Core</description>
     <releaseNotes>Implement client side of the Server-Server sync protocol. Supports authentication, sync of categories and update metadata, metadata persistence in a local repository, export updates to WSUS format.</releaseNotes>
     <tags>Windows Update WSUS WU MS-WSUSSS</tags>
     <repository type="GIT" url="https://github.com/microsoft/update-server-server-sync" />
