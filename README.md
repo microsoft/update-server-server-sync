@@ -6,12 +6,14 @@ Use this library to programmatically browse the Microsoft Update catalog, sync u
 
 ### See [MS-WSUSSS](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wsusss/f49f0c3e-a426-4b4b-b401-9aeb2892815c) for the complete technical documentation of the protocol.
 
-## Compiling the code
-Requirements: Visual Studio 2017 with C# development tools installed.
+## Referencing the library in your project
 
-Open build\server-server-update-sync.sln in Visual Studio and build the solution.
+The easiest way is to use the published NuGet package. In your .NET Core project, add a reference to the [UpdateServices.ServerServerSync NuGet package](https://www.nuget.org/packages/UpdateServices.ServerServerSync). Make sure to check "Include prerelease" if searching for the NuGet package in Visual Studio.
+
+Alternatively, you can compile the code yourself. Visual Studio 2017 with .Net Core development tools is required to build the solution provided at build\server-server-update-sync.sln
 
 ## Using the library
+
 The library provides a higher level of abstraction for interacting with an update server than the underlying SOAP. Authentication, server configuration, batched queries, metadata and content cross-linking are handled internally. Update XML metadata is parsed into C# objects for easy access to update properties: prerequisites, bundled updates, files, categories, etc.
 
 #### The UpstreamServerClient object:
