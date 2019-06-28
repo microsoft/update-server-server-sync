@@ -88,8 +88,11 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
             localRepo.RepositoryOperationProgress += LocalRepo_RepositoryOperationProgress;
 
-            var totalDownloadSize = updatesToDownload.Sum(u => (u as IUpdateWithFiles).Files.Sum(f => (long)f.Size));
-            var totalFilesToDownload = updatesToDownload.Sum(u => (u as IUpdateWithFiles).Files.Count);
+            var uniqueFiles = updatesToDownload.SelectMany(u => (u as IUpdateWithFiles).Files).GroupBy(f => f.DownloadUrl);
+            
+
+            var totalDownloadSize = uniqueFiles.Sum(f => (long)f.First().Size);
+            var totalFilesToDownload = uniqueFiles.Count();
             Console.Write($"Downloading {totalDownloadSize} bytes in {totalFilesToDownload} files. Continue? (y/n)");
             var response = Console.ReadKey();
             if (response.Key == ConsoleKey.Y)
