@@ -36,6 +36,28 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         public string TitleFilter { get; set; }
     }
 
+    [Verb("sync-content", HelpText = "Syncs update content with an upstream server")]
+    public class ContentSyncOptions : IRepositoryPathOption
+    {
+        [Option("repo-path", Required = false, HelpText = "Repo location, if not using the default one")]
+        public string RepositoryPath { get; set; }
+
+        [Option("drivers", Required = false, HelpText = "Filter to drivers only")]
+        public bool Drivers { get; set; }
+
+        [Option("product-filter", Required = false, Separator = '+', HelpText = "Product filter for sync'ing updates")]
+        public IEnumerable<string> ProductsFilter { get; set; }
+
+        [Option("classification-filter", Required = false, Separator = '+', HelpText = "Classification filter for sync'ing updates")]
+        public IEnumerable<string> ClassificationsFilter { get; set; }
+
+        [Option("id-filter", Required = false, Separator = '+', HelpText = "ID filter")]
+        public IEnumerable<string> IdFilter { get; set; }
+
+        [Option("title-filter", Required = false, HelpText = "Title filter")]
+        public string TitleFilter { get; set; }
+    }
+
     [Verb("init", HelpText = "Initializes a new local updates repository")]
     public class InitRepositoryOptions : IRepositoryPathOption
     {

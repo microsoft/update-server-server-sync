@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.UpdateServices.Metadata.Content;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,7 +14,13 @@ namespace Microsoft.UpdateServices.LocalCache
         ExportUpdateXmlBlobProgress,
         ExportUpdateXmlBlobEnd,
         CompressExportFileStart,
-        CompressExportFileEnd
+        CompressExportFileEnd,
+        DownloadFileStart,
+        DownloadFileProgress,
+        DownloadFileEnd,
+        HashFileStart,
+        HashFileProgress,
+        HashFileEnd
     }
 
     /// <summary>
@@ -23,9 +30,9 @@ namespace Microsoft.UpdateServices.LocalCache
     {
         public double PercentDone { get; internal set; }
 
-        public int Maximum { get; internal set; }
+        public long Maximum { get; internal set; }
 
-        public int Current { get; internal set; }
+        public long Current { get; internal set; }
 
         public RepoOperationTypes CurrentOperation { get; internal set; }
 
@@ -33,5 +40,10 @@ namespace Microsoft.UpdateServices.LocalCache
         {
             CurrentOperation = RepoOperationTypes.Unknown;
         }
+    }
+
+    public class RepoContentOperationProgress : RepoOperationProgress
+    {
+        public UpdateFile File { get; internal set; }
     }
 }

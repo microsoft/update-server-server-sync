@@ -140,7 +140,7 @@ namespace Microsoft.UpdateServices
             // Create the list of updates to query data for. Remove those updates that were reported as "new"
             // but for which we already have metadata
             var updatesToRetrieveDataFor = categoryQueryResult.identities.Where(
-                newUpdateId => !unchangedUpdates.Any(unchangedUpdate => unchangedUpdate.Identity.Equals(newUpdateId)));
+                newUpdateId => !unchangedUpdates.ContainsKey(newUpdateId));
 
             // Retrieve metadata for all new categories
             progress.CurrentTask = QuerySubTaskTypes.GetUpdateMetadataStart;
@@ -206,7 +206,7 @@ namespace Microsoft.UpdateServices
             // Create the list of updates to query data for. Remove those updates that were reported as "new"
             // but for which we already have metadata
             var updatesToRetrieveDataFor = updatesQueryResult.identities.Where(
-                newUpdateId => !unchangedUpdates.Any(unchangedUpdate => unchangedUpdate.Identity.Equals(newUpdateId)));
+                newUpdateId => !unchangedUpdates.ContainsKey(newUpdateId));
 
             progress.CurrentTask = QuerySubTaskTypes.GetUpdateMetadataStart;
             progress.Maximum = updatesToRetrieveDataFor.Count();
@@ -392,29 +392,31 @@ namespace Microsoft.UpdateServices
         /// <param name="cachedUpdates">List of locally cached updates</param>
         /// <param name="newUpdateIds">List of new update identities reported by the upstream server</param>
         /// <returns>List of locally cached updates that did not change</returns>
-        private IEnumerable<MicrosoftUpdate> GetUnchangedUpdates(Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate> cachedUpdates, IEnumerable<MicrosoftUpdateIdentity> newUpdateIds)
+        private Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate> GetUnchangedUpdates(Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate> cachedUpdates, IEnumerable<MicrosoftUpdateIdentity> newUpdateIds)
         {
             if (cachedUpdates == null)
             {
-                return Enumerable.Empty<MicrosoftUpdate>();
+                return new Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate>();
             }
 
-            var unchangedUpdates = new List<MicrosoftUpdate>();
-            foreach(var newUpdateId in newUpdateIds)
+            var unchangedUpdates = new Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate>();
+            foreach (var newUpdateId in newUpdateIds)
             {
                 // Find cached updates that match the ID+revision of new updates (did not really change)
                 if (cachedUpdates.TryGetValue(newUpdateId, out MicrosoftUpdate unchangedUpdate))
                 {
-                    unchangedUpdates.Add(unchangedUpdate);
+                    unchangedUpdates.Add(unchangedUpdate.Identity, unchangedUpdate);
                 }
             }
+
+            var newUpdatesDictionary = newUpdateIds.ToDictionary(id => id);
 
             foreach(var cachedUpdate in cachedUpdates.Values)
             {
                 // Find those cached updates that do not appear in the new updates list received from the server
-                if (!newUpdateIds.Any(newUpdateId => newUpdateId.Equals(cachedUpdate.Identity)))
+                if (!newUpdatesDictionary.ContainsKey(cachedUpdate.Identity))
                 {
-                    unchangedUpdates.Add(cachedUpdate);
+                    unchangedUpdates.Add(cachedUpdate.Identity, cachedUpdate);
                 }
             }
 

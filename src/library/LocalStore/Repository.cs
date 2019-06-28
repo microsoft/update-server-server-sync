@@ -7,8 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
+using System.Threading;
 
 namespace Microsoft.UpdateServices.LocalCache
 {
@@ -71,7 +70,18 @@ namespace Microsoft.UpdateServices.LocalCache
             byte[] hashBytes = Convert.FromBase64String(updateFile.Digests[0].DigestBase64);
             var contentSubDirectory = string.Format("{0:X}", hashBytes.Last());
 
-            return Path.Combine(LocalPath, ContentDirectoryName, contentSubDirectory, updateFile.Digests[0].DigestBase64, updateFile.FileName);
+            return Path.Combine(LocalPath, ContentDirectoryName, contentSubDirectory, updateFile.Digests[0].DigestBase64.Replace('/', '_'), updateFile.FileName);
+        }
+
+        /// <summary>
+        /// Returns the path to the file that marks whether an update content file was successfully downloaded.
+        /// The marker file is written after the update content file is downloaded and its hash verified
+        /// </summary>
+        /// <param name="updateFile">Update content file for which to retrieve the marker file path</param>
+        /// <returns>The marker file path. This file might not exist.</returns>
+        private string GetUpdateFileMarkerPath(UpdateFile updateFile)
+        {
+            return GetUpdateFilePath(updateFile) + ".done";
         }
 
         /// <summary>
@@ -228,6 +238,82 @@ namespace Microsoft.UpdateServices.LocalCache
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Checks if an update file has been downloaded
+        /// </summary>
+        /// <param name="file">File to check if it was downloaded</param>
+        /// <returns>True if the file was downloaded, false otherwise</returns>
+        private bool IsFileDownloaded(UpdateFile file)
+        {
+            return File.Exists(GetUpdateFileMarkerPath(file));
+        }
+
+        /// <summary>
+        /// Downloads the files associated with the specified update
+        /// </summary>
+        /// <param name="update">The update whose file should be downloaded</param>
+        public void DownloadUpdateContent(IUpdateWithFiles update)
+        {
+            var contentDownloader = new ContentDownloader();
+            contentDownloader.OnDownloadProgress += ContentDownloader_OnDownloadProgress;
+
+            var hashChecker = new ContentHash();
+            hashChecker.OnHashingProgress += HashChecker_OnHashingProgress;
+
+            var cancellationSource = new CancellationTokenSource();
+
+            // Raise a download complete for each file that was already downloaded
+            update
+                .Files
+                .Where(f => IsFileDownloaded(f))
+                .ToList()
+                .ForEach(f => RepositoryOperationProgress?.Invoke(this, new RepoContentOperationProgress() { CurrentOperation = RepoOperationTypes.DownloadFileEnd, File = f }));
+
+            foreach (var file in update.Files.Where(file => !IsFileDownloaded(file)))
+            {
+                RepositoryOperationProgress?.Invoke(this, new RepoContentOperationProgress() { CurrentOperation = RepoOperationTypes.DownloadFileStart, File = file });
+
+                // Create the directory structure where the file will be downloaded
+                var contentFilePath = GetUpdateFilePath(file);
+                var contentFileDirectory = Path.GetDirectoryName(contentFilePath);
+                if (!Directory.Exists(contentFileDirectory))
+                {
+                    Directory.CreateDirectory(contentFileDirectory);
+                }
+                
+                // Download the file (or resume and interrupted download)
+                contentDownloader.DownloadToFile(GetUpdateFilePath(file), file, cancellationSource.Token);
+
+                RepositoryOperationProgress?.Invoke(this, new RepoContentOperationProgress() { CurrentOperation = RepoOperationTypes.DownloadFileEnd, File = file });
+
+                RepositoryOperationProgress?.Invoke(this, new RepoContentOperationProgress() { CurrentOperation = RepoOperationTypes.HashFileStart, File = file });
+
+                // Check the hash; must match the strongest hash specified in the update metadata
+                if (hashChecker.Check(file, contentFilePath))
+                {
+                    var markerFile = File.Create(GetUpdateFileMarkerPath(file));
+                    markerFile.Dispose();
+                }
+
+                RepositoryOperationProgress?.Invoke(this, new RepoContentOperationProgress() { CurrentOperation = RepoOperationTypes.HashFileEnd, File = file });
+            }
+        }
+
+        private void HashChecker_OnHashingProgress(object sender, RepoOperationProgress e)
+        {
+            RepositoryOperationProgress?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Handles download progress notifications from the content downloader by forwarding themto registered event handlers of the store
+        /// </summary>
+        /// <param name="sender">The content downloader</param>
+        /// <param name="e">Progress data</param>
+        private void ContentDownloader_OnDownloadProgress(object sender, RepoOperationProgress e)
+        {
+            RepositoryOperationProgress?.Invoke(this, e);
         }
 
         /// <summary>

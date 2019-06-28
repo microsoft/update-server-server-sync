@@ -9,28 +9,66 @@ using System.Text;
 
 namespace Microsoft.UpdateServices.Tools.UpdateRepo
 {
-    class LocalStoreQuery
+    /// <summary>
+    /// Implements query and management operations on a local updates repository
+    /// </summary>
+    class RepositoryAccess
     {
         private readonly Repository TargetRepo;
+        private readonly QueryRepositoryOptions Options;
 
-        public LocalStoreQuery(Repository localRepo)
+        /// <summary>
+        ///  Runs a local repo query command
+        /// </summary>
+        /// <param name="options">Query options (filters)</param>
+        public static void Query(QueryRepositoryOptions options)
         {
-            TargetRepo = localRepo;
+            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption, Repository.RepositoryOpenMode.OpenExisting);
+            if (localRepo == null)
+            {
+                return;
+            }
+
+            var repoQuery = new RepositoryAccess(localRepo, options);
+            repoQuery.Query();
         }
 
-        public void Run(QueryRepositoryOptions options)
+        /// <summary>
+        /// Deletes the repo specified in the options
+        /// </summary>
+        /// <param name="options">Options containing the path to the repo to delete</param>
+        public static void Delete(DeleteRepositoryOptions options)
         {
-            if (options.Configuration)
+            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption, Repository.RepositoryOpenMode.OpenExisting);
+            if (localRepo == null)
+            {
+                return;
+            }
+
+            Console.Write("Deleting the repository...");
+            localRepo.Delete();
+            ConsoleOutput.WriteGreen("Done!");
+        }
+
+        private RepositoryAccess(Repository localRepo, QueryRepositoryOptions options)
+        {
+            TargetRepo = localRepo;
+            Options = options;
+        }
+
+        private void Query()
+        {
+            if (Options.Configuration)
             {
                 PrintConfiguration();
             }
-            else if (options.Products ||
-                options.Classifications ||
-                options.Updates ||
-                options.Drivers ||
-                options.Detectoids)
+            else if (Options.Products ||
+                Options.Classifications ||
+                Options.Updates ||
+                Options.Drivers ||
+                Options.Detectoids)
             {
-                PrintUpdates(options);
+                PrintUpdates(Options);
             }
         }
 
@@ -117,15 +155,17 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             {
                 Console.WriteLine("No data found");
             }
-
-            Console.Write("\r\nQuery results:\r\n-----------------------------");
-
-            foreach (var update in filteredData)
+            else
             {
-                PrintUpdateMetadata(update);
-            }
+                Console.Write("\r\nQuery results:\r\n-----------------------------");
 
-            Console.WriteLine("-----------------------------\r\nMatched {0} entries", filteredData.Count);
+                foreach (var update in filteredData)
+                {
+                    PrintUpdateMetadata(update);
+                }
+
+                Console.WriteLine("-----------------------------\r\nMatched {0} entries", filteredData.Count);
+            }
         }
 
         /// <summary>
