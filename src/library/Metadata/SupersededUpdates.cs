@@ -9,8 +9,8 @@ namespace Microsoft.UpdateServices.Metadata
     /// <summary>
     /// Interface implemented by updates that can superseed other updates
     /// </summary>
-    public interface IUpdateWithSuperseededUpdates
+    public interface IUpdateWithSupersededUpdates
     {
-        List<MicrosoftUpdateIdentity> SuperseededUpdates { get; }
+        List<MicrosoftUpdateIdentity> SupersededUpdates { get; }
     }
 }

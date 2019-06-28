@@ -47,7 +47,7 @@ namespace Microsoft.UpdateServices.Tests
             var reloadedRepository = Repository.FromDirectory(Environment.CurrentDirectory);
 
             Assert.IsTrue(reloadedRepository.Categories.Categories.Count == localRepository.Categories.Categories.Count);
-            Assert.IsTrue(reloadedRepository.Updates.Updates.Count == localRepository.Updates.Updates.Count);
+            Assert.IsTrue(reloadedRepository.Updates.Index.Count == localRepository.Updates.Index.Count);
         }
 
         /// <summary>

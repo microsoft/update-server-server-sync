@@ -1,4 +1,7 @@
-﻿using Microsoft.UpdateServices.LocalCache;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.UpdateServices.LocalCache;
 using Microsoft.UpdateServices.Metadata;
 using Microsoft.UpdateServices.Metadata.Content;
 using Microsoft.UpdateServices.Metadata.Prerequisites;
@@ -126,7 +129,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             {
                 if (options.Updates)
                 {
-                    filteredData.AddRange(TargetRepo.Updates.Updates.Values);
+                    filteredData.AddRange(TargetRepo.Updates.Index.Values);
                 }
                 else if (options.Drivers)
                 {
@@ -134,21 +137,16 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 }
             }
 
-            if (!string.IsNullOrEmpty(options.TitleFilter))
-            {
-                var filterTokens = options.TitleFilter.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                filteredData.RemoveAll(category => !category.MatchTitle(filterTokens));
-            }
+            // Apply other filters specified on the command line
+            MetadataFilter.Apply(filteredData, options as IUpdatesFilter);
 
-            if (!string.IsNullOrEmpty(options.IdFilter))
+            if (options.SkipSuperseded)
             {
-                if (!Guid.TryParse(options.IdFilter, out Guid guidFilter))
-                {
-                    ConsoleOutput.WriteRed("The ID filter must be a GUID string!");
-                    return;
-                }
+                // Create the list of updates that have been superseded
+                var supersededUpdates = TargetRepo.Updates.Updates.OfType<IUpdateWithSupersededUpdates>().SelectMany(u => u.SupersededUpdates).Distinct().ToDictionary(u => u.Raw.UpdateID);
 
-                filteredData.RemoveAll(category => category.Identity.Raw.UpdateID != guidFilter);
+                // Remove updates that are on the list of superseded updates
+                filteredData.RemoveAll(u => supersededUpdates.ContainsKey(u.Identity.Raw.UpdateID));
             }
 
             if (filteredData.Count == 0)
@@ -233,9 +231,9 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 PrintFileDetails(update as IUpdateWithFiles);
             }
 
-            if (update is IUpdateWithSuperseededUpdates)
+            if (update is IUpdateWithSupersededUpdates)
             {
-                PrintSuperseededUpdates(update as IUpdateWithSuperseededUpdates);
+                PrintSupersededUpdates(update as IUpdateWithSupersededUpdates);
             }
 
             if (update is IUpdateWithBundledUpdates)
@@ -315,15 +313,15 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             }
         }
 
-        void PrintSuperseededUpdates(IUpdateWithSuperseededUpdates updateWithSuperseeds)
+        void PrintSupersededUpdates(IUpdateWithSupersededUpdates updateWithSuperseeds)
         {
-            if (updateWithSuperseeds.SuperseededUpdates.Count > 0)
+            if (updateWithSuperseeds.SupersededUpdates.Count > 0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("    Superseeds:");
                 Console.ResetColor();
 
-                foreach (var id in updateWithSuperseeds.SuperseededUpdates)
+                foreach (var id in updateWithSuperseeds.SupersededUpdates)
                 {
                     Console.WriteLine("        ID  : {0}", id.Raw.UpdateID);
                 }

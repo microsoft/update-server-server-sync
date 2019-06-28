@@ -1,4 +1,7 @@
-﻿using Microsoft.UpdateServices.Compression;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.UpdateServices.Compression;
 using Microsoft.UpdateServices.Metadata;
 using Microsoft.UpdateServices.Metadata.Content;
 using Microsoft.UpdateServices.Metadata.Prerequisites;
@@ -359,7 +362,7 @@ namespace Microsoft.UpdateServices.LocalCache
                 foreach (var additionalUpdate in additionalUpdates)
                 {
                     // Bundled updates should appear in the list before the updates that bundle them
-                    updatesToExport.Insert(0, repository.Updates.Updates[additionalUpdate]);
+                    updatesToExport.Insert(0, repository.Updates.Index[additionalUpdate]);
                 }
 
                 additionalUpdatesFound = additionalUpdates.Count > 0;

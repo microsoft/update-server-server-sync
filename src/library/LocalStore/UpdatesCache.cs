@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.UpdateServices.Query;
@@ -17,10 +20,16 @@ namespace Microsoft.UpdateServices.LocalCache
     public class UpdatesCache
     {
         /// <summary>
+        /// Dictionary of known updates
+        /// </summary>
+        [JsonIgnore]
+        public Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate> Index { get; protected set; }
+
+        /// <summary>
         /// List of known updates
         /// </summary>
         [JsonIgnore]
-        public Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate> Updates { get; protected set; }
+        public IEnumerable<MicrosoftUpdate> Updates => Index.Values;
 
         /// <summary>
         /// List of known updates; only used to serialize the dictionary above as a flat list
@@ -32,7 +41,7 @@ namespace Microsoft.UpdateServices.LocalCache
         /// Filter for driver updates in the updates list
         /// </summary>
         [JsonIgnore]
-        public IEnumerable<DriverUpdate> Drivers => Updates.Values.OfType<DriverUpdate>();
+        public IEnumerable<DriverUpdate> Drivers => Index.Values.OfType<DriverUpdate>();
 
         /// <summary>
         /// List of update queries used. Each update query contains the filters used and the anchor associated
@@ -51,7 +60,7 @@ namespace Microsoft.UpdateServices.LocalCache
         /// The object version currently implemented by this code
         /// </summary>
         [JsonIgnore]
-        const int CurrentVersion = 2;
+        const int CurrentVersion = 3;
 
         /// <summary>
         /// The updates repository that contains this object. Used when serializing-deserializing to 
@@ -73,7 +82,7 @@ namespace Microsoft.UpdateServices.LocalCache
         /// <param name="parentRepository"></param>
         private UpdatesCache(Repository parentRepository)
         {
-            Updates = new Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate>();
+            Index = new Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate>();
             UpdateQueries = new List<QueryFilter>();
             ParentRepository = parentRepository;
             Version = CurrentVersion;
@@ -97,7 +106,7 @@ namespace Microsoft.UpdateServices.LocalCache
                     if (deserializedCache.Version == CurrentVersion)
                     {
                         // Re-create the updates dictionary from the serialized list of updates
-                        deserializedCache.Updates = deserializedCache.UpdatesList.ToDictionary(u => u.Identity);
+                        deserializedCache.Index = deserializedCache.UpdatesList.ToDictionary(u => u.Identity);
 
                         // The updates list is only used to serialize updates to disk. For in-memory operations only
                         // the dictionary is used
@@ -140,9 +149,9 @@ namespace Microsoft.UpdateServices.LocalCache
             
             foreach (var newUpdate in queryResult.Updates)
             {
-                if (!Updates.ContainsKey(newUpdate.Identity))
+                if (!Index.ContainsKey(newUpdate.Identity))
                 {
-                    Updates.Add(newUpdate.Identity, newUpdate);
+                    Index.Add(newUpdate.Identity, newUpdate);
 
                     // Prepare the path where to save the XML metadata
                     var xmlFilePath = ParentRepository.GetUpdateXmlPath(newUpdate);
@@ -150,6 +159,12 @@ namespace Microsoft.UpdateServices.LocalCache
                     if (!Directory.Exists(parentDirectory))
                     {
                         Directory.CreateDirectory(parentDirectory);
+                    }
+
+                    // The XML metadata will be overwritten
+                    if (File.Exists(xmlFilePath))
+                    {
+                        File.Delete(xmlFilePath);
                     }
 
                     // Move the XML metadata file from the query result location to this repo
@@ -164,7 +179,7 @@ namespace Microsoft.UpdateServices.LocalCache
                 var productsList = categories.Products.ToList();
                 var classificationsList = categories.Classifications.ToList();
 
-                foreach (var update in Updates.Values)
+                foreach (var update in Index.Values)
                 {
                     var updateWithProduct = update as IUpdateWithProduct;
                     if (updateWithProduct != null)
@@ -202,7 +217,7 @@ namespace Microsoft.UpdateServices.LocalCache
         {
             Delete(ParentRepository);
 
-            Updates.Clear();
+            Index.Clear();
             UpdateQueries.Clear();
         }
 
@@ -212,7 +227,7 @@ namespace Microsoft.UpdateServices.LocalCache
         internal void Commit()
         {
             // Refresh the updates list from the dictionary before serializing
-            UpdatesList = Updates.Values.ToList();
+            UpdatesList = Index.Values.ToList();
             File.WriteAllText(ParentRepository.UpdatesFilePath, JsonConvert.SerializeObject(this));
         }
     }

@@ -198,7 +198,7 @@ namespace Microsoft.UpdateServices
             progress.CurrentTask = QuerySubTaskTypes.GetRevisionIdsEnd;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var cachedUpdates = cachedMetadata?.Updates;
+            var cachedUpdates = cachedMetadata?.Index;
 
             // Find all updates that did not change
             var unchangedUpdates = GetUnchangedUpdates(cachedUpdates, updatesQueryResult.identities);

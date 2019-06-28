@@ -1,4 +1,7 @@
-﻿using CommandLine;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using CommandLine;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +11,17 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
     public interface IRepositoryPathOption
     {
         string RepositoryPath { get; }
+    }
+
+    public interface IUpdatesFilter
+    {
+        IEnumerable<string> ProductsFilter { get; }
+
+        IEnumerable<string> ClassificationsFilter { get; }
+
+        IEnumerable<string> IdFilter { get; }
+        
+        string TitleFilter { get; }
     }
 
     [Verb("sync-categories", HelpText = "Syncs categories metadata in a repository.")]
@@ -28,16 +42,10 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
         [Option("classification-filter", Required = false, Separator = '+', HelpText = "Classification filter for sync'ing updates")]
         public IEnumerable<string> ClassificationsFilter { get; set; }
-
-        [Option("id-filter", Required = false, HelpText = "ID filter")]
-        public string IdFilter { get; set; }
-
-        [Option("title-filter", Required = false, HelpText = "Title filter")]
-        public string TitleFilter { get; set; }
     }
 
     [Verb("sync-content", HelpText = "Syncs update content with an upstream server")]
-    public class ContentSyncOptions : IRepositoryPathOption
+    public class ContentSyncOptions : IRepositoryPathOption, IUpdatesFilter
     {
         [Option("repo-path", Required = false, HelpText = "Repo location, if not using the default one")]
         public string RepositoryPath { get; set; }
@@ -73,7 +81,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
     }
 
     [Verb("query", HelpText = "Queries update metadata in a local repository")]
-    public class QueryRepositoryOptions : IRepositoryPathOption
+    public class QueryRepositoryOptions : IRepositoryPathOption, IUpdatesFilter
     {
         [Option("repo-path", Required = false, HelpText = "Repo location, if not using the current directory")]
         public string RepositoryPath { get; set; }
@@ -96,11 +104,21 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         [Option("updates", Required = true, HelpText = "Read updates", SetName = "updates")]
         public bool Updates { get; set; }
 
-        [Option("id-filter", Required = false, HelpText = "ID filter")]
-        public string IdFilter { get; set; }
+        [Option("id-filter", Required = false, Separator = '+', HelpText = "ID filter")]
+        public IEnumerable<string> IdFilter { get; set; }
 
         [Option("title-filter", Required = false, HelpText = "Title filter")]
         public string TitleFilter { get; set; }
+
+        [Option("product-filter", Required = false, Separator = '+', HelpText = "Product filter")]
+        public IEnumerable<string> ProductsFilter { get; set; }
+
+        [Option("classification-filter", Required = false, Separator = '+', HelpText = "Classification filter")]
+        public IEnumerable<string> ClassificationsFilter { get; set; }
+
+        [Option("skip-superseded", Required = false, Default = false, HelpText = "Ignore superseded updates")]
+        public bool SkipSuperseded { get; set; }
+
     }
 
     [Verb("export", HelpText = "Export update metadata from the repository.")]

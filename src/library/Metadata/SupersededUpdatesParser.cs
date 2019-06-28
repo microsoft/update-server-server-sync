@@ -5,44 +5,42 @@ using Microsoft.UpdateServices.WebServices.ServerSync;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
 namespace Microsoft.UpdateServices.Metadata
 {
     /// <summary>
-    /// Parses bundled updates information from update XML blob
+    /// Parses superseded updates information from update XML blob
     /// </summary>
-    abstract class BundlesUpdatesParser
+    abstract class SupersededUpdatesParser
     {
         public static List<MicrosoftUpdateIdentity> Parse(XDocument xdoc)
         {
-            var bundledUpdates = new List<MicrosoftUpdateIdentity>();
+            var supersededIds = new List<MicrosoftUpdateIdentity>();
 
-            var bundledUpdatesElements = xdoc.Descendants(XName.Get("BundledUpdates", "http://schemas.microsoft.com/msus/2002/12/Update"));
-            if (bundledUpdatesElements.Count() > 1)
+            var supersededUpdatesElements = xdoc.Descendants(XName.Get("SupersededUpdates", "http://schemas.microsoft.com/msus/2002/12/Update"));
+            if (supersededUpdatesElements.Count() > 1)
             {
                 throw new Exception("Multiple superseded elements nodes found");
-            }
-            else if (bundledUpdatesElements.Count() == 1)
+            } else if (supersededUpdatesElements.Count() == 1)
             {
-                var bundledIdentityNodes = bundledUpdatesElements
+                var superseedeIdentityNodes = supersededUpdatesElements
                     .First()
                     .Descendants(XName.Get("UpdateIdentity", "http://schemas.microsoft.com/msus/2002/12/Update"));
 
-                foreach(var bundledIdentityNode in bundledIdentityNodes)
+                foreach(var supersededIdentityNode in superseedeIdentityNodes)
                 {
-                    bundledUpdates.Add(
+                    supersededIds
+                        .Add(
                         new MicrosoftUpdateIdentity(
                             new UpdateIdentity()
                             {
-                                UpdateID = Guid.Parse(bundledIdentityNode.Attribute("UpdateID").Value),
-                                RevisionNumber = int.Parse(bundledIdentityNode.Attribute("RevisionNumber").Value)
+                                UpdateID = Guid.Parse(supersededIdentityNode.Attribute("UpdateID").Value)
                             }));
                 }
             }
 
-            return bundledUpdates;
+            return supersededIds;
         }
     }
 }

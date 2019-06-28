@@ -20,7 +20,7 @@ namespace Microsoft.UpdateServices.Metadata
         MicrosoftUpdate,
         IUpdateWithPrerequisites,
         IUpdateWithFiles,
-        IUpdateWithSuperseededUpdates,
+        IUpdateWithSupersededUpdates,
         IUpdateWithBundledUpdates,
         IUpdateWithProduct,
         IUpdateWithClassification
@@ -38,7 +38,7 @@ namespace Microsoft.UpdateServices.Metadata
         /// <summary>
         /// Updates that this SoftwareUpdate superseeds
         /// </summary>
-        public List<MicrosoftUpdateIdentity> SuperseededUpdates { get; set; }
+        public List<MicrosoftUpdateIdentity> SupersededUpdates { get; set; }
 
         /// <summary>
         /// Other bundled updates in this SoftwareUpdate
@@ -98,8 +98,8 @@ namespace Microsoft.UpdateServices.Metadata
             // Parse prerequisites
             Prerequisites = PrerequisitesParser.Parse(xdoc);
 
-            // Parse superseeded updates
-            SuperseededUpdates = SuperseededUpdatesParser.Parse(xdoc);
+            // Parse superseded updates
+            SupersededUpdates = SupersededUpdatesParser.Parse(xdoc);
 
             // Parse bundled updates
             BundledUpdates = BundlesUpdatesParser.Parse(xdoc);

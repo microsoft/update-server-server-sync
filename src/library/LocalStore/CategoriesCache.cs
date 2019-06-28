@@ -43,7 +43,7 @@ namespace Microsoft.UpdateServices.LocalCache
         /// The object version currently implemented by this code
         /// </summary>
         [JsonIgnore]
-        const int CurrentVersion = 2;
+        const int CurrentVersion = 3;
 
         /// <summary>
         /// Filter for detectoids in the categories list

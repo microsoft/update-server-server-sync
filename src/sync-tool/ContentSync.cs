@@ -23,31 +23,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             var updatesToDownload = new List<MicrosoftUpdate>();
 
             // Only updates with files and those with a product and classifications are considered
-            updatesToDownload.AddRange(localRepo.Updates.Updates.Values.Where(u => u is IUpdateWithFiles && u is IUpdateWithProduct && u is IUpdateWithClassification));
-
-            // Apply the classification filter
-            foreach(var classificationFilter in options.ClassificationsFilter)
-            {
-                if (!Guid.TryParse(classificationFilter, out Guid classificationId))
-                {
-                    ConsoleOutput.WriteRed("The classification filter must contain only GUIDs!");
-                    return;
-                }
-
-                updatesToDownload.RemoveAll(u => !(u as IUpdateWithClassification).ClassificationIds.Contains(classificationId));
-            }
-
-            // Apply the product filter
-            foreach(var productFilter in options.ProductsFilter)
-            {
-                if (!Guid.TryParse(productFilter, out Guid productId))
-                {
-                    ConsoleOutput.WriteRed("The product ID filter must contain only GUIDs!");
-                    return;
-                }
-
-                updatesToDownload.RemoveAll(u => !(u as IUpdateWithProduct).ProductIds.Contains(productId));
-            }
+            updatesToDownload.AddRange(localRepo.Updates.Index.Values.Where(u => u is IUpdateWithFiles && u is IUpdateWithProduct && u is IUpdateWithClassification));
 
             // Apply the drivers filter
             if (options.Drivers)
@@ -56,29 +32,8 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 updatesToDownload.RemoveAll(u => !(u is DriverUpdate));
             }
 
-            if (!string.IsNullOrEmpty(options.TitleFilter))
-            {
-                var filterTokens = options.TitleFilter.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                updatesToDownload.RemoveAll(category => !category.MatchTitle(filterTokens));
-            }
-
-            if (options.IdFilter.Count() > 0)
-            {
-                var idFilter = new List<Guid>();
-                foreach(var stringId in options.IdFilter)
-                {
-                    if (!Guid.TryParse(stringId, out Guid guidId))
-                    {
-                        ConsoleOutput.WriteRed("The ID filter must be a GUID string!");
-                        return;
-                    }
-
-                    idFilter.Add(guidId);
-                }
-
-                // Remove all updates that don't match the ID filter
-                updatesToDownload.RemoveAll(u  => !idFilter.Contains(u.Identity.Raw.UpdateID));
-            }
+            // Apply other filters specified on the command line
+            MetadataFilter.Apply(updatesToDownload, options as IUpdatesFilter);
 
             if (updatesToDownload.Count == 0)
             {
@@ -89,7 +44,6 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             localRepo.RepositoryOperationProgress += LocalRepo_RepositoryOperationProgress;
 
             var uniqueFiles = updatesToDownload.SelectMany(u => (u as IUpdateWithFiles).Files).GroupBy(f => f.DownloadUrl);
-            
 
             var totalDownloadSize = uniqueFiles.Sum(f => (long)f.First().Size);
             var totalFilesToDownload = uniqueFiles.Count();
