@@ -6,7 +6,7 @@ Use this library to
 * programmatically browse the Microsoft Update catalog
 * sync updates locally and run advanced queries on update metadata
 * export updates to WSUS
-* run your upstream update server in an ASP.NET Core web app and serve updates to downstream WSUS servers
+* run an upstream update server in ASP.NET Core and serve updates to downstream WSUS servers
 
 ## Reference the library in your project
 
@@ -18,9 +18,9 @@ Alternatively, you can compile the code yourself. Visual Studio 2017 with .Net C
 
 Please refer to the [API documentation](https://microsoft.github.io/update-server-server-sync/) for help on using the library.
 
-[Get started with using the update sync client](https://microsoft.github.io/update-server-server-sync/api/index.html#the-upstreamserverclient)
+[Get started with the updates sync client](https://microsoft.github.io/update-server-server-sync/api/index.html#the-upstreamserverclient)
 
-[Get started with using the updates sync server](https://microsoft.github.io/update-server-server-sync/api/index.html#the-upsteam-server)
+[Get started with the updates sync server](https://microsoft.github.io/update-server-server-sync/api/index.html#the-upsteam-server)
 
 [Code Examples](https://microsoft.github.io/update-server-server-sync/examples/repository_basic.html)
 
