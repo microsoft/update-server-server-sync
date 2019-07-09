@@ -24,8 +24,8 @@
       },
       {
         "files": [
-          "articles/**.md",
-          "articles/**/toc.yml",
+          "examples/**.md",
+          "examples/**/toc.yml",
           "toc.yml",
           "*.md"
         ]

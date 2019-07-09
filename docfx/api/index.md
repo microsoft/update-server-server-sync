@@ -65,31 +65,4 @@ Use [UpstreamServerStartup](Microsoft.UpdateServices.Server.UpstreamServerStartu
 
 First sync some updates to a local repository, then configure the upstream server startup to distribute updates from your local repository to downstream WSUS servers.
 
-```
-// Open an existing local repository.
-// This sample assumes updates were sync'ed from an upstream server and merged
-// into this local repository
-var localRepo = FileSystemRepository.Open(Environment.CurrentDirectory);
-
-// Create an empty filter; serves all updates in repository
-var filter = new RepositoryFilter();
-
-// Create and initialize an ASP.NET web host builder
-var host = new WebHostBuilder()
-   .UseUrls($"http://localhost:24222")
-   .UseStartup<Microsoft.UpdateServices.Server.UpstreamServerStartup>()
-   .UseKestrel()
-   .ConfigureAppConfiguration((hostingContext, config) =>
-   {
-       config.AddInMemoryCollection(
-       new Dictionary<string, string>()
-       {
-           { "repo-path", Environment.CurrentDirectory },
-           { "updates-filter", filter.ToJson() }
-       });
-   })
-   .Build();
-
-// Run the ASP.NET service
-host.Run();
-```
+See [this example](../examples/upstream_server.html) for running an upstream server in a ASP.NET Core web app.

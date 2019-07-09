@@ -118,33 +118,7 @@ categories.ForEach(cat =&gt; Console.WriteLine($&quot;{cat.Identity}:{cat.Title}
 <h4 id="the-upsteam-server">The <a href="Microsoft.UpdateServices.Server.UpstreamServerStartup.html">upsteam server</a></h4>
 <p>Use <a href="Microsoft.UpdateServices.Server.UpstreamServerStartup.html">UpstreamServerStartup</a> to run an upstream server in your ASP.NET web app.</p>
 <p>First sync some updates to a local repository, then configure the upstream server startup to distribute updates from your local repository to downstream WSUS servers.</p>
-<pre><code>// Open an existing local repository.
-// This sample assumes updates were sync'ed from an upstream server and merged
-// into this local repository
-var localRepo = FileSystemRepository.Open(Environment.CurrentDirectory);
-
-// Create an empty filter; serves all updates in repository
-var filter = new RepositoryFilter();
-
-// Create and initialize an ASP.NET web host builder
-var host = new WebHostBuilder()
-   .UseUrls($&quot;http://localhost:24222&quot;)
-   .UseStartup&lt;Microsoft.UpdateServices.Server.UpstreamServerStartup&gt;()
-   .UseKestrel()
-   .ConfigureAppConfiguration((hostingContext, config) =&gt;
-   {
-       config.AddInMemoryCollection(
-       new Dictionary&lt;string, string&gt;()
-       {
-           { &quot;repo-path&quot;, Environment.CurrentDirectory },
-           { &quot;updates-filter&quot;, filter.ToJson() }
-       });
-   })
-   .Build();
-
-// Run the ASP.NET service
-host.Run();
-</code></pre>
+<p>See <a href="../examples/upstream_server.html">this example</a> for running an upstream server in a ASP.NET Core web app.</p>
 </article>
           </div>
           
