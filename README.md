@@ -26,15 +26,15 @@ Please refer to the [API documentation](https://microsoft.github.io/update-serve
 
 
 ## Use the upsync utility
-The upsync command line utility is provided as a sample for using the library. This tool can be used to browse Microsoft's update catalog, sync updates and export updates to a WSUS server.
+The upsync command line utility is provided as a sample for using the library. Upsync can be used to browse Microsoft's update catalog, sync updates and export updates to a WSUS server.
 
-You can build the tool in Visual Studio. It builds from the same solution as the library.
+You can build upsync in Visual Studio; It builds from the same solution as the library.
 
 Or download and unzip upsync from [https://github.com/microsoft/update-server-server-sync/releases](https://github.com/microsoft/update-server-server-sync/releases)
 
-See the wiki for [command line options reference](https://github.com/microsoft/update-server-server-sync/wiki/UpSync-command-line-options)
+See [upsync command line options reference](https://github.com/microsoft/update-server-server-sync/wiki/UpSync-command-line-options)
 
-See the wiki for [samples on running the upsync tool](https://github.com/microsoft/update-server-server-sync/wiki/UpSync-tool-examples)
+See [upsync examples](https://github.com/microsoft/update-server-server-sync/wiki/UpSync-examples)
 
 # Contributing
 
