@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace Microsoft.UpdateServices.Metadata
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace Microsoft.UpdateServices.Metadata
+   ">
+    <meta name="generator" content="docfx 2.43.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.UpdateServices.Metadata">
+  
+  <h1 id="Microsoft_UpdateServices_Metadata" data-uid="Microsoft.UpdateServices.Metadata" class="text-break">Namespace Microsoft.UpdateServices.Metadata
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.Classification.html">Classification</a></h4>
+      <section><p>Represents a Classification. Used to clasify updates on an upstream server.</p>
+<p>
+Example classifications: drivers, security updates, feature packs etc.
+</p>
+</section>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.Detectoid.html">Detectoid</a></h4>
+      <section><p>Represents a detectoid. Detectoids determine applicabilty of updates for a computer and as such are used
+as pre-requisites for other updates.</p>
+<p>
+Example detectoids: x64, x86, arm64, DirectX12 supported, etc.
+</p>
+</section>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.DriverMetadata.html">DriverMetadata</a></h4>
+      <section><p>Extended metadata for a DriverUpdate</p>
+</section>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.DriverUpdate.html">DriverUpdate</a></h4>
+      <section><p>Represents a driver update.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a></h4>
+      <section><p>Represents the identity of an update.</p>
+<p>An update&apos;s identity is the pair ID (Guid) - Revision (integer).</p>
+</section>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a></h4>
+      <section><p>Metadata for a product category.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.SoftwareUpdate.html">SoftwareUpdate</a></h4>
+      <section><p>Reprerents a software update.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a></h4>
+      <section><p>A base class for all updates stored on an upstream update server. Stores generic update metadata applicable to both categories and updates.</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithBundledUpdates.html">IUpdateWithBundledUpdates</a></h4>
+      <section><p>Interface implemented by updates that can bundle other updates</p>
+</section>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithClassification.html">IUpdateWithClassification</a></h4>
+      <section><p>Interface implemented by updates that have one or more classifications</p>
+</section>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithProduct.html">IUpdateWithProduct</a></h4>
+      <section><p>Interface implemeted by updates that belong to a <a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a></p>
+</section>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithSupersededUpdates.html">IUpdateWithSupersededUpdates</a></h4>
+      <section><p>Interface implemented by updates that superseed other updates</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

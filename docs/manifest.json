@@ -1,0 +1,693 @@
+{
+  "homepages": [],
+  "source_base_path": "E:/src/update-server-server-sync/docfx",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Client.ClientAuthenticator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Client.ClientAuthenticator.html",
+          "hash": "DKZDBP137QH6WWU13BQQjw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Client.Endpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Client.Endpoint.html",
+          "hash": "/pW3MO6UEzUzOGUk0gfI8A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Client.MetadataQueryProgress.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Client.MetadataQueryProgress.html",
+          "hash": "vucJ+MYP7unzjsmCNBTq4g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Client.MetadataQueryStage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Client.MetadataQueryStage.html",
+          "hash": "bhh+JhiBVnxjCims2n/aeQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Client.ServiceAccessToken.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Client.ServiceAccessToken.html",
+          "hash": "IUKFhWT/g1CeyJgFRjsx9w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Client.UpstreamServerClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Client.UpstreamServerClient.html",
+          "hash": "Ntum2juE8573AEP/ETttrw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Client.UpstreamServerErrorCode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Client.UpstreamServerErrorCode.html",
+          "hash": "Sqo2xSbpVREQxjDz+qj7rg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Client.UpstreamServerException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Client.UpstreamServerException.html",
+          "hash": "4J1cektaT9hyrlg9LBjSfg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Client.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Client.html",
+          "hash": "mmMVwHi+w+Dz6/fTTRhEmQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Classification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Classification.html",
+          "hash": "eHIz6zT8CAv0RgkGhUicmw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Content.IUpdateWithFiles.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Content.IUpdateWithFiles.html",
+          "hash": "7OT5TjrTV8qJEiaFSmVSWw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Content.UpdateFile.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Content.UpdateFile.html",
+          "hash": "LvE8EEx7wUgiuk8H+zztzQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.html",
+          "hash": "veZHWbrwjQYmmxjPcxw2Iw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl.html",
+          "hash": "GsjT5pbdnnFTQmjmVPrBfg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Content.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Content.html",
+          "hash": "7uThPOljLV75AnE09YRAbA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Detectoid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Detectoid.html",
+          "hash": "uy+McxjCwxEfiU7ciLYPeQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.DriverMetadata.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.DriverMetadata.html",
+          "hash": "kHUBCTR7uk1rfJ8OVrieXQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.DriverUpdate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.DriverUpdate.html",
+          "hash": "c30mR04l5fHXNsFEB15bLQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.IUpdateWithBundledUpdates.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.IUpdateWithBundledUpdates.html",
+          "hash": "cm0kohYdJGKwEmFQPp7HIA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.IUpdateWithClassification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.IUpdateWithClassification.html",
+          "hash": "1oXuALwa8X6u5jx6aUVuTA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.IUpdateWithProduct.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.IUpdateWithProduct.html",
+          "hash": "qE7htDRffWZOO8gUzuIOCA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.IUpdateWithSupersededUpdates.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.IUpdateWithSupersededUpdates.html",
+          "hash": "axPnP6kVRUpNmY1ksgxO4A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Identity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Identity.html",
+          "hash": "w9MUX+wx5erXvB8fyEM3zQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Prerequisites.AtLeastOne.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Prerequisites.AtLeastOne.html",
+          "hash": "cCMBDNBdzGbGXiHA9y6SlA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Prerequisites.IUpdateWithPrerequisites.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Prerequisites.IUpdateWithPrerequisites.html",
+          "hash": "ckjTSLB3PRVtIBrFh3BycQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite.html",
+          "hash": "isFDEq0nperGqUQ70GIgBQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Prerequisites.Simple.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Prerequisites.Simple.html",
+          "hash": "fHHWsOBvkjH3b/j5HjVSWA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Prerequisites.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Prerequisites.html",
+          "hash": "udIcdOPgJsYwgOtcrZXbwA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Product.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Product.html",
+          "hash": "fN2ihkKK3j5jBxX9XtuReQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.SoftwareUpdate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.SoftwareUpdate.html",
+          "hash": "dbWwcLuGWvb1y1W5La2+bw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.Update.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.Update.html",
+          "hash": "eWQULhMF04eYDhVVMNGwtA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.html",
+          "hash": "5IIb3S10Tu+lW3c0QZyHCA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Query.QueryFilter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Query.QueryFilter.html",
+          "hash": "6Z765OdnHaGERELaCgNI5Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Query.QueryResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Query.QueryResult.html",
+          "hash": "xmydLW+51557U8uz1VhIZQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Query.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Query.html",
+          "hash": "FEgzI2B+sm/91T6wt3x38A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Server.UpstreamServerStartup.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Server.UpstreamServerStartup.html",
+          "hash": "dNfufzkdHK8U/eTRGSca0g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Server.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Server.html",
+          "hash": "go2SxIAU91nCx4ypJbzpPg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Storage.ContentOperationProgress.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Storage.ContentOperationProgress.html",
+          "hash": "nAoy4uayHYX9Ub/VIASVgQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Storage.FileSystemRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Storage.FileSystemRepository.html",
+          "hash": "Dpb0gmi5QF/lMBQgvT01yg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Storage.IRepository.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Storage.IRepository.html",
+          "hash": "aH9rdcL2Sany81Tn77SONw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Storage.OperationProgress.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Storage.OperationProgress.html",
+          "hash": "WzVqvO3EfnZT1fZIaetL/Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Storage.OperationType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Storage.OperationType.html",
+          "hash": "GR5EjynFDaqTkpFRiMQeeA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Storage.RepoConfiguration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Storage.RepoConfiguration.html",
+          "hash": "E8SUwbGIFoXQzEkQEf4wHQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Storage.RepoExportFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Storage.RepoExportFormat.html",
+          "hash": "TBohCox2Lp/k/hUmyIHjrw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Storage.RepositoryFilter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Storage.RepositoryFilter.html",
+          "hash": "cb0Y3oHgQhwoA51FIsJf4w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Storage.UpdateRetrievalMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Storage.UpdateRetrievalMode.html",
+          "hash": "RIMnwZ5NyHPLVmA9QasUCA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Storage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Storage.html",
+          "hash": "+XZgomHKLZKzhDXR8QEYiQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "xYztpRNP4p49gPUtjyaI2Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "dbxg90hGUhrDsOQ0FlvG6Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "5+xgvEDDFjkzI48NhshUFw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "t7iiFrmuYmrKWisdq+lN6Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "rwqiKimda85Ei3dK+t71Og=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "k+/dkjFuwAVS32HduMpmBw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 3,
+          "skipped_file_count": 3
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 47,
+          "skipped_file_count": 44
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

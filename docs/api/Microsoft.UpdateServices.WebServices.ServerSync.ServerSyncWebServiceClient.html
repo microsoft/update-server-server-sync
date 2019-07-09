@@ -1,0 +1,1443 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ServerSyncWebServiceClient
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ServerSyncWebServiceClient
+   ">
+    <meta name="generator" content="docfx 2.43.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient">
+  
+  
+  <h1 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient" class="text-break">Class ServerSyncWebServiceClient
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">System.ServiceModel.ClientBase</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService.html">IServerSyncWebService</a>&gt;</div>
+    <div class="level2"><span class="xref">ServerSyncWebServiceClient</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">System.IDisposable</span></div>
+    <div><span class="xref">System.ServiceModel.ICommunicationObject</span></div>
+    <div><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService.html">IServerSyncWebService</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.Abort()</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.Close()</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.CreateChannel()</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.GetDefaultValueForInitialization&lt;T&gt;()</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.InvokeAsync(System.ServiceModel.ClientBase.BeginOperationDelegate&lt;&gt;, System.Object[], System.ServiceModel.ClientBase.EndOperationDelegate&lt;&gt;, System.Threading.SendOrPostCallback, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.BeginClose(System.AsyncCallback, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.BeginClose(System.TimeSpan, System.AsyncCallback, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.BeginOpen(System.AsyncCallback, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.BeginOpen(System.TimeSpan, System.AsyncCallback, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.Close()</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.Close(System.TimeSpan)</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.EndClose(System.IAsyncResult)</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.EndOpen(System.IAsyncResult)</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.Open()</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.Open(System.TimeSpan)</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.IDisposable.Dispose()</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.Channel</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.ChannelFactory</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.ClientCredentials</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.Endpoint</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.InnerChannel</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.State</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.Closed</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.Closing</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.Faulted</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.Opened</span>
+    </div>
+    <div>
+      <span class="xref">System.ServiceModel.ClientBase&lt;Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService&gt;.System.ServiceModel.ICommunicationObject.Opening</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.html">Microsoft.UpdateServices.WebServices.ServerSync</a></h6>
+  <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
+  <h5 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ServerSyncWebServiceClient : ClientBase&lt;IServerSyncWebService&gt;, IDisposable, ICommunicationObject, IServerSyncWebService</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient__ctor_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.#ctor*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient__ctor" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.#ctor">ServerSyncWebServiceClient()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ServerSyncWebServiceClient()</code></pre>
+  </div>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient__ctor_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.#ctor*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient__ctor_Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_EndpointConfiguration_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.#ctor(Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.EndpointConfiguration)">ServerSyncWebServiceClient(ServerSyncWebServiceClient.EndpointConfiguration)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ServerSyncWebServiceClient(ServerSyncWebServiceClient.EndpointConfiguration endpointConfiguration)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.EndpointConfiguration.html">ServerSyncWebServiceClient.EndpointConfiguration</a></td>
+        <td><span class="parametername">endpointConfiguration</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient__ctor_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.#ctor*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient__ctor_Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_EndpointConfiguration_System_ServiceModel_EndpointAddress_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.#ctor(Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.EndpointConfiguration,System.ServiceModel.EndpointAddress)">ServerSyncWebServiceClient(ServerSyncWebServiceClient.EndpointConfiguration, EndpointAddress)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ServerSyncWebServiceClient(ServerSyncWebServiceClient.EndpointConfiguration endpointConfiguration, EndpointAddress remoteAddress)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.EndpointConfiguration.html">ServerSyncWebServiceClient.EndpointConfiguration</a></td>
+        <td><span class="parametername">endpointConfiguration</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ServiceModel.EndpointAddress</span></td>
+        <td><span class="parametername">remoteAddress</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient__ctor_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.#ctor*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient__ctor_Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_EndpointConfiguration_System_String_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.#ctor(Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.EndpointConfiguration,System.String)">ServerSyncWebServiceClient(ServerSyncWebServiceClient.EndpointConfiguration, String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ServerSyncWebServiceClient(ServerSyncWebServiceClient.EndpointConfiguration endpointConfiguration, string remoteAddress)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.EndpointConfiguration.html">ServerSyncWebServiceClient.EndpointConfiguration</a></td>
+        <td><span class="parametername">endpointConfiguration</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">remoteAddress</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient__ctor_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.#ctor*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient__ctor_System_ServiceModel_Channels_Binding_System_ServiceModel_EndpointAddress_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.#ctor(System.ServiceModel.Channels.Binding,System.ServiceModel.EndpointAddress)">ServerSyncWebServiceClient(Binding, EndpointAddress)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ServerSyncWebServiceClient(Binding binding, EndpointAddress remoteAddress)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ServiceModel.Channels.Binding</span></td>
+        <td><span class="parametername">binding</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ServiceModel.EndpointAddress</span></td>
+        <td><span class="parametername">remoteAddress</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_CloseAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.CloseAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_CloseAsync" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.CloseAsync">CloseAsync()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task CloseAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_DownloadFilesAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.DownloadFilesAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_DownloadFilesAsync_Microsoft_UpdateServices_WebServices_ServerSync_DownloadFilesRequestBody_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.DownloadFilesAsync(Microsoft.UpdateServices.WebServices.ServerSync.DownloadFilesRequestBody)">DownloadFilesAsync(DownloadFilesRequestBody)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;DownloadFilesResponse&gt; DownloadFilesAsync(DownloadFilesRequestBody DownloadFiles)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.DownloadFilesRequestBody.html">DownloadFilesRequestBody</a></td>
+        <td><span class="parametername">DownloadFiles</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.DownloadFilesResponse.html">DownloadFilesResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetAuthConfigAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetAuthConfigAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetAuthConfigAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetAuthConfigRequestBody_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetAuthConfigAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetAuthConfigRequestBody)">GetAuthConfigAsync(GetAuthConfigRequestBody)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;GetAuthConfigResponse&gt; GetAuthConfigAsync(GetAuthConfigRequestBody GetAuthConfig)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetAuthConfigRequestBody.html">GetAuthConfigRequestBody</a></td>
+        <td><span class="parametername">GetAuthConfig</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetAuthConfigResponse.html">GetAuthConfigResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetConfigDataAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetConfigDataAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetConfigDataAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetConfigDataRequestBody_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetConfigDataAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetConfigDataRequestBody)">GetConfigDataAsync(GetConfigDataRequestBody)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;GetConfigDataResponse&gt; GetConfigDataAsync(GetConfigDataRequestBody GetConfigData)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetConfigDataRequestBody.html">GetConfigDataRequestBody</a></td>
+        <td><span class="parametername">GetConfigData</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetConfigDataResponse.html">GetConfigDataResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetCookieAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetCookieAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetCookieAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetCookieRequestBody_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetCookieAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetCookieRequestBody)">GetCookieAsync(GetCookieRequestBody)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;GetCookieResponse&gt; GetCookieAsync(GetCookieRequestBody GetCookie)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetCookieRequestBody.html">GetCookieRequestBody</a></td>
+        <td><span class="parametername">GetCookie</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetCookieResponse.html">GetCookieResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetDeploymentsAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetDeploymentsAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetDeploymentsAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetDeploymentsRequestBody_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetDeploymentsAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetDeploymentsRequestBody)">GetDeploymentsAsync(GetDeploymentsRequestBody)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;GetDeploymentsResponse&gt; GetDeploymentsAsync(GetDeploymentsRequestBody GetDeployments)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetDeploymentsRequestBody.html">GetDeploymentsRequestBody</a></td>
+        <td><span class="parametername">GetDeployments</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetDeploymentsResponse.html">GetDeploymentsResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetDriverIdListAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetDriverIdListAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetDriverIdListAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetDriverIdListRequestBody_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetDriverIdListAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetDriverIdListRequestBody)">GetDriverIdListAsync(GetDriverIdListRequestBody)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;GetDriverIdListResponse&gt; GetDriverIdListAsync(GetDriverIdListRequestBody GetDriverIdList)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetDriverIdListRequestBody.html">GetDriverIdListRequestBody</a></td>
+        <td><span class="parametername">GetDriverIdList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetDriverIdListResponse.html">GetDriverIdListResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetDriverSetDataAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetDriverSetDataAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetDriverSetDataAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetDriverSetDataRequestBody_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetDriverSetDataAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetDriverSetDataRequestBody)">GetDriverSetDataAsync(GetDriverSetDataRequestBody)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;GetDriverSetDataResponse&gt; GetDriverSetDataAsync(GetDriverSetDataRequestBody GetDriverSetData)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetDriverSetDataRequestBody.html">GetDriverSetDataRequestBody</a></td>
+        <td><span class="parametername">GetDriverSetData</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetDriverSetDataResponse.html">GetDriverSetDataResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetRelatedRevisionsForUpdatesAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetRelatedRevisionsForUpdatesAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetRelatedRevisionsForUpdatesAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetRelatedRevisionsForUpdatesRequestBody_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetRelatedRevisionsForUpdatesAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetRelatedRevisionsForUpdatesRequestBody)">GetRelatedRevisionsForUpdatesAsync(GetRelatedRevisionsForUpdatesRequestBody)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;GetRelatedRevisionsForUpdatesResponse&gt; GetRelatedRevisionsForUpdatesAsync(GetRelatedRevisionsForUpdatesRequestBody GetRelatedRevisionsForUpdates)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetRelatedRevisionsForUpdatesRequestBody.html">GetRelatedRevisionsForUpdatesRequestBody</a></td>
+        <td><span class="parametername">GetRelatedRevisionsForUpdates</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetRelatedRevisionsForUpdatesResponse.html">GetRelatedRevisionsForUpdatesResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetRevisionIdListAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetRevisionIdListAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetRevisionIdListAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetRevisionIdListRequestBody_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetRevisionIdListAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetRevisionIdListRequestBody)">GetRevisionIdListAsync(GetRevisionIdListRequestBody)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;GetRevisionIdListResponse&gt; GetRevisionIdListAsync(GetRevisionIdListRequestBody GetRevisionIdList)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetRevisionIdListRequestBody.html">GetRevisionIdListRequestBody</a></td>
+        <td><span class="parametername">GetRevisionIdList</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetRevisionIdListResponse.html">GetRevisionIdListResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetUpdateDataAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetUpdateDataAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetUpdateDataAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetUpdateDataRequestBody_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetUpdateDataAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDataRequestBody)">GetUpdateDataAsync(GetUpdateDataRequestBody)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;GetUpdateDataResponse&gt; GetUpdateDataAsync(GetUpdateDataRequestBody GetUpdateData)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDataRequestBody.html">GetUpdateDataRequestBody</a></td>
+        <td><span class="parametername">GetUpdateData</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDataResponse.html">GetUpdateDataResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetUpdateDecryptionDataAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetUpdateDecryptionDataAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_GetUpdateDecryptionDataAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetUpdateDecryptionDataRequestBody_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.GetUpdateDecryptionDataAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDecryptionDataRequestBody)">GetUpdateDecryptionDataAsync(GetUpdateDecryptionDataRequestBody)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;GetUpdateDecryptionDataResponse&gt; GetUpdateDecryptionDataAsync(GetUpdateDecryptionDataRequestBody GetUpdateDecryptionData)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDecryptionDataRequestBody.html">GetUpdateDecryptionDataRequestBody</a></td>
+        <td><span class="parametername">GetUpdateDecryptionData</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDecryptionDataResponse.html">GetUpdateDecryptionDataResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_OpenAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.OpenAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_OpenAsync" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.OpenAsync">OpenAsync()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OpenAsync()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_PingAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.PingAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_PingAsync_System_Int32_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.PingAsync(System.Int32)">PingAsync(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;PingResponse&gt; PingAsync(int pingLevel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">pingLevel</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.PingResponse.html">PingResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_DownloadFilesAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#DownloadFilesAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_DownloadFilesAsync_Microsoft_UpdateServices_WebServices_ServerSync_DownloadFilesRequest_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#DownloadFilesAsync(Microsoft.UpdateServices.WebServices.ServerSync.DownloadFilesRequest)">IServerSyncWebService.DownloadFilesAsync(DownloadFilesRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;DownloadFilesResponse&gt; IServerSyncWebService.DownloadFilesAsync(DownloadFilesRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.DownloadFilesRequest.html">DownloadFilesRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.DownloadFilesResponse.html">DownloadFilesResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetAuthConfigAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetAuthConfigAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetAuthConfigAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetAuthConfigRequest_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetAuthConfigAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetAuthConfigRequest)">IServerSyncWebService.GetAuthConfigAsync(GetAuthConfigRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;GetAuthConfigResponse&gt; IServerSyncWebService.GetAuthConfigAsync(GetAuthConfigRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetAuthConfigRequest.html">GetAuthConfigRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetAuthConfigResponse.html">GetAuthConfigResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetConfigDataAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetConfigDataAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetConfigDataAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetConfigDataRequest_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetConfigDataAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetConfigDataRequest)">IServerSyncWebService.GetConfigDataAsync(GetConfigDataRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;GetConfigDataResponse&gt; IServerSyncWebService.GetConfigDataAsync(GetConfigDataRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetConfigDataRequest.html">GetConfigDataRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetConfigDataResponse.html">GetConfigDataResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetCookieAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetCookieAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetCookieAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetCookieRequest_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetCookieAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetCookieRequest)">IServerSyncWebService.GetCookieAsync(GetCookieRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;GetCookieResponse&gt; IServerSyncWebService.GetCookieAsync(GetCookieRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetCookieRequest.html">GetCookieRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetCookieResponse.html">GetCookieResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetDeploymentsAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetDeploymentsAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetDeploymentsAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetDeploymentsRequest_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetDeploymentsAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetDeploymentsRequest)">IServerSyncWebService.GetDeploymentsAsync(GetDeploymentsRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;GetDeploymentsResponse&gt; IServerSyncWebService.GetDeploymentsAsync(GetDeploymentsRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetDeploymentsRequest.html">GetDeploymentsRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetDeploymentsResponse.html">GetDeploymentsResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetDriverIdListAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetDriverIdListAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetDriverIdListAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetDriverIdListRequest_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetDriverIdListAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetDriverIdListRequest)">IServerSyncWebService.GetDriverIdListAsync(GetDriverIdListRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;GetDriverIdListResponse&gt; IServerSyncWebService.GetDriverIdListAsync(GetDriverIdListRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetDriverIdListRequest.html">GetDriverIdListRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetDriverIdListResponse.html">GetDriverIdListResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetDriverSetDataAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetDriverSetDataAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetDriverSetDataAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetDriverSetDataRequest_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetDriverSetDataAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetDriverSetDataRequest)">IServerSyncWebService.GetDriverSetDataAsync(GetDriverSetDataRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;GetDriverSetDataResponse&gt; IServerSyncWebService.GetDriverSetDataAsync(GetDriverSetDataRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetDriverSetDataRequest.html">GetDriverSetDataRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetDriverSetDataResponse.html">GetDriverSetDataResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetRelatedRevisionsForUpdatesAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetRelatedRevisionsForUpdatesAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetRelatedRevisionsForUpdatesAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetRelatedRevisionsForUpdatesRequest_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetRelatedRevisionsForUpdatesAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetRelatedRevisionsForUpdatesRequest)">IServerSyncWebService.GetRelatedRevisionsForUpdatesAsync(GetRelatedRevisionsForUpdatesRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;GetRelatedRevisionsForUpdatesResponse&gt; IServerSyncWebService.GetRelatedRevisionsForUpdatesAsync(GetRelatedRevisionsForUpdatesRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetRelatedRevisionsForUpdatesRequest.html">GetRelatedRevisionsForUpdatesRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetRelatedRevisionsForUpdatesResponse.html">GetRelatedRevisionsForUpdatesResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetRevisionIdListAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetRevisionIdListAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetRevisionIdListAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetRevisionIdListRequest_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetRevisionIdListAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetRevisionIdListRequest)">IServerSyncWebService.GetRevisionIdListAsync(GetRevisionIdListRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;GetRevisionIdListResponse&gt; IServerSyncWebService.GetRevisionIdListAsync(GetRevisionIdListRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetRevisionIdListRequest.html">GetRevisionIdListRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetRevisionIdListResponse.html">GetRevisionIdListResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetUpdateDataAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetUpdateDataAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetUpdateDataAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetUpdateDataRequest_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetUpdateDataAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDataRequest)">IServerSyncWebService.GetUpdateDataAsync(GetUpdateDataRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;GetUpdateDataResponse&gt; IServerSyncWebService.GetUpdateDataAsync(GetUpdateDataRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDataRequest.html">GetUpdateDataRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDataResponse.html">GetUpdateDataResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetUpdateDecryptionDataAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetUpdateDecryptionDataAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_GetUpdateDecryptionDataAsync_Microsoft_UpdateServices_WebServices_ServerSync_GetUpdateDecryptionDataRequest_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#GetUpdateDecryptionDataAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDecryptionDataRequest)">IServerSyncWebService.GetUpdateDecryptionDataAsync(GetUpdateDecryptionDataRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;GetUpdateDecryptionDataResponse&gt; IServerSyncWebService.GetUpdateDecryptionDataAsync(GetUpdateDecryptionDataRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDecryptionDataRequest.html">GetUpdateDecryptionDataRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDecryptionDataResponse.html">GetUpdateDecryptionDataResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_PingAsync_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#PingAsync*"></a>
+  <h4 id="Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncWebServiceClient_Microsoft_UpdateServices_WebServices_ServerSync_IServerSyncWebService_PingAsync_Microsoft_UpdateServices_WebServices_ServerSync_PingRequest_" data-uid="Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncWebServiceClient.Microsoft#UpdateServices#WebServices#ServerSync#IServerSyncWebService#PingAsync(Microsoft.UpdateServices.WebServices.ServerSync.PingRequest)">IServerSyncWebService.PingAsync(PingRequest)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;PingResponse&gt; IServerSyncWebService.PingAsync(PingRequest request)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.PingRequest.html">PingRequest</a></td>
+        <td><span class="parametername">request</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.PingResponse.html">PingResponse</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.IDisposable</span>
+  </div>
+  <div>
+      <span class="xref">System.ServiceModel.ICommunicationObject</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService.html">IServerSyncWebService</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

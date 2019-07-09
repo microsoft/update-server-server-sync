@@ -1,0 +1,351 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DriverMetadata
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DriverMetadata
+   ">
+    <meta name="generator" content="docfx 2.43.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata">
+  
+  
+  <h1 id="Microsoft_UpdateServices_Metadata_DriverMetadata" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata" class="text-break">Class DriverMetadata
+  </h1>
+  <div class="markdown level0 summary"><p>Extended metadata for a DriverUpdate</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">DriverMetadata</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.UpdateServices.Metadata.html">Microsoft.UpdateServices.Metadata</a></h6>
+  <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
+  <h5 id="Microsoft_UpdateServices_Metadata_DriverMetadata_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class DriverMetadata</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_DriverMetadata_Class_" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.Class*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_DriverMetadata_Class" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.Class">Class</h4>
+  <div class="markdown level1 summary"><p>Gets the driver class type</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string Class { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Driver class (graphics, USB, etc.)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_DriverMetadata_Company_" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.Company*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_DriverMetadata_Company" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.Company">Company</h4>
+  <div class="markdown level1 summary"><p>Gets the Company that created the driver</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string Company { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Company name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_DriverMetadata_DriverVerDate_" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerDate*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_DriverMetadata_DriverVerDate" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerDate">DriverVerDate</h4>
+  <div class="markdown level1 summary"><p>Gets the driver timestamp</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string DriverVerDate { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Driver timestamp</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_DriverMetadata_DriverVerVersion_" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerVersion*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_DriverMetadata_DriverVerVersion" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerVersion">DriverVerVersion</h4>
+  <div class="markdown level1 summary"><p>Gets the driver version</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string DriverVerVersion { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Driver version</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_DriverMetadata_HardwareID_" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.HardwareID*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_DriverMetadata_HardwareID" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.HardwareID">HardwareID</h4>
+  <div class="markdown level1 summary"><p>Gets the hardware IDs this driver update is applicable to</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string HardwareID { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Hardware ID string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_DriverMetadata_Manufacturer_" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.Manufacturer*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_DriverMetadata_Manufacturer" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.Manufacturer">Manufacturer</h4>
+  <div class="markdown level1 summary"><p>Gets the driver manufacturer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string Manufacturer { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Manufacturer name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_DriverMetadata_Provider_" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.Provider*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_DriverMetadata_Provider" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.Provider">Provider</h4>
+  <div class="markdown level1 summary"><p>Gets the entity that provided the driver.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string Provider { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Driver provider name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_DriverMetadata_WhqlDriverID_" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.WhqlDriverID*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_DriverMetadata_WhqlDriverID" data-uid="Microsoft.UpdateServices.Metadata.DriverMetadata.WhqlDriverID">WhqlDriverID</h4>
+  <div class="markdown level1 summary"><p>Gets the Windows Hardware Quality Lab driver ID</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string WhqlDriverID { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>WHQL driver ID string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

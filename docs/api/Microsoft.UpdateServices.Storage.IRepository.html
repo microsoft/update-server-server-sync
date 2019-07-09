@@ -1,0 +1,644 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IRepository
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IRepository
+   ">
+    <meta name="generator" content="docfx 2.43.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.UpdateServices.Storage.IRepository">
+  
+  
+  <h1 id="Microsoft_UpdateServices_Storage_IRepository" data-uid="Microsoft.UpdateServices.Storage.IRepository" class="text-break">Interface IRepository
+  </h1>
+  <div class="markdown level0 summary"><p>Interface to manage a repository that contains Microsoft updates.</p>
+<p>A repository tracks an upstream update server.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.UpdateServices.Storage.html">Microsoft.UpdateServices.Storage</a></h6>
+  <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
+  <h5 id="Microsoft_UpdateServices_Storage_IRepository_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IRepository</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_CategoriesIndex_" data-uid="Microsoft.UpdateServices.Storage.IRepository.CategoriesIndex*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_CategoriesIndex" data-uid="Microsoft.UpdateServices.Storage.IRepository.CategoriesIndex">CategoriesIndex</h4>
+  <div class="markdown level1 summary"><p>Gets the categories index (products, classifications, detectoids)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyDictionary&lt;Identity, Update&gt; CategoriesIndex { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><p>List of categories</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_ClassificationsIndex_" data-uid="Microsoft.UpdateServices.Storage.IRepository.ClassificationsIndex*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_ClassificationsIndex" data-uid="Microsoft.UpdateServices.Storage.IRepository.ClassificationsIndex">ClassificationsIndex</h4>
+  <div class="markdown level1 summary"><p>Gets the classifications index</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyDictionary&lt;Identity, Classification&gt; ClassificationsIndex { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Classification.html">Classification</a>&gt;</td>
+        <td><p>List of classifications</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_Configuration_" data-uid="Microsoft.UpdateServices.Storage.IRepository.Configuration*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_Configuration" data-uid="Microsoft.UpdateServices.Storage.IRepository.Configuration">Configuration</h4>
+  <div class="markdown level1 summary"><p>Gets the configuration of the repository</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">RepoConfiguration Configuration { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Storage.RepoConfiguration.html">RepoConfiguration</a></td>
+        <td><p>Repository configuration</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_DetectoidsIndex_" data-uid="Microsoft.UpdateServices.Storage.IRepository.DetectoidsIndex*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_DetectoidsIndex" data-uid="Microsoft.UpdateServices.Storage.IRepository.DetectoidsIndex">DetectoidsIndex</h4>
+  <div class="markdown level1 summary"><p>Gets the detectoids index</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyDictionary&lt;Identity, Detectoid&gt; DetectoidsIndex { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Detectoid.html">Detectoid</a>&gt;</td>
+        <td><p>List of detectoids</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_ProductsIndex_" data-uid="Microsoft.UpdateServices.Storage.IRepository.ProductsIndex*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_ProductsIndex" data-uid="Microsoft.UpdateServices.Storage.IRepository.ProductsIndex">ProductsIndex</h4>
+  <div class="markdown level1 summary"><p>Gets the products index</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyDictionary&lt;Identity, Product&gt; ProductsIndex { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a>&gt;</td>
+        <td><p>List of products</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_UpdatesIndex_" data-uid="Microsoft.UpdateServices.Storage.IRepository.UpdatesIndex*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_UpdatesIndex" data-uid="Microsoft.UpdateServices.Storage.IRepository.UpdatesIndex">UpdatesIndex</h4>
+  <div class="markdown level1 summary"><p>Gets the updates indexUpdates index</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyDictionary&lt;Identity, Update&gt; UpdatesIndex { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><p>List of updates</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_Delete_" data-uid="Microsoft.UpdateServices.Storage.IRepository.Delete*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_Delete" data-uid="Microsoft.UpdateServices.Storage.IRepository.Delete">Delete()</h4>
+  <div class="markdown level1 summary"><p>Delete the repository</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Delete()</code></pre>
+  </div>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_DownloadUpdateContent_" data-uid="Microsoft.UpdateServices.Storage.IRepository.DownloadUpdateContent*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_DownloadUpdateContent_Microsoft_UpdateServices_Metadata_Content_IUpdateWithFiles_" data-uid="Microsoft.UpdateServices.Storage.IRepository.DownloadUpdateContent(Microsoft.UpdateServices.Metadata.Content.IUpdateWithFiles)">DownloadUpdateContent(IUpdateWithFiles)</h4>
+  <div class="markdown level1 summary"><p>Download content for an update</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void DownloadUpdateContent(IUpdateWithFiles update)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Metadata.Content.IUpdateWithFiles.html">IUpdateWithFiles</a></td>
+        <td><span class="parametername">update</span></td>
+        <td><p>The update to download content for</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_Export_" data-uid="Microsoft.UpdateServices.Storage.IRepository.Export*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_Export_Microsoft_UpdateServices_Storage_RepositoryFilter_System_String_Microsoft_UpdateServices_Storage_RepoExportFormat_" data-uid="Microsoft.UpdateServices.Storage.IRepository.Export(Microsoft.UpdateServices.Storage.RepositoryFilter,System.String,Microsoft.UpdateServices.Storage.RepoExportFormat)">Export(RepositoryFilter, String, RepoExportFormat)</h4>
+  <div class="markdown level1 summary"><p>Export selected updates from the repository, using the specified format</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Export(RepositoryFilter filter, string exportFilePath, RepoExportFormat format)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Storage.RepositoryFilter.html">RepositoryFilter</a></td>
+        <td><span class="parametername">filter</span></td>
+        <td><p>Filter which updates to export from the repository</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">exportFilePath</span></td>
+        <td><p>Export file path</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Storage.RepoExportFormat.html">RepoExportFormat</a></td>
+        <td><span class="parametername">format</span></td>
+        <td><p>Export file format</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_GetCategories_" data-uid="Microsoft.UpdateServices.Storage.IRepository.GetCategories*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_GetCategories" data-uid="Microsoft.UpdateServices.Storage.IRepository.GetCategories">GetCategories()</h4>
+  <div class="markdown level1 summary"><p>Returns all categories present in the repository</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">List&lt;Update&gt; GetCategories()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><p>List of categories: classifications, detectoids, products</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_GetCategories_" data-uid="Microsoft.UpdateServices.Storage.IRepository.GetCategories*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_GetCategories_Microsoft_UpdateServices_Storage_RepositoryFilter_" data-uid="Microsoft.UpdateServices.Storage.IRepository.GetCategories(Microsoft.UpdateServices.Storage.RepositoryFilter)">GetCategories(RepositoryFilter)</h4>
+  <div class="markdown level1 summary"><p>Returns all categories that match the filter</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">List&lt;Update&gt; GetCategories(RepositoryFilter filter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Storage.RepositoryFilter.html">RepositoryFilter</a></td>
+        <td><span class="parametername">filter</span></td>
+        <td><p>Categories filter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><p>List of categories that match the filter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_GetUpdate_" data-uid="Microsoft.UpdateServices.Storage.IRepository.GetUpdate*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_GetUpdate_Microsoft_UpdateServices_Metadata_Identity_Microsoft_UpdateServices_Storage_UpdateRetrievalMode_" data-uid="Microsoft.UpdateServices.Storage.IRepository.GetUpdate(Microsoft.UpdateServices.Metadata.Identity,Microsoft.UpdateServices.Storage.UpdateRetrievalMode)">GetUpdate(Identity, UpdateRetrievalMode)</h4>
+  <div class="markdown level1 summary"><p>Get an update in the repository by ID</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Update GetUpdate(Identity updateId, UpdateRetrievalMode metadataMode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a></td>
+        <td><span class="parametername">updateId</span></td>
+        <td><p>The update ID to lookup</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Storage.UpdateRetrievalMode.html">UpdateRetrievalMode</a></td>
+        <td><span class="parametername">metadataMode</span></td>
+        <td><p>Level of metadata to retrieve.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a></td>
+        <td><p>The requested update</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_GetUpdates_" data-uid="Microsoft.UpdateServices.Storage.IRepository.GetUpdates*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_GetUpdates_Microsoft_UpdateServices_Storage_RepositoryFilter_Microsoft_UpdateServices_Storage_UpdateRetrievalMode_" data-uid="Microsoft.UpdateServices.Storage.IRepository.GetUpdates(Microsoft.UpdateServices.Storage.RepositoryFilter,Microsoft.UpdateServices.Storage.UpdateRetrievalMode)">GetUpdates(RepositoryFilter, UpdateRetrievalMode)</h4>
+  <div class="markdown level1 summary"><p>Returns all updates that match the filter</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">List&lt;Update&gt; GetUpdates(RepositoryFilter filter, UpdateRetrievalMode metadataMode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Storage.RepositoryFilter.html">RepositoryFilter</a></td>
+        <td><span class="parametername">filter</span></td>
+        <td><p>Updates filter</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Storage.UpdateRetrievalMode.html">UpdateRetrievalMode</a></td>
+        <td><span class="parametername">metadataMode</span></td>
+        <td><p>Level of metadata to retrieve.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><p>List of updates that match the filter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_GetUpdates_" data-uid="Microsoft.UpdateServices.Storage.IRepository.GetUpdates*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_GetUpdates_Microsoft_UpdateServices_Storage_UpdateRetrievalMode_" data-uid="Microsoft.UpdateServices.Storage.IRepository.GetUpdates(Microsoft.UpdateServices.Storage.UpdateRetrievalMode)">GetUpdates(UpdateRetrievalMode)</h4>
+  <div class="markdown level1 summary"><p>Returns all updates present in the repository</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">List&lt;Update&gt; GetUpdates(UpdateRetrievalMode metadataMode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Storage.UpdateRetrievalMode.html">UpdateRetrievalMode</a></td>
+        <td><span class="parametername">metadataMode</span></td>
+        <td><p>Level of metadata to retrieve.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><p>List of updates</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IRepository_MergeQueryResult_" data-uid="Microsoft.UpdateServices.Storage.IRepository.MergeQueryResult*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_MergeQueryResult_Microsoft_UpdateServices_Query_QueryResult_" data-uid="Microsoft.UpdateServices.Storage.IRepository.MergeQueryResult(Microsoft.UpdateServices.Query.QueryResult)">MergeQueryResult(QueryResult)</h4>
+  <div class="markdown level1 summary"><p>Merge new updates or categories into the repository</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MergeQueryResult(QueryResult queryResult)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Query.QueryResult.html">QueryResult</a></td>
+        <td><span class="parametername">queryResult</span></td>
+        <td><p>The query results to merge</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  
+  <h4 id="Microsoft_UpdateServices_Storage_IRepository_RepositoryOperationProgress" data-uid="Microsoft.UpdateServices.Storage.IRepository.RepositoryOperationProgress">RepositoryOperationProgress</h4>
+  <div class="markdown level1 summary"><p>Raised on progress for long running repository operations</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;OperationProgress&gt; RepositoryOperationProgress</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Storage.OperationProgress.html">OperationProgress</a>&gt;</td>
+        <td><p>Progress data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

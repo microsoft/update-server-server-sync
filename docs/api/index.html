@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content=" ">
+    <meta name="generator" content="docfx 2.43.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+
+<p>While this library implements the server-server sync protocol, it provides a higher level of abstraction over the underlying SOAP-based protocol for interacting with a Microsoft upstream update server. Authentication, server configuration, batched queries, metadata and content cross-linking are handled internally. Update XML metadata data is parsed behind the scenes and exposed as native C# properties: prerequisites, bundled updates, files, categories, extended metadata.</p>
+<h4 id="the-clientauthenticator">The <a href="Microsoft.UpdateServices.Client.ClientAuthenticator.html">ClientAuthenticator</a></h4>
+<p>The ClientAuthenticator retrieves an access token to an upstream update server. It is not necessary to use the authenticator on its own, as UpstreamServerClient will perform authentication automatically if an access token is not provided.</p>
+<h4 id="the-upstreamserverclient">The <a href="Microsoft.UpdateServices.Client.UpstreamServerClient.html">UpstreamServerClient</a></h4>
+<p>Use UpstreamServerClient to retrieve categories and updates from an upstream update server.</p>
+<p>While not required, it is recommended to use a local store - like <a href="Microsoft.UpdateServices.Storage.FileSystemRepository.html">FileSystemRepository</a> - with UpstreamServerClient to enable caching and delta update sync'ing.</p>
+<h5 id="retrieve-update-categories">Retrieve update categories:</h5>
+<pre><code>var server = new UpstreamServerClient(Endpoint.Default);
+var categoriesQueryResult = await server.GetCategories();
+categoriesQueryResult.Updates.ForEach(cat =&gt; Console.WriteLine(cat.Title));
+</code></pre>
+<h5 id="retrieve-updates">Retrieve updates:</h5>
+<pre><code>// Create a filter for first product and all classifications for it
+var filter = new QueryFilter(
+                categoriesQueryResult.Updates.OfType&lt;Product&gt;().Take(1),
+                categoriesQueryResult.Updates.OfType&lt;Classification&gt;());
+
+// Get updates
+var updatesQueryResult = await server.GetUpdates(filter);
+updatesQueryResult.Updates.ForEach(update =&gt; Console.WriteLine(update.Title));
+</code></pre>
+<h4 id="the-update-repository">The <a href="Microsoft.UpdateServices.Storage.IRepository.html">update repository</a></h4>
+<p>An update repository caches updates locally for running queries on update metadata, filtering, exporting updates to WSUS or running your own Upstream Update Server.</p>
+<p>A <a href="Microsoft.UpdateServices.Storage.FileSystemRepository.html">FileSystemRepository</a> caches updates on the local file system. Used together with <a href="Microsoft.UpdateServices.Client.UpstreamServerClient.html">UpstreamServerClient</a> it enables delta syncs - retrieving only changed or new updates from a baseline.</p>
+<p>An update repository syncs updates from a single upstream update server. Multiple repositories can be created to sync from multiple upstream servers.</p>
+<h5 id="initialize-a-repository">Initialize a repository</h5>
+<pre><code>// Create a repository for updates in the current directory, tracking the 
+// official Microsoft upstream update server
+var localRepo = FileSystemRepository.Init(Environment.CurrentDirectory, Endpoint.Default.URI);
+
+// Create a client from the repository and query categories
+var server = new UpstreamServerClient(localRepo);
+var categoriesQueryResult = await server.GetCategories();
+
+// Save retrieved categories
+localRepo.MergeQueryResult(categoriesQueryResult);
+</code></pre>
+<h5 id="query-a-repository">Query a repository</h5>
+<pre><code>// Open an existing repository
+var localRepo = FileSystemRepository.Open(Environment.CurrentDirectory);
+
+// Get categories from the repository
+var categories = localRepo.GetCategories();
+
+// Print category ID and title
+categories.ForEach(cat =&gt; Console.WriteLine($&quot;{cat.Identity}:{cat.Title}&quot;));
+</code></pre>
+<h4 id="the-upsteam-server">The <a href="Microsoft.UpdateServices.Server.UpstreamServerStartup.html">upsteam server</a></h4>
+<p>Use <a href="Microsoft.UpdateServices.Server.UpstreamServerStartup.html">UpstreamServerStartup</a> to run an upstream server in your ASP.NET web app.</p>
+<p>First sync some updates to a local repository, then configure the upstream server startup to distribute updates from your local repository to downstream WSUS servers.</p>
+<pre><code>// Open an existing local repository.
+// This sample assumes updates were sync'ed from an upstream server and merged
+// into this local repository
+var localRepo = FileSystemRepository.Open(Environment.CurrentDirectory);
+
+// Create an empty filter; serves all updates in repository
+var filter = new RepositoryFilter();
+
+// Create and initialize an ASP.NET web host builder
+var host = new WebHostBuilder()
+   .UseUrls($&quot;http://localhost:24222&quot;)
+   .UseStartup&lt;Microsoft.UpdateServices.Server.UpstreamServerStartup&gt;()
+   .UseKestrel()
+   .ConfigureAppConfiguration((hostingContext, config) =&gt;
+   {
+       config.AddInMemoryCollection(
+       new Dictionary&lt;string, string&gt;()
+       {
+           { &quot;repo-path&quot;, Environment.CurrentDirectory },
+           { &quot;updates-filter&quot;, filter.ToJson() }
+       });
+   })
+   .Build();
+
+// Run the ASP.NET service
+host.Run();
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
