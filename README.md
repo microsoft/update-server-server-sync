@@ -1,8 +1,12 @@
 # Windows Update Services ServerServer Sync Protocol
 
-Provide a C# implementation (.NET Core) of the Microsoft Update Server-Server sync protocol (client side).
+Provide a C# implementation (.NET Core) of the Microsoft Update Server-Server sync protocol, both client and server.
 
-Use this library to programmatically browse the Microsoft Update catalog, sync updates locally and run advanced queries on update metadata.
+Use this library to
+* programmatically browse the Microsoft Update catalog
+* sync updates locally and run advanced queries on update metadata
+* export updates to WSUS
+* run your upstream update server in an ASP.NET Core web app and serve updates to downstream WSUS servers
 
 ### See [MS-WSUSSS](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wsusss/f49f0c3e-a426-4b4b-b401-9aeb2892815c) for the complete technical documentation of the protocol.
 
