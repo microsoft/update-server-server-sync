@@ -22,6 +22,8 @@ Please refer to the [API documentation](https://microsoft.github.io/update-serve
 
 [Get started with using the updates sync server](https://microsoft.github.io/update-server-server-sync/api/index.html#the-upsteam-server)
 
+[Code Examples](https://microsoft.github.io/update-server-server-sync/examples/repository_basic.html)
+
 
 ## Use the upsync utility
 The upsync command line utility is provided as a sample for using the library. This tool can be used to browse Microsoft's update catalog, sync updates and export updates to a WSUS server.
