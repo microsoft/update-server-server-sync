@@ -1,4 +1,4 @@
-﻿using Microsoft.UpdateServices.LocalCache;
+﻿using Microsoft.UpdateServices.Storage;
 using Microsoft.UpdateServices.Metadata;
 using Microsoft.UpdateServices.Metadata.Content;
 using Microsoft.UpdateServices.Metadata.Prerequisites;
@@ -13,17 +13,23 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
     {
         public static void Run(ContentSyncOptions options)
         {
-            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption, Repository.RepositoryOpenMode.OpenExisting);
+            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption);
             if (localRepo == null)
             {
                 return;
             }
 
-            // Collect updates that pass the filter
-            var updatesToDownload = new List<MicrosoftUpdate>();
+            var filter = MetadataFilter.RepositoryFilterFromCommandLineFilter(options as IUpdatesFilter);
+            if (filter == null)
+            {
+                return;
+            }
 
-            // Only updates with files and those with a product and classifications are considered
-            updatesToDownload.AddRange(localRepo.Updates.Index.Values.Where(u => u is IUpdateWithFiles && u is IUpdateWithProduct && u is IUpdateWithClassification));
+            // Apply filters specified on the command line
+            var updatesToDownload = localRepo.GetUpdates(filter, UpdateRetrievalMode.Extended);
+
+            // Only updates with files are considered
+            updatesToDownload.RemoveAll(u => !(u is IUpdateWithFiles));
 
             // Apply the drivers filter
             if (options.Drivers)
@@ -31,9 +37,6 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 // Sync only drivers
                 updatesToDownload.RemoveAll(u => !(u is DriverUpdate));
             }
-
-            // Apply other filters specified on the command line
-            MetadataFilter.Apply(updatesToDownload, options as IUpdatesFilter);
 
             if (updatesToDownload.Count == 0)
             {
@@ -59,38 +62,38 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             }
         }
 
-        private static void LocalRepo_RepositoryOperationProgress(object sender, RepoOperationProgress e)
+        private static void LocalRepo_RepositoryOperationProgress(object sender, OperationProgress e)
         {
             switch (e.CurrentOperation)
             {
-                case RepoOperationTypes.DownloadFileStart:
-                    Console.Write("Downloading {0,60} [000.00%]", (e as RepoContentOperationProgress).File.FileName);
+                case OperationType.DownloadFileStart:
+                    Console.Write("Downloading {0,60} [000.00%]", (e as ContentOperationProgress).File.FileName);
                     break;
 
-                case RepoOperationTypes.HashFileStart:
-                    Console.Write("Hashing     {0,60} [000.00%]", (e as RepoContentOperationProgress).File.FileName);
+                case OperationType.HashFileStart:
+                    Console.Write("Hashing     {0,60} [000.00%]", (e as ContentOperationProgress).File.FileName);
                     break;
 
-                case RepoOperationTypes.DownloadFileEnd:
+                case OperationType.DownloadFileEnd:
                     Console.CursorLeft = 0;
-                    Console.Write("Downloading {0,60} [100.00%] ", (e as RepoContentOperationProgress).File.FileName);
+                    Console.Write("Downloading {0,60} [100.00%] ", (e as ContentOperationProgress).File.FileName);
                     ConsoleOutput.WriteGreen("Done!");
                     break;
 
-                case RepoOperationTypes.HashFileEnd:
+                case OperationType.HashFileEnd:
                     Console.CursorLeft = 0;
-                    Console.Write("Hashing     {0,60} [100.00%] ", (e as RepoContentOperationProgress).File.FileName);
+                    Console.Write("Hashing     {0,60} [100.00%] ", (e as ContentOperationProgress).File.FileName);
                     ConsoleOutput.WriteGreen("Done!");
                     break;
 
-                case RepoOperationTypes.DownloadFileProgress:
+                case OperationType.DownloadFileProgress:
                     Console.CursorLeft = 0;
-                    Console.Write("Downloading {0,60} [{1:000.00}%]", (e as RepoContentOperationProgress).File.FileName, e.PercentDone);
+                    Console.Write("Downloading {0,60} [{1:000.00}%]", (e as ContentOperationProgress).File.FileName, e.PercentDone);
                     break;
 
-                case RepoOperationTypes.HashFileProgress:
+                case OperationType.HashFileProgress:
                     Console.CursorLeft = 0;
-                    Console.Write("Hashing     {0,60} [{1:000.00}%]", (e as RepoContentOperationProgress).File.FileName, e.PercentDone);
+                    Console.Write("Hashing     {0,60} [{1:000.00}%]", (e as ContentOperationProgress).File.FileName, e.PercentDone);
                     break;
             }
         }

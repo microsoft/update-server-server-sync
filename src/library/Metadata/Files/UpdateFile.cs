@@ -10,50 +10,71 @@ using System.Xml.Linq;
 namespace Microsoft.UpdateServices.Metadata.Content
 {
     /// <summary>
-    /// Interface implemented by updates that can have files
+    /// Interface implemented by updates that have content (<see cref="IUpdateWithFiles"/>)
     /// </summary>
     public interface IUpdateWithFiles
     {
+        /// <summary>
+        /// Gets the list of <see cref="UpdateFile"/> for an update
+        /// </summary>
+        /// <value>
+        /// List of files
+        /// </value>
         List<UpdateFile> Files { get; }
     }
 
     /// <summary>
-    /// Stores information about a file associated with an update
+    /// Represents a content file for an update.
     /// </summary>
     public class UpdateFile
     {
         /// <summary>
-        /// The name of the file
+        /// Gets the name of the file
         /// </summary>
-        public string FileName { get; set; }
+        /// <value>
+        /// File name
+        /// </value>
+        [JsonProperty]
+        public string FileName { get; private set; }
 
         /// <summary>
-        /// File size
+        /// Ges the file size, in bytes.
         /// </summary>
-        public UInt64 Size { get; set; }
+        /// <value>File size</value>
+        [JsonProperty]
+        public UInt64 Size { get; private set; }
 
         /// <summary>
-        /// Last file modified data
+        /// Gets the last modified timestamp for the file
         /// </summary>
-        public DateTime ModifiedDate { get; set; }
+        /// <value>Last modified DateTime</value>
+        [JsonProperty]
+        public DateTime ModifiedDate { get; private set; }
 
         /// <summary>
-        /// File digests. Multiple algorithms might be used
+        /// Gets the list of file digests. Multiple hashing algorithms might be used.
         /// </summary>
-        public List<UpdateFileDigest> Digests { get; set; }
+        /// <value>List of file digests, one per algorithm.</value>
+        [JsonProperty]
+        public List<UpdateFileDigest> Digests { get; private set; }
 
         /// <summary>
-        /// The type of patching this file provides
+        /// Gets the type of patching this file provides
         /// </summary>
-        public string PatchingType { get; set; }
+        /// <value>Patchin type string</value>
+        [JsonProperty]
+        public string PatchingType { get; private set; }
 
         /// <summary>
-        /// Soruce URLs for the file
+        /// Gets the list of URLs for the file.
         /// </summary>
-        public List<UpdateFileUrl> Urls { get; set; }
+        /// <value>List of URLs.</value>
+        [JsonProperty]
+        public List<UpdateFileUrl> Urls { get; private set; }
 
-        public bool HasDownloadUrl => Urls.Count > 0;
-
+        /// <summary>
+        /// Gets the default download URL for a file.
+        /// </summary>
         public string DownloadUrl => string.IsNullOrEmpty(Urls[0].MuUrl) ? Urls[0].UssUrl : Urls[0].MuUrl;
 
         [JsonConstructor]
@@ -63,7 +84,7 @@ namespace Microsoft.UpdateServices.Metadata.Content
         /// Create a new update file with data parsed from the XML element specified
         /// </summary>
         /// <param name="xmlFileElement"></param>
-        public UpdateFile(XElement xmlFileElement)
+        internal UpdateFile(XElement xmlFileElement)
         {
             Digests = new List<UpdateFileDigest>();
             Urls = new List<UpdateFileUrl>();
@@ -87,6 +108,11 @@ namespace Microsoft.UpdateServices.Metadata.Content
             }
         }
 
+        /// <summary>
+        /// Override equality method; two UpdateFile are equal if they have the same content hash.
+        /// </summary>
+        /// <param name="obj">Other UpdateFile</param>
+        /// <returns>True if the two objects are equal, false otherwise</returns>
         public override bool Equals(object obj)
         {
             if (!(obj is UpdateFile))
@@ -99,6 +125,10 @@ namespace Microsoft.UpdateServices.Metadata.Content
             return otherDigest.DigestBase64.Equals(Digests[0].DigestBase64) && otherDigest.Algorithm.Equals(Digests[0].Algorithm);
         }
 
+        /// <summary>
+        /// Return a hash code based on the hash of the file content.
+        /// </summary>
+        /// <returns>UpdateFile hash code</returns>
         public override int GetHashCode()
         {
             return Digests[0].DigestBase64.GetHashCode();

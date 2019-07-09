@@ -1,19 +1,18 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Xml.Linq;
 
 namespace Microsoft.UpdateServices.Metadata.Prerequisites
 {
     /// <summary>
-    /// Parses prerequisites from an update XML
+    /// Base, abstract class for update prerequisites.
+    /// <para>See <see cref="Simple"/> and <see cref="AtLeastOne"/> for possible prerequisite classes.</para>
     /// </summary>
-    abstract class PrerequisitesParser
+    public abstract class Prerequisite
     {
-        public static List<Prerequisites.Prerequisite> Parse(XDocument xdoc)
+        internal static List<Prerequisites.Prerequisite> FromXml(XDocument xdoc)
         {
             var parsedPrerequisites = new List<Prerequisites.Prerequisite>();
             // Get the prerequisites node
@@ -31,7 +30,7 @@ namespace Microsoft.UpdateServices.Metadata.Prerequisites
                 {
                     if (prerequisite.Name.LocalName.Equals("UpdateIdentity"))
                     {
-                        parsedPrerequisites.Add(new Prerequisites.SimplePrerequisite(prerequisite));
+                        parsedPrerequisites.Add(new Prerequisites.Simple(prerequisite));
                     }
                     else if (prerequisite.Name.LocalName.Equals("AtLeastOne"))
                     {

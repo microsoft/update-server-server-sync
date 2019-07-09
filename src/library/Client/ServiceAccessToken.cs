@@ -6,13 +6,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.UpdateServices
+namespace Microsoft.UpdateServices.Client
 {
     /// <summary>
-    /// Class that encapsulates all data required to authenticate against an upstream update server.
-    /// Internally it stores the server authentication info, authentication cookie and access cookies.
-    /// 
-    /// This class can be persisted (serialized).
+    /// Provides access to updates stored on an upstream update server. Requried all requests to an update server.
     /// </summary>
     public class ServiceAccessToken
     {
@@ -41,20 +38,21 @@ namespace Microsoft.UpdateServices
         /// <summary>
         /// Check if the access token is expired
         /// </summary>
+        /// <value>True is expired, false otherwise</value>
         public bool Expired { get { return ExpiresIn(TimeSpan.FromMilliseconds(0)); } }
 
         /// <summary>
         /// Check if the access token will expire within the specified time span
         /// </summary>
-        /// <param name="timeSpanInFuture">Time span from current time to check expiration</param>
+        /// <param name="timeSpan">Time span from current time.</param>
         /// <returns>True if the token will expire before the timespan passes, false otherwise</returns>
-        public bool ExpiresIn(TimeSpan timeSpanInFuture)
+        public bool ExpiresIn(TimeSpan timeSpan)
         {
-            return AccessCookie == null ? true : AccessCookie.Expiration < DateTime.Now.AddMinutes(timeSpanInFuture.TotalMinutes);
+            return AccessCookie == null ? true : AccessCookie.Expiration < DateTime.Now.AddMinutes(timeSpan.TotalMinutes);
         }
 
         /// <summary>
-        /// Serialize this object to JSON
+        /// Serializes an instance of <see cref="ServiceAccessToken"/> to JSON
         /// </summary>
         /// <returns>JSON string</returns>
         public string ToJson()
@@ -63,9 +61,9 @@ namespace Microsoft.UpdateServices
         }
 
         /// <summary>
-        /// Create a ServiceAccessToken from a serialized token
+        /// Deserialize an instance of <see cref="ServiceAccessToken"/> from a JSON string.
         /// </summary>
-        /// <param name="json">The JSON string containing a serialized token</param>
+        /// <param name="json">The JSON string containing the serialized ServiceAccessToken</param>
         /// <returns>Deserialiazed ServiceAccessToken</returns>
         public static ServiceAccessToken FromJson(string json)
         {

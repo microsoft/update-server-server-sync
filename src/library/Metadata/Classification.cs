@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using Microsoft.UpdateServices.WebServices.ServerSync;
 using Newtonsoft.Json;
@@ -9,9 +10,37 @@ using Newtonsoft.Json;
 namespace Microsoft.UpdateServices.Metadata
 {
     /// <summary>
-    /// Classification metadata
+    /// Interface implemented by updates that have one or more classifications
     /// </summary>
-    public class Classification : MicrosoftUpdate
+    public interface IUpdateWithClassification
+    {
+        /// <summary>
+        /// Get the list of classifications for an update
+        /// </summary>
+        /// <value>
+        /// List of GUIDs; each GUID maps to a classification GUID
+        /// </value>
+        List<Guid> ClassificationIds { get; }
+    }
+
+    /// <summary>
+    /// Represents a Classification. Used to clasify updates on an upstream server.
+    /// <para>
+    /// Example classifications: drivers, security updates, feature packs etc.
+    /// </para>
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// var server = new UpstreamServerClient(Endpoint.Default);
+    /// 
+    /// // Query categories
+    /// var categoriesQueryResult = await server.GetCategories();
+    /// 
+    /// // Get classifications
+    /// var products = categoriesQueryResult.Updates.OfType&lt;Classification&gt;();
+    /// </code>
+    /// </example>
+    public class Classification : Update
     {
         [JsonConstructor]
         private Classification()
@@ -19,12 +48,10 @@ namespace Microsoft.UpdateServices.Metadata
 
         }
 
-        public Classification(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc) : base(serverSyncUpdateData)
+        internal Classification(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc) : base(serverSyncUpdateData)
         {
-            var titleAndDescription = GetTitleAndDescriptionFromXml(xdoc);
-            Title = titleAndDescription.Key;
-            Description = titleAndDescription.Value;
-            UpdateType = MicrosoftUpdateType.Classification;
+            GetTitleAndDescriptionFromXml(xdoc);
+            UpdateType = UpdateType.Classification;
         }
     }
 }

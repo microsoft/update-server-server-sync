@@ -11,7 +11,7 @@ namespace Microsoft.UpdateServices.Compression
     /// <summary>
     /// Performs CAB compression and decompression. Works on Windows only
     /// </summary>
-    public class CabinetUtility
+    internal class CabinetUtility
     {
         /// <summary>
         /// Decompress an in-memory cabinet archive

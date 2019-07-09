@@ -7,10 +7,16 @@ using System.Collections.Generic;
 namespace Microsoft.UpdateServices.Metadata
 {
     /// <summary>
-    /// Implemented by updates that can bundle other updates
+    /// Interface implemented by updates that can bundle other updates
     /// </summary>
     public interface IUpdateWithBundledUpdates
     {
-        List<MicrosoftUpdateIdentity> BundledUpdates { get; }
+        /// <summary>
+        /// List of bundled updates
+        /// </summary>
+        /// <value>
+        /// List of update identities.
+        /// </value>
+        List<Identity> BundledUpdates { get; }
     }
 }

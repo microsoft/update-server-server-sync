@@ -7,10 +7,14 @@ using System.Collections.Generic;
 namespace Microsoft.UpdateServices.Metadata
 {
     /// <summary>
-    /// Interface implemented by updates that can superseed other updates
+    /// Interface implemented by updates that superseed other updates
     /// </summary>
     public interface IUpdateWithSupersededUpdates
     {
-        List<MicrosoftUpdateIdentity> SupersededUpdates { get; }
+        /// <summary>
+        /// List of Update Ids superseded by an update.
+        /// </summary>
+        /// <value>List of update <see cref="Identity"/></value>
+        List<Identity> SupersededUpdates { get; }
     }
 }

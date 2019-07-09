@@ -7,40 +7,91 @@ using Microsoft.UpdateServices.WebServices.ServerSync;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
 namespace Microsoft.UpdateServices.Metadata
 {
     /// <summary>
-    /// Metadata for a driver update
+    /// Represents a driver update.
     /// </summary>
-    public class DriverUpdate : MicrosoftUpdate, IUpdateWithPrerequisites, IUpdateWithFiles, IUpdateWithProduct, IUpdateWithClassification
+    /// <example>
+    /// <code>
+    /// var server = new UpstreamServerClient(Endpoint.Default);
+    /// 
+    /// // Query categories
+    /// var categories = await server.GetCategories();
+    /// 
+    /// // Create a filter for quering drivers
+    /// var filter = new QueryFilter(
+    ///     categories.Updates.OfType&lt;Product&gt;(),
+    ///     categories.Updates.OfType&lt;Classification&gt;().Where(c => c.Title.Equals("Driver")));
+    ///     
+    /// // Get drivers
+    /// var driversQueryResult = await server.GetUpdates(filter);
+    /// var drivers = driversQueryResult.Updates.OfType&lt;DriverUpdate&gt;();
+    /// </code>
+    /// </example>
+    public class DriverUpdate :
+        Update,
+        IUpdateWithPrerequisites,
+        IUpdateWithFiles,
+        IUpdateWithProduct,
+        IUpdateWithProductInternal,
+        IUpdateWithClassification,
+        IUpdateWithClassificationInternal,
+        IUpdateWithSupersededUpdates
     {
         /// <summary>
-        /// Inner metadata extracted from the update XML
+        /// Gets the list of product IDs for the driver update
         /// </summary>
-        public List<DriverMetadata> Metadata;
+        /// <value>List of product IDs. The GUIDs map to a <see cref="Product"/></value>
+        [JsonProperty]
+        public List<Guid> ProductIds { get; private set; }
 
         /// <summary>
-        /// Files in the driver update
+        /// Gets the list of classifications for the driver update
         /// </summary>
-        public List<UpdateFile> Files { get; set; }
+        /// <value>List of classification IDs. The GUIDs map to a <see cref="Classification"/></value>
+        [JsonProperty]
+        public List<Guid> ClassificationIds { get; private set; }
 
         /// <summary>
-        /// Prerequisites
+        /// Gets the list of driver update extended metadata.
         /// </summary>
-        public List<Prerequisites.Prerequisite> Prerequisites { get; set; }
+        /// <value>
+        /// List of driver metadata (hardware ID, version, etc.)
+        /// </value>
+        [JsonIgnore]
+        public List<DriverMetadata> Metadata { get; private set; }
 
         /// <summary>
-        /// The product this driver belongs to
+        /// Gets the list of files (content) for the driver update
         /// </summary>
-        public List<Guid> ProductIds { get; set; }
+        /// <value>
+        /// List of content files
+        /// </value>
+        [JsonIgnore]
+        public List<UpdateFile> Files { get; private set; }
 
         /// <summary>
-        /// The classifications of this driver update
+        /// Get the list of prerequisites for the driver update.
         /// </summary>
-        public List<Guid> ClassificationIds { get; set; }
+        /// <value>
+        /// List of prerequisites
+        /// </value>
+        [JsonIgnore]
+        public List<Prerequisites.Prerequisite> Prerequisites { get; private set; }
+
+        /// <summary>
+        /// Get the list of updates that this driver update superseds
+        /// </summary>
+        /// <value>
+        /// List of update IDs that this driver update replaced.
+        /// </value>
+        [JsonIgnore]
+        public List<Identity> SupersededUpdates { get; private set; }
 
         [JsonConstructor]
         private DriverUpdate()
@@ -49,24 +100,42 @@ namespace Microsoft.UpdateServices.Metadata
         }
 
         /// <summary>
-        /// Create a DriverUpdate from an update XML
+        /// Create a DriverUpdate from an update XML and raw update data
         /// </summary>
         /// <param name="serverSyncUpdateData"></param>
         /// <param name="xdoc">Update XML document</param>
-        /// <param name="urlData">URL data for the files referenced in the update (if any)</param>
-        public DriverUpdate(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc, List<UpdateFileUrl> urlData) : base(serverSyncUpdateData)
+        internal DriverUpdate(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc) : base(serverSyncUpdateData)
         {
-            var titleAndDescription = GetTitleAndDescriptionFromXml(xdoc);
-            Title = titleAndDescription.Key;
-            Description = titleAndDescription.Value;
-            UpdateType = MicrosoftUpdateType.Driver;
+            GetTitleAndDescriptionFromXml(xdoc);
+            UpdateType = UpdateType.Driver;
 
-            Metadata = new List<DriverMetadata>();
-            ParseDriverMetadata(xdoc);
+            Prerequisites = Prerequisite.FromXml(xdoc);
 
-            Files = UpdateFileParser.Parse(xdoc, urlData);
+            // Parse superseded updates
+            SupersededUpdates = SupersededUpdatesParser.Parse(xdoc);
+        }
 
-            Prerequisites = PrerequisitesParser.Parse(xdoc);
+        /// <summary>
+        /// Sets extended attributes from the XML metadata.
+        /// </summary>
+        /// <param name="xmlReader">XML stream</param>
+        /// <param name="contentFiles">All known content files. Used to resolve the hash from XML metadata to an actual file</param>
+        internal override void LoadExtendedAttributesFromXml(StreamReader xmlReader, Dictionary<string, UpdateFileUrl> contentFiles)
+        {
+            if (!ExtendedAttributesLoaded)
+            {
+                var xdoc = XDocument.Parse(xmlReader.ReadToEnd(), LoadOptions.None);
+                Metadata = new List<DriverMetadata>();
+                ParseDriverMetadata(xdoc);
+
+                Files = UpdateFileParser.Parse(xdoc, contentFiles);
+
+                Prerequisites = Prerequisite.FromXml(xdoc);
+
+                SupersededUpdates = SupersededUpdatesParser.Parse(xdoc);
+
+                ExtendedAttributesLoaded = true;
+            }
         }
 
         /// <summary>
@@ -88,60 +157,32 @@ namespace Microsoft.UpdateServices.Metadata
         /// This is done by finding the "AtleastOne" prerequisite with IsCategory attribute that matches a product ID
         /// </summary>
         /// <param name="allProducts">All known products</param>
-        public void ResolveProduct(List<MicrosoftProduct> allProducts)
+        void IUpdateWithProductInternal.ResolveProduct(List<Product> allProducts)
         {
-            ProductIds = CategoryResolver.ResolveProductFromPrerequisites(Prerequisites, allProducts);
+            if (ProductIds == null && Prerequisites != null)
+            {
+                ProductIds = CategoryResolver.ResolveProductFromPrerequisites(Prerequisites, allProducts);
+                if (ProductIds == null)
+                {
+                    throw new Exception($"Cannot resolve product for update {Identity}");
+                }
+            }
         }
 
         /// <summary>
         /// Resolves the classification of this driver.
         /// This is done by finding the "AtleastOne" prerequisite with IsCategory attribute that matches a classification ID
         /// </summary>
-        /// <param name="allProducts">All known products</param>
-        public void ResolveClassification(List<Classification> allClassifications)
+        /// <param name="allClassifications">All known classifications</param>
+        void IUpdateWithClassificationInternal.ResolveClassification(List<Classification> allClassifications)
         {
-            ClassificationIds = CategoryResolver.ResolveClassificationFromPrerequisites(Prerequisites, allClassifications);
-        }
-    }
-
-    /// <summary>
-    /// Stores driver metadata extracted from the update XML blob
-    /// </summary>
-    public class DriverMetadata
-    {
-        public string HardwareID { get; set; }
-        public string WhqlDriverID { get; set; }
-
-        public string Manufacturer { get; set; }
-
-        public string Company { get; set; }
-
-        public string Provider { get; set; }
-
-        public string DriverVerDate { get; set; }
-        public string DriverVerVersion { get; set; }
-
-        public string Class { get; set; }
-
-        [JsonConstructor]
-        private DriverMetadata() { }
-
-        /// <summary>
-        /// Constructor; parses the passed WindowsDriverMetaData XML element
-        /// </summary>
-        /// <param name="xmlMetadata">The WindowsDriverMetaData element to parse data from</param>
-        public DriverMetadata(XElement xmlMetadata)
-        {
-            string[] propertyNames = new string[] {
-                "HardwareID", "WhqlDriverID", "Manufacturer", "Company", "Provider", "DriverVerDate", "DriverVerVersion", "Class" };
-
-            // Go through all property names, extract them from the XML node and set this objects properties
-            foreach(var propertyName in propertyNames)
+            if (ClassificationIds == null && Prerequisites != null)
             {
-                var propertyAttributes = xmlMetadata.Attributes(propertyName);
-                if (propertyAttributes.Count() > 0)
+                ClassificationIds = CategoryResolver.ResolveClassificationFromPrerequisites(Prerequisites, allClassifications);
+
+                if (ClassificationIds == null)
                 {
-                    this.GetType().GetProperty(propertyName).SetValue(this, propertyAttributes.First().Value);
+                    throw new Exception($"Cannot resolve classification for update {Identity}");
                 }
             }
         }

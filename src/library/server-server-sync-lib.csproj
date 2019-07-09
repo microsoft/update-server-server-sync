@@ -5,8 +5,14 @@
     <RootNamespace>Microsoft.UpdateServices</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>server-server-sync-lib-documentation.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="SoapCore" Version="0.9.9.6" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.5.3" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.5.3" />
     <PackageReference Include="System.ServiceModel.NetTcp" Version="4.5.3" />
@@ -19,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Metadata\Files\" />
-    <Folder Include="Metadata\Prerequisites\" />
   </ItemGroup>
 
 </Project>

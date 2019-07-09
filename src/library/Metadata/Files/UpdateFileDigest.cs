@@ -7,24 +7,26 @@ using System;
 namespace Microsoft.UpdateServices.Metadata.Content
 {
     /// <summary>
-    /// Stores digest information for a file
+    /// Represents digest information for an update content file
     /// </summary>
     public class UpdateFileDigest
     {
         /// <summary>
-        /// The digest algorithm used
+        /// Gets the digest algorithm used
         /// </summary>
-        public string Algorithm { get; set; }
+        /// <value>Digest algorithm name</value>
+        public string Algorithm { get; private set; }
 
         /// <summary>
-        /// Base64 encoded digest
+        /// Gets the base64 encoded digest
         /// </summary>
-        public string DigestBase64 { get; set; }
+        /// <value>Base64 encoded string</value>
+        public string DigestBase64 { get; private set; }
 
         [JsonConstructor]
         private UpdateFileDigest() { }
 
-        public UpdateFileDigest(string algorithm, string digestBase64)
+        internal UpdateFileDigest(string algorithm, string digestBase64)
         {
             Algorithm = algorithm;
             DigestBase64 = digestBase64;

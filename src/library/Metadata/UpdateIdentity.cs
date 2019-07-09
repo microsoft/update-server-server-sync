@@ -10,15 +10,28 @@ using System.Runtime.Serialization;
 namespace Microsoft.UpdateServices.Metadata
 {
     /// <summary>
-    /// Wraps around a WebService UpdateIdentity to add comparison and equality operations required for fast indexing
+    /// Represents the identity of an update.
+    /// <para>An update's identity is the pair ID (Guid) - Revision (integer).</para>
     /// </summary>
-    public class MicrosoftUpdateIdentity : IComparable
+    public class Identity : IComparable
     {
         /// <summary>
         /// The UpdateIdentity received on the wire
         /// </summary>
         [JsonProperty]
-        public UpdateIdentity Raw { get; private set; }
+        internal UpdateIdentity Raw { get; set; }
+
+        /// <summary>
+        /// Gets the ID part of the identity
+        /// </summary>
+        /// <value>GUID identity</value>
+        public Guid ID => Raw.UpdateID;
+
+        /// <summary>
+        /// Gets the revision part of the identity
+        /// </summary>
+        /// <value>Revision integer</value>
+        public int Revision => Raw.RevisionNumber;
 
         // Keys used for fast equality comparison.
 
@@ -41,7 +54,7 @@ namespace Microsoft.UpdateServices.Metadata
         /// Private constructor used by the deserializer
         /// </summary>
         [JsonConstructor]
-        private MicrosoftUpdateIdentity()
+        private Identity()
         {
         }
 
@@ -59,7 +72,7 @@ namespace Microsoft.UpdateServices.Metadata
         /// Creates an identity wrapper over the on-the-wire identity.
         /// </summary>
         /// <param name="identity"></param>
-        public MicrosoftUpdateIdentity(UpdateIdentity identity)
+        internal Identity(UpdateIdentity identity)
         {
             // Save the original Guid ID and revision
             Raw = identity;
@@ -78,14 +91,23 @@ namespace Microsoft.UpdateServices.Metadata
             Key3 = Raw.RevisionNumber;
         }
 
+        /// <summary>
+        /// Comparison override. 
+        /// </summary>
+        /// <param name="obj">The other Identity object</param>
+        /// <returns>
+        /// <para>-1 if this instance precedes obj in the sort order</para>
+        /// <para>0 if this instance occurs in the same position in the sort order as obj</para>
+        /// <para>1 if this instance follows obj in the sort order. </para>
+        /// </returns>
         public int CompareTo(object obj)
         {
-            if (!(obj is MicrosoftUpdateIdentity))
+            if (!(obj is Identity))
             {
                 return -1;
             }
 
-            var other = obj as MicrosoftUpdateIdentity;
+            var other = obj as Identity;
 
             if ((this.Key1 > other.Key1) ||
                 (this.Key1 == other.Key1 && this.Key2 > other.Key2) ||
@@ -103,32 +125,57 @@ namespace Microsoft.UpdateServices.Metadata
             }
         }
 
+        /// <summary>
+        /// Equals override. Checks that both ID and Revision match
+        /// </summary>
+        /// <param name="obj">The other Identity</param>
+        /// <returns>True if identities are equal, false otherwise</returns>
         public override bool Equals(object obj)
         {
-            if (!(obj is MicrosoftUpdateIdentity))
+            if (!(obj is Identity))
             {
                 return false;
             }
 
-            var other = obj as MicrosoftUpdateIdentity;
+            var other = obj as Identity;
             return this.Key1 == other.Key1 && this.Key2 == other.Key2 && this.Key3 == other.Key3;
         }
 
-        public static bool operator ==(MicrosoftUpdateIdentity lhs, MicrosoftUpdateIdentity rhs)
+        /// <summary>
+        /// Equality operator override. Matches Equals return value;
+        /// </summary>
+        /// <param name="lhs"></param>
+        /// <param name="rhs"></param>
+        /// <returns>True if the two Identity objects are equal, false otherwise</returns>
+        public static bool operator ==(Identity lhs, Identity rhs)
         {
             return lhs.Equals(rhs);
         }
 
-        public static bool operator !=(MicrosoftUpdateIdentity lhs, MicrosoftUpdateIdentity rhs)
+        /// <summary>
+        /// Inequality operator override. The reverse of Equals.
+        /// </summary>
+        /// <param name="lhs">Left Identity</param>
+        /// <param name="rhs">Right Identity</param>
+        /// <returns>True if the two Identity objects are not equal, false otherwise.</returns>
+        public static bool operator !=(Identity lhs, Identity rhs)
         {
             return !(lhs == rhs);
         }
 
+        /// <summary>
+        /// Returns a hash code based on both ID and Revision.
+        /// </summary>
+        /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
             return Raw.UpdateID.GetHashCode() | Raw.RevisionNumber;
         }
 
+        /// <summary>
+        /// Returns a string representation of the Identity, based on ID and Revision
+        /// </summary>
+        /// <returns>Identity string</returns>
         public override string ToString()
         {
             return $"{Raw.UpdateID}-{Raw.RevisionNumber}";

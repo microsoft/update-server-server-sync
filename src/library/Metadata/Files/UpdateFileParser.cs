@@ -17,9 +17,9 @@ namespace Microsoft.UpdateServices.Metadata.Content
         /// Create an UpdateFile object with metadata from the XML blob and URLs from the url data array
         /// </summary>
         /// <param name="xdoc">The XML element that holds file metadata</param>
-        /// <param name="urlData">array of known file URLs</param>
+        /// <param name="urlData">Dictionary of known file URLs</param>
         /// <returns></returns>
-        public static List<UpdateFile> Parse(XDocument xdoc, List<UpdateFileUrl> urlData)
+        public static List<UpdateFile> Parse(XDocument xdoc, Dictionary<string, UpdateFileUrl> urlData)
         {
             var parsedFiles = new List<UpdateFile>();
 
@@ -36,8 +36,7 @@ namespace Microsoft.UpdateServices.Metadata.Content
             {
                 foreach(var hash in file.Digests)
                 {
-                    var fileUrl = urlData.Find(url => url.DigestBase64.Equals(hash.DigestBase64));
-                    if (fileUrl != null)
+                    if (urlData.TryGetValue(hash.DigestBase64, out UpdateFileUrl fileUrl))
                     {
                         file.Urls.Add(fileUrl);
                         break;

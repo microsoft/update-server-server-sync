@@ -14,15 +14,15 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Microsoft.UpdateServices.LocalCache
+namespace Microsoft.UpdateServices.Storage
 {
     class WsusExport
     {
-        private readonly Repository SourceRepository;
+        private readonly IRepository SourceRepository;
 
-        public event EventHandler<RepoOperationProgress> ExportProgress;
+        public event EventHandler<OperationProgress> ExportProgress;
 
-        public WsusExport(Repository sourceRepository)
+        public WsusExport(IRepository sourceRepository)
         {
             SourceRepository = sourceRepository;
         }
@@ -30,10 +30,9 @@ namespace Microsoft.UpdateServices.LocalCache
         /// <summary>
         /// Exports the specified updates from a local repository to a format compatible with WSUS 2016
         /// </summary>
-        /// <param name="repository">The repository to export updates from</param>
         /// <param name="updatesToExport">The updates to export. All categories from the repository are also exported</param>
         /// <param name="exportFilePath">The export destination file (CAB)</param>
-        public void Export(List<MicrosoftUpdate> updatesToExport, string exportFilePath)
+        public void Export(List<Update> updatesToExport, string exportFilePath)
         {
             var exportDirectory = Directory.GetParent(exportFilePath);
             if (!exportDirectory.Exists)
@@ -70,32 +69,32 @@ namespace Microsoft.UpdateServices.LocalCache
             }
 
             // Pack all XML blobs for updates to be exported into a flat text file
-            var progress = new RepoOperationProgress() { CurrentOperation = RepoOperationTypes.ExportUpdateXmlBlobStart };
+            var progress = new OperationProgress() { CurrentOperation = OperationType.ExportUpdateXmlBlobStart };
             ExportProgress?.Invoke(this, progress);
 
             var metadataFile = Path.Combine(exportDirectory.FullName, "metadata.txt");
             WriteMetadataFile(updatesToExport, metadataFile);
 
-            progress.CurrentOperation = RepoOperationTypes.ExportUpdateXmlBlobEnd;
+            progress.CurrentOperation = OperationType.ExportUpdateXmlBlobEnd;
             ExportProgress?.Invoke(this, progress);
 
             // Write metadata for all exported updates, languages and files
-            progress.CurrentOperation = RepoOperationTypes.ExportMetadataStart;
+            progress.CurrentOperation = OperationType.ExportMetadataStart;
             ExportProgress?.Invoke(this, progress);
 
             var packageXmlFile = Path.Combine(exportDirectory.FullName, "package.xml");
             WritePackagesXml(updatesToExport, packageXmlFile);
 
-            progress.CurrentOperation = RepoOperationTypes.ExportMetadataEnd;
+            progress.CurrentOperation = OperationType.ExportMetadataEnd;
             ExportProgress?.Invoke(this, progress);
 
             // Add the above 2 files to a CAB archive
-            progress.CurrentOperation = RepoOperationTypes.CompressExportFileStart;
+            progress.CurrentOperation = OperationType.CompressExportFileStart;
             ExportProgress?.Invoke(this, progress);
 
             var result = CabinetUtility.CompressFiles(new List<string>() { metadataFile, packageXmlFile }, exportFilePath);
 
-            progress.CurrentOperation = RepoOperationTypes.CompressExportFileEnd;
+            progress.CurrentOperation = OperationType.CompressExportFileEnd;
             ExportProgress?.Invoke(this, progress);
 
             // Delete temporary files
@@ -116,7 +115,7 @@ namespace Microsoft.UpdateServices.LocalCache
         /// </summary>
         /// <param name="updatesToExport">The updates to export</param>
         /// <param name="metadataTextFile">Destination metadata file</param>
-        private void WriteMetadataFile(List<MicrosoftUpdate> updatesToExport, string metadataTextFile)
+        private void WriteMetadataFile(List<Update> updatesToExport, string metadataTextFile)
         {
             // Each line in the metadata text file contains multiple lines of the following format:
             // <update GUID>,<update revision>,<xml size>,<xml>\r\n
@@ -125,19 +124,19 @@ namespace Microsoft.UpdateServices.LocalCache
             // Open the metadata file for writing
             using (var metadataFile = File.CreateText(metadataTextFile))
             {
-                var allUpdates = new List<MicrosoftUpdate>(SourceRepository.Categories.Categories.Values);
+                var allUpdates = SourceRepository.GetCategories();
                 allUpdates.AddRange(updatesToExport);
 
-                var progress = new RepoOperationProgress() { CurrentOperation = RepoOperationTypes.ExportUpdateXmlBlobProgress, Maximum = allUpdates.Count, Current = 0 };
+                var sourceRepositoryInternal = SourceRepository as IRepositoryInternal;
+                var progress = new OperationProgress() { CurrentOperation = OperationType.ExportUpdateXmlBlobProgress, Maximum = allUpdates.Count, Current = 0 };
                 foreach (var update in allUpdates)
                 {
-                    // The XML comes from a separate file in the store.
-                    var xmlFilePath = SourceRepository.GetUpdateXmlPath(update);
-                    if (!File.Exists(xmlFilePath))
+                    if (!sourceRepositoryInternal.IsUpdateXmlAvailable(update))
                     {
-                        throw new Exception($"Cannot file XML file {xmlFilePath}");
+                        throw new Exception($"Update XML not available for {update.Identity}");
                     }
-                    var xmlData = File.ReadAllText(xmlFilePath);
+                    
+                    var xmlData = sourceRepositoryInternal.GetUpdateXmlReader(update).ReadToEnd();
 
                     // Write one line with GUID, revision, XML length, XML data
                     metadataFile.WriteLine("{0},{1:x8},{2:x8},{3}", update.Identity.Raw.UpdateID, update.Identity.Raw.RevisionNumber, xmlData.Length, xmlData);
@@ -155,7 +154,7 @@ namespace Microsoft.UpdateServices.LocalCache
         /// <param name="updates">The updates to export</param>
         /// <param name="packagesFilePath">Destination file to write the XML to</param>
         private void WritePackagesXml(
-            List<MicrosoftUpdate> updates,
+            List<Update> updates,
             string packagesFilePath)
         {
             XDocument packagesXml = new XDocument();
@@ -169,7 +168,7 @@ namespace Microsoft.UpdateServices.LocalCache
             exportElement.Add(new XAttribute("ProtocolVersion", "1.20"));
 
             // Create Languages element and add it to the XML
-            var serverConfigData = SourceRepository.GetServiceConfiguration();
+            var serverConfigData = (SourceRepository as IRepositoryInternal).ServiceConfiguration;
             exportElement.Add(CreateLanguagesElement(serverConfigData));
 
             // Create a Files element and add it to the top level ExportPackage element
@@ -216,7 +215,7 @@ namespace Microsoft.UpdateServices.LocalCache
             return languagesElement;
         }
 
-        private static XElement CreateFilesElement(List<MicrosoftUpdate> updates)
+        private static XElement CreateFilesElement(List<Update> updates)
         {
             var filesToExport = updates.OfType<IUpdateWithFiles>().SelectMany(u => u.Files).Distinct();
 
@@ -249,8 +248,8 @@ namespace Microsoft.UpdateServices.LocalCache
         private List<XElement> CreateCategoriesElements()
         {
             var categoriesElements = new List<XElement>();
-
-            foreach (var category in SourceRepository.Categories.Categories.Values)
+            var allCategories = SourceRepository.GetCategories();
+            foreach (var category in allCategories)
             {
                 var categoryElement = new XElement("Update");
                 categoryElement.Add(new XAttribute("UpdateId", category.Identity.Raw.UpdateID));
@@ -273,7 +272,7 @@ namespace Microsoft.UpdateServices.LocalCache
         /// </summary>
         /// <param name="updates">The updates to export</param>
         /// <returns></returns>
-        private static List<XElement> CreateUpdatesElements(List<MicrosoftUpdate> updates)
+        private static List<XElement> CreateUpdatesElements(List<Update> updates)
         {
             var categoriesElements = new List<XElement>();
 
@@ -337,13 +336,13 @@ namespace Microsoft.UpdateServices.LocalCache
         /// to the list as well. This is done recursively, until all bundled updates have been included
         /// </summary>
         /// <param name="updatesToExport">The updates to export. Bundled updates are added to this list</param>
-        /// <param name="updatesStore">All known updates</param>
-        public static void CompleteTheListOfExportUpdates(List<MicrosoftUpdate> updatesToExport, Repository repository)
+        /// <param name="repository">The repository to export from.</param>
+        public static void CompleteTheListOfExportUpdates(List<Update> updatesToExport, IRepository repository)
         {
             bool additionalUpdatesFound = false;
             do
             {
-                var additionalUpdates = new List<MicrosoftUpdateIdentity>();
+                var additionalUpdates = new List<Identity>();
                 foreach (var selectedUpdate in updatesToExport)
                 {
                     if (selectedUpdate is IUpdateWithBundledUpdates)
@@ -362,7 +361,7 @@ namespace Microsoft.UpdateServices.LocalCache
                 foreach (var additionalUpdate in additionalUpdates)
                 {
                     // Bundled updates should appear in the list before the updates that bundle them
-                    updatesToExport.Insert(0, repository.Updates.Index[additionalUpdate]);
+                    updatesToExport.Insert(0, repository.GetUpdate(additionalUpdate, UpdateRetrievalMode.Extended));
                 }
 
                 additionalUpdatesFound = additionalUpdates.Count > 0;

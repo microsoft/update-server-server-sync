@@ -1,0 +1,17 @@
+apiRules:
+
+- exclude:
+    uidRegex: ^Microsoft\.UpdateServices\.WebServices\.DssAuthentication$
+    type: Namespace
+
+- exclude:
+    uidRegex: ^Microsoft\.UpdateServices\.WebServices\.ServerSync$
+    type: Namespace
+
+- exclude:
+    uidRegex: ^System\.Object
+    type: Type
+
+- exclude:
+    uidRegex: ^System\.Exception
+    type: Type

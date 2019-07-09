@@ -1,25 +1,33 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.UpdateServices.LocalCache;
+using Microsoft.UpdateServices.Storage;
 using Microsoft.UpdateServices.Metadata;
 using Microsoft.UpdateServices.WebServices.ServerSync;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.UpdateServices.Metadata.Content;
 
-namespace Microsoft.UpdateServices
+namespace Microsoft.UpdateServices.Client
 {
     /// <summary>
-    /// Query updates, metadata and content from an upstream update server
+    /// Query updates, metadata and content from an upstream update server.
     /// </summary>
+    /// <remarks>
+    /// It is recommended to use the UpstreamServerClient together with an <see cref="IRepository"/>. This enables caching of access tokens and service configuration,
+    /// speeding up queries. Using a local repository enable retrieval of delta changes between the upstream server and the local repository.
+    /// </remarks>
     public class UpstreamServerClient
     {
         /// <summary>
-        /// The endpoint this instance is connecting to
+        /// Gets the update server <see cref="Endpoint"/> this client connects to.
         /// </summary>
-        public readonly Endpoint UpstreamEndpoint;
+        /// <value>
+        /// Update server <see cref="Endpoint"/>
+        /// </value>
+        public Endpoint UpstreamEndpoint { get; private set; }
 
         /// <summary>
         /// Client used to issue SOAP requests
@@ -27,32 +35,41 @@ namespace Microsoft.UpdateServices
         private readonly IServerSyncWebService ServerSyncClient;
 
         /// <summary>
+        /// Local updates cache. Contains cached access tokens, service configuration and updates
+        /// </summary>
+        internal IRepository LocalRepository;
+
+        /// <summary>
         /// Cached access cookie. If not set in the constructor, a new access token will be obtained
         /// </summary>
-        public ServiceAccessToken AccessToken;
+        private ServiceAccessToken AccessToken;
 
         /// <summary>
         /// Service configuration data. Contains maximum query limits, etc.
         /// If not passed to the constructor, this class will retrieve it from the service
         /// </summary>
-        public ServerSyncConfigData ConfigData;
-
-        public event EventHandler<MetadataQueryProgress> MetadataQueryProgress;
-        public event EventHandler<MetadataQueryProgress> MetadataQueryComplete;
+        private ServerSyncConfigData ConfigData;
 
         /// <summary>
-        /// Instantiate a client used to communicate the upstream update server and the specified endpoint.
+        /// Raised on progress during a metadata query. Reports the current query stage.
         /// </summary>
-        /// <param name="upstreamEndpoint">The server endpoint</param>
-        /// <param name="configData">Optional cached server configuration. If null, the config data is queries from the server</param>
-        /// <param name="accessToken">Optional cached access token. If null, a new access token is requested.</param>
-        public UpstreamServerClient(Endpoint upstreamEndpoint, ServerSyncConfigData configData = null, ServiceAccessToken accessToken = null)
+        /// <value>Progress data</value>
+        public event EventHandler<MetadataQueryProgress> MetadataQueryProgress;
+
+        /// <summary>
+        /// Initializes a new instance of UpstreamServerClient.
+        /// </summary>
+        /// <param name="upstreamEndpoint">The server endpoint this client will connect to.</param>
+        /// <remarks>Thsi constructor is not recommended for performance reasons. It is recommended to use the constructor that takes a local repository.
+        /// Queries take a significant amount of time, and using a local repository enables delta queries, where only changes on the upstream server are retrieved.</remarks>
+        public UpstreamServerClient(Endpoint upstreamEndpoint)
         {
             UpstreamEndpoint = upstreamEndpoint;
+            LocalRepository = null;
 
             var httpBindingWithTimeout = new System.ServiceModel.BasicHttpBinding()
             {
-                ReceiveTimeout = new TimeSpan(0, 3, 0),
+                ReceiveTimeout = new TimeSpan(0, 10, 0),
                 SendTimeout = new TimeSpan(0, 3, 0),
                 MaxBufferSize = int.MaxValue,
                 ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max,
@@ -60,55 +77,123 @@ namespace Microsoft.UpdateServices
                 AllowCookies = true
             };
 
-            httpBindingWithTimeout.Security.Mode = System.ServiceModel.BasicHttpSecurityMode.Transport;
+            var serviceEndpoint = new System.ServiceModel.EndpointAddress(UpstreamEndpoint.ServerSyncURI);
+            if (serviceEndpoint.Uri.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
+            {
+                httpBindingWithTimeout.Security.Mode = System.ServiceModel.BasicHttpSecurityMode.Transport;
+            }
 
-            ServerSyncClient = new ServerSyncWebServiceClient(
-                httpBindingWithTimeout,
-                new System.ServiceModel.EndpointAddress(UpstreamEndpoint.ServerSyncRoot));
+            ServerSyncClient = new ServerSyncWebServiceClient(httpBindingWithTimeout, serviceEndpoint);
 
-            AccessToken = accessToken;
-            ConfigData = configData;
+            if (LocalRepository != null)
+            {
+                ConfigData = (LocalRepository as IRepositoryInternal).ServiceConfiguration;
+                AccessToken = (LocalRepository as IRepositoryInternal).AccessToken;
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of UpstreamServerClient, based on the specified local repository. The upstream
+        /// server endpoint is inherited from the local repository.
+        /// </summary>
+        /// <param name="localRepository">Local updates repository.
+        /// <para>Cached data from the repository is used for queries.</para>
+        /// <para>Query results are delta changes between the upstread server and the local repository.
+        /// </para>
+        /// </param>
+        /// <example>
+        /// <code>
+        /// // Initialize a new local repository in the current directory, tracking the official Microsoft upstream server
+        /// var newRepo = FileSystemRepository.Init(Environment.CurrentDirectory, Endpoint.Default.URI);
+        /// 
+        /// // Create a new client based on the local repository 
+        /// var client = new UpstreamServerClient(newRepo);
+        /// 
+        /// var categories = await client.GetCategories();
+        /// 
+        /// // Save the categories query result in the local repository
+        /// newRepo.MergeQueryResult(categories);
+        /// </code>
+        /// </example>
+        public UpstreamServerClient(IRepository localRepository)
+        {
+            UpstreamEndpoint = localRepository.Configuration.UpstreamServerEndpoint;
+            LocalRepository = localRepository;
+
+            var httpBindingWithTimeout = new System.ServiceModel.BasicHttpBinding()
+            {
+                ReceiveTimeout = new TimeSpan(0, 10, 0),
+                SendTimeout = new TimeSpan(0, 3, 0),
+                MaxBufferSize = int.MaxValue,
+                ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max,
+                MaxReceivedMessageSize = int.MaxValue,
+                AllowCookies = true
+            };
+
+            var serviceEndpoint = new System.ServiceModel.EndpointAddress(UpstreamEndpoint.ServerSyncURI);
+            if (serviceEndpoint.Uri.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
+            {
+                httpBindingWithTimeout.Security.Mode = System.ServiceModel.BasicHttpSecurityMode.Transport;
+            }
+
+            ServerSyncClient = new ServerSyncWebServiceClient(httpBindingWithTimeout, serviceEndpoint);
+
+            if (LocalRepository != null)
+            {
+                ConfigData = (LocalRepository as IRepositoryInternal).ServiceConfiguration;
+                AccessToken = (LocalRepository as IRepositoryInternal).AccessToken;
+            }
         }
 
         /// <summary>
         /// Updates the access token of this client
         /// </summary>
         /// <returns>Nothing</returns>
-        public async Task RefreshAccessToken()
+        internal async Task RefreshAccessToken()
         {
             var progress = new MetadataQueryProgress();
-            progress.CurrentTask = QuerySubTaskTypes.AuthenticateStart;
+            progress.CurrentTask = MetadataQueryStage.AuthenticateStart;
             MetadataQueryProgress?.Invoke(this, progress);
 
             var authenticator = new ClientAuthenticator(UpstreamEndpoint);
             AccessToken = await authenticator.Authenticate(AccessToken);
 
-            progress.CurrentTask = QuerySubTaskTypes.AuthenticateEnd;
+            progress.CurrentTask = MetadataQueryStage.AuthenticateEnd;
             MetadataQueryProgress?.Invoke(this, progress);
+
+            if (LocalRepository != null)
+            {
+                (LocalRepository as IRepositoryInternal).SetAccessToken(AccessToken);
+            }
         }
 
         /// <summary>
         /// Updates the server config data for this client
         /// </summary>
         /// <returns></returns>
-        public async Task RefreshServerConfigData()
+        internal async Task RefreshServerConfigData()
         {
             var progress = new MetadataQueryProgress();
-            progress.CurrentTask = QuerySubTaskTypes.GetServerConfigStart;
+            progress.CurrentTask = MetadataQueryStage.GetServerConfigStart;
             MetadataQueryProgress?.Invoke(this, progress);
 
             ConfigData = await QueryConfigData();
 
-            progress.CurrentTask = QuerySubTaskTypes.GetServerConfigEnd;
+            progress.CurrentTask = MetadataQueryStage.GetServerConfigEnd;
             MetadataQueryProgress?.Invoke(this, progress);
+
+            if (LocalRepository != null)
+            {
+                (LocalRepository as IRepositoryInternal).SetServiceConfiguration(ConfigData);
+            }
         }
-        
+
         /// <summary>
-        /// Retrieves the list of categories from the upstream update server
+        /// Gets the list of categories from the upstream update server.
+        /// <para>If the client was initialized with a repository, only new or changed categories not present in the repository are retrieved.</para>
         /// </summary>
-        /// <param name="cachedMetadata">Cached categories. If provided, this method retrieves only the updates that are new or changed</param>
-        /// <returns>A categories query result: new categories list and anchor</returns>
-        public async Task<Query.QueryResult> GetCategories(CategoriesCache cachedMetadata = null)
+        /// <returns>A query result containing all or changed categories.</returns>
+        public async Task<Query.QueryResult> GetCategories()
         {
             var progress = new MetadataQueryProgress();
         
@@ -124,15 +209,16 @@ namespace Microsoft.UpdateServices
             }
 
             // Query IDs for all categories known to the upstream server
-            progress.CurrentTask = QuerySubTaskTypes.GetRevisionIdsStart;
+            progress.CurrentTask = MetadataQueryStage.GetRevisionIdsStart;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var categoryQueryResult = await GetCategoryIds(cachedMetadata?.LastQuery?.Anchor);
+            var localRepositoryInternal = LocalRepository == null ? null : LocalRepository as IRepositoryInternal;
+            var categoryQueryResult = await GetCategoryIds(localRepositoryInternal?.GetCategoriesAnchor());
 
-            progress.CurrentTask = QuerySubTaskTypes.GetRevisionIdsEnd;
+            progress.CurrentTask = MetadataQueryStage.GetRevisionIdsEnd;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var cachedCategories = cachedMetadata?.Categories;
+            var cachedCategories = LocalRepository?.CategoriesIndex;
 
             // Find all updates that did not change
             var unchangedUpdates = GetUnchangedUpdates(cachedCategories, categoryQueryResult.identities);
@@ -143,7 +229,7 @@ namespace Microsoft.UpdateServices
                 newUpdateId => !unchangedUpdates.ContainsKey(newUpdateId));
 
             // Retrieve metadata for all new categories
-            progress.CurrentTask = QuerySubTaskTypes.GetUpdateMetadataStart;
+            progress.CurrentTask = MetadataQueryStage.GetUpdateMetadataStart;
             progress.Maximum = updatesToRetrieveDataFor.Count();
             progress.Current = 0;
             MetadataQueryProgress?.Invoke(this, progress);
@@ -153,18 +239,22 @@ namespace Microsoft.UpdateServices
             await GetUpdateDataForIds(
                 updatesToRetrieveDataFor.Select(id => id.Raw).ToList(), queryResult);
 
-            progress.CurrentTask = QuerySubTaskTypes.GetUpdateMetadataEnd;
+            progress.CurrentTask = MetadataQueryStage.GetUpdateMetadataEnd;
             MetadataQueryProgress?.Invoke(this, progress);
 
             return queryResult;
         }
 
         /// <summary>
-        /// Retrieves the list of updates from the upstream update server, using the specified filter
+        /// Gets the list of updates matching the query filter from an upstream update server.
         /// </summary>
-        /// <param name="cachedMetadata">Cached updates. If provided, this method retrieves only the updates that are new or changed</param>
-        /// <returns>An updates query result: new updates list and anchor</returns>
-        public async Task<Query.QueryResult> GetUpdates(Query.QueryFilter updatesFilter, UpdatesCache cachedMetadata = null)
+        /// <param name="updatesFilter">Updates filter. See <see cref="Query.QueryFilter"/> for details.</param>
+        /// <returns>A query result containing all or changed updates that match the filter.</returns>
+        /// <remarks>
+        /// When a local repository is used to initialize the UpstreamServerClient, the query result is a delta relative to the local repository.
+        /// The query result is not merged into the store. The caller can merge the query result using <see cref="IRepository.MergeQueryResult(Query.QueryResult)"/>
+        /// </remarks>
+        public async Task<Query.QueryResult> GetUpdates(Query.QueryFilter updatesFilter)
         {
             var progress = new MetadataQueryProgress();
 
@@ -183,42 +273,36 @@ namespace Microsoft.UpdateServices
             {
                 await RefreshServerConfigData();
             }
-            
-            // Check if this filter was used in the past, and if yes its anchor will be used to get only changed updates since then
-            var cachedFilter = cachedMetadata?.UpdateQueries.Find(filter => filter.Equals(updatesFilter));
 
-            // If the filter was not used in the past, use the passed in filter
-            var effectiveFilter = cachedFilter == null ? updatesFilter : cachedFilter;
-
-            progress.CurrentTask = QuerySubTaskTypes.GetRevisionIdsStart;
+            progress.CurrentTask = MetadataQueryStage.GetRevisionIdsStart;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var updatesQueryResult = await GetUpdateIds(effectiveFilter);
+            var localRepositoryInternal = LocalRepository == null ? null : LocalRepository as IRepositoryInternal;
+            updatesFilter.Anchor = localRepositoryInternal?.GetUpdatesAnchorForFilter(updatesFilter);
+            var updatesQueryResult = await GetUpdateIds(updatesFilter);
 
-            progress.CurrentTask = QuerySubTaskTypes.GetRevisionIdsEnd;
+            progress.CurrentTask = MetadataQueryStage.GetRevisionIdsEnd;
             MetadataQueryProgress?.Invoke(this, progress);
-
-            var cachedUpdates = cachedMetadata?.Index;
 
             // Find all updates that did not change
-            var unchangedUpdates = GetUnchangedUpdates(cachedUpdates, updatesQueryResult.identities);
+            var unchangedUpdates = GetUnchangedUpdates(LocalRepository?.UpdatesIndex, updatesQueryResult.identities);
 
             // Create the list of updates to query data for. Remove those updates that were reported as "new"
             // but for which we already have metadata
             var updatesToRetrieveDataFor = updatesQueryResult.identities.Where(
                 newUpdateId => !unchangedUpdates.ContainsKey(newUpdateId));
 
-            progress.CurrentTask = QuerySubTaskTypes.GetUpdateMetadataStart;
+            progress.CurrentTask = MetadataQueryStage.GetUpdateMetadataStart;
             progress.Maximum = updatesToRetrieveDataFor.Count();
             progress.Current = 0;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var queryResult = Query.QueryResult.CreateUpdatesQueryResult(effectiveFilter, updatesQueryResult.anchor);
+            var queryResult = Query.QueryResult.CreateUpdatesQueryResult(updatesFilter, updatesQueryResult.anchor);
 
             await GetUpdateDataForIds(
                 updatesToRetrieveDataFor.Select(id => id.Raw).ToList(), queryResult);
 
-            progress.CurrentTask = QuerySubTaskTypes.GetUpdateMetadataEnd;
+            progress.CurrentTask = MetadataQueryStage.GetUpdateMetadataEnd;
             MetadataQueryProgress?.Invoke(this, progress);
 
             return queryResult;
@@ -250,7 +334,7 @@ namespace Microsoft.UpdateServices
         /// <param name="oldAnchor">The anchor returned by a previous call to this function. Can be null.</param>
         /// <returns>The list of category IDs and an anchor. If an anchor was passed in, the
         /// list of category IDs is a delta list of categories changed since the anchor was generated.</returns>
-        private async Task<(string anchor, IEnumerable<Metadata.MicrosoftUpdateIdentity> identities)> GetCategoryIds(string oldAnchor = null)
+        private async Task<(string anchor, IEnumerable<Metadata.Identity> identities)> GetCategoryIds(string oldAnchor = null)
         {
             // Create a request for categories
             var revisionIdRequest = new GetRevisionIdListRequest();
@@ -274,16 +358,16 @@ namespace Microsoft.UpdateServices
             // Return IDs and the anchor for this query. The anchor can be used to get a delta list in the future.
             return (
                 revisionsIdReply.GetRevisionIdListResponse1.GetRevisionIdListResult.Anchor,
-                revisionsIdReply.GetRevisionIdListResponse1.GetRevisionIdListResult.NewRevisions.Select(rawId => new Metadata.MicrosoftUpdateIdentity(rawId)));
+                revisionsIdReply.GetRevisionIdListResponse1.GetRevisionIdListResult.NewRevisions.Select(rawId => new Metadata.Identity(rawId)));
         }
 
         /// <summary>
         /// Retrieves category IDs from the update server: classifications, products and detectoids
         /// </summary>
-        /// <param name="oldAnchor">The anchor returned by a previous call to this function. Can be null.</param>
-        /// <returns>The list of category IDs and an anchor. If an anchor was passed in, the
+        /// <param name="filter">The filter to use.</param>
+        /// <returns>The list of category IDs and an anchor. If teh filter contains an anchor, the
         /// list of category IDs is a delta list of categories changed since the anchor was generated.</returns>
-        private async Task<(string anchor, IEnumerable<Metadata.MicrosoftUpdateIdentity> identities)> GetUpdateIds(Query.QueryFilter filter)
+        private async Task<(string anchor, IEnumerable<Metadata.Identity> identities)> GetUpdateIds(Query.QueryFilter filter)
         {
             // Create a request for categories
             var revisionIdRequest = new GetRevisionIdListRequest();
@@ -303,7 +387,7 @@ namespace Microsoft.UpdateServices
             // Return IDs and the anchor for this query. The anchor can be used to get a delta list in the future.
             return (
                 revisionsIdReply.GetRevisionIdListResponse1.GetRevisionIdListResult.Anchor,
-                revisionsIdReply.GetRevisionIdListResponse1.GetRevisionIdListResult.NewRevisions.Select(rawId => new Metadata.MicrosoftUpdateIdentity(rawId)));
+                revisionsIdReply.GetRevisionIdListResponse1.GetRevisionIdListResult.NewRevisions.Select(rawId => new Metadata.Identity(rawId)));
         }
 
         /// <summary>
@@ -318,7 +402,7 @@ namespace Microsoft.UpdateServices
 
             // Progress tracking and reporting
             int batchesDone = 0;
-            var progress = new MetadataQueryProgress() { CurrentTask = QuerySubTaskTypes.GetUpdateMetadataProgress, Maximum = updateIds.Count, Current = 0 };
+            var progress = new MetadataQueryProgress() { CurrentTask = MetadataQueryStage.GetUpdateMetadataProgress, Maximum = updateIds.Count, Current = 0 };
             MetadataQueryProgress?.Invoke(this, progress);
 
             foreach (var batch in retrieveBatches)
@@ -327,7 +411,21 @@ namespace Microsoft.UpdateServices
                 updateDataRequest.GetUpdateData = new GetUpdateDataRequestBody();
                 updateDataRequest.GetUpdateData.cookie = AccessToken.AccessCookie;
                 updateDataRequest.GetUpdateData.updateIds = batch;
-                var updateDataReply = await ServerSyncClient.GetUpdateDataAsync(updateDataRequest);
+
+                GetUpdateDataResponse updateDataReply;
+                int retryCount = 0;
+                do
+                {
+                    try
+                    {
+                        updateDataReply = await ServerSyncClient.GetUpdateDataAsync(updateDataRequest);
+                    }
+                    catch (System.TimeoutException)
+                    {
+                        updateDataReply = null;
+                    }
+                    retryCount++;
+                } while (updateDataReply != null && retryCount < 3);
 
                 if (updateDataReply == null || updateDataReply.GetUpdateDataResponse1 == null || updateDataReply.GetUpdateDataResponse1.GetUpdateDataResult == null)
                 {
@@ -340,8 +438,10 @@ namespace Microsoft.UpdateServices
                 // Add the updates to the result, converting them to a higher level representation
                 foreach (var overTheWireUpdate in updateDataReply.GetUpdateDataResponse1.GetUpdateDataResult.updates)
                 {
-                    result.AddUpdate(MicrosoftProduct.FromServerSyncUpdateData(overTheWireUpdate, filesList));
+                    result.AddUpdate(Product.FromServerSyncUpdateData(overTheWireUpdate));
                 }
+
+                filesList.ForEach(file => result.AddFile(file));
 
                 // Track progress
                 batchesDone++;
@@ -349,9 +449,6 @@ namespace Microsoft.UpdateServices
                 progress.Current += batch.Count();
                 MetadataQueryProgress?.Invoke(this, progress);
             }
-
-            progress.IsComplete = true;
-            MetadataQueryComplete?.Invoke(this, progress);
         }
 
         /// <summary>
@@ -392,18 +489,18 @@ namespace Microsoft.UpdateServices
         /// <param name="cachedUpdates">List of locally cached updates</param>
         /// <param name="newUpdateIds">List of new update identities reported by the upstream server</param>
         /// <returns>List of locally cached updates that did not change</returns>
-        private Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate> GetUnchangedUpdates(Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate> cachedUpdates, IEnumerable<MicrosoftUpdateIdentity> newUpdateIds)
+        private Dictionary<Identity, Update> GetUnchangedUpdates(IReadOnlyDictionary<Identity, Update> cachedUpdates, IEnumerable<Identity> newUpdateIds)
         {
             if (cachedUpdates == null)
             {
-                return new Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate>();
+                return new Dictionary<Identity, Update>();
             }
 
-            var unchangedUpdates = new Dictionary<MicrosoftUpdateIdentity, MicrosoftUpdate>();
+            var unchangedUpdates = new Dictionary<Identity, Update>();
             foreach (var newUpdateId in newUpdateIds)
             {
                 // Find cached updates that match the ID+revision of new updates (did not really change)
-                if (cachedUpdates.TryGetValue(newUpdateId, out MicrosoftUpdate unchangedUpdate))
+                if (cachedUpdates.TryGetValue(newUpdateId, out Update unchangedUpdate))
                 {
                     unchangedUpdates.Add(unchangedUpdate.Identity, unchangedUpdate);
                 }

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.UpdateServices.LocalCache;
+using Microsoft.UpdateServices.Storage;
 using Microsoft.UpdateServices.Metadata;
 using System;
 using System.Collections.Generic;
@@ -17,49 +17,20 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         /// <param name="options">Export options</param>
         public static void ExportUpdates(RepositoryExportOptions options)
         {
-            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption, Repository.RepositoryOpenMode.OpenExisting);
+            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption);
             if (localRepo == null)
             {
                 return;
             }
 
-            // Collect updates that pass the filter
-            var filteredData = new List<MicrosoftUpdate>();
-
-            if (options.Drivers)
+            var filter = MetadataFilter.RepositoryFilterFromCommandLineFilter(options as IUpdatesFilter);
+            if (filter == null)
             {
-                filteredData.AddRange(localRepo.Updates.Drivers);
-            }
-            else
-            {
-                filteredData.AddRange(localRepo.Updates.Index.Values);
-            }
-
-            if (!string.IsNullOrEmpty(options.TitleFilter))
-            {
-                var filterTokens = options.TitleFilter.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                filteredData.RemoveAll(category => !category.MatchTitle(filterTokens));
-            }
-
-            if (!string.IsNullOrEmpty(options.IdFilter))
-            {
-                if (!Guid.TryParse(options.IdFilter, out Guid guidFilter))
-                {
-                    ConsoleOutput.WriteRed("The ID filter must be a GUID string!");
-                    return;
-                }
-
-                filteredData.RemoveAll(category => category.Identity.Raw.UpdateID != guidFilter);
-            }
-
-            if (filteredData.Count == 0)
-            {
-                ConsoleOutput.WriteRed("No data found that matches the filters");
                 return;
             }
 
             localRepo.RepositoryOperationProgress += LocalRepo_RepositoryOperationProgress;
-            localRepo.Export(filteredData, options.ExportFile, Repository.ExportFormat.WSUS_2016);
+            localRepo.Export(filter, options.ExportFile, RepoExportFormat.WSUS_2016);
         }
 
         /// <summary>
@@ -68,30 +39,30 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         /// </summary>
         /// <param name="sender">The local repository that is executing a long running operation</param>
         /// <param name="e">Progress information</param>
-        private static void LocalRepo_RepositoryOperationProgress(object sender, RepoOperationProgress e)
+        private static void LocalRepo_RepositoryOperationProgress(object sender, OperationProgress e)
         {
             switch (e.CurrentOperation)
             {
-                case RepoOperationTypes.ExportUpdateXmlBlobStart:
+                case OperationType.ExportUpdateXmlBlobStart:
                     Console.Write("Exporting update XML data: 000.00%");
                     break;
 
-                case RepoOperationTypes.ExportUpdateXmlBlobProgress:
+                case OperationType.ExportUpdateXmlBlobProgress:
                     Console.CursorLeft = 0;
                     Console.Write("Exporting {0} update(s) and categories XML data: {1:000.00}%", e.Maximum, e.PercentDone);
                     break;
 
-                case RepoOperationTypes.ExportMetadataStart:
+                case OperationType.ExportMetadataStart:
                     Console.Write("Packing metadata...");
                     break;
 
-                case RepoOperationTypes.CompressExportFileStart:
+                case OperationType.CompressExportFileStart:
                     Console.WriteLine("Compressing output export file...\r\n");
                     break;
 
-                case RepoOperationTypes.ExportMetadataEnd:
-                case RepoOperationTypes.ExportUpdateXmlBlobEnd:
-                case RepoOperationTypes.CompressExportFileEnd:
+                case OperationType.ExportMetadataEnd:
+                case OperationType.ExportUpdateXmlBlobEnd:
+                case OperationType.CompressExportFileEnd:
                     ConsoleOutput.WriteGreen("Done!");
                     break;
 

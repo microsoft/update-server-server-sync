@@ -7,41 +7,55 @@ using System.Threading.Tasks;
 using Microsoft.UpdateServices.WebServices.DssAuthentication;
 using Microsoft.UpdateServices.WebServices.ServerSync;
 
-namespace Microsoft.UpdateServices
+namespace Microsoft.UpdateServices.Client
 {
     /// <summary>
-    /// Provides authentication against an upstream update server.
-    /// To get access to an upstream update service (USS), an access cookie is required. The flow to
-    /// obtain an access cookie is:
-    /// 1. Obtain auth info from the update service
-    /// 2. Use the auth info to build the URL to the DSS authentication service
-    /// 3. Obtain an authentication cookie from the DSS authentication service
-    /// 4. Obtain an access cookie from the USS using the authorization token from the DSS
-    /// 
-    /// This class simplifies the above flow by exposing a single "Authenticate" operation that performs 1-4 above
-    /// and returns a ServiceAccessToken containing the auth info, auth cookie and access cookie.
+    /// Implements authentication with an upstream update server.
+    /// <para>
+    /// Use the ClientAuthenticator to obtain an access token for accessing metadata and content on an upstream update server.
+    /// </para>
     /// </summary>
+    /// <example>
+    /// <code>
+    /// var authenticator = new ClientAuthenticator(Endpoint.Default);
+    /// var accessToken = await authenticator.Authenticate();
+    /// </code>
+    /// </example>
     public class ClientAuthenticator
     {
         /// <summary>
-        /// The remote server the authenticator will run against.
+        /// Gets the update server endpoint this instance of ClientAuthenticator authenticates with.
         /// </summary>
         public readonly Endpoint UpstreamEndpoint;
 
         /// <summary>
-        /// Create an authentication client that authenticates with the specified endpoint.
+        /// Initializes a new instance of the ClientAuthenticator class to authenticate with the specified endpoint.
         /// </summary>
         /// <param name="endpoint">The endpoint to authenticate with.</param>
-        public ClientAuthenticator(Endpoint endpoint = null)
+        public ClientAuthenticator(Endpoint endpoint)
         {
-            UpstreamEndpoint = endpoint == null ? Endpoint.Default : endpoint;
+            UpstreamEndpoint = endpoint;
         }
 
         /// <summary>
-        /// Performs a fast re-authentication using the provided cached authentication token
+        /// Initializes a new instance of the ClientAuthenticator that authenticates with the official
+        /// Microsoft upstream update server.
         /// </summary>
-        /// <param name="cachedAccessToken">A cached access token for fast re-authentication.</param>
-        /// <returns>A ServiceAccessToken used to query the upstream update service.</returns>
+        public ClientAuthenticator()
+        {
+            UpstreamEndpoint = Endpoint.Default;
+        }
+
+        /// <summary>
+        /// Performs authentication with an upstream update server, using a previously issued service access token.
+        /// </summary>
+        /// <remarks>
+        /// Refreshing an old token with this method is faster than obtaining a new token as it requires fewer server roundtrips.
+        /// 
+        /// If the access cookie does not expire within 30 minutes, the function succeeds and the old token is returned.
+        /// </remarks>
+        /// <param name="cachedAccessToken">The previously issued access token.</param>
+        /// <returns>The new ServiceAccessToken</returns>
         public async Task<ServiceAccessToken> Authenticate(ServiceAccessToken cachedAccessToken)
         {
             if (cachedAccessToken == null)
@@ -72,7 +86,7 @@ namespace Microsoft.UpdateServices
             }
             catch (UpstreamServerException ex)
             {
-                if (ex.ErrorCode == UpstreamServerErrorCodes.InvalidAuthorizationCookie)
+                if (ex.ErrorCode == UpstreamServerErrorCode.InvalidAuthorizationCookie)
                 {
                     // The authorization cookie is expired or invalid. Restart the authentication protocol
                     restartAuthenticationRequired = true;
@@ -89,7 +103,7 @@ namespace Microsoft.UpdateServices
         /// <summary>
         /// Performs authentication with an upstream update service.
         /// </summary>
-        /// <returns>A ServiceAccessToken used to query the upstream update service.</returns>
+        /// <returns>A new access token.</returns>
         public async Task<ServiceAccessToken> Authenticate()
         {
             ServiceAccessToken newAccessToken = new ServiceAccessToken();
@@ -109,10 +123,15 @@ namespace Microsoft.UpdateServices
         {
             GetAuthConfigResponse authConfigResponse;
 
+            var httpBinding = new System.ServiceModel.BasicHttpBinding();
+            var upstreamEndpoint = new System.ServiceModel.EndpointAddress(UpstreamEndpoint.ServerSyncURI);
+            if (upstreamEndpoint.Uri.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
+            {
+                httpBinding.Security.Mode = System.ServiceModel.BasicHttpSecurityMode.Transport;
+            }
+
             // Create a WSUS server sync client
-            IServerSyncWebService serverSyncClient = new ServerSyncWebServiceClient(
-                ServerSyncWebServiceClient.EndpointConfiguration.BasicHttpsBinding_IServerSyncWebService,
-                UpstreamEndpoint.ServerSyncRoot);
+            IServerSyncWebService serverSyncClient = new ServerSyncWebServiceClient(httpBinding, upstreamEndpoint);
 
             // Retrieve the authentication information
             authConfigResponse = await serverSyncClient.GetAuthConfigAsync(new GetAuthConfigRequest());
@@ -135,10 +154,16 @@ namespace Microsoft.UpdateServices
         /// <returns>An authentication cookie</returns>
         private async Task<WebServices.DssAuthentication.AuthorizationCookie> GetAuthorizationCookie(AuthPlugInInfo authInfo)
         {
+            var httpBinding = new System.ServiceModel.BasicHttpBinding();
+            var upstreamEndpoint = new System.ServiceModel.EndpointAddress(UpstreamEndpoint.GetAuthenticationEndpointFromRelativeUrl(authInfo.ServiceUrl));
+
+            if (upstreamEndpoint.Uri.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
+            {
+                httpBinding.Security.Mode = System.ServiceModel.BasicHttpSecurityMode.Transport;
+            }
+
             // Create a DSS client using the endpoint retrieved above
-            IDSSAuthWebService authenticationService = new DSSAuthWebServiceClient(
-                DSSAuthWebServiceClient.EndpointConfiguration.BasicHttpsBinding_IDSSAuthWebService,
-                UpstreamEndpoint.GetAuthenticationEndpointFromRelativeUrl(authInfo.ServiceUrl));
+            IDSSAuthWebService authenticationService = new DSSAuthWebServiceClient(httpBinding, upstreamEndpoint);
 
             // Issue the request. All accounts are allowed, so we just generate a random account guid and name
             var cookieRequest = new GetAuthorizationCookieRequest();
@@ -164,10 +189,15 @@ namespace Microsoft.UpdateServices
         /// <returns>An access cookie</returns>
         private async Task<Cookie> GetServerAccessCookie(WebServices.DssAuthentication.AuthorizationCookie authCookie)
         {
+            var httpBinding = new System.ServiceModel.BasicHttpBinding();
+            var upstreamEndpoint = new System.ServiceModel.EndpointAddress(UpstreamEndpoint.ServerSyncURI);
+            if (upstreamEndpoint.Uri.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
+            {
+                httpBinding.Security.Mode = System.ServiceModel.BasicHttpSecurityMode.Transport;
+            }
+
             // Create a service client on the default Microsoft upstream server.
-            IServerSyncWebService serverSyncClient = new ServerSyncWebServiceClient(
-                ServerSyncWebServiceClient.EndpointConfiguration.BasicHttpsBinding_IServerSyncWebService,
-                UpstreamEndpoint.ServerSyncRoot);
+            IServerSyncWebService serverSyncClient = new ServerSyncWebServiceClient(httpBinding, upstreamEndpoint);
 
             // Create an access cookie request using the authentication cookie parameter.
             var cookieRequest = new GetCookieRequest();

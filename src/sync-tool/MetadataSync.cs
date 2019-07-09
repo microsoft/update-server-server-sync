@@ -1,9 +1,10 @@
-﻿using Microsoft.UpdateServices.LocalCache;
+﻿using Microsoft.UpdateServices.Storage;
 using Microsoft.UpdateServices.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.UpdateServices.Client;
 
 namespace Microsoft.UpdateServices.Tools.UpdateRepo
 {
@@ -13,55 +14,25 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
     class MetadataSync
     {
         /// <summary>
-        /// Initialize a new local updates repository by sync'ing the server configuration
-        /// </summary>
-        /// <param name="options">Initialization options (path)</param>
-        public static void SyncConfiguration(InitRepositoryOptions options)
-        {
-            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption, Repository.RepositoryOpenMode.CreateIfDoesNotExist);
-
-            var server = new UpstreamServerClient(Endpoint.Default);
-            server.MetadataQueryProgress += Server_MetadataQueryProgress;
-            server.RefreshAccessToken().GetAwaiter().GetResult();
-            server.RefreshServerConfigData().GetAwaiter().GetResult();
-
-            localRepo.CacheAccessToken(server.AccessToken);
-            localRepo.CacheServiceConfiguration(server.ConfigData);
-
-            ConsoleOutput.WriteGreen("Done!");
-        }
-
-        /// <summary>
         /// Syncs categories in a local updates repository
         /// </summary>
         /// <param name="options">Sync options</param>
         public static void SyncCategories(CategoriesSyncOptions options)
         {
-            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption, Repository.RepositoryOpenMode.CreateIfDoesNotExist);
-
-            var cachedToken = localRepo.GetAccessToken();
-            if (cachedToken != null)
+            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption);
+            if (localRepo == null)
             {
-                Console.WriteLine("Loaded cached access token.");
+                return;
             }
 
-            var serviceConfig = localRepo.GetServiceConfiguration();
-            if (serviceConfig != null)
-            {
-                Console.WriteLine("Loaded cached service configuration.");
-            }
-
-            var server = new UpstreamServerClient(Endpoint.Default, serviceConfig, cachedToken);
+            var server = new UpstreamServerClient(localRepo);
             server.MetadataQueryProgress += Server_MetadataQueryProgress;
-            using (var newCategories = server.GetCategories(localRepo.Categories).GetAwaiter().GetResult())
+            using (var newCategories = server.GetCategories().GetAwaiter().GetResult())
             {
                 Console.Write("Merging the query result and commiting the changes...");
                 localRepo.MergeQueryResult(newCategories);
                 ConsoleOutput.WriteGreen("Done!");
             }
-
-            localRepo.CacheAccessToken(server.AccessToken);
-            localRepo.CacheServiceConfiguration(server.ConfigData);
         }
 
         /// <summary>
@@ -70,15 +41,14 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         /// <param name="options">Sync command options</param>
         public static void SyncUpdates(UpdatesSyncOptions options)
         {
-            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption, Repository.RepositoryOpenMode.OpenExisting);
-
+            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption);
             if (localRepo == null)
             {
                 ConsoleOutput.WriteRed("Initialize the repo and sync categories first!");
                 return;
             }
 
-            if (localRepo.Categories.Categories.Count == 0)
+            if (localRepo.GetCategories().Count == 0)
             {
                 ConsoleOutput.WriteRed("Categories must be sync'ed before updates. Please run \"sync-categories\" first");
                 return;
@@ -87,7 +57,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             Query.QueryFilter filter;
             try
             {
-                filter = MetadataSync.CreateValidFilterFromOptions(options, localRepo.Categories);
+                filter = MetadataSync.CreateValidFilterFromOptions(options, localRepo);
             }
             catch (Exception ex)
             {
@@ -95,30 +65,15 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 return;
             }
 
-            var cachedToken = localRepo.GetAccessToken();
-            if (cachedToken != null)
-            {
-                Console.WriteLine("Loaded cached access token.");
-            }
-
-            var serviceConfig = localRepo.GetServiceConfiguration();
-            if (serviceConfig != null)
-            {
-                Console.WriteLine("Loaded cached service configuration.");
-            }
-
-            var server = new UpstreamServerClient(Endpoint.Default, serviceConfig, cachedToken);
+            var server = new UpstreamServerClient(localRepo);
             server.MetadataQueryProgress += Server_MetadataQueryProgress;
 
-            using (var newUpdates = server.GetUpdates(filter, localRepo.Updates).GetAwaiter().GetResult())
+            using (var newUpdates = server.GetUpdates(filter).GetAwaiter().GetResult())
             {
                 Console.Write("Merging the query result and commiting the changes...");
                 localRepo.MergeQueryResult(newUpdates);
                 ConsoleOutput.WriteGreen("Done!");
             }
-
-            localRepo.CacheAccessToken(server.AccessToken);
-            localRepo.CacheServiceConfiguration(server.ConfigData);
         }
 
 
@@ -132,34 +87,34 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         {
             switch (e.CurrentTask)
             {
-                case QuerySubTaskTypes.AuthenticateStart:
+                case MetadataQueryStage.AuthenticateStart:
                     Console.Write("Acquiring new access token...");
                     break;
 
-                case QuerySubTaskTypes.GetServerConfigStart:
+                case MetadataQueryStage.GetServerConfigStart:
                     Console.Write("Retrieving service configuration data...");
                     break;
 
-                case QuerySubTaskTypes.AuthenticateEnd:
-                case QuerySubTaskTypes.GetServerConfigEnd:
-                case QuerySubTaskTypes.GetRevisionIdsEnd:
+                case MetadataQueryStage.AuthenticateEnd:
+                case MetadataQueryStage.GetServerConfigEnd:
+                case MetadataQueryStage.GetRevisionIdsEnd:
                     ConsoleOutput.WriteGreen("Done!");
                     break;
 
-                case QuerySubTaskTypes.GetRevisionIdsStart:
+                case MetadataQueryStage.GetRevisionIdsStart:
                     Console.Write("Retrieving revision IDs...");
                     break;
 
-                case QuerySubTaskTypes.GetUpdateMetadataStart:
+                case MetadataQueryStage.GetUpdateMetadataStart:
                     Console.Write("Retrieving {0} updates metadata: 0%", e.Maximum);
                     break;
 
-                case QuerySubTaskTypes.GetUpdateMetadataEnd:
+                case MetadataQueryStage.GetUpdateMetadataEnd:
                     Console.CursorLeft = 0;
                     Console.WriteLine("Retrieving {0} updates metadata: 100% Done", e.Maximum);
                     break;
 
-                case QuerySubTaskTypes.GetUpdateMetadataProgress:
+                case MetadataQueryStage.GetUpdateMetadataProgress:
                     Console.CursorLeft = 0;
                     Console.Write("Retrieving {0} updates metadata: {1:000.00}%", e.Maximum, e.PercentDone);
                     break;
@@ -172,9 +127,9 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         /// <param name="options">The user's commandline options with intended filter</param>
         /// <param name="categories">List of known categories and classifications</param>
         /// <returns>A query filter that can be used to selectively retrieve updates from the upstream server</returns>
-        private static Query.QueryFilter CreateValidFilterFromOptions(UpdatesSyncOptions options, CategoriesCache categories)
+        private static Query.QueryFilter CreateValidFilterFromOptions(UpdatesSyncOptions options, IRepository categories)
         {
-            var productFilter = new List<MicrosoftProduct>();
+            var productFilter = new List<Product>();
             var classificationFilter = new List<Classification>();
 
             // If a classification is specified then categories is also required, regardless of user option. Add all categories in this case.
@@ -190,16 +145,16 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
             if (allProductsRequired)
             {
-                productFilter.AddRange(categories.Products);
+                productFilter.AddRange(categories.ProductsIndex.Values);
             }
             else
             {
                 foreach (var categoryGuidString in options.ProductsFilter)
                 {
                     var categoryGuid = new Guid(categoryGuidString);
-                    var matchingProduct = categories.Products.Where(category => category.Identity.Raw.UpdateID == categoryGuid);
+                    var matchingProduct = categories.ProductsIndex.Values.Where(category => category.Identity.ID == categoryGuid);
 
-                    if (matchingProduct.Count() != 1)
+                    if (matchingProduct.Count() == 0)
                     {
                         throw new Exception($"Could not find a match for product filter {categoryGuidString}");
                     }
@@ -210,16 +165,16 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
             if (allClassificationsRequired)
             {
-                classificationFilter.AddRange(categories.Classifications);
+                classificationFilter.AddRange(categories.ClassificationsIndex.Values);
             }
             else
             {
                 foreach (var classificationGuidString in options.ClassificationsFilter)
                 {
                     var classificationGuid = new Guid(classificationGuidString);
-                    var matchingClassification = categories.Classifications.Where(classification => classification.Identity.Raw.UpdateID == classificationGuid);
+                    var matchingClassification = categories.ClassificationsIndex.Values.Where(classification => classification.Identity.ID == classificationGuid);
 
-                    if (matchingClassification.Count() != 1)
+                    if (matchingClassification.Count() == 0)
                     {
                         throw new Exception($"Could not find a match for classification filter {classificationGuidString}");
                     }

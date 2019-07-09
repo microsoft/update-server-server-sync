@@ -11,46 +11,74 @@ using Microsoft.UpdateServices.Metadata.Prerequisites;
 namespace Microsoft.UpdateServices.Metadata
 {
     /// <summary>
-    /// Interface implemeted by updates that have a product category
+    /// Interface implemeted by updates that belong to a <see cref="Product"/>
     /// </summary>
     public interface IUpdateWithProduct
     {
+        /// <summary>
+        /// Gets the list of parent Products Ids of this update.
+        /// </summary>
+        /// <value>
+        /// List of GUIDs
+        /// </value>
         List<Guid> ProductIds { get; }
+    }
 
-        void ResolveProduct(List<MicrosoftProduct> allProducts);
+    /// <summary>
+    /// Internal interface that exposes the ResolveProduct operation on an update that has a parent Product
+    /// </summary>
+    interface IUpdateWithProductInternal
+    {
+        void ResolveProduct(List<Product> allProducts);
     }
 
     /// <summary>
     /// Metadata for a product category.
     /// </summary>
-    public class MicrosoftProduct : MicrosoftUpdate, IUpdateWithProduct
+    /// <example>
+    /// <code>
+    /// var server = new UpstreamServerClient(Endpoint.Default);
+    /// 
+    /// // Query categories
+    /// var categoriesQueryResult = await server.GetCategories();
+    /// 
+    /// // Get Products
+    /// var products = categoriesQueryResult.Updates.OfType&lt;Product&gt;();
+    /// </code>
+    /// </example>
+    public class Product : Update, IUpdateWithProduct, IUpdateWithProductInternal
     {
         /// <summary>
-        /// The parent product of this product, if any
+        /// Gets the list of parent Products of this Product.
+        /// <para>For example, Microsoft is the parent product of the "Windows" product, which is the parent product of the "Windows 8.1" product.</para>
         /// </summary>
+        /// <value>
+        /// List of GUIDs
+        /// </value>
         public List<Guid> ProductIds { get; set; }
 
+        /// <summary>
+        /// Temporary list of prerequisites; Used to resolve the parent product, after which the list is released.
+        /// </summary>
         [JsonIgnore]
         private List<Prerequisite> TemporaryPrerequisites;
 
         [JsonConstructor]
-        private MicrosoftProduct()
+        private Product()
         {
 
         }
 
-        public MicrosoftProduct(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc) : base(serverSyncUpdateData)
+        internal Product(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc) : base(serverSyncUpdateData)
         {
-            var titleAndDescription = GetTitleAndDescriptionFromXml(xdoc);
-            Title = titleAndDescription.Key;
-            Description = titleAndDescription.Value;
-            UpdateType = MicrosoftUpdateType.Product;
+            GetTitleAndDescriptionFromXml(xdoc);
+            UpdateType = UpdateType.Product;
 
             // The parent product ID is embedded amongst the prerequisites
             // The parent product is a prerequisite of type AtLeastOne having the IsCategory attribute set to true
             // All the metadata is required to identify a product; for now stash all prerequisites and later
             // we'll have another pass and identify the product
-            TemporaryPrerequisites = PrerequisitesParser.Parse(xdoc);
+            TemporaryPrerequisites = Prerequisite.FromXml(xdoc);
         }
 
         /// <summary>
@@ -58,7 +86,7 @@ namespace Microsoft.UpdateServices.Metadata
         /// This is done by finding the "AtleastOne" prerequisite with IsCategory attribute that matches a product ID
         /// </summary>
         /// <param name="allProducts">All known products</param>
-        public void ResolveProduct(List<MicrosoftProduct> allProducts)
+        void IUpdateWithProductInternal.ResolveProduct(List<Product> allProducts)
         {
             ProductIds = CategoryResolver.ResolveProductFromPrerequisites(TemporaryPrerequisites, allProducts);
         }

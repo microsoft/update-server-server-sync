@@ -7,19 +7,17 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 
-namespace Microsoft.UpdateServices.LocalCache
+namespace Microsoft.UpdateServices.Storage
 {
     internal class ContentDownloader
     {
-        public event EventHandler<RepoOperationProgress> OnDownloadProgress;
+        public event EventHandler<OperationProgress> OnDownloadProgress;
 
         /// <summary>
         /// Downloads a single file belonging to an update package. Supports resuming a partial download
         /// </summary>
-        /// <param name="destination">The file stream to write content to</param>
-        /// <param name="url">Download source</param>
-        /// <param name="startOffset">Offset to resume download from</param>
-        /// <param name="expectedFileSize">The expected file size at the end of the download. Must match the server advertised size as well. Pass -1 when expected size is not known</param>
+        /// <param name="destinationFilePath">Download destination file.</param>
+        /// <param name="updateFile">The update file to download.</param>
         /// <param name="cancellationToken">Cancellation token</param>
         public void DownloadToFile(
             string destinationFilePath,
@@ -62,12 +60,12 @@ namespace Microsoft.UpdateServices.LocalCache
             long startOffset,
             CancellationToken cancellationToken)
         {
-            var progress = new RepoContentOperationProgress()
+            var progress = new ContentOperationProgress()
             {
                 File = updateFile,
                 Current = startOffset,
                 Maximum = (long)updateFile.Size,
-                CurrentOperation = RepoOperationTypes.DownloadFileProgress
+                CurrentOperation = OperationType.DownloadFileProgress
             };
             progress.PercentDone = (progress.Current * 100) / progress.Maximum;
 

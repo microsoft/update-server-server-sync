@@ -15,9 +15,9 @@ namespace Microsoft.UpdateServices.Metadata
     /// </summary>
     abstract class BundlesUpdatesParser
     {
-        public static List<MicrosoftUpdateIdentity> Parse(XDocument xdoc)
+        public static List<Identity> Parse(XDocument xdoc)
         {
-            var bundledUpdates = new List<MicrosoftUpdateIdentity>();
+            var bundledUpdates = new List<Identity>();
 
             var bundledUpdatesElements = xdoc.Descendants(XName.Get("BundledUpdates", "http://schemas.microsoft.com/msus/2002/12/Update"));
             if (bundledUpdatesElements.Count() > 1)
@@ -33,7 +33,7 @@ namespace Microsoft.UpdateServices.Metadata
                 foreach(var bundledIdentityNode in bundledIdentityNodes)
                 {
                     bundledUpdates.Add(
-                        new MicrosoftUpdateIdentity(
+                        new Identity(
                             new UpdateIdentity()
                             {
                                 UpdateID = Guid.Parse(bundledIdentityNode.Attribute("UpdateID").Value),

@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.UpdateServices.Storage;
 using Microsoft.UpdateServices.Metadata;
 using Microsoft.UpdateServices.Metadata.Prerequisites;
+using Microsoft.UpdateServices.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,60 +17,51 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
     /// </summary>
     class MetadataFilter
     {
-        /// <summary>
-        /// Applies a command line based filter to a list of updates
-        /// </summary>
-        /// <param name="updates">The updates to filter. Updates that do not pass the filter are removed from this list.</param>
-        /// <param name="filter">The command line filter specified by the user.</param>
-        public static void Apply(List<MicrosoftUpdate> updates, IUpdatesFilter filter)
+        private static List<Guid> StringGuidsToGuids(IEnumerable<string> stringGuids)
         {
-            // Apply the classification filter
-            foreach (var classificationFilter in filter.ClassificationsFilter)
+            var returnList = new List<Guid>();
+            foreach (var guidString in stringGuids)
             {
-                if (!Guid.TryParse(classificationFilter, out Guid classificationId))
+                if (!Guid.TryParse(guidString, out Guid guid))
                 {
-                    ConsoleOutput.WriteRed("The classification filter must contain only GUIDs!");
-                    return;
+                    return null;
                 }
 
-                updates.RemoveAll(u => !(u as IUpdateWithClassification).ClassificationIds.Contains(classificationId));
+                returnList.Add(guid);
             }
 
-            // Apply the product filter
-            foreach (var productFilter in filter.ProductsFilter)
+            return returnList;
+        }
+
+        public static RepositoryFilter RepositoryFilterFromCommandLineFilter(IUpdatesFilter filterOptions)
+        {
+            var filter = new RepositoryFilter()
             {
-                if (!Guid.TryParse(productFilter, out Guid productId))
-                {
-                    ConsoleOutput.WriteRed("The product ID filter must contain only GUIDs!");
-                    return;
-                }
+                TitleFilter = filterOptions.TitleFilter
+            };
 
-                updates.RemoveAll(u => !(u as IUpdateWithProduct).ProductIds.Contains(productId));
-            }
-
-            if (!string.IsNullOrEmpty(filter.TitleFilter))
+            filter.ClassificationFilter = StringGuidsToGuids(filterOptions.ClassificationsFilter);
+            if (filter.ClassificationFilter == null)
             {
-                var filterTokens = filter.TitleFilter.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                updates.RemoveAll(category => !category.MatchTitle(filterTokens));
+                ConsoleOutput.WriteRed("The classification filter must contain only GUIDs!");
+                return null;
             }
 
-            if (filter.IdFilter.Count() > 0)
+            filter.ProductFilter = StringGuidsToGuids(filterOptions.ProductsFilter);
+            if (filter.ProductFilter == null)
             {
-                var idFilter = new List<Guid>();
-                foreach (var stringId in filter.IdFilter)
-                {
-                    if (!Guid.TryParse(stringId, out Guid guidId))
-                    {
-                        ConsoleOutput.WriteRed("The ID filter must be a GUID string!");
-                        return;
-                    }
-
-                    idFilter.Add(guidId);
-                }
-
-                // Remove all updates that don't match the ID filter
-                updates.RemoveAll(u => !idFilter.Contains(u.Identity.Raw.UpdateID));
+                ConsoleOutput.WriteRed("The product ID filter must contain only GUIDs!");
+                return null;
             }
+
+            filter.IdFilter = StringGuidsToGuids(filterOptions.IdFilter);
+            if (filter.IdFilter == null)
+            {
+                ConsoleOutput.WriteRed("The update ID filter must contain only GUIDs!");
+                return null;
+            }
+
+            return filter;
         }
     }
 }

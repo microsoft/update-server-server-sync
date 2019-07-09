@@ -7,6 +7,7 @@ using Microsoft.UpdateServices.WebServices.ServerSync;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -14,61 +15,115 @@ using System.Xml.Linq;
 namespace Microsoft.UpdateServices.Metadata
 {
     /// <summary>
-    /// Stores metadata for a software update (non-driver)
+    /// Reprerents a software update.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// var server = new UpstreamServerClient(Endpoint.Default);
+    /// 
+    /// // Query categories
+    /// var categories = await server.GetCategories();
+    /// 
+    /// // Create a filter for Windows 10 1803 updates
+    /// var filter = new QueryFilter(
+    ///     categories.Updates.OfType&lt;Product&gt;().Where(p => p.Title.Contains("Windows 10 version 1803 and Later")),
+    ///     categories.Updates.OfType&lt;Classification&gt;());
+    ///     
+    /// // Get updates
+    /// var updatesQueryResult = await server.GetUpdates(filter);
+    /// var softwareUpdates = updatesQueryResult.Updates.OfType&lt;SoftwareUpdate&gt;();
+    /// </code>
+    /// </example>
     public class SoftwareUpdate :
-        MicrosoftUpdate,
+        Update,
         IUpdateWithPrerequisites,
         IUpdateWithFiles,
         IUpdateWithSupersededUpdates,
         IUpdateWithBundledUpdates,
         IUpdateWithProduct,
-        IUpdateWithClassification
+        IUpdateWithProductInternal,
+        IUpdateWithClassification,
+        IUpdateWithClassificationInternal
     {
         /// <summary>
-        /// Files contained in the update
+        /// Gets the list of product IDs for the software update
         /// </summary>
-        public List<UpdateFile> Files { get; set; }
+        /// <value>List of product IDs. The GUIDs map to a <see cref="Product"/></value>
+        [JsonProperty]
+        public List<Guid> ProductIds { get; private set; }
 
         /// <summary>
-        /// SoftwareUpdate prerequisites
+        /// Gets the list of classifications for the software update
         /// </summary>
-        public List<Prerequisite> Prerequisites { get; set; }
+        /// <value>List of classification IDs. The GUIDs map to a <see cref="Classification"/></value>
+        [JsonProperty]
+        public List<Guid> ClassificationIds { get; private set; }
 
         /// <summary>
-        /// Updates that this SoftwareUpdate superseeds
+        /// Gets the list of files (content) for the software update
         /// </summary>
-        public List<MicrosoftUpdateIdentity> SupersededUpdates { get; set; }
+        /// <value>
+        /// List of content files
+        /// </value>
+        [JsonIgnore]
+        public List<UpdateFile> Files { get; private set; }
 
         /// <summary>
-        /// Other bundled updates in this SoftwareUpdate
+        /// Get the list of prerequisites for the software update.
         /// </summary>
-        public List<MicrosoftUpdateIdentity> BundledUpdates { get; set; }
+        /// <value>
+        /// List of prerequisites
+        /// </value>
+        [JsonIgnore]
+        public List<Prerequisites.Prerequisite> Prerequisites { get; private set; }
 
         /// <summary>
-        /// Support url
+        /// Get the list of updates that this software update superseds
         /// </summary>
-        public string SupportUrl { get; set; }
+        /// <value>
+        /// List of update IDs that this software update replaced.
+        /// </value>
+        [JsonIgnore]
+        public List<Identity> SupersededUpdates { get; private set; }
 
         /// <summary>
-        /// KB article ID
+        /// Get the list of other updates bundled with this software update. 
         /// </summary>
-        public string KBArticleId { get; set; }
+        /// <value>
+        /// List of update IDs that this software update contains.
+        /// </value>
+        [JsonIgnore]
+        public List<Identity> BundledUpdates { get; private set; }
 
         /// <summary>
-        /// If the SoftareUpdate is OsUpgrade, contains the type (e.g. "swap")
+        /// Gets the support url
         /// </summary>
-        public string OsUpgrade { get; set; }
+        /// <value>
+        /// Support URL string
+        /// </value>
+        [JsonIgnore]
+        public string SupportUrl { get; private set; }
 
         /// <summary>
-        /// The product this update belongs to
+        /// Knowledge base (KB) article ID
         /// </summary>
-        public List<Guid> ProductIds { get; set; }
+        /// <value>
+        /// KB article ID string
+        /// </value>
+        [JsonIgnore]
+        public string KBArticleId { get; private set; }
 
         /// <summary>
-        /// The classification of this software update
+        /// Gets the OsUpgrade type ("swap" etc.)
+        /// <para>
+        /// The property is set only for operating system upgrades.
+        /// </para>
         /// </summary>
-        public List<Guid> ClassificationIds { get; set; }
+        /// <value>
+        /// OS upgrade type string
+        /// </value>
+        [JsonIgnore]
+        public string OsUpgrade { get; private set; }
 
         /// <summary>
         /// Private constructor used by the deserializer
@@ -80,32 +135,50 @@ namespace Microsoft.UpdateServices.Metadata
         }
 
         /// <summary>
-        /// Create a SoftwareUpdate by parsing it's properties from the specified XML
+        /// Create a SoftwareUpdate by parsing it's properties from the specified XML and raw update data
         /// </summary>
-        /// <param name="serverSyncUpdateData"></param>
-        /// <param name="xdoc"></param>
-        /// <param name="urlData">URL data for the files referenced in the update (if any)</param>
-        public SoftwareUpdate(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc, List<UpdateFileUrl> urlData) : base(serverSyncUpdateData)
+        /// <param name="serverSyncUpdateData">The raw update metadata received from the upstream server</param>
+        /// <param name="xdoc">XML document with update metadata</param>
+        internal SoftwareUpdate(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc) : base(serverSyncUpdateData)
         {
-            var titleAndDescription = GetTitleAndDescriptionFromXml(xdoc);
-            Title = titleAndDescription.Key;
-            Description = titleAndDescription.Value;
-            UpdateType = MicrosoftUpdateType.Software;
-
-            // Parse filese
-            Files = UpdateFileParser.Parse(xdoc, urlData);
+            GetTitleAndDescriptionFromXml(xdoc);
+            UpdateType = UpdateType.Software;
 
             // Parse prerequisites
-            Prerequisites = PrerequisitesParser.Parse(xdoc);
+            Prerequisites = Prerequisite.FromXml(xdoc);
 
             // Parse superseded updates
             SupersededUpdates = SupersededUpdatesParser.Parse(xdoc);
+        }
 
-            // Parse bundled updates
-            BundledUpdates = BundlesUpdatesParser.Parse(xdoc);
+        /// <summary>
+        /// Sets extended attributes from the XML metadata.
+        /// </summary>
+        /// <param name="xmlReader">XML stream containing metadata</param>
+        /// <param name="contentFiles">All known content files. Used to resolve the hash from XML metadata to an actual file</param>
+        internal override void LoadExtendedAttributesFromXml(StreamReader xmlReader, Dictionary<string, UpdateFileUrl> contentFiles)
+        {
+            if (!ExtendedAttributesLoaded)
+            {
+                var xdoc = XDocument.Parse(xmlReader.ReadToEnd(), LoadOptions.None);
 
-            // Parse software update specific properties
-            GetPropertiesFromXml(xdoc);
+                // Parse files
+                Files = UpdateFileParser.Parse(xdoc, contentFiles);
+
+                // Parse prerequisites
+                Prerequisites = Prerequisite.FromXml(xdoc);
+
+                // Parse superseded updates
+                SupersededUpdates = SupersededUpdatesParser.Parse(xdoc);
+
+                // Parse bundled updates
+                BundledUpdates = BundlesUpdatesParser.Parse(xdoc);
+
+                // Parse software update specific properties
+                GetPropertiesFromXml(xdoc);
+
+                ExtendedAttributesLoaded = true;
+            }
         }
 
         /// <summary>
@@ -152,19 +225,25 @@ namespace Microsoft.UpdateServices.Metadata
         /// This is done by finding the "AtleastOne" prerequisite with IsCategory attribute that matches a product ID
         /// </summary>
         /// <param name="allProducts">All known products</param>
-        public void ResolveProduct(List<MicrosoftProduct> allProducts)
+        void IUpdateWithProductInternal.ResolveProduct(List<Product> allProducts)
         {
-            ProductIds = CategoryResolver.ResolveProductFromPrerequisites(Prerequisites, allProducts);
+            if (ProductIds == null)
+            {
+                ProductIds = CategoryResolver.ResolveProductFromPrerequisites(Prerequisites, allProducts);
+            }
         }
 
         /// <summary>
         /// Resolves the classification of this software update.
         /// This is done by finding the "AtleastOne" prerequisite with IsCategory attribute that matches a classification ID
         /// </summary>
-        /// <param name="allProducts">All known products</param>
-        public void ResolveClassification(List<Classification> allClassifications)
+        /// <param name="allClassifications">All known products</param>
+        void IUpdateWithClassificationInternal.ResolveClassification(List<Classification> allClassifications)
         {
-            ClassificationIds = CategoryResolver.ResolveClassificationFromPrerequisites(Prerequisites, allClassifications);
+            if (ClassificationIds == null)
+            {
+                ClassificationIds = CategoryResolver.ResolveClassificationFromPrerequisites(Prerequisites, allClassifications);
+            }
         }
     }
 }

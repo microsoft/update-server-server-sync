@@ -11,35 +11,53 @@ using System.Linq;
 namespace Microsoft.UpdateServices.Query
 {
     /// <summary>
-    /// Filter used when quering for updates. Combines a categories and classification filters
+    /// Represents a filter used for quering updates. Combines categories and classifications filters
+    /// <para>To create a QueryFilter, query the categories on the upstream server first.</para>
     /// </summary>
+    /// <example>
+    /// <code>
+    /// var server = new UpstreamServerClient(Endpoint.Default);
+    /// 
+    /// var categories = await server.GetCategories();
+    /// 
+    /// // Create a filter for first product and all classifications
+    /// var filter = new QueryFilter(
+    ///     categories.Updates.OfType&lt;Product&gt;().Take(1),
+    ///     categories.Updates.OfType&lt;Classification&gt;());
+    ///
+    /// // Get updates
+    /// var updatesQueryResult = await server.GetUpdates(filter);
+    /// </code>
+    /// </example>
     public class QueryFilter
     {
         /// <summary>
-        /// The categories filter
+        /// Gets the list of products in the filter.
         /// </summary>
-        public List<MicrosoftUpdateIdentity> ProductsFilter { get; set; }
+        /// <value>List of product identities.</value>
+        public List<Identity> ProductsFilter { get; internal set; }
 
         /// <summary>
-        /// The classifications query
+        /// Gets the list of classifications in the filter.
         /// </summary>
-        public List<MicrosoftUpdateIdentity> ClassificationsFilter { get; set; }
+        /// <value>List of classification identities.</value>
+        public List<Identity> ClassificationsFilter { get; internal set; }
 
         /// <summary>
         /// Server returned anchor for this query. Save it to use in the future when using this filter
         /// </summary>
-        public string Anchor { get; set; }
+        internal string Anchor { get; set; }
 
         /// <summary>
         /// True if this filter was used to query categories; false otherwise.
         /// </summary>
-        public bool IsCategoriesQuery { get; set; }
+        internal bool IsCategoriesQuery { get; set; }
 
         [JsonConstructor]
         internal QueryFilter()
         {
-            ProductsFilter = new List<MicrosoftUpdateIdentity>();
-            ClassificationsFilter = new List<MicrosoftUpdateIdentity>();
+            ProductsFilter = new List<Identity>();
+            ClassificationsFilter = new List<Identity>();
             Anchor = null;
         }
 
@@ -49,8 +67,8 @@ namespace Microsoft.UpdateServices.Query
         /// <param name="anchor"></param>
         internal QueryFilter(string anchor)
         {
-            ProductsFilter = new List<MicrosoftUpdateIdentity>();
-            ClassificationsFilter = new List<MicrosoftUpdateIdentity>();
+            ProductsFilter = new List<Identity>();
+            ClassificationsFilter = new List<Identity>();
             Anchor = anchor;
         }
 
@@ -60,7 +78,7 @@ namespace Microsoft.UpdateServices.Query
         /// <param name="categories">The categories filter used</param>
         /// <param name="classifications">The classifications filter used</param>
         /// <param name="anchor">The anchor received from the service after the query</param>
-        internal QueryFilter(List<Metadata.MicrosoftUpdate> categories, List<Metadata.MicrosoftUpdate> classifications, string anchor)
+        internal QueryFilter(List<Metadata.Update> categories, List<Metadata.Update> classifications, string anchor)
         {
             ProductsFilter = categories.Select(cat => cat.Identity).ToList();
             ClassificationsFilter = classifications.Select(classification => classification.Identity).ToList();
@@ -68,12 +86,11 @@ namespace Microsoft.UpdateServices.Query
         }
 
         /// <summary>
-        /// Create a filter that contains categories or classifications
+        /// Initialize a new QueryFilter from the specified products and categories.
         /// </summary>
-        /// <param name="categories">The products filter</param>
+        /// <param name="products">The products filter</param>
         /// <param name="classifications">The classifications filter</param>
-        /// <param name="anchor">The anchor received from the service after the query</param>
-        public QueryFilter(IEnumerable<MicrosoftProduct> products, IEnumerable<Classification> classifications)
+        public QueryFilter(IEnumerable<Product> products, IEnumerable<Classification> classifications)
         {
             ProductsFilter = products.Select(p => p.Identity).ToList();
             ClassificationsFilter = classifications.Select(classification => classification.Identity).ToList();
@@ -123,10 +140,13 @@ namespace Microsoft.UpdateServices.Query
         }
 
         /// <summary>
-        /// Equality comparer for 2 queries
+        /// Override Equals for 2 QueryFilter objects
         /// </summary>
-        /// <param name="obj">Other query</param>
-        /// <returns></returns>
+        /// <param name="obj">Other QueryFilter</param>
+        /// <returns>
+        /// <para>True if the two QueryFilter are identical (same product and classification filters).</para>
+        /// <para>False otherwise</para>
+        /// </returns>
         public override bool Equals(object obj)
         {
             if (!(obj is QueryFilter))
@@ -146,6 +166,15 @@ namespace Microsoft.UpdateServices.Query
                 && this.ClassificationsFilter.All(cat => other.ClassificationsFilter.Contains(cat));
         }
 
+        /// <summary>
+        /// Override equality operator QueryFilter objects
+        /// </summary>
+        /// <param name="lhs">Left QueryFilter</param>
+        /// <param name="rhs">Right QueryFilter</param>
+        /// <returns>
+        /// <para>True if both lhs and rhs are QueryFilter and they contain the same classification and product filters</para>
+        /// <para>False otherwise</para>
+        /// </returns>
         public static bool operator ==(QueryFilter lhs, QueryFilter rhs)
         {
             if (object.ReferenceEquals(lhs, null))
@@ -158,11 +187,24 @@ namespace Microsoft.UpdateServices.Query
             }
         }
 
+        /// <summary>
+        /// Override inequality operator QueryFilter objects
+        /// </summary>
+        /// <param name="lhs">Left QueryFilter</param>
+        /// <param name="rhs">Right QueryFilter</param>
+        /// <returns>
+        /// <para>True if both lhs and rhs are not QueryFilter or they contain different classification and product filters</para>
+        /// <para>False otherwise</para>
+        /// </returns>
         public static bool operator !=(QueryFilter lhs, QueryFilter rhs)
         {
             return !(lhs == rhs);
         }
 
+        /// <summary>
+        /// Returns a hash code based on the hash codes of the contained classification and products
+        /// </summary>
+        /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
             int hash = 0;

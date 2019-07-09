@@ -6,14 +6,14 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Microsoft.UpdateServices.LocalCache
+namespace Microsoft.UpdateServices.Storage
 {
     /// <summary>
     /// Hashes file contents and checks hashes with value expected from update file metadata
     /// </summary>
     class ContentHash
     {
-        public event EventHandler<RepoOperationProgress> OnHashingProgress;
+        public event EventHandler<OperationProgress> OnHashingProgress;
 
         /// <summary>
         /// Checks that the hash of a file matches the value specified in the update file metadata
@@ -53,12 +53,12 @@ namespace Microsoft.UpdateServices.LocalCache
             // Hash the file contents
             using (var fileStream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
-                var progress = new RepoContentOperationProgress()
+                var progress = new ContentOperationProgress()
                 {
                     File = updateFile,
                     Current = 0,
                     Maximum = (long)updateFile.Size,
-                    CurrentOperation = RepoOperationTypes.HashFileProgress,
+                    CurrentOperation = OperationType.HashFileProgress,
                     PercentDone = 0
                 };
 

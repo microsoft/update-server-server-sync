@@ -8,9 +8,24 @@ using System.Xml.Linq;
 namespace Microsoft.UpdateServices.Metadata
 {
     /// <summary>
-    /// Detectoid metadata
+    /// Represents a detectoid. Detectoids determine applicabilty of updates for a computer and as such are used
+    /// as pre-requisites for other updates.
+    /// <para>
+    /// Example detectoids: x64, x86, arm64, DirectX12 supported, etc.
+    /// </para>
     /// </summary>
-    public class Detectoid : MicrosoftUpdate
+    /// <example>
+    /// <code>
+    /// var server = new UpstreamServerClient(Endpoint.Default);
+    /// 
+    /// // Query categories
+    /// var categoriesQueryResult = await server.GetCategories();
+    /// 
+    /// // Get detectoids
+    /// var detectoids = categoriesQueryResult.Updates.OfType&lt;Detectoid&gt;();
+    /// </code>
+    /// </example>
+    public class Detectoid : Update
     {
         [JsonConstructor]
         private Detectoid()
@@ -18,12 +33,10 @@ namespace Microsoft.UpdateServices.Metadata
 
         }
 
-        public Detectoid(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc) : base(serverSyncUpdateData)
+        internal Detectoid(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc) : base(serverSyncUpdateData)
         {
-            var titleAndDescription = GetTitleAndDescriptionFromXml(xdoc);
-            Title = titleAndDescription.Key;
-            Description = titleAndDescription.Value;
-            UpdateType = MicrosoftUpdateType.Detectoid;
+            GetTitleAndDescriptionFromXml(xdoc);
+            UpdateType = UpdateType.Detectoid;
         }
     }
 }

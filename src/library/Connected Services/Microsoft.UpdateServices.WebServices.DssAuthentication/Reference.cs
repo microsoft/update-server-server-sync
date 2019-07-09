@@ -10,8 +10,9 @@
 namespace Microsoft.UpdateServices.WebServices.DssAuthentication
 {
     using System.Runtime.Serialization;
-    
-    
+
+#pragma warning disable 1591
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("dotnet-svcutil", "1.0.0.1")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetAuthorizationCookieRequestBody", Namespace="http://www.microsoft.com/SoftwareDistribution/Server/DssAuthWebService")]
@@ -598,4 +599,5 @@ namespace Microsoft.UpdateServices.WebServices.DssAuthentication
             BasicHttpsBinding_IDSSAuthWebService,
         }
     }
+#pragma warning restore 1591
 }

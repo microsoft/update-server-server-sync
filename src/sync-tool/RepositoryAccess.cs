@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.UpdateServices.LocalCache;
+using Microsoft.UpdateServices.Storage;
 using Microsoft.UpdateServices.Metadata;
 using Microsoft.UpdateServices.Metadata.Content;
 using Microsoft.UpdateServices.Metadata.Prerequisites;
@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.UpdateServices.Client;
 
 namespace Microsoft.UpdateServices.Tools.UpdateRepo
 {
@@ -17,7 +18,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
     /// </summary>
     class RepositoryAccess
     {
-        private readonly Repository TargetRepo;
+        private readonly IRepository TargetRepo;
         private readonly QueryRepositoryOptions Options;
 
         /// <summary>
@@ -26,7 +27,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         /// <param name="options">Query options (filters)</param>
         public static void Query(QueryRepositoryOptions options)
         {
-            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption, Repository.RepositoryOpenMode.OpenExisting);
+            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption);
             if (localRepo == null)
             {
                 return;
@@ -36,13 +37,44 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             repoQuery.Query();
         }
 
+        public static void Status(RepositoryStatusOptions options)
+        {
+            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption);
+            if (localRepo == null)
+            {
+                return;
+            }
+
+            Console.WriteLine($"Upstream server: {localRepo.Configuration.UpstreamServerEndpoint.URI}");
+        }
+
+        /// <summary>
+        /// Deletes the repo specified in the options
+        /// </summary>
+        /// <param name="options">Options containing the path to the repo to delete</param>
+        public static void Init(InitRepositoryOptions options)
+        {
+            var repoPath = string.IsNullOrEmpty(options.RepositoryPath) ? Environment.CurrentDirectory : options.RepositoryPath;
+            var upstreamServer = string.IsNullOrEmpty(options.UpstreamServerAddress) ? Endpoint.Default.URI : options.UpstreamServerAddress;
+
+            if (FileSystemRepository.RepoExists(repoPath))
+            {
+                ConsoleOutput.WriteRed("Repo already exists");
+                return;
+            }
+
+            var newRepo = FileSystemRepository.Init(repoPath, upstreamServer);
+
+            ConsoleOutput.WriteGreen($"Repository created. Upstream server: {newRepo.Configuration.UpstreamServerEndpoint.URI}");
+        }
+
         /// <summary>
         /// Deletes the repo specified in the options
         /// </summary>
         /// <param name="options">Options containing the path to the repo to delete</param>
         public static void Delete(DeleteRepositoryOptions options)
         {
-            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption, Repository.RepositoryOpenMode.OpenExisting);
+            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption);
             if (localRepo == null)
             {
                 return;
@@ -53,7 +85,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             ConsoleOutput.WriteGreen("Done!");
         }
 
-        private RepositoryAccess(Repository localRepo, QueryRepositoryOptions options)
+        private RepositoryAccess(IRepository localRepo, QueryRepositoryOptions options)
         {
             TargetRepo = localRepo;
             Options = options;
@@ -61,11 +93,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
         private void Query()
         {
-            if (Options.Configuration)
-            {
-                PrintConfiguration();
-            }
-            else if (Options.Products ||
+            if (Options.Products ||
                 Options.Classifications ||
                 Options.Updates ||
                 Options.Drivers ||
@@ -76,80 +104,58 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         }
 
         /// <summary>
-        /// Print the service configuration from the store
-        /// </summary>
-        public void PrintConfiguration()
-        {
-            var configuration = TargetRepo.GetServiceConfiguration();
-            if (configuration == null)
-            {
-                ConsoleOutput.WriteRed("Cannot read configuration data from the store!");
-                return;
-            }
-
-            Console.WriteLine("Anchor config     |  {0}", configuration.NewConfigAnchor);
-            Console.WriteLine("Protocol version  |  {0}", configuration.ProtocolVersion);
-            Console.WriteLine("Hosts psf files   |  {0}", configuration.ServerHostsPsfFiles);
-            Console.WriteLine("Catalog only sync |  {0}", configuration.CatalogOnlySync);
-            Console.WriteLine("Lazy sync         |  {0}", configuration.LazySync);
-            Console.WriteLine("Max computer ids  |  {0}", configuration.MaxNumberOfComputerIdsInRequest);
-            Console.WriteLine("Max driver sets   |  {0}", configuration.MaxNumberOfDriverSetsPerRequest);
-            Console.WriteLine("Max hardware ids  |  {0}", configuration.MaxNumberOfPnpHardwareIdsInRequest);
-            Console.WriteLine("Max updates       |  {0}", configuration.MaxNumberOfUpdatesPerRequest);
-        }
-
-        /// <summary>
         /// Print updates from the store
         /// </summary>
         /// <param name="options">Print options, including filters</param>
         public void PrintUpdates(QueryRepositoryOptions options)
         {
-            // Collect updates that pass the filter
-            var filteredData = new List<MicrosoftUpdate>();
+            var filter = MetadataFilter.RepositoryFilterFromCommandLineFilter(options as IUpdatesFilter);
+            if (filter == null)
+            {
+                return;
+            }
+
+            filter.SkipSuperseded = options.SkipSuperseded;
+            filter.FirstX = options.FirstX;
+
+            var metadataMode = options.ExtendedMetadata ? UpdateRetrievalMode.Extended : UpdateRetrievalMode.Basic;
+
+            // Apply filters specified on the command line
+            List<Update> filteredUpdates;
 
             if (options.Classifications || options.Products || options.Detectoids)
             {
-                if (options.Classifications)
+                filteredUpdates = TargetRepo.GetCategories(filter);
+                if (!options.Classifications)
                 {
-                    filteredData.AddRange(TargetRepo.Categories.Classifications);
+                    filteredUpdates.RemoveAll(u => u is Classification);
                 }
 
-                if (options.Products)
+                if (!options.Products)
                 {
-                    filteredData.AddRange(TargetRepo.Categories.Products);
+                    filteredUpdates.RemoveAll(u => u is Product);
                 }
 
-                if (options.Detectoids)
+                if (!options.Detectoids)
                 {
-                    filteredData.AddRange(TargetRepo.Categories.Detectoids);
+                    filteredUpdates.RemoveAll(u => u is Detectoid);
                 }
             }
-
-            if (options.Updates || options.Drivers)
+            else if (options.Updates || options.Drivers)
             {
-                if (options.Updates)
+                filteredUpdates = TargetRepo.GetUpdates(filter, metadataMode);
+
+                if (options.Drivers)
                 {
-                    filteredData.AddRange(TargetRepo.Updates.Index.Values);
-                }
-                else if (options.Drivers)
-                {
-                    filteredData.AddRange(TargetRepo.Updates.Drivers);
+                    filteredUpdates.RemoveAll(u => !(u is DriverUpdate));
                 }
             }
-
-            // Apply other filters specified on the command line
-            MetadataFilter.Apply(filteredData, options as IUpdatesFilter);
-
-            if (options.SkipSuperseded)
+            else
             {
-                // Create the list of updates that have been superseded
-                var supersededUpdates = TargetRepo.Updates.Updates.OfType<IUpdateWithSupersededUpdates>().SelectMany(u => u.SupersededUpdates).Distinct().ToDictionary(u => u.Raw.UpdateID);
-
-                // Remove updates that are on the list of superseded updates
-                filteredData.RemoveAll(u => supersededUpdates.ContainsKey(u.Identity.Raw.UpdateID));
+                filteredUpdates = new List<Update>();
             }
 
-            if (filteredData.Count == 0)
+            if (filteredUpdates.Count == 0)
             {
                 Console.WriteLine("No data found");
             }
@@ -157,12 +163,15 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             {
                 Console.Write("\r\nQuery results:\r\n-----------------------------");
 
-                foreach (var update in filteredData)
+                if (!options.CountOnly)
                 {
-                    PrintUpdateMetadata(update);
+                    foreach (var update in filteredUpdates)
+                    {
+                        PrintUpdateMetadata(update, metadataMode);
+                    }
                 }
 
-                Console.WriteLine("-----------------------------\r\nMatched {0} entries", filteredData.Count);
+                Console.WriteLine("-----------------------------\r\nMatched {0} entries", filteredUpdates.Count);
             }
         }
 
@@ -170,23 +179,13 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         /// Print update metadata
         /// </summary>
         /// <param name="update">The update to print metadata for</param>
-        void PrintUpdateMetadata(MicrosoftUpdate update)
+        void PrintUpdateMetadata(Update update, UpdateRetrievalMode metadataMode)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\r\nID: {0}", update.Identity.Raw.UpdateID);
+            Console.WriteLine("\r\nID: {0}", update.Identity.ID);
             Console.ResetColor();
             Console.WriteLine("    Title          : {0}", update.Title);
             Console.WriteLine("    Description    : {0}", update.Description);
-
-            if (update is DriverUpdate)
-            {
-                PrintDriverMetadata(update as DriverUpdate);
-
-            }
-            else if (update is SoftwareUpdate)
-            {
-                PrintSoftwareUpdateMetadata(update as SoftwareUpdate);
-            }
 
             var productInfo = update as Metadata.IUpdateWithProduct;
             var classificationInfo = update as IUpdateWithClassification;
@@ -203,7 +202,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                     foreach (var updateParentId in updateParentIds)
                     {
                         Console.WriteLine("        Product ID          : {0}", updateParentId);
-                        var matchindProducts = TargetRepo.Categories.Products.Where(p => p.Identity.Raw.UpdateID == updateParentId).ToList();
+                        var matchindProducts = TargetRepo.ProductsIndex.Values.Where(p => p.Identity.ID == updateParentId).ToList();
                         if (matchindProducts.Count > 0)
                         {
                             Console.WriteLine("        Product name        : {0}", matchindProducts[0].Title);
@@ -217,13 +216,28 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                     foreach (var classificationId in classificationIds)
                     {
                         Console.WriteLine("        Classification ID   : {0}", classificationId);
-                        var matchingClassification = TargetRepo.Categories.Classifications.Where(p => p.Identity.Raw.UpdateID == classificationId).ToList();
+                        var matchingClassification = TargetRepo.ClassificationsIndex.Values.Where(p => p.Identity.ID == classificationId).ToList();
                         if (matchingClassification.Count > 0)
                         {
                             Console.WriteLine("        Classification name : {0}", matchingClassification[0].Title);
                         }
                     }
                 }
+            }
+
+            if (metadataMode == UpdateRetrievalMode.Basic)
+            {
+                return;
+            }
+
+            if (update is DriverUpdate)
+            {
+                PrintDriverMetadata(update as DriverUpdate);
+
+            }
+            else if (update is SoftwareUpdate)
+            {
+                PrintSoftwareUpdateMetadata(update as SoftwareUpdate);
             }
 
             if (update is IUpdateWithFiles)
@@ -245,8 +259,6 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             {
                 PrintPrerequisites(update as IUpdateWithPrerequisites);
             }
-
-            //Console.WriteLine("{0}", update.XmlData);
         }
 
         void PrintDriverMetadata(DriverUpdate driverUpdate)
@@ -323,7 +335,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
                 foreach (var id in updateWithSuperseeds.SupersededUpdates)
                 {
-                    Console.WriteLine("        ID  : {0}", id.Raw.UpdateID);
+                    Console.WriteLine("        ID  : {0}", id.ID);
                 }
             }
         }
@@ -338,8 +350,8 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
                 foreach (var id in updateWithBundledUpdates.BundledUpdates)
                 {
-                    Console.WriteLine("        ID        : {0}", id.Raw.UpdateID);
-                    Console.WriteLine("        Revision  : {0}", id.Raw.RevisionNumber);
+                    Console.WriteLine("        ID        : {0}", id.ID);
+                    Console.WriteLine("        Revision  : {0}", id.Revision);
                 }
             }
         }
@@ -364,9 +376,9 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                             Console.WriteLine("            ID          : {0}", subPrereq.UpdateId);
                         }
                     }
-                    else if (prereq is SimplePrerequisite)
+                    else if (prereq is Simple)
                     {
-                        Console.WriteLine("            ID          : {0}", (prereq as SimplePrerequisite).UpdateId);
+                        Console.WriteLine("            ID          : {0}", (prereq as Simple).UpdateId);
                     }
                 }
             }

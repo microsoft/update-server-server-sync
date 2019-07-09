@@ -2,56 +2,103 @@
 // Licensed under the MIT License.
 
 using Microsoft.UpdateServices.Compression;
+using Microsoft.UpdateServices.Metadata.Content;
 using Microsoft.UpdateServices.WebServices.ServerSync;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
 namespace Microsoft.UpdateServices.Metadata
 {
     /// <summary>
-    /// Types of updates
+    /// The UpdateType enumeration defines various types of updates
     /// </summary>
-    public enum MicrosoftUpdateType
+    internal enum UpdateType
     {
+        /// <summary>
+        /// <see cref="Metadata.Detectoid"/>
+        /// </summary>
         Detectoid,
+        /// <summary>
+        /// <see cref="Metadata.Classification"/>
+        /// </summary>
         Classification,
+        /// <summary>
+        /// <see cref="Metadata.Product"/>
+        /// </summary>
         Product,
+        /// <summary>
+        /// <see cref="Metadata.DriverUpdate"/>
+        /// </summary>
         Driver,
+        /// <summary>
+        /// <see cref="Metadata.SoftwareUpdate"/>
+        /// </summary>
         Software
     }
 
     /// <summary>
-    /// Stores update data in a JSON friendly format. The data is parsed from the XML contained in ServerSyncUpdateData.
-    /// MicrosoftUpdate is abstract and is actually a factory for other concrete update types
+    /// A base class for all updates stored on an upstream update server. Stores generic update metadata applicable to both categories and updates.
     /// </summary>
-    public abstract class MicrosoftUpdate
+    public abstract class Update
     {
         /// <summary>
-        /// The update's identity, consisting of a GUID and revision number
+        /// Gets the update or category identity, consisting of a GUID and revision number
         /// </summary>
-        public MicrosoftUpdateIdentity Identity { get; set; }
+        /// <value>
+        /// Update identity.
+        /// </value>
+        [JsonProperty]
+        public Identity Identity { get; private set; }
 
         /// <summary>
         /// The type of update
         /// </summary>
-        public MicrosoftUpdateType UpdateType { get; set; }
+        [JsonProperty]
+        internal UpdateType UpdateType;
+
+        /// <summary>
+        /// Get the category or update title
+        /// </summary>
+        [JsonProperty]
+        public string Title { get; private set; }
+
+        /// <summary>
+        /// Get the category or update description
+        /// </summary>
+        [JsonProperty]
+        public string Description { get; private set; }
+
+        /// <summary>
+        /// Time when the update was added to the repository
+        /// </summary>
+        [JsonProperty]
+        internal DateTime LastChanged;
+
+        /// <summary>
+        /// Check if the update is superseded by another update
+        /// </summary>
+        [JsonProperty]
+        public bool IsSuperseded { get; internal set; }
 
         /// <summary>
         /// XML data received from the server. It is not serialized with this object but rather
         /// saved independently to an XML file on disk
         /// </summary>
         [JsonIgnore]
-        public string XmlData { get; set; }
+        internal string XmlData;
 
-        public string Title { get; set; }
+        /// <summary>
+        /// True if extended attributes have been loaded
+        /// </summary>
+        [JsonIgnore]
+        internal bool ExtendedAttributesLoaded = false;
 
-        public string Description { get; set; }
-
-        public bool MatchTitle(string[] keywords)
+        internal bool MatchTitle(string[] keywords)
         {
             foreach(var keyword in keywords)
             {
@@ -65,19 +112,18 @@ namespace Microsoft.UpdateServices.Metadata
         }
 
         [JsonConstructor]
-        protected MicrosoftUpdate() { }
+        internal Update() { }
 
-        protected MicrosoftUpdate(ServerSyncUpdateData serverSyncUpdateData)
+        internal Update(ServerSyncUpdateData serverSyncUpdateData)
         {
-            Identity = new MicrosoftUpdateIdentity(serverSyncUpdateData.Id);
+            Identity = new Identity(serverSyncUpdateData.Id);
         }
 
         /// <summary>
         /// Construct an update by decoding the contained XML
         /// </summary>
         /// <param name="serverSyncUpdateData"></param>
-        /// /// <param name="urlData">URL data for the files referenced in the update (if any)</param>
-        public static MicrosoftUpdate FromServerSyncUpdateData(ServerSyncUpdateData serverSyncUpdateData, List<UpdateFileUrl> urlData)
+        internal static Update FromServerSyncUpdateData(ServerSyncUpdateData serverSyncUpdateData)
         {
             // We need to parse the XML update blob
             string updateXml = serverSyncUpdateData.XmlUpdateBlob;
@@ -94,9 +140,6 @@ namespace Microsoft.UpdateServices.Metadata
             }
 
             var xdoc = XDocument.Parse(updateXml, LoadOptions.None);
-
-            // Get the title and optional description
-            var titleAndDescription = GetTitleAndDescriptionFromXml(xdoc);
 
             // Get the update type
             var updateType = GetUpdateTypeFromXml(xdoc).ToLowerInvariant();
@@ -119,7 +162,7 @@ namespace Microsoft.UpdateServices.Metadata
                     }
                     else if (categoryType == "product" || categoryType == "company" || categoryType == "productfamily")
                     {
-                        return new MicrosoftProduct(serverSyncUpdateData, xdoc)
+                        return new Product(serverSyncUpdateData, xdoc)
                         {
                             XmlData = updateXml
                         };
@@ -130,13 +173,13 @@ namespace Microsoft.UpdateServices.Metadata
                     }
 
                 case "driver":
-                    return new DriverUpdate(serverSyncUpdateData, xdoc, urlData)
+                    return new DriverUpdate(serverSyncUpdateData, xdoc)
                     {
                         XmlData = updateXml
                     };
 
                 case "software":
-                    return new SoftwareUpdate(serverSyncUpdateData, xdoc, urlData)
+                    return new SoftwareUpdate(serverSyncUpdateData, xdoc)
                     {
                         XmlData = updateXml
                     };
@@ -144,6 +187,16 @@ namespace Microsoft.UpdateServices.Metadata
                 default:
                     throw new Exception($"Unexpected update type: {updateType}");
             }
+        }
+
+        /// <summary>
+        /// Loads extended attributes from XML. Classes that inherit should provide an implementation.
+        /// </summary>
+        /// <param name="xmlReader">The XML stream</param>
+        /// <param name="contentFiles">Dictionary of known update files. Used to resolve file hashes to URLs</param>
+        internal virtual void LoadExtendedAttributesFromXml(StreamReader xmlReader, Dictionary<string, UpdateFileUrl> contentFiles)
+        {
+            ExtendedAttributesLoaded = true;
         }
 
         /// <summary>
@@ -201,7 +254,7 @@ namespace Microsoft.UpdateServices.Metadata
         /// </summary>
         /// <param name="xdoc"></param>
         /// <returns></returns>
-        protected static KeyValuePair<string, string> GetTitleAndDescriptionFromXml(XDocument xdoc)
+        internal void GetTitleAndDescriptionFromXml(XDocument xdoc)
         {
             // Get the title and description (if available)
             var localizedProperties = xdoc.Descendants(XName.Get("LocalizedProperties", "http://schemas.microsoft.com/msus/2002/12/Update"));
@@ -210,73 +263,19 @@ namespace Microsoft.UpdateServices.Metadata
                 var language = localizedProperty.Descendants(XName.Get("Language", "http://schemas.microsoft.com/msus/2002/12/Update")).First();
                 if (language.Value == "en")
                 {
-                    var title = localizedProperty.Descendants(XName.Get("Title", "http://schemas.microsoft.com/msus/2002/12/Update")).First().Value;
+                    Title = localizedProperty.Descendants(XName.Get("Title", "http://schemas.microsoft.com/msus/2002/12/Update")).First().Value;
 
                     var descriptions = localizedProperty.Descendants(XName.Get("Description", "http://schemas.microsoft.com/msus/2002/12/Update"));
                     if (descriptions.Count() > 0)
                     {
-                        return new KeyValuePair<string, string>(title, descriptions.First().Value);
+                        Description = descriptions.First().Value;
                     }
-                    else
-                    {
-                        return new KeyValuePair<string, string>(title, null);
-                    }
+
+                    return;
                 }
             }
 
             throw new Exception("Cannot find update title");
-        }
-    }
-
-    /// <summary>
-    /// Deserialization converter that instantiates the correct update object based on the type encoded in the JSON
-    /// </summary>
-    public class MicrosoftUpdateConverter : JsonConverter
-    {
-        public override bool CanConvert(Type objectType)
-        {
-            return typeof(MicrosoftUpdate).IsAssignableFrom(objectType);
-        }
-
-        public override object ReadJson(JsonReader reader,
-            Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            JObject item = JObject.Load(reader);
-            var updateType = (MicrosoftUpdateType)item["UpdateType"].Value<int>();
-
-            JsonSerializer prerequisiteDeserializer = new JsonSerializer();
-            prerequisiteDeserializer.Converters.Add(new Prerequisites.PrerequisiteConverter());
-
-            if (updateType == MicrosoftUpdateType.Product)
-            {
-                return item.ToObject<MicrosoftProduct>(prerequisiteDeserializer);
-            }
-            else if (updateType == MicrosoftUpdateType.Detectoid)
-            {
-                return item.ToObject<Detectoid>(prerequisiteDeserializer);
-            }
-            else if (updateType == MicrosoftUpdateType.Classification)
-            {
-                return item.ToObject<Classification>(prerequisiteDeserializer);
-            }
-            else if (updateType == MicrosoftUpdateType.Driver)
-            {
-                return item.ToObject<DriverUpdate>(prerequisiteDeserializer);
-            }
-            else if (updateType == MicrosoftUpdateType.Software)
-            {
-                return item.ToObject<SoftwareUpdate>(prerequisiteDeserializer);
-            }
-            else
-            {
-                throw new Exception("Unexpected update type");
-            }
-        }
-
-        public override void WriteJson(JsonWriter writer,
-            object value, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
         }
     }
 }

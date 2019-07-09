@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.UpdateServices.LocalCache;
+using Microsoft.UpdateServices.Storage;
 using Microsoft.UpdateServices.Query;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using System.ServiceModel;
+using Microsoft.UpdateServices.Client;
 
 namespace Microsoft.UpdateServices.Tests
 {
@@ -16,7 +17,7 @@ namespace Microsoft.UpdateServices.Tests
         [TestInitialize]
         public void Initialize()
         {
-            Repository.Delete(Environment.CurrentDirectory);
+            FileSystemRepository.Delete(Environment.CurrentDirectory);
         }
 
         /// <summary>
@@ -28,13 +29,13 @@ namespace Microsoft.UpdateServices.Tests
             var upstreamServerClient = new UpstreamServerClient(Endpoint.Default);
             var categories = upstreamServerClient.GetCategories().GetAwaiter().GetResult();
 
-            var localRepository = Repository.FromDirectory(Environment.CurrentDirectory);
+            var localRepository = FileSystemRepository.Init(Environment.CurrentDirectory, Endpoint.Default.URI);
 
             // Insert categories into store
             localRepository.MergeQueryResult(categories);
 
             // Create a filter with the first product and all classifications
-            var filter = new QueryFilter(localRepository.Categories.Products.Take(1), localRepository.Categories.Classifications);
+            var filter = new QueryFilter(localRepository.ProductsIndex.Values.Take(1), localRepository.ClassificationsIndex.Values);
 
             // Get updates
             
@@ -44,10 +45,10 @@ namespace Microsoft.UpdateServices.Tests
             localRepository.MergeQueryResult(updates);
 
             // Reload the store
-            var reloadedRepository = Repository.FromDirectory(Environment.CurrentDirectory);
+            var reloadedRepository = FileSystemRepository.Open(Environment.CurrentDirectory);
 
-            Assert.IsTrue(reloadedRepository.Categories.Categories.Count == localRepository.Categories.Categories.Count);
-            Assert.IsTrue(reloadedRepository.Updates.Index.Count == localRepository.Updates.Index.Count);
+            Assert.IsTrue(reloadedRepository.CategoriesIndex.Count == localRepository.CategoriesIndex.Count);
+            Assert.IsTrue(reloadedRepository.UpdatesIndex.Count == localRepository.UpdatesIndex.Count);
         }
 
         /// <summary>
@@ -56,31 +57,21 @@ namespace Microsoft.UpdateServices.Tests
         [TestMethod]
         public void AuthenticationAndConfigCaching()
         {
-            var upstreamServerClient = new UpstreamServerClient(Endpoint.Default);
+            var localRepository = FileSystemRepository.Init(Environment.CurrentDirectory, Endpoint.Default.URI);
+            var upstreamServerClient = new UpstreamServerClient(localRepository);
             var categories = upstreamServerClient.GetCategories().GetAwaiter().GetResult();
-
-            var localRepository = Repository.FromDirectory(Environment.CurrentDirectory);
-            localRepository.CacheAccessToken(upstreamServerClient.AccessToken);
-            localRepository.CacheServiceConfiguration(upstreamServerClient.ConfigData);
 
             // Insert categories into store
             localRepository.MergeQueryResult(categories);
 
-
             // Reload the store
-            var reloadedRepository = Repository.FromDirectory(Environment.CurrentDirectory);
+            var reloadedRepository = FileSystemRepository.Open(Environment.CurrentDirectory);
 
-            var cachedToken = reloadedRepository.GetAccessToken();
-            Assert.IsNotNull(cachedToken);
-
-            var serviceConfig = reloadedRepository.GetServiceConfiguration();
-            Assert.IsNotNull(serviceConfig);
-
-            var upstreamServerClientWithCache = new UpstreamServerClient(Endpoint.Default, serviceConfig, cachedToken);
+            var upstreamServerClientWithCache = new UpstreamServerClient(localRepository);
             var categories1 = upstreamServerClientWithCache.GetCategories().GetAwaiter().GetResult();
 
             Assert.IsNotNull(categories1);
-            Assert.IsTrue(categories.Updates.Count == categories1.Updates.Count);
+            Assert.IsTrue(categories1.Updates.Count == 0);
         }
 
     }

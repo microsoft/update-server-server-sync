@@ -5,10 +5,17 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>Microsoft.UpdateServices.Tools.UpdateRepo</RootNamespace>
     <AssemblyName>upsync</AssemblyName>
+    <Version>1.0.0</Version>
+    <Company>upsync</Company>
+    <Authors>upsync</Authors>
+    <Description></Description>
+    <AssemblyVersion>1.7.0.0</AssemblyVersion>
+    <FileVersion>1.7.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>

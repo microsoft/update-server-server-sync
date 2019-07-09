@@ -9,9 +9,10 @@
 
 namespace Microsoft.UpdateServices.WebServices.ServerSync
 {
+#pragma warning disable 1591
     using System.Runtime.Serialization;
-    
-    
+    using System.ServiceModel;
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("dotnet-svcutil", "1.0.0.1")]
     [System.Runtime.Serialization.DataContractAttribute(Name="GetAuthConfigRequestBody", Namespace="http://schemas.datacontract.org/2004/07/Windows.Services.DeliveryCatalog.ServerSy" +
@@ -2418,11 +2419,14 @@ namespace Microsoft.UpdateServices.WebServices.ServerSync
         }
     }
     
+    // XmlSerializer is used as default because of inconsistencies in field ordering across the WSUS server versions
+    [XmlSerializerFormat]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("dotnet-svcutil", "1.0.0.1")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.microsoft.com/SoftwareDistribution", ConfigurationName="Microsoft.UpdateServices.WebServices.ServerSync.IServerSyncWebService")]
     public interface IServerSyncWebService
     {
-        
+        // GetAuthConfig must be serialized with DataContract because it's an empty message and XmlSerializer does not generate an empty body
+        [DataContractFormat]
         [System.ServiceModel.OperationContractAttribute(Action="http://www.microsoft.com/SoftwareDistribution/GetAuthConfig", ReplyAction="http://www.microsoft.com/SoftwareDistribution/IServerSyncWebService/GetAuthConfig" +
             "Response")]
         System.Threading.Tasks.Task<Microsoft.UpdateServices.WebServices.ServerSync.GetAuthConfigResponse> GetAuthConfigAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetAuthConfigRequest request);
@@ -3207,4 +3211,5 @@ namespace Microsoft.UpdateServices.WebServices.ServerSync
             BasicHttpsBinding_IServerSyncWebService,
         }
     }
+#pragma warning restore 1591
 }

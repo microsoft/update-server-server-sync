@@ -14,9 +14,9 @@ namespace Microsoft.UpdateServices.Metadata
     /// </summary>
     abstract class SupersededUpdatesParser
     {
-        public static List<MicrosoftUpdateIdentity> Parse(XDocument xdoc)
+        public static List<Identity> Parse(XDocument xdoc)
         {
-            var supersededIds = new List<MicrosoftUpdateIdentity>();
+            var supersededIds = new List<Identity>();
 
             var supersededUpdatesElements = xdoc.Descendants(XName.Get("SupersededUpdates", "http://schemas.microsoft.com/msus/2002/12/Update"));
             if (supersededUpdatesElements.Count() > 1)
@@ -32,7 +32,7 @@ namespace Microsoft.UpdateServices.Metadata
                 {
                     supersededIds
                         .Add(
-                        new MicrosoftUpdateIdentity(
+                        new Identity(
                             new UpdateIdentity()
                             {
                                 UpdateID = Guid.Parse(supersededIdentityNode.Attribute("UpdateID").Value)

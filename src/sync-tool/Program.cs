@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using CommandLine;
-using Microsoft.UpdateServices.LocalCache;
-using Microsoft.UpdateServices.Metadata;
+using Microsoft.UpdateServices.Storage;
 
 namespace Microsoft.UpdateServices.Tools.UpdateRepo
 {
@@ -11,20 +9,24 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         static void Main(string[] args)
         {
             CommandLine.Parser.Default.ParseArguments<
+                RepositoryStatusOptions,
                 UpdatesSyncOptions,
                 QueryRepositoryOptions,
                 InitRepositoryOptions,
                 DeleteRepositoryOptions,
                 RepositoryExportOptions,
                 CategoriesSyncOptions,
-                ContentSyncOptions>(args)
+                ContentSyncOptions,
+                RunUpstreamServerOptions>(args)
                 .WithParsed<DeleteRepositoryOptions>(opts => RepositoryAccess.Delete(opts))
-                .WithParsed<InitRepositoryOptions>(opts => MetadataSync.SyncConfiguration(opts))
+                .WithParsed<InitRepositoryOptions>(opts => RepositoryAccess.Init(opts))
                 .WithParsed<UpdatesSyncOptions>(opts => MetadataSync.SyncUpdates(opts))
                 .WithParsed<QueryRepositoryOptions>(opts => RepositoryAccess.Query(opts))
                 .WithParsed<RepositoryExportOptions>(opts => RepositoryExport.ExportUpdates(opts))
                 .WithParsed<CategoriesSyncOptions>(opts => MetadataSync.SyncCategories(opts))
                 .WithParsed<ContentSyncOptions>(opts => ContentSync.Run(opts))
+                .WithParsed<RepositoryStatusOptions>(opts => RepositoryAccess.Status(opts))
+                .WithParsed<RunUpstreamServerOptions>(opts => UpstreamServer.Run(opts))
                 .WithNotParsed(failed => Console.WriteLine("Error"));
         }
 
@@ -34,11 +36,11 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         /// <param name="repositoryOption">The command line switch that contains the path</param>
         /// <param name="openMode">Open mode: if existing of create if not existing</param>
         /// <returns>A repository if one was opened or created, null if a repo does not exist at the path and create was not requested</returns>
-        public static Repository LoadRepositoryFromOptions(IRepositoryPathOption repositoryOption, Repository.RepositoryOpenMode openMode)
+        public static IRepository LoadRepositoryFromOptions(IRepositoryPathOption repositoryOption)
         {
             Console.Write("Opening repository...");
             var repoPath = string.IsNullOrEmpty(repositoryOption.RepositoryPath) ? Environment.CurrentDirectory : repositoryOption.RepositoryPath;
-            var localRepo = Repository.FromDirectory(repoPath, openMode);
+            var localRepo = FileSystemRepository.Open(repoPath);
             if (localRepo == null)
             {
                 ConsoleOutput.WriteRed($"There is no repository at path {repoPath}");
