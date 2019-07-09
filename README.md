@@ -8,8 +8,6 @@ Use this library to
 * export updates to WSUS
 * run your upstream update server in an ASP.NET Core web app and serve updates to downstream WSUS servers
 
-### See [MS-WSUSSS](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wsusss/f49f0c3e-a426-4b4b-b401-9aeb2892815c) for the complete technical documentation of the protocol.
-
 ## Reference the library in your project
 
 The easiest way is to use the published NuGet package. In your .NET Core project, add a reference to the [UpdateServices.ServerServerSync NuGet package](https://www.nuget.org/packages/UpdateServices.ServerServerSync). Make sure to check "Include prerelease" if searching for the NuGet package in Visual Studio.
