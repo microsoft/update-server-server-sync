@@ -30,7 +30,7 @@ You can build the tool in Visual Studio. It builds from the same solution as the
 
 Or download and unzip upsync from [https://github.com/microsoft/update-server-server-sync/releases](https://github.com/microsoft/update-server-server-sync/releases)
 
-See the wiki for [command line options reference](https://github.com/microsoft/update-server-server-sync/wiki/UpSync-tool-command-line-options)
+See the wiki for [command line options reference](https://github.com/microsoft/update-server-server-sync/wiki/UpSync-command-line-options)
 
 See the wiki for [samples on running the upsync tool](https://github.com/microsoft/update-server-server-sync/wiki/UpSync-tool-examples)
 
