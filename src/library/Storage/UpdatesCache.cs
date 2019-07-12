@@ -203,6 +203,7 @@ namespace Microsoft.UpdateServices.Storage
             var parentRepositoryInternal = ParentRepository as IRepositoryInternal;
 
             List<Update> newBundlingUpdates = new List<Update>();
+            List<Update> addedUpdates = new List<Update>();
             
             foreach (var newUpdate in queryResult.Updates)
             {
@@ -212,6 +213,7 @@ namespace Microsoft.UpdateServices.Storage
                     newUpdate.LastChanged = DateTime.Now;
 
                     Index.Add(newUpdate.Identity, newUpdate);
+                    addedUpdates.Add(newUpdate);
 
                     using (var newMetadataStream = File.OpenRead(queryResult.GetUpdateXmlPath(newUpdate)))
                     {
@@ -268,7 +270,8 @@ namespace Microsoft.UpdateServices.Storage
                 var productsList = categories.Products.Values.ToList();
                 var classificationsList = categories.Classifications.Values.ToList();
 
-                foreach (var update in Index.Values)
+                // Fill in product and classification information.
+                foreach (var update in addedUpdates)
                 {
                     var updateWithProduct = update as IUpdateWithProductInternal;
                     if (updateWithProduct != null)
