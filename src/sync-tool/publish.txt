@@ -1,0 +1,1 @@
+﻿dotnet publish --self-contained --runtime win-x64 --configuration Release --output bin\release\publish
