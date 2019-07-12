@@ -201,6 +201,8 @@ namespace Microsoft.UpdateServices.Storage
             }
 
             var parentRepositoryInternal = ParentRepository as IRepositoryInternal;
+
+            List<Update> newBundlingUpdates = new List<Update>();
             
             foreach (var newUpdate in queryResult.Updates)
             {
@@ -217,6 +219,11 @@ namespace Microsoft.UpdateServices.Storage
                         {
                             newMetadataStream.CopyTo(updateXmlWriter);
                         }
+                    }
+
+                    if (newUpdate is IUpdateWithBundledUpdates)
+                    {
+                        newBundlingUpdates.Add(newUpdate);
                     }
 
                     // Delete the temporary file
@@ -273,6 +280,36 @@ namespace Microsoft.UpdateServices.Storage
                     if (updateWithClassification != null)
                     {
                         updateWithClassification.ResolveClassification(classificationsList);
+                    }
+                }
+            }
+
+            // Fixup missing classifications and products by inheriting them from the parent update that bundles them
+            foreach (var updateWithBundledUpdates in newBundlingUpdates)
+            {
+                foreach (var bundledUpdate in (updateWithBundledUpdates as IUpdateWithBundledUpdates).BundledUpdates)
+                {
+                    if (Index.ContainsKey(bundledUpdate))
+                    {
+                        var update = Index[bundledUpdate];
+
+                        if (update is IUpdateWithClassification)
+                        {
+                            var updateWithClassification = update as IUpdateWithClassification;
+                            if (updateWithClassification.ClassificationIds.Count == 0)
+                            {
+                                updateWithClassification.ClassificationIds.AddRange((updateWithBundledUpdates as IUpdateWithClassification).ClassificationIds);
+                            }
+                        }
+
+                        if (update is IUpdateWithProduct)
+                        {
+                            var updateWithProduct = update as IUpdateWithProduct;
+                            if (updateWithProduct.ProductIds.Count == 0)
+                            {
+                                updateWithProduct.ProductIds.AddRange((updateWithBundledUpdates as IUpdateWithProduct).ProductIds);
+                            }
+                        }
                     }
                 }
             }

@@ -355,7 +355,7 @@
             // Create a new client based on the local repository 
             var client = new UpstreamServerClient(newRepo);
             
-            var categories = await server.GetCategories();
+            var categories = await client.GetCategories();
             
             // Save the categories query result in the local repository
             newRepo.MergeQueryResult(categories);
@@ -795,6 +795,14 @@
             Gets the default download URL for a file.
             </summary>
         </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.Content.UpdateFile.GetContentDirectoryName">
+            <summary>
+            Get the content directory, as per Server-Server sync protocol spec.
+            The content directory is the string representation of the last 2 hex digits of the SHA256 hash
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Microsoft.UpdateServices.Metadata.Content.UpdateFile.#ctor(System.Xml.Linq.XElement)">
             <summary>
             Create a new update file with data parsed from the XML element specified
@@ -1062,7 +1070,7 @@
             
             // Create a filter for Windows 10 1803 updates
             var filter = new QueryFilter(
-                categories.Updates.OfType&lt;Product&gt;().Where(p => p.Title.Contains("Windows 10 version 1803 and Later"),
+                categories.Updates.OfType&lt;Product&gt;().Where(p => p.Title.Contains("Windows 10 version 1803 and Later")),
                 categories.Updates.OfType&lt;Classification&gt;());
                 
             // Get updates
@@ -1539,13 +1547,14 @@
             </remarks>
             <example>
             <code>
-            var server = new UpstreamServerClient(Endpoint.Default);
+            // Create a new local repository
+            var localRepo = FileSystemRepository.Init(Environment.CurrentDirectory, Endpoint.Default.URI);
+            
+            // Create a new UpstreamServerClient using the local repository
+            var server = new UpstreamServerClient(localRepo);
             
             // Query categories
             var categoriesQueryResult = await server.GetCategories();
-            
-            // Create a new local repository
-            var localRepo = Repository.FromDirectory(Environment.CurrentDirectory);
             
             // Save the categories query result in the local repository
             localRepo.MergeQueryResult(categoriesQueryResult);
@@ -1621,6 +1630,19 @@
             Deletes the temporary directory that contains XML metadata
             </summary>
         </member>
+        <member name="T:Microsoft.UpdateServices.Server.ContentController">
+            <summary>
+            MVC controller for handling content requests on an upstream updates server.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Server.ContentController.GetUpdateContent(System.String,System.String)">
+            <summary>
+            Handle HTTP get requests on the Content/(Directory)/(FileName) URLs
+            </summary>
+            <param name="directory">The directory name for an update file</param>
+            <param name="name">The file name for an update file</param>
+            <returns>File content on success, other error codes otherwise</returns>
+        </member>
         <member name="T:Microsoft.UpdateServices.Server.AuthenticationWebService">
             <summary>
             Authentication service implementation; mock implementation, all requests get an authorization cookie, regardless of credentials
@@ -1661,12 +1683,14 @@
             Cached service configuration
             </summary>
         </member>
-        <member name="M:Microsoft.UpdateServices.Server.ServerSyncWebService.#ctor(Microsoft.UpdateServices.Storage.IRepository,Microsoft.UpdateServices.Storage.RepositoryFilter)">
+        <member name="M:Microsoft.UpdateServices.Server.ServerSyncWebService.#ctor(Microsoft.UpdateServices.Storage.IRepository,Microsoft.UpdateServices.Storage.RepositoryFilter,System.Boolean)">
             <summary>
             Instantiate the server and serve updates from the local repo
             </summary>
             <param name="localRepo">The repository to server updates from</param>
             <param name="filter">The filter for which updates to serve.</param>
+            <param name="serveOnlyMetadata">Serve only update metadata, not content. Clients must use the MUUrl to
+            download content</param>
         </member>
         <member name="M:Microsoft.UpdateServices.Server.ServerSyncWebService.GetAuthConfigAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetAuthConfigRequest)">
             <summary>
@@ -1711,10 +1735,10 @@
             </summary>
             <example>
             <code>
-            // Open and existing local repository.
+            // Open an existing local repository.
             // This sample assumes updates were sync'ed from an upstream server and merged
             // into this local repository
-            var localRepo = Repository.FromDirectory(Environment.CurrentDirectory);
+            var localRepo = FileSystemRepository.Open(Environment.CurrentDirectory);
             
             // Create an empty filter; serves all updates in repository
             var filter = new RepositoryFilter();
@@ -2231,6 +2255,13 @@
             <param name="filter">The filter used in the query</param>
             <returns>Anchor string</returns>
         </member>
+        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateFileStream(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
+            <summary>
+            Gets a read only stream for an update content file
+            </summary>
+            <param name="updateFile">The update file to open</param>
+            <returns>Read only stream for the requested update content file</returns>
+        </member>
         <member name="T:Microsoft.UpdateServices.Storage.RepoExportFormat">
             <summary>
             Supported repository export formats
@@ -2368,6 +2399,20 @@
             Gets the updates indexUpdates index
             </summary>
             <value>List of updates</value>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IRepository.GetUpdateFileStream(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
+            <summary>
+            Gets a read only stream for an update content file
+            </summary>
+            <param name="updateFile">The update file to open</param>
+            <returns>Read only stream for the requested update content file</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IRepository.IsFileDownloaded(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
+            <summary>
+            Checks if an update file has been downloaded
+            </summary>
+            <param name="file">File to check if it was downloaded</param>
+            <returns>True if the file was downloaded, false otherwise</returns>
         </member>
         <member name="P:Microsoft.UpdateServices.Storage.IRepositoryInternal.ServiceConfiguration">
             <summary>

@@ -1535,6 +1535,25 @@ references:
   commentId: N:Microsoft.UpdateServices.Server
   fullName: Microsoft.UpdateServices.Server
   nameWithType: Microsoft.UpdateServices.Server
+- uid: Microsoft.UpdateServices.Server.ContentController
+  name: ContentController
+  href: api/Microsoft.UpdateServices.Server.ContentController.html
+  commentId: T:Microsoft.UpdateServices.Server.ContentController
+  fullName: Microsoft.UpdateServices.Server.ContentController
+  nameWithType: ContentController
+- uid: Microsoft.UpdateServices.Server.ContentController.GetUpdateContent(System.String,System.String)
+  name: GetUpdateContent(String, String)
+  href: api/Microsoft.UpdateServices.Server.ContentController.html#Microsoft_UpdateServices_Server_ContentController_GetUpdateContent_System_String_System_String_
+  commentId: M:Microsoft.UpdateServices.Server.ContentController.GetUpdateContent(System.String,System.String)
+  fullName: Microsoft.UpdateServices.Server.ContentController.GetUpdateContent(System.String, System.String)
+  nameWithType: ContentController.GetUpdateContent(String, String)
+- uid: Microsoft.UpdateServices.Server.ContentController.GetUpdateContent*
+  name: GetUpdateContent
+  href: api/Microsoft.UpdateServices.Server.ContentController.html#Microsoft_UpdateServices_Server_ContentController_GetUpdateContent_
+  commentId: Overload:Microsoft.UpdateServices.Server.ContentController.GetUpdateContent
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Server.ContentController.GetUpdateContent
+  nameWithType: ContentController.GetUpdateContent
 - uid: Microsoft.UpdateServices.Server.UpstreamServerStartup
   name: UpstreamServerStartup
   href: api/Microsoft.UpdateServices.Server.UpstreamServerStartup.html
@@ -1753,6 +1772,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdate
   nameWithType: FileSystemRepository.GetUpdate
+- uid: Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateFileStream(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
+  name: GetUpdateFileStream(UpdateFile)
+  href: api/Microsoft.UpdateServices.Storage.FileSystemRepository.html#Microsoft_UpdateServices_Storage_FileSystemRepository_GetUpdateFileStream_Microsoft_UpdateServices_Metadata_Content_UpdateFile_
+  commentId: M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateFileStream(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
+  fullName: Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateFileStream(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
+  nameWithType: FileSystemRepository.GetUpdateFileStream(UpdateFile)
+- uid: Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateFileStream*
+  name: GetUpdateFileStream
+  href: api/Microsoft.UpdateServices.Storage.FileSystemRepository.html#Microsoft_UpdateServices_Storage_FileSystemRepository_GetUpdateFileStream_
+  commentId: Overload:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateFileStream
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateFileStream
+  nameWithType: FileSystemRepository.GetUpdateFileStream
 - uid: Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdates(Microsoft.UpdateServices.Storage.RepositoryFilter,Microsoft.UpdateServices.Storage.UpdateRetrievalMode)
   name: GetUpdates(RepositoryFilter, UpdateRetrievalMode)
   href: api/Microsoft.UpdateServices.Storage.FileSystemRepository.html#Microsoft_UpdateServices_Storage_FileSystemRepository_GetUpdates_Microsoft_UpdateServices_Storage_RepositoryFilter_Microsoft_UpdateServices_Storage_UpdateRetrievalMode_
@@ -1785,6 +1817,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.FileSystemRepository.Init
   nameWithType: FileSystemRepository.Init
+- uid: Microsoft.UpdateServices.Storage.FileSystemRepository.IsFileDownloaded(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
+  name: IsFileDownloaded(UpdateFile)
+  href: api/Microsoft.UpdateServices.Storage.FileSystemRepository.html#Microsoft_UpdateServices_Storage_FileSystemRepository_IsFileDownloaded_Microsoft_UpdateServices_Metadata_Content_UpdateFile_
+  commentId: M:Microsoft.UpdateServices.Storage.FileSystemRepository.IsFileDownloaded(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
+  fullName: Microsoft.UpdateServices.Storage.FileSystemRepository.IsFileDownloaded(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
+  nameWithType: FileSystemRepository.IsFileDownloaded(UpdateFile)
+- uid: Microsoft.UpdateServices.Storage.FileSystemRepository.IsFileDownloaded*
+  name: IsFileDownloaded
+  href: api/Microsoft.UpdateServices.Storage.FileSystemRepository.html#Microsoft_UpdateServices_Storage_FileSystemRepository_IsFileDownloaded_
+  commentId: Overload:Microsoft.UpdateServices.Storage.FileSystemRepository.IsFileDownloaded
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.FileSystemRepository.IsFileDownloaded
+  nameWithType: FileSystemRepository.IsFileDownloaded
 - uid: Microsoft.UpdateServices.Storage.FileSystemRepository.MergeQueryResult(Microsoft.UpdateServices.Query.QueryResult)
   name: MergeQueryResult(QueryResult)
   href: api/Microsoft.UpdateServices.Storage.FileSystemRepository.html#Microsoft_UpdateServices_Storage_FileSystemRepository_MergeQueryResult_Microsoft_UpdateServices_Query_QueryResult_
@@ -1985,6 +2030,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.IRepository.GetUpdate
   nameWithType: IRepository.GetUpdate
+- uid: Microsoft.UpdateServices.Storage.IRepository.GetUpdateFileStream(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
+  name: GetUpdateFileStream(UpdateFile)
+  href: api/Microsoft.UpdateServices.Storage.IRepository.html#Microsoft_UpdateServices_Storage_IRepository_GetUpdateFileStream_Microsoft_UpdateServices_Metadata_Content_UpdateFile_
+  commentId: M:Microsoft.UpdateServices.Storage.IRepository.GetUpdateFileStream(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
+  fullName: Microsoft.UpdateServices.Storage.IRepository.GetUpdateFileStream(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
+  nameWithType: IRepository.GetUpdateFileStream(UpdateFile)
+- uid: Microsoft.UpdateServices.Storage.IRepository.GetUpdateFileStream*
+  name: GetUpdateFileStream
+  href: api/Microsoft.UpdateServices.Storage.IRepository.html#Microsoft_UpdateServices_Storage_IRepository_GetUpdateFileStream_
+  commentId: Overload:Microsoft.UpdateServices.Storage.IRepository.GetUpdateFileStream
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.IRepository.GetUpdateFileStream
+  nameWithType: IRepository.GetUpdateFileStream
 - uid: Microsoft.UpdateServices.Storage.IRepository.GetUpdates(Microsoft.UpdateServices.Storage.RepositoryFilter,Microsoft.UpdateServices.Storage.UpdateRetrievalMode)
   name: GetUpdates(RepositoryFilter, UpdateRetrievalMode)
   href: api/Microsoft.UpdateServices.Storage.IRepository.html#Microsoft_UpdateServices_Storage_IRepository_GetUpdates_Microsoft_UpdateServices_Storage_RepositoryFilter_Microsoft_UpdateServices_Storage_UpdateRetrievalMode_
@@ -2004,6 +2062,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.IRepository.GetUpdates
   nameWithType: IRepository.GetUpdates
+- uid: Microsoft.UpdateServices.Storage.IRepository.IsFileDownloaded(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
+  name: IsFileDownloaded(UpdateFile)
+  href: api/Microsoft.UpdateServices.Storage.IRepository.html#Microsoft_UpdateServices_Storage_IRepository_IsFileDownloaded_Microsoft_UpdateServices_Metadata_Content_UpdateFile_
+  commentId: M:Microsoft.UpdateServices.Storage.IRepository.IsFileDownloaded(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
+  fullName: Microsoft.UpdateServices.Storage.IRepository.IsFileDownloaded(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
+  nameWithType: IRepository.IsFileDownloaded(UpdateFile)
+- uid: Microsoft.UpdateServices.Storage.IRepository.IsFileDownloaded*
+  name: IsFileDownloaded
+  href: api/Microsoft.UpdateServices.Storage.IRepository.html#Microsoft_UpdateServices_Storage_IRepository_IsFileDownloaded_
+  commentId: Overload:Microsoft.UpdateServices.Storage.IRepository.IsFileDownloaded
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.IRepository.IsFileDownloaded
+  nameWithType: IRepository.IsFileDownloaded
 - uid: Microsoft.UpdateServices.Storage.IRepository.MergeQueryResult(Microsoft.UpdateServices.Query.QueryResult)
   name: MergeQueryResult(QueryResult)
   href: api/Microsoft.UpdateServices.Storage.IRepository.html#Microsoft_UpdateServices_Storage_IRepository_MergeQueryResult_Microsoft_UpdateServices_Query_QueryResult_

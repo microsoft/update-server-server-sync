@@ -181,5 +181,9 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
         [Option("classification-filter", Required = false, Separator = '+', HelpText = "Classification filter")]
         public IEnumerable<string> ClassificationsFilter { get; set; }
+
+        [Option("metadata-only", Required = false, HelpText = "Do not serve updates content, just metadata")]
+        public bool MetadataOnly { get; set; }
+
     }
 }

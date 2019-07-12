@@ -22,7 +22,7 @@ namespace Microsoft.UpdateServices.Metadata
             var bundledUpdatesElements = xdoc.Descendants(XName.Get("BundledUpdates", "http://schemas.microsoft.com/msus/2002/12/Update"));
             if (bundledUpdatesElements.Count() > 1)
             {
-                throw new Exception("Multiple superseded elements nodes found");
+                throw new Exception("Multiple BundledUpdates elements nodes found");
             }
             else if (bundledUpdatesElements.Count() == 1)
             {

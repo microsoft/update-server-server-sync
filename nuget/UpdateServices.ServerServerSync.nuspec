@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>UpdateServices.ServerServerSync</id>
-    <version>1.7.0</version>
+    <version>1.8.0</version>
     <title>Microsoft Update Services: Server-Server Sync</title>
     <summary>Provides programmatic access to the Microsoft Update catalog from .NET Core</summary>
     <authors>Cristian Petruta</authors>
@@ -11,12 +11,13 @@
     <license type="expression">MIT</license>
     <projectUrl>https://microsoft.github.io/update-server-server-sync/</projectUrl>
     <description>Provides programmatic access to the Microsoft Update catalog from .NET Core</description>
-    <releaseNotes>Implement server role running in ASP.NET web app; can serve updates to downstream WSUS servers. Optimize repository format for better query performance. </releaseNotes>
+    <releaseNotes>Implement content serving for the upstream server. Performance improvements when starting up the upstream server.</releaseNotes>
     <tags>Windows Update WSUS WU MS-WSUSSS</tags>
     <repository type="GIT" url="https://github.com/microsoft/update-server-server-sync" />
     <dependencies>
       <group targetFramework=".NETCoreApp2.1">
         <dependency id="Microsoft.AspNetCore" version="2.2.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.Mvc" version="2.2.0" exclude="Build,Analyzers" />
         <dependency id="Newtonsoft.Json" version="12.0.2" exclude="Build,Analyzers" />
         <dependency id="SoapCore" version="0.9.9.6" exclude="Build,Analyzers" />
         <dependency id="System.ServiceModel.Duplex" version="4.5.3" exclude="Build,Analyzers" />

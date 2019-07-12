@@ -40,34 +40,6 @@ namespace Microsoft.UpdateServices.Storage
                 Directory.CreateDirectory(exportDirectory.FullName);
             }
 
-            // Fixup missing classifications and products by inheriting them from the parent update that bundles them
-            var updatesWithBundledUpdates = updatesToExport.Where(u => u is IUpdateWithBundledUpdates && u is IUpdateWithClassification && u is IUpdateWithProduct);
-            foreach (var updateWithBundledUpdates in updatesWithBundledUpdates)
-            {
-                foreach (var bundledUpdate in (updateWithBundledUpdates as IUpdateWithBundledUpdates).BundledUpdates)
-                {
-                    var update = updatesToExport.Find(u => u.Identity.Equals(bundledUpdate));
-
-                    if (update is IUpdateWithClassification)
-                    {
-                        var updateWithClassification = update as IUpdateWithClassification;
-                        if (updateWithClassification.ClassificationIds.Count == 0)
-                        {
-                            updateWithClassification.ClassificationIds.AddRange((updateWithBundledUpdates as IUpdateWithClassification).ClassificationIds);
-                        }
-                    }
-
-                    if (update is IUpdateWithProduct)
-                    {
-                        var updateWithProduct = update as IUpdateWithProduct;
-                        if (updateWithProduct.ProductIds.Count == 0)
-                        {
-                            updateWithProduct.ProductIds.AddRange((updateWithBundledUpdates as IUpdateWithProduct).ProductIds);
-                        }
-                    }
-                }
-            }
-
             // Pack all XML blobs for updates to be exported into a flat text file
             var progress = new OperationProgress() { CurrentOperation = OperationType.ExportUpdateXmlBlobStart };
             ExportProgress?.Invoke(this, progress);

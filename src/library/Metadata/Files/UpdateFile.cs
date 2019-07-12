@@ -77,6 +77,25 @@ namespace Microsoft.UpdateServices.Metadata.Content
         /// </summary>
         public string DownloadUrl => string.IsNullOrEmpty(Urls[0].MuUrl) ? Urls[0].UssUrl : Urls[0].MuUrl;
 
+        private string CachedContentDirectoryName;
+
+        /// <summary>
+        /// Get the content directory, as per Server-Server sync protocol spec.
+        /// The content directory is the string representation of the last 2 hex digits of the SHA256 hash
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        internal string GetContentDirectoryName()
+        {
+            if (string.IsNullOrEmpty(CachedContentDirectoryName))
+            {
+                byte[] hashBytes = Convert.FromBase64String(Digests[0].DigestBase64);
+                CachedContentDirectoryName = string.Format("{0:X}", hashBytes.Last());
+            }
+
+            return CachedContentDirectoryName;
+        }
+
         [JsonConstructor]
         private UpdateFile() { }
 

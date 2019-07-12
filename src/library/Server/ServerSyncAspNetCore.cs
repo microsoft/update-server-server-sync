@@ -42,11 +42,15 @@ namespace Microsoft.UpdateServices.Server
         /// </summary>
         /// <param name="localRepo">The repository to server updates from</param>
         /// <param name="filter">The filter for which updates to serve.</param>
-        public ServerSyncWebService(IRepository localRepo, RepositoryFilter filter)
+        /// <param name="serveOnlyMetadata">Serve only update metadata, not content. Clients must use the MUUrl to
+        /// download content</param>
+        public ServerSyncWebService(IRepository localRepo, RepositoryFilter filter, bool serveOnlyMetadata)
         {
             LocalRepository = localRepo;
 
             ServiceConfiguration = (LocalRepository as IRepositoryInternal).ServiceConfiguration;
+
+            ServiceConfiguration.CatalogOnlySync = serveOnlyMetadata;
 
             UpdatesFilter = filter;
 
@@ -185,10 +189,14 @@ namespace Microsoft.UpdateServices.Server
                 
                 if (classificationsFilter != null)
                 {
-                    foreach (var classification in classificationsFilter)
-                    {
-                        requestedUpdateIds.RemoveAll(u => !(u as IUpdateWithClassification).ClassificationIds.Contains(classification.Id));
-                    }
+                    var classificationFilterIds = classificationsFilter.Select(filter => filter.Id).ToList();
+
+                    // Remove all updates that don't have classifications
+                    requestedUpdateIds.RemoveAll(u => !(u is IUpdateWithClassification));
+
+                    // Remove all updates that don't have a classification that matches the filter
+                    requestedUpdateIds.RemoveAll(
+                        u => !(u as IUpdateWithClassification).ClassificationIds.Any(c => classificationFilterIds.Contains(c)));
                 }
 
                 // Deduplicate result and convert to raw identity format
@@ -243,7 +251,7 @@ namespace Microsoft.UpdateServices.Server
                             {
                                 FileDigest = Convert.FromBase64String(updateFile.Digests[0].DigestBase64),
                                 MUUrl = updateFile.Urls[0].MuUrl,
-                                UssUrl = updateFile.Urls[0].UssUrl
+                                UssUrl = $"Content/{updateFile.GetContentDirectoryName()}/{updateFile.FileName}"
                             });
                     }
                     

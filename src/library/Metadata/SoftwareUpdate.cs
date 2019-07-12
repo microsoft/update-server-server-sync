@@ -149,6 +149,9 @@ namespace Microsoft.UpdateServices.Metadata
 
             // Parse superseded updates
             SupersededUpdates = SupersededUpdatesParser.Parse(xdoc);
+
+            // Parse bundled updates
+            BundledUpdates = BundlesUpdatesParser.Parse(xdoc);
         }
 
         /// <summary>

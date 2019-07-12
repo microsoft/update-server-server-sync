@@ -44,12 +44,18 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 })
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
-                    config.AddInMemoryCollection(
-                        new Dictionary<string, string>()
-                        {
-                            { "repo-path", repoPath },
-                            { "updates-filter", filter.ToJson() }
-                        });
+                    var configDictionary = new Dictionary<string, string>()
+                    {
+                        { "repo-path", repoPath },
+                        { "updates-filter", filter.ToJson() }
+                    };
+
+                    if (options.MetadataOnly)
+                    {
+                        configDictionary.Add("metadata-only", "true");
+                    }
+
+                    config.AddInMemoryCollection(configDictionary);
                 })
                 .Build();
 

@@ -140,12 +140,26 @@ namespace Microsoft.UpdateServices.Storage
         /// Gets the categories index (products, classifications, detectoids)
         /// </summary>
         /// <value>List of categories</value>
-        IReadOnlyDictionary<Identity, Update> CategoriesIndex{ get; }
+        IReadOnlyDictionary<Identity, Update> CategoriesIndex { get; }
 
         /// <summary>
         /// Gets the updates indexUpdates index
         /// </summary>
         /// <value>List of updates</value>
         IReadOnlyDictionary<Identity, Update> UpdatesIndex { get; }
+
+        /// <summary>
+        /// Gets a read only stream for an update content file
+        /// </summary>
+        /// <param name="updateFile">The update file to open</param>
+        /// <returns>Read only stream for the requested update content file</returns>
+        Stream GetUpdateFileStream(UpdateFile updateFile);
+
+        /// <summary>
+        /// Checks if an update file has been downloaded
+        /// </summary>
+        /// <param name="file">File to check if it was downloaded</param>
+        /// <returns>True if the file was downloaded, false otherwise</returns>
+        bool IsFileDownloaded(UpdateFile file);
     }
 }

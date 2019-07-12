@@ -165,8 +165,7 @@ namespace Microsoft.UpdateServices.Storage
                 throw new Exception("Cannot determine file path for update with no digest");
             }
 
-            byte[] hashBytes = Convert.FromBase64String(updateFile.Digests[0].DigestBase64);
-            var contentSubDirectory = string.Format("{0:X}", hashBytes.Last());
+            var contentSubDirectory = updateFile.GetContentDirectoryName();
 
             return Path.Combine(LocalPath, ContentDirectoryName, contentSubDirectory, updateFile.Digests[0].DigestBase64.Replace('/', '_'), updateFile.FileName);
         }
@@ -468,7 +467,7 @@ namespace Microsoft.UpdateServices.Storage
         /// </summary>
         /// <param name="file">File to check if it was downloaded</param>
         /// <returns>True if the file was downloaded, false otherwise</returns>
-        private bool IsFileDownloaded(UpdateFile file)
+        public bool IsFileDownloaded(UpdateFile file)
         {
             return File.Exists(GetUpdateFileMarkerPath(file));
         }
@@ -732,6 +731,22 @@ namespace Microsoft.UpdateServices.Storage
         void IRepositoryInternal.SetAccessToken(ServiceAccessToken newAccessToken)
         {
             SetAccessToken(newAccessToken);
+        }
+
+
+        /// <summary>
+        /// Gets a read only stream for an update content file
+        /// </summary>
+        /// <param name="updateFile">The update file to open</param>
+        /// <returns>Read only stream for the requested update content file</returns>
+        public Stream GetUpdateFileStream(UpdateFile updateFile)
+        {
+            if (!IsFileDownloaded(updateFile))
+            {
+                throw new Exception("The requested file is not downloaded");
+            }
+
+            return File.OpenRead(GetUpdateFilePath(updateFile));
         }
     }
 }

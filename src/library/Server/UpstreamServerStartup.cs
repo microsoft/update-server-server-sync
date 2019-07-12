@@ -10,6 +10,7 @@ using System.ServiceModel;
 using SoapCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Hosting;
+using System.Reflection;
 
 namespace Microsoft.UpdateServices.Server
 {
@@ -54,6 +55,8 @@ namespace Microsoft.UpdateServices.Server
 
         RepositoryFilter Filter;
 
+        bool MetadataOnly;
+
         /// <summary>
         /// Initialize a new instance of UpstreamServerStartup.
         /// </summary>
@@ -78,6 +81,13 @@ namespace Microsoft.UpdateServices.Server
             {
                 throw new System.Exception("Cannot find local repository; a local updates repository is required to run an upstream server.");
             }
+
+            // Get the repository path from the configuration
+            var metadataOnly = config.GetValue<string>("metadata-only");
+            if (!string.IsNullOrEmpty(metadataOnly))
+            {
+                MetadataOnly = true;
+            }
         }
 
         /// <summary>
@@ -92,8 +102,17 @@ namespace Microsoft.UpdateServices.Server
             services.AddSoapCore();
 
             // Enable the upstream WCF services
-            services.TryAddSingleton<ServerSyncWebService>(new Server.ServerSyncWebService(LocalRepository, Filter));
+            services.TryAddSingleton<ServerSyncWebService>(new Server.ServerSyncWebService(LocalRepository, Filter, MetadataOnly));
             services.TryAddSingleton<AuthenticationWebService>();
+
+            if (!MetadataOnly)
+            {
+                // Enable the content controller if serving content
+                services.TryAddSingleton<ContentController>(new ContentController(LocalRepository, Filter));
+
+                // Add ContentController from this assembly
+                services.AddMvc().AddApplicationPart(Assembly.GetExecutingAssembly()).AddControllersAsServices();
+            }
         }
 
         /// <summary>
@@ -106,6 +125,18 @@ namespace Microsoft.UpdateServices.Server
         /// <param name="loggerFactory">Logging factory.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            if (!MetadataOnly)
+            {
+                // Create routes for the content controller
+                app.UseMvc(routes =>
+                {
+                    routes.MapRoute(
+                        name: "getContent",
+                        template: "Content/{directory}/{name}", defaults: new { controller = "Content", action = "GetUpdateContent" });
+                });
+            }
+            
+
             // Wire the upstream WCF services
             app.UseSoapEndpoint<ServerSyncWebService>("/ServerSyncWebService/ServerSyncWebService.asmx", new BasicHttpBinding(), SoapSerializer.XmlSerializer);
             app.UseSoapEndpoint<AuthenticationWebService>("/DssAuthWebService/DssAuthWebService.asmx", new BasicHttpBinding(), SoapSerializer.XmlSerializer);

@@ -520,6 +520,51 @@ on the local file system.</p>
   </table>
   
   
+  <a id="Microsoft_UpdateServices_Storage_FileSystemRepository_GetUpdateFileStream_" data-uid="Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateFileStream*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_FileSystemRepository_GetUpdateFileStream_Microsoft_UpdateServices_Metadata_Content_UpdateFile_" data-uid="Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateFileStream(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">GetUpdateFileStream(UpdateFile)</h4>
+  <div class="markdown level1 summary"><p>Gets a read only stream for an update content file</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Stream GetUpdateFileStream(UpdateFile updateFile)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFile.html">UpdateFile</a></td>
+        <td><span class="parametername">updateFile</span></td>
+        <td><p>The update file to open</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IO.Stream</span></td>
+        <td><p>Read only stream for the requested update content file</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="Microsoft_UpdateServices_Storage_FileSystemRepository_GetUpdates_" data-uid="Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdates*"></a>
   <h4 id="Microsoft_UpdateServices_Storage_FileSystemRepository_GetUpdates_Microsoft_UpdateServices_Storage_RepositoryFilter_Microsoft_UpdateServices_Storage_UpdateRetrievalMode_" data-uid="Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdates(Microsoft.UpdateServices.Storage.RepositoryFilter,Microsoft.UpdateServices.Storage.UpdateRetrievalMode)">GetUpdates(RepositoryFilter, UpdateRetrievalMode)</h4>
   <div class="markdown level1 summary"><p>Returns all updates that match the filter</p>
@@ -661,6 +706,51 @@ on the local file system.</p>
       <tr>
         <td><a class="xref" href="Microsoft.UpdateServices.Storage.FileSystemRepository.html">FileSystemRepository</a></td>
         <td><p>A newly initialize repository</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_FileSystemRepository_IsFileDownloaded_" data-uid="Microsoft.UpdateServices.Storage.FileSystemRepository.IsFileDownloaded*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_FileSystemRepository_IsFileDownloaded_Microsoft_UpdateServices_Metadata_Content_UpdateFile_" data-uid="Microsoft.UpdateServices.Storage.FileSystemRepository.IsFileDownloaded(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">IsFileDownloaded(UpdateFile)</h4>
+  <div class="markdown level1 summary"><p>Checks if an update file has been downloaded</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsFileDownloaded(UpdateFile file)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFile.html">UpdateFile</a></td>
+        <td><span class="parametername">file</span></td>
+        <td><p>File to check if it was downloaded</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the file was downloaded, false otherwise</p>
 </td>
       </tr>
     </tbody>
