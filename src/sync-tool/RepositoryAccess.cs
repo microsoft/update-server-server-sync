@@ -46,10 +46,12 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             }
 
             Console.WriteLine($"Upstream server: {localRepo.Configuration.UpstreamServerEndpoint.URI}");
+            Console.WriteLine($"Account name: {localRepo.Configuration.AccountName}");
+            Console.WriteLine($"Account GUID: {localRepo.Configuration.AccountGuid.ToString()}");
         }
 
         /// <summary>
-        /// Deletes the repo specified in the options
+        /// Initialize a new repo or updates repo configuration
         /// </summary>
         /// <param name="options">Options containing the path to the repo to delete</param>
         public static void Init(InitRepositoryOptions options)
@@ -57,15 +59,30 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             var repoPath = string.IsNullOrEmpty(options.RepositoryPath) ? Environment.CurrentDirectory : options.RepositoryPath;
             var upstreamServer = string.IsNullOrEmpty(options.UpstreamServerAddress) ? Endpoint.Default.URI : options.UpstreamServerAddress;
 
+            FileSystemRepository repo;
+
             if (FileSystemRepository.RepoExists(repoPath))
             {
-                ConsoleOutput.WriteRed("Repo already exists");
-                return;
+                repo = FileSystemRepository.Open(repoPath);
+            }
+            else
+            {
+                repo = FileSystemRepository.Init(repoPath, upstreamServer);
+                ConsoleOutput.WriteGreen($"Repository created. Upstream server: {repo.Configuration.UpstreamServerEndpoint.URI}");
             }
 
-            var newRepo = FileSystemRepository.Init(repoPath, upstreamServer);
+            if (!string.IsNullOrEmpty(options.AccountName) &&
+                !string.IsNullOrEmpty(options.AccountGuid))
+            {
+                if (!Guid.TryParse(options.AccountGuid, out Guid accountGuid))
+                {
+                    ConsoleOutput.WriteRed("The account GUID must be a valid GUID string");
+                    return;
+                }
 
-            ConsoleOutput.WriteGreen($"Repository created. Upstream server: {newRepo.Configuration.UpstreamServerEndpoint.URI}");
+                repo.SetRemoteEndpointCredentials(options.AccountName, accountGuid);
+                ConsoleOutput.WriteGreen("Credentials updated.");
+            }
         }
 
         /// <summary>

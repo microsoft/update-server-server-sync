@@ -35,6 +35,8 @@ namespace Microsoft.UpdateServices.Client
         public ClientAuthenticator(Endpoint endpoint)
         {
             UpstreamEndpoint = endpoint;
+            AccountGuid = new Guid();
+            AccountName = new Guid().ToString();
         }
 
         /// <summary>
@@ -44,6 +46,32 @@ namespace Microsoft.UpdateServices.Client
         public ClientAuthenticator()
         {
             UpstreamEndpoint = Endpoint.Default;
+            AccountGuid = new Guid();
+            AccountName = new Guid().ToString();
+        }
+
+        /// <summary>
+        /// Account name used when authenticating. If null, a random GUID string is used.
+        /// </summary>
+        private readonly string AccountName = null;
+
+        /// <summary>
+        /// Account GUID used for authenticating. If null, a random GUID is used
+        /// </summary>
+        private readonly Guid? AccountGuid = null;
+
+        /// <summary>
+        /// Initializes a new instance of the ClientAuthenticator class to authenticate with the specified endpoint, using
+        /// specified credentials.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to authenticate with.</param>
+        /// <param name="accountName">Account name.</param>
+        /// <param name="accountGuid">Account GUID.</param>
+        public ClientAuthenticator(Endpoint endpoint, string accountName, Guid accountGuid)
+        {
+            UpstreamEndpoint = endpoint;
+            AccountGuid = accountGuid;
+            AccountName = accountName;
         }
 
         /// <summary>
@@ -168,8 +196,8 @@ namespace Microsoft.UpdateServices.Client
             // Issue the request. All accounts are allowed, so we just generate a random account guid and name
             var cookieRequest = new GetAuthorizationCookieRequest();
             cookieRequest.GetAuthorizationCookie = new GetAuthorizationCookieRequestBody();
-            cookieRequest.GetAuthorizationCookie.accountGuid = Guid.NewGuid().ToString();
-            cookieRequest.GetAuthorizationCookie.accountName = Guid.NewGuid().ToString();
+            cookieRequest.GetAuthorizationCookie.accountGuid = AccountName;
+            cookieRequest.GetAuthorizationCookie.accountName = AccountGuid.ToString();
 
             var getAuthCookieResponse = await authenticationService.GetAuthorizationCookieAsync(cookieRequest);
 

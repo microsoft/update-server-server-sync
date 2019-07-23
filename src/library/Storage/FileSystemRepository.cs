@@ -149,6 +149,19 @@ namespace Microsoft.UpdateServices.Storage
         public RepoConfiguration Configuration { get; private set; }
 
         /// <summary>
+        /// Set the account name and account GUID for authenticating with the remote endpoint
+        /// </summary>
+        /// <param name="accountName">Account name</param>
+        /// <param name="accountGuid">Account GUID</param>
+        public void SetRemoteEndpointCredentials(string accountName, Guid accountGuid)
+        {
+            Configuration.AccountName = accountName;
+            Configuration.AccountGuid = accountGuid;
+
+            Configuration.SaveToFile(RepositoryConfigFilePath);
+        }
+
+        /// <summary>
         /// Index with metadata for update content files
         /// </summary>
         private Dictionary<string, UpdateFileUrl> Files;

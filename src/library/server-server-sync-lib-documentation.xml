@@ -63,6 +63,25 @@
             Microsoft upstream update server.
             </summary>
         </member>
+        <member name="F:Microsoft.UpdateServices.Client.ClientAuthenticator.AccountName">
+            <summary>
+            Account name used when authenticating. If null, a random GUID string is used.
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Client.ClientAuthenticator.AccountGuid">
+            <summary>
+            Account GUID used for authenticating. If null, a random GUID is used
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Client.ClientAuthenticator.#ctor(Microsoft.UpdateServices.Client.Endpoint,System.String,System.Guid)">
+            <summary>
+            Initializes a new instance of the ClientAuthenticator class to authenticate with the specified endpoint, using
+            specified credentials.
+            </summary>
+            <param name="endpoint">The endpoint to authenticate with.</param>
+            <param name="accountName">Account name.</param>
+            <param name="accountGuid">Account GUID.</param>
+        </member>
         <member name="M:Microsoft.UpdateServices.Client.ClientAuthenticator.Authenticate(Microsoft.UpdateServices.Client.ServiceAccessToken)">
             <summary>
             Performs authentication with an upstream update server, using a previously issued service access token.
@@ -2480,6 +2499,16 @@
             The address of the upstream server from which this repository was cloned
             </summary>
             <value>Upstream update server endpoint</value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.RepoConfiguration.AccountName">
+            <summary>
+            The account name used when authenticating with the upstream server
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.RepoConfiguration.AccountGuid">
+            <summary>
+            The account GUID used when authenticating with the upstream server
+            </summary>
         </member>
         <member name="F:Microsoft.UpdateServices.Storage.RepoConfiguration.Version">
             <summary>

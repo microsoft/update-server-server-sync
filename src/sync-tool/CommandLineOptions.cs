@@ -74,6 +74,12 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
         [Option("upstream-server", Required = false, HelpText = "Upstream server address; if none is provided, the official Microsoft upstream server is used")]
         public string UpstreamServerAddress { get; set; }
+
+        [Option("account-name", Required = false, HelpText = "Account name; if not set, a random GUID is used.")]
+        public string AccountName { get; set; }
+
+        [Option("account-guid", Required = false, HelpText = "Account GUID. If not set, a random GUID is used.")]
+        public string AccountGuid { get; set; }
     }
 
     [Verb("status", HelpText = "Displays status information about and updates repository")]

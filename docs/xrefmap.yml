@@ -25,6 +25,12 @@ references:
   commentId: M:Microsoft.UpdateServices.Client.ClientAuthenticator.#ctor(Microsoft.UpdateServices.Client.Endpoint)
   fullName: Microsoft.UpdateServices.Client.ClientAuthenticator.ClientAuthenticator(Microsoft.UpdateServices.Client.Endpoint)
   nameWithType: ClientAuthenticator.ClientAuthenticator(Endpoint)
+- uid: Microsoft.UpdateServices.Client.ClientAuthenticator.#ctor(Microsoft.UpdateServices.Client.Endpoint,System.String,System.Guid)
+  name: ClientAuthenticator(Endpoint, String, Guid)
+  href: api/Microsoft.UpdateServices.Client.ClientAuthenticator.html#Microsoft_UpdateServices_Client_ClientAuthenticator__ctor_Microsoft_UpdateServices_Client_Endpoint_System_String_System_Guid_
+  commentId: M:Microsoft.UpdateServices.Client.ClientAuthenticator.#ctor(Microsoft.UpdateServices.Client.Endpoint,System.String,System.Guid)
+  fullName: Microsoft.UpdateServices.Client.ClientAuthenticator.ClientAuthenticator(Microsoft.UpdateServices.Client.Endpoint, System.String, System.Guid)
+  nameWithType: ClientAuthenticator.ClientAuthenticator(Endpoint, String, Guid)
 - uid: Microsoft.UpdateServices.Client.ClientAuthenticator.#ctor*
   name: ClientAuthenticator
   href: api/Microsoft.UpdateServices.Client.ClientAuthenticator.html#Microsoft_UpdateServices_Client_ClientAuthenticator__ctor_
@@ -1888,6 +1894,19 @@ references:
   commentId: E:Microsoft.UpdateServices.Storage.FileSystemRepository.RepositoryOperationProgress
   fullName: Microsoft.UpdateServices.Storage.FileSystemRepository.RepositoryOperationProgress
   nameWithType: FileSystemRepository.RepositoryOperationProgress
+- uid: Microsoft.UpdateServices.Storage.FileSystemRepository.SetRemoteEndpointCredentials(System.String,System.Guid)
+  name: SetRemoteEndpointCredentials(String, Guid)
+  href: api/Microsoft.UpdateServices.Storage.FileSystemRepository.html#Microsoft_UpdateServices_Storage_FileSystemRepository_SetRemoteEndpointCredentials_System_String_System_Guid_
+  commentId: M:Microsoft.UpdateServices.Storage.FileSystemRepository.SetRemoteEndpointCredentials(System.String,System.Guid)
+  fullName: Microsoft.UpdateServices.Storage.FileSystemRepository.SetRemoteEndpointCredentials(System.String, System.Guid)
+  nameWithType: FileSystemRepository.SetRemoteEndpointCredentials(String, Guid)
+- uid: Microsoft.UpdateServices.Storage.FileSystemRepository.SetRemoteEndpointCredentials*
+  name: SetRemoteEndpointCredentials
+  href: api/Microsoft.UpdateServices.Storage.FileSystemRepository.html#Microsoft_UpdateServices_Storage_FileSystemRepository_SetRemoteEndpointCredentials_
+  commentId: Overload:Microsoft.UpdateServices.Storage.FileSystemRepository.SetRemoteEndpointCredentials
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.FileSystemRepository.SetRemoteEndpointCredentials
+  nameWithType: FileSystemRepository.SetRemoteEndpointCredentials
 - uid: Microsoft.UpdateServices.Storage.FileSystemRepository.UpdatesIndex
   name: UpdatesIndex
   href: api/Microsoft.UpdateServices.Storage.FileSystemRepository.html#Microsoft_UpdateServices_Storage_FileSystemRepository_UpdatesIndex
@@ -2274,6 +2293,32 @@ references:
   commentId: T:Microsoft.UpdateServices.Storage.RepoConfiguration
   fullName: Microsoft.UpdateServices.Storage.RepoConfiguration
   nameWithType: RepoConfiguration
+- uid: Microsoft.UpdateServices.Storage.RepoConfiguration.AccountGuid
+  name: AccountGuid
+  href: api/Microsoft.UpdateServices.Storage.RepoConfiguration.html#Microsoft_UpdateServices_Storage_RepoConfiguration_AccountGuid
+  commentId: P:Microsoft.UpdateServices.Storage.RepoConfiguration.AccountGuid
+  fullName: Microsoft.UpdateServices.Storage.RepoConfiguration.AccountGuid
+  nameWithType: RepoConfiguration.AccountGuid
+- uid: Microsoft.UpdateServices.Storage.RepoConfiguration.AccountGuid*
+  name: AccountGuid
+  href: api/Microsoft.UpdateServices.Storage.RepoConfiguration.html#Microsoft_UpdateServices_Storage_RepoConfiguration_AccountGuid_
+  commentId: Overload:Microsoft.UpdateServices.Storage.RepoConfiguration.AccountGuid
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.RepoConfiguration.AccountGuid
+  nameWithType: RepoConfiguration.AccountGuid
+- uid: Microsoft.UpdateServices.Storage.RepoConfiguration.AccountName
+  name: AccountName
+  href: api/Microsoft.UpdateServices.Storage.RepoConfiguration.html#Microsoft_UpdateServices_Storage_RepoConfiguration_AccountName
+  commentId: P:Microsoft.UpdateServices.Storage.RepoConfiguration.AccountName
+  fullName: Microsoft.UpdateServices.Storage.RepoConfiguration.AccountName
+  nameWithType: RepoConfiguration.AccountName
+- uid: Microsoft.UpdateServices.Storage.RepoConfiguration.AccountName*
+  name: AccountName
+  href: api/Microsoft.UpdateServices.Storage.RepoConfiguration.html#Microsoft_UpdateServices_Storage_RepoConfiguration_AccountName_
+  commentId: Overload:Microsoft.UpdateServices.Storage.RepoConfiguration.AccountName
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.RepoConfiguration.AccountName
+  nameWithType: RepoConfiguration.AccountName
 - uid: Microsoft.UpdateServices.Storage.RepoConfiguration.UpstreamServerEndpoint
   name: UpstreamServerEndpoint
   href: api/Microsoft.UpdateServices.Storage.RepoConfiguration.html#Microsoft_UpdateServices_Storage_RepoConfiguration_UpstreamServerEndpoint

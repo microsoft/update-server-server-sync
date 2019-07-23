@@ -60,7 +60,7 @@ namespace Microsoft.UpdateServices.Client
         /// Initializes a new instance of UpstreamServerClient.
         /// </summary>
         /// <param name="upstreamEndpoint">The server endpoint this client will connect to.</param>
-        /// <remarks>Thsi constructor is not recommended for performance reasons. It is recommended to use the constructor that takes a local repository.
+        /// <remarks>This constructor is not recommended for performance reasons. It is recommended to use the constructor that takes a local repository.
         /// Queries take a significant amount of time, and using a local repository enables delta queries, where only changes on the upstream server are retrieved.</remarks>
         public UpstreamServerClient(Endpoint upstreamEndpoint)
         {
@@ -155,9 +155,17 @@ namespace Microsoft.UpdateServices.Client
             progress.CurrentTask = MetadataQueryStage.AuthenticateStart;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var authenticator = new ClientAuthenticator(UpstreamEndpoint);
-            AccessToken = await authenticator.Authenticate(AccessToken);
-
+            if (LocalRepository != null)
+            {
+                var authenticator = new ClientAuthenticator(UpstreamEndpoint, LocalRepository.Configuration.AccountName, LocalRepository.Configuration.AccountGuid.Value);
+                AccessToken = await authenticator.Authenticate(AccessToken);
+            }
+            else
+            {
+                var authenticator = new ClientAuthenticator(UpstreamEndpoint);
+                AccessToken = await authenticator.Authenticate(AccessToken);
+            }
+            
             progress.CurrentTask = MetadataQueryStage.AuthenticateEnd;
             MetadataQueryProgress?.Invoke(this, progress);
 

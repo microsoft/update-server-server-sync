@@ -5,6 +5,7 @@ using System;
 using Newtonsoft.Json;
 using System.IO;
 using Microsoft.UpdateServices.Client;
+using System.Runtime.Serialization;
 
 namespace Microsoft.UpdateServices.Storage
 {
@@ -21,6 +22,18 @@ namespace Microsoft.UpdateServices.Storage
         public Endpoint UpstreamServerEndpoint { get; set; }
 
         /// <summary>
+        /// The account name used when authenticating with the upstream server
+        /// </summary>
+        [JsonProperty]
+        public string AccountName { get; set; }
+
+        /// <summary>
+        /// The account GUID used when authenticating with the upstream server
+        /// </summary>
+        [JsonProperty]
+        public Guid? AccountGuid { get; set; }
+
+        /// <summary>
         /// The version of this object. Used to compare against the current version when deserializing
         /// </summary>
         [JsonProperty]
@@ -35,10 +48,27 @@ namespace Microsoft.UpdateServices.Storage
         [JsonConstructor]
         private RepoConfiguration() { }
 
+        [OnDeserialized]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            if (AccountName == null)
+            {
+                AccountName = new Guid().ToString();
+            }
+
+            if (AccountGuid == null)
+            {
+                AccountGuid = new Guid();
+            }
+        }
+
         internal RepoConfiguration(Endpoint upstreamServer)
         {
             UpstreamServerEndpoint = upstreamServer;
             Version = CurrentVersion;
+
+            AccountName = new Guid().ToString();
+            AccountGuid = new Guid();
         }
 
         internal static RepoConfiguration ReadFromFile(string configFile)
