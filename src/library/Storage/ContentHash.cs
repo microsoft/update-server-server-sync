@@ -1,4 +1,7 @@
-﻿using Microsoft.UpdateServices.Metadata.Content;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.UpdateServices.Metadata.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;

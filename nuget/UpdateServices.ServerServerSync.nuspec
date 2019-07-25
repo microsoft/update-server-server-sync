@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>UpdateServices.ServerServerSync</id>
-    <version>1.9.0</version>
+    <version>1.10.0</version>
     <title>Microsoft Update Services: Server-Server Sync</title>
     <summary>Provides programmatic access to the Microsoft Update catalog from .NET Core</summary>
     <authors>Cristian Petruta</authors>
@@ -11,7 +11,7 @@
     <license type="expression">MIT</license>
     <projectUrl>https://microsoft.github.io/update-server-server-sync/</projectUrl>
     <description>Provides programmatic access to the Microsoft Update catalog from .NET Core</description>
-    <releaseNotes>Enable custom authentication credentials in the authenticator. Persist custom authentication credentials for a local repository.</releaseNotes>
+    <releaseNotes>Fix content serving to downstream servers and other fixes.</releaseNotes>
     <tags>Windows Update WSUS WU MS-WSUSSS</tags>
     <repository type="GIT" url="https://github.com/microsoft/update-server-server-sync" />
     <dependencies>

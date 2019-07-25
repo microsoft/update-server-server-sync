@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -154,6 +157,13 @@ namespace Microsoft.UpdateServices.Storage
         /// <param name="updateFile">The update file to open</param>
         /// <returns>Read only stream for the requested update content file</returns>
         Stream GetUpdateFileStream(UpdateFile updateFile);
+
+        /// <summary>
+        /// Gets a stream reader to an update's XML data
+        /// </summary>
+        /// <param name="updateIdentity">The update ID to get the XML metadata stream for</param>
+        /// <returns>Stream reader over the metadata XML</returns>
+        StreamReader GetUpdateXmlReader(Identity updateIdentity);
 
         /// <summary>
         /// Checks if an update file has been downloaded

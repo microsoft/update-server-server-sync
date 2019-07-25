@@ -1,11 +1,11 @@
-﻿using Microsoft.UpdateServices.Storage;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.UpdateServices.Storage;
 using Microsoft.UpdateServices.Metadata;
 using Microsoft.UpdateServices.Metadata.Content;
-using Microsoft.UpdateServices.Metadata.Prerequisites;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Microsoft.UpdateServices.Tools.UpdateRepo
 {

@@ -606,6 +606,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.DigestBase64
   nameWithType: UpdateFileDigest.DigestBase64
+- uid: Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.HexString
+  name: HexString
+  href: api/Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.html#Microsoft_UpdateServices_Metadata_Content_UpdateFileDigest_HexString
+  commentId: P:Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.HexString
+  fullName: Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.HexString
+  nameWithType: UpdateFileDigest.HexString
+- uid: Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.HexString*
+  name: HexString
+  href: api/Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.html#Microsoft_UpdateServices_Metadata_Content_UpdateFileDigest_HexString_
+  commentId: Overload:Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.HexString
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.HexString
+  nameWithType: UpdateFileDigest.HexString
 - uid: Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl
   name: UpdateFileUrl
   href: api/Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl.html
@@ -1560,6 +1573,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Server.ContentController.GetUpdateContent
   nameWithType: ContentController.GetUpdateContent
+- uid: Microsoft.UpdateServices.Server.ContentController.GetUpdateContentHead(System.String,System.String)
+  name: GetUpdateContentHead(String, String)
+  href: api/Microsoft.UpdateServices.Server.ContentController.html#Microsoft_UpdateServices_Server_ContentController_GetUpdateContentHead_System_String_System_String_
+  commentId: M:Microsoft.UpdateServices.Server.ContentController.GetUpdateContentHead(System.String,System.String)
+  fullName: Microsoft.UpdateServices.Server.ContentController.GetUpdateContentHead(System.String, System.String)
+  nameWithType: ContentController.GetUpdateContentHead(String, String)
+- uid: Microsoft.UpdateServices.Server.ContentController.GetUpdateContentHead*
+  name: GetUpdateContentHead
+  href: api/Microsoft.UpdateServices.Server.ContentController.html#Microsoft_UpdateServices_Server_ContentController_GetUpdateContentHead_
+  commentId: Overload:Microsoft.UpdateServices.Server.ContentController.GetUpdateContentHead
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Server.ContentController.GetUpdateContentHead
+  nameWithType: ContentController.GetUpdateContentHead
 - uid: Microsoft.UpdateServices.Server.UpstreamServerStartup
   name: UpstreamServerStartup
   href: api/Microsoft.UpdateServices.Server.UpstreamServerStartup.html
@@ -1810,6 +1836,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdates
   nameWithType: FileSystemRepository.GetUpdates
+- uid: Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateXmlReader(Microsoft.UpdateServices.Metadata.Identity)
+  name: GetUpdateXmlReader(Identity)
+  href: api/Microsoft.UpdateServices.Storage.FileSystemRepository.html#Microsoft_UpdateServices_Storage_FileSystemRepository_GetUpdateXmlReader_Microsoft_UpdateServices_Metadata_Identity_
+  commentId: M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateXmlReader(Microsoft.UpdateServices.Metadata.Identity)
+  fullName: Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateXmlReader(Microsoft.UpdateServices.Metadata.Identity)
+  nameWithType: FileSystemRepository.GetUpdateXmlReader(Identity)
+- uid: Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateXmlReader*
+  name: GetUpdateXmlReader
+  href: api/Microsoft.UpdateServices.Storage.FileSystemRepository.html#Microsoft_UpdateServices_Storage_FileSystemRepository_GetUpdateXmlReader_
+  commentId: Overload:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateXmlReader
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateXmlReader
+  nameWithType: FileSystemRepository.GetUpdateXmlReader
 - uid: Microsoft.UpdateServices.Storage.FileSystemRepository.Init(System.String,System.String)
   name: Init(String, String)
   href: api/Microsoft.UpdateServices.Storage.FileSystemRepository.html#Microsoft_UpdateServices_Storage_FileSystemRepository_Init_System_String_System_String_
@@ -2081,6 +2120,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.IRepository.GetUpdates
   nameWithType: IRepository.GetUpdates
+- uid: Microsoft.UpdateServices.Storage.IRepository.GetUpdateXmlReader(Microsoft.UpdateServices.Metadata.Identity)
+  name: GetUpdateXmlReader(Identity)
+  href: api/Microsoft.UpdateServices.Storage.IRepository.html#Microsoft_UpdateServices_Storage_IRepository_GetUpdateXmlReader_Microsoft_UpdateServices_Metadata_Identity_
+  commentId: M:Microsoft.UpdateServices.Storage.IRepository.GetUpdateXmlReader(Microsoft.UpdateServices.Metadata.Identity)
+  fullName: Microsoft.UpdateServices.Storage.IRepository.GetUpdateXmlReader(Microsoft.UpdateServices.Metadata.Identity)
+  nameWithType: IRepository.GetUpdateXmlReader(Identity)
+- uid: Microsoft.UpdateServices.Storage.IRepository.GetUpdateXmlReader*
+  name: GetUpdateXmlReader
+  href: api/Microsoft.UpdateServices.Storage.IRepository.html#Microsoft_UpdateServices_Storage_IRepository_GetUpdateXmlReader_
+  commentId: Overload:Microsoft.UpdateServices.Storage.IRepository.GetUpdateXmlReader
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.IRepository.GetUpdateXmlReader
+  nameWithType: IRepository.GetUpdateXmlReader
 - uid: Microsoft.UpdateServices.Storage.IRepository.IsFileDownloaded(Microsoft.UpdateServices.Metadata.Content.UpdateFile)
   name: IsFileDownloaded(UpdateFile)
   href: api/Microsoft.UpdateServices.Storage.IRepository.html#Microsoft_UpdateServices_Storage_IRepository_IsFileDownloaded_Microsoft_UpdateServices_Metadata_Content_UpdateFile_

@@ -180,7 +180,7 @@ namespace Microsoft.UpdateServices.Storage
 
             var contentSubDirectory = updateFile.GetContentDirectoryName();
 
-            return Path.Combine(LocalPath, ContentDirectoryName, contentSubDirectory, updateFile.Digests[0].DigestBase64.Replace('/', '_'), updateFile.FileName);
+            return Path.Combine(LocalPath, ContentDirectoryName, contentSubDirectory, updateFile.Digests[0].HexString, updateFile.Digests[0].HexString + Path.GetExtension(updateFile.FileName));
         }
 
         /// <summary>
@@ -197,12 +197,12 @@ namespace Microsoft.UpdateServices.Storage
         /// <summary>
         /// Given an update, returns the path to its XML file in the store.
         /// </summary>
-        /// <param name="update">The update to get the path for</param>
+        /// <param name="updateIdentity">The update identity to get the path for</param>
         /// <returns>Fully qualified path to the file. The path might not exist.</returns>
-        private string GetUpdateXmlPath(Update update)
+        private string GetUpdateXmlPath(Identity updateIdentity)
         {
-            var contentSubDirectory = update.Identity.ID.ToByteArray().Last().ToString();
-            return Path.Combine(LocalPath, XmlMetadataDirectoryName, contentSubDirectory, update.Identity.ToString() + ".xml");
+            var contentSubDirectory = updateIdentity.ID.ToByteArray().Last().ToString();
+            return Path.Combine(LocalPath, XmlMetadataDirectoryName, contentSubDirectory, updateIdentity.ToString() + ".xml");
         }
 
         private string LocalPath = null;
@@ -596,7 +596,7 @@ namespace Microsoft.UpdateServices.Storage
         /// <returns>True if the updates's XML is available, false otherwise</returns>
         bool IRepositoryInternal.IsUpdateXmlAvailable(Update update)
         {
-            return File.Exists(GetUpdateXmlPath(update));
+            return File.Exists(GetUpdateXmlPath(update.Identity));
         }
 
         /// <summary>
@@ -606,7 +606,7 @@ namespace Microsoft.UpdateServices.Storage
         /// <returns>FileStream for update XML</returns>
         Stream IRepositoryInternal.GetUpdateXmlWriteStream(Update update)
         {
-            var xmlPath = GetUpdateXmlPath(update);
+            var xmlPath = GetUpdateXmlPath(update.Identity);
             var xmlParentDirectory = Path.GetDirectoryName(xmlPath);
             if (!Directory.Exists(xmlParentDirectory))
             {
@@ -626,9 +626,19 @@ namespace Microsoft.UpdateServices.Storage
             return GetUpdateXmlReaderPrivate(update);
         }
 
+        /// <summary>
+        /// Gets a stream reader to an update's XML data
+        /// </summary>
+        /// <param name="updateIdentity">The update to get the XML metadata stream for</param>
+        /// <returns>stream reader</returns>
+        public StreamReader GetUpdateXmlReader(Identity updateIdentity)
+        {
+            return File.OpenText(GetUpdateXmlPath(updateIdentity));
+        }
+
         StreamReader GetUpdateXmlReaderPrivate(Update update)
         {
-            return File.OpenText(GetUpdateXmlPath(update));
+            return File.OpenText(GetUpdateXmlPath(update.Identity));
         }
 
         /// <summary>
@@ -706,7 +716,7 @@ namespace Microsoft.UpdateServices.Storage
         public Update GetUpdate(Identity updateId, UpdateRetrievalMode metadataMode)
         {
             var update = Updates.Index[updateId];
-            if (metadataMode == UpdateRetrievalMode.Extended)
+            if (metadataMode == UpdateRetrievalMode.Extended && !update.ExtendedAttributesLoaded)
             {
                 using (var xmlReader = GetUpdateXmlReaderPrivate(update))
                 {

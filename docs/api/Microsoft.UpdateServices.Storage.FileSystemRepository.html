@@ -661,6 +661,51 @@ on the local file system.</p>
   </table>
   
   
+  <a id="Microsoft_UpdateServices_Storage_FileSystemRepository_GetUpdateXmlReader_" data-uid="Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateXmlReader*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_FileSystemRepository_GetUpdateXmlReader_Microsoft_UpdateServices_Metadata_Identity_" data-uid="Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateXmlReader(Microsoft.UpdateServices.Metadata.Identity)">GetUpdateXmlReader(Identity)</h4>
+  <div class="markdown level1 summary"><p>Gets a stream reader to an update's XML data</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public StreamReader GetUpdateXmlReader(Identity updateIdentity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a></td>
+        <td><span class="parametername">updateIdentity</span></td>
+        <td><p>The update to get the XML metadata stream for</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IO.StreamReader</span></td>
+        <td><p>stream reader</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="Microsoft_UpdateServices_Storage_FileSystemRepository_Init_" data-uid="Microsoft.UpdateServices.Storage.FileSystemRepository.Init*"></a>
   <h4 id="Microsoft_UpdateServices_Storage_FileSystemRepository_Init_System_String_System_String_" data-uid="Microsoft.UpdateServices.Storage.FileSystemRepository.Init(System.String,System.String)">Init(String, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new local updates repository that sync's updates from the specified upstream update server</p>

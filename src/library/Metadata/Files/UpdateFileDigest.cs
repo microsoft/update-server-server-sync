@@ -23,6 +23,11 @@ namespace Microsoft.UpdateServices.Metadata.Content
         /// <value>Base64 encoded string</value>
         public string DigestBase64 { get; private set; }
 
+        /// <summary>
+        /// Gets the HEX string representation of the digest 
+        /// </summary>
+        public string HexString => BitConverter.ToString(Convert.FromBase64String(DigestBase64)).Replace("-", "");
+
         [JsonConstructor]
         private UpdateFileDigest() { }
 

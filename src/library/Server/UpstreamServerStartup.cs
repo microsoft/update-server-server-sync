@@ -104,6 +104,7 @@ namespace Microsoft.UpdateServices.Server
             // Enable the upstream WCF services
             services.TryAddSingleton<ServerSyncWebService>(new Server.ServerSyncWebService(LocalRepository, Filter, MetadataOnly));
             services.TryAddSingleton<AuthenticationWebService>();
+            services.TryAddSingleton<ReportingWebService>();
 
             if (!MetadataOnly)
             {
@@ -135,11 +136,12 @@ namespace Microsoft.UpdateServices.Server
                         template: "Content/{directory}/{name}", defaults: new { controller = "Content", action = "GetUpdateContent" });
                 });
             }
-            
 
             // Wire the upstream WCF services
             app.UseSoapEndpoint<ServerSyncWebService>("/ServerSyncWebService/ServerSyncWebService.asmx", new BasicHttpBinding(), SoapSerializer.XmlSerializer);
             app.UseSoapEndpoint<AuthenticationWebService>("/DssAuthWebService/DssAuthWebService.asmx", new BasicHttpBinding(), SoapSerializer.XmlSerializer);
+            app.UseSoapEndpoint<ReportingWebService>("/ReportingWebService/ReportingWebService.asmx", new BasicHttpBinding(), SoapSerializer.XmlSerializer);
+
 
             // This entry is for backwards compat with WSUS, which seems to add an extra '/' that does not get routed properly by ASP
             app.UseSoapEndpoint<AuthenticationWebService>("//DssAuthWebService/DssAuthWebService.asmx", new BasicHttpBinding(), SoapSerializer.XmlSerializer);

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.UpdateServices.Metadata.Content;
 using Microsoft.UpdateServices.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Encodings.Web;
 
 namespace Microsoft.UpdateServices.Server
 {
@@ -23,10 +25,11 @@ namespace Microsoft.UpdateServices.Server
             var updatesWithFiles = LocalRepository.GetUpdates(filter, UpdateRetrievalMode.Extended).OfType<IUpdateWithFiles>();
 
             UpdateFiles = updatesWithFiles.SelectMany(u => u.Files).Distinct().ToDictionary(
-                f => $"{f.GetContentDirectoryName().ToLower()}/{f.FileName.ToLower()}");
+                f => $"{f.GetContentDirectoryName().ToLower()}/{f.Digests[0].HexString.ToLower() + System.IO.Path.GetExtension(f.FileName).ToLower()}");
         }
+
         /// <summary>
-        /// Handle HTTP get requests on the Content/(Directory)/(FileName) URLs
+        /// Handle HTTP GET requests on the Content/(Directory)/(FileName) URLs
         /// </summary>
         /// <param name="directory">The directory name for an update file</param>
         /// <param name="name">The file name for an update file</param>
@@ -36,18 +39,51 @@ namespace Microsoft.UpdateServices.Server
         {
             var lookupKey = $"{directory.ToLower()}/{name.ToLower()}";
 
-            if (UpdateFiles.TryGetValue(lookupKey, out UpdateFile file))
+            if (UpdateFiles.TryGetValue(lookupKey, out UpdateFile file) &&
+                 LocalRepository.IsFileDownloaded(file))
             {
-                if (!LocalRepository.IsFileDownloaded(file))
-                {
-                    return NotFound();
-                }
+                var request = HttpContext.Request;
 
-                return new FileStreamResult(LocalRepository.GetUpdateFileStream(file), "application/octet-stream");
+                var fileResult = new FileStreamResult(LocalRepository.GetUpdateFileStream(file), "application/octet-stream");
+                fileResult.FileDownloadName = name;
+                fileResult.EnableRangeProcessing = true;
+                return fileResult;
             }
             else
             {
                 return NotFound();
+            }
+        }
+
+        /// <summary>
+        /// Handle HTTP HEAD requests on the Content/(Directory)/(FileName) URLs
+        /// </summary>
+        /// <param name="directory">The directory name for an update file</param>
+        /// <param name="name">The file name for an update file</param>
+        /// <returns>File header on success, other error codes otherwise</returns>
+        [HttpHead("Content/{directory}/{name}", Name = "GetUpdateContentHead")]
+        public void GetUpdateContentHead(string directory, string name)
+        {
+            HttpContext.Response.Body = null;
+
+            var lookupKey = $"{directory.ToLower()}/{name.ToLower()}";
+
+            if (UpdateFiles.TryGetValue(lookupKey, out UpdateFile file) &&
+                LocalRepository.IsFileDownloaded(file))
+            {
+                var okResult = new OkResult();
+
+                using (var contentStream = LocalRepository.GetUpdateFileStream(file))
+                {
+                    HttpContext.Response.ContentLength = contentStream.Length;
+                }
+
+                HttpContext.Response.Body = null;
+                HttpContext.Response.StatusCode = 200;
+            }
+            else
+            {
+                HttpContext.Response.StatusCode = 404;
             }
         }
     }

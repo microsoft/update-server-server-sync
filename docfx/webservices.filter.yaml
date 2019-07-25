@@ -9,6 +9,10 @@ apiRules:
     type: Namespace
 
 - exclude:
+    uidRegex: ^Microsoft\.UpdateServices\.WebServices\.ServerReporting$
+    type: Namespace
+
+- exclude:
     uidRegex: ^Microsoft\.AspNetCore\.Mvc$
     type: Namespace
 
