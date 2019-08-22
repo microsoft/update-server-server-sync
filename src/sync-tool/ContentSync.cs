@@ -6,6 +6,7 @@ using Microsoft.UpdateServices.Metadata;
 using Microsoft.UpdateServices.Metadata.Content;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Microsoft.UpdateServices.Tools.UpdateRepo
 {
@@ -13,56 +14,56 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
     {
         public static void Run(ContentSyncOptions options)
         {
-            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption);
-            if (localRepo == null)
+            var metadataSource = Program.LoadMetadataSourceFromOptions(options as IMetadataSourceOptions);
+            if (metadataSource == null)
             {
                 return;
             }
 
-            var filter = MetadataFilter.RepositoryFilterFromCommandLineFilter(options as IUpdatesFilter);
+            var filter = FilterBuilder.MetadataFilterFromCommandLine(options as IMetadataFilterOptions);
             if (filter == null)
             {
                 return;
             }
 
             // Apply filters specified on the command line
-            var updatesToDownload = localRepo.GetUpdates(filter, UpdateRetrievalMode.Extended);
-
-            // Only updates with files are considered
-            updatesToDownload.RemoveAll(u => !(u is IUpdateWithFiles));
-
-            // Apply the drivers filter
-            if (options.Drivers)
-            {
-                // Sync only drivers
-                updatesToDownload.RemoveAll(u => !(u is DriverUpdate));
-            }
-
+            var updatesToDownload = metadataSource.GetUpdates(filter);
             if (updatesToDownload.Count == 0)
             {
                 Console.WriteLine("No updates matched the filter");
                 return;
             }
 
-            localRepo.RepositoryOperationProgress += LocalRepo_RepositoryOperationProgress;
+            var filesToDownload = new List<UpdateFile>();
+            foreach(var update in updatesToDownload)
+            {
+                filesToDownload.AddRange(MetadataQuery.GetAllUpdateFiles(metadataSource, update));
+            }
 
-            var uniqueFiles = updatesToDownload.SelectMany(u => (u as IUpdateWithFiles).Files).GroupBy(f => f.DownloadUrl);
+            var contentDestination = new FileSystemContentStore(options.ContentDestination);
+            contentDestination.Progress += LocalSource_OperationProgress;
 
-            var totalDownloadSize = uniqueFiles.Sum(f => (long)f.First().Size);
-            var totalFilesToDownload = uniqueFiles.Count();
-            Console.Write($"Downloading {totalDownloadSize} bytes in {totalFilesToDownload} files. Continue? (y/n)");
+            var uniqueFiles = filesToDownload.GroupBy(f => f.DownloadUrl).Select(g => g.First()).ToList();
+
+            uniqueFiles.RemoveAll(f => contentDestination.Contains(f));
+
+            if (uniqueFiles.Count == 0)
+            {
+                ConsoleOutput.WriteGreen("The content matching the filter is up-to-date");
+                return;
+            }
+
+            var totalDownloadSize = uniqueFiles.Sum(f => (long)f.Size);
+            Console.Write($"Downloading {totalDownloadSize} bytes in {uniqueFiles.Count} files. Continue? (y/n)");
             var response = Console.ReadKey();
             if (response.Key == ConsoleKey.Y)
             {
                 Console.WriteLine();
-                foreach (var update in updatesToDownload)
-                {
-                    localRepo.DownloadUpdateContent(update as IUpdateWithFiles);
-                }
+                contentDestination.Add(uniqueFiles);
             }
         }
 
-        private static void LocalRepo_RepositoryOperationProgress(object sender, OperationProgress e)
+        private static void LocalSource_OperationProgress(object sender, OperationProgress e)
         {
             switch (e.CurrentOperation)
             {

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.UpdateServices.Storage;
 using Microsoft.UpdateServices.WebServices.ServerSync;
 using Newtonsoft.Json;
 using System.Xml.Linq;
@@ -16,27 +17,28 @@ namespace Microsoft.UpdateServices.Metadata
     /// </summary>
     /// <example>
     /// <code>
-    /// var server = new UpstreamServerClient(Endpoint.Default);
+    /// var categoriesSource = await server.GetCategories();
+    ///
+    /// // Create a filter for quering drivers
+    /// var filter = new QueryFilter(
+    ///      categoriesSource.ProductsIndex.Values,
+    ///      categoriesSource.ClassificationsIndex.Values.Where(c => c.Title.Equals("Driver")));
     /// 
-    /// // Query categories
-    /// var categoriesQueryResult = await server.GetCategories();
+    /// // Get drivers
+    /// var updatesSource = await server.GetUpdates(filter);
+    /// var drivers = updatesSource.UpdatesIndex.Values.OfType&lt;DriverUpdate&gt;();
     /// 
-    /// // Get detectoids
-    /// var detectoids = categoriesQueryResult.Updates.OfType&lt;Detectoid&gt;();
+    /// updatesSource.Delete();
+    /// categoriesSource.Delete();
+    /// 
     /// </code>
     /// </example>
     public class Detectoid : Update
     {
-        [JsonConstructor]
-        private Detectoid()
-        {
+        internal Detectoid(Identity id, IMetadataSource source) : base(id, source) { }
 
-        }
-
-        internal Detectoid(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc) : base(serverSyncUpdateData)
+        internal Detectoid(Identity id, XDocument xdoc) : base(id, null)
         {
-            GetTitleAndDescriptionFromXml(xdoc);
-            UpdateType = UpdateType.Detectoid;
         }
     }
 }

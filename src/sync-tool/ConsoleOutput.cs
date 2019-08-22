@@ -19,5 +19,12 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             Console.WriteLine(text);
             Console.ResetColor();
         }
+
+        public static void WriteCyan(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(text);
+            Console.ResetColor();
+        }
     }
 }

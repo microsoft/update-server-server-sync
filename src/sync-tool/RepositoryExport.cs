@@ -6,40 +6,54 @@ using Microsoft.UpdateServices.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
+using System.IO;
+using Microsoft.UpdateServices.WebServices.ServerSync;
 
 namespace Microsoft.UpdateServices.Tools.UpdateRepo
 {
-    class RepositoryExport
+    class UpdateMetadataExport
     {
         /// <summary>
-        /// Export update metadata from a repository
+        /// Export filtered or all update metadata from a source
         /// </summary>
         /// <param name="options">Export options</param>
-        public static void ExportUpdates(RepositoryExportOptions options)
+        public static void ExportUpdates(MetadataSourceExportOptions options)
         {
-            var localRepo = Program.LoadRepositoryFromOptions(options as IRepositoryPathOption);
-            if (localRepo == null)
+            var source = Program.LoadMetadataSourceFromOptions(options as IMetadataSourceOptions);
+            if (source == null)
             {
                 return;
             }
 
-            var filter = MetadataFilter.RepositoryFilterFromCommandLineFilter(options as IUpdatesFilter);
+            var filter = FilterBuilder.MetadataFilterFromCommandLine(options as IMetadataFilterOptions);
             if (filter == null)
             {
                 return;
             }
 
-            localRepo.RepositoryOperationProgress += LocalRepo_RepositoryOperationProgress;
-            localRepo.Export(filter, options.ExportFile, RepoExportFormat.WSUS_2016);
+            ServerSyncConfigData serverConfig;
+            try
+            {
+                serverConfig = JsonConvert.DeserializeObject<ServerSyncConfigData>(File.ReadAllText(options.ServerConfigFile));
+            }
+            catch(Exception)
+            {
+                ConsoleOutput.WriteRed($"Failed to read server configuration file from {options.ServerConfigFile}");
+                return;
+            }
+
+            (source as CompressedMetadataStore).ExportProgress += LocalSource_ExportOperationProgress;
+            source.Export(filter, options.ExportFile, RepoExportFormat.WSUS_2016, serverConfig);
         }
 
         /// <summary>
-        /// Handles progress notifications from a local repository
+        /// Handles progress notifications from a the local update metadata source
         /// Prints progress information to the console
         /// </summary>
-        /// <param name="sender">The local repository that is executing a long running operation</param>
+        /// <param name="sender">The metadata source that is executing a long running operation</param>
         /// <param name="e">Progress information</param>
-        private static void LocalRepo_RepositoryOperationProgress(object sender, OperationProgress e)
+        private static void LocalSource_ExportOperationProgress(object sender, OperationProgress e)
         {
             switch (e.CurrentOperation)
             {

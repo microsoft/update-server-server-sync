@@ -96,6 +96,87 @@
   </h3>
   
   
+  <a id="Microsoft_UpdateServices_Metadata_Update_BundledUpdates_" data-uid="Microsoft.UpdateServices.Metadata.Update.BundledUpdates*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_BundledUpdates" data-uid="Microsoft.UpdateServices.Metadata.Update.BundledUpdates">BundledUpdates</h4>
+  <div class="markdown level1 summary"><p>List of bundled updates</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Identity&gt; BundledUpdates { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td><p>List of update identities.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_BundleParent_" data-uid="Microsoft.UpdateServices.Metadata.Update.BundleParent*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_BundleParent" data-uid="Microsoft.UpdateServices.Metadata.Update.BundleParent">BundleParent</h4>
+  <div class="markdown level1 summary"><p>Gets the update within which this update is bundled</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Identity&gt; BundleParent { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_ClassificationIds_" data-uid="Microsoft.UpdateServices.Metadata.Update.ClassificationIds*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_ClassificationIds" data-uid="Microsoft.UpdateServices.Metadata.Update.ClassificationIds">ClassificationIds</h4>
+  <div class="markdown level1 summary"><p>Gets the list of classifications for the driver update</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public List&lt;Guid&gt; ClassificationIds { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><p>List of classification IDs. The GUIDs map to a <a class="xref" href="Microsoft.UpdateServices.Metadata.Classification.html">Classification</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="Microsoft_UpdateServices_Metadata_Update_Description_" data-uid="Microsoft.UpdateServices.Metadata.Update.Description*"></a>
   <h4 id="Microsoft_UpdateServices_Metadata_Update_Description" data-uid="Microsoft.UpdateServices.Metadata.Update.Description">Description</h4>
   <div class="markdown level1 summary"><p>Get the category or update description</p>
@@ -103,7 +184,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
 public string Description { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
@@ -123,6 +204,137 @@ public string Description { get; }</code></pre>
   </table>
   
   
+  <a id="Microsoft_UpdateServices_Metadata_Update_Files_" data-uid="Microsoft.UpdateServices.Metadata.Update.Files*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_Files" data-uid="Microsoft.UpdateServices.Metadata.Update.Files">Files</h4>
+  <div class="markdown level1 summary"><p>Gets the list of files (content) for update</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;UpdateFile&gt; Files { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFile.html">UpdateFile</a>&gt;</td>
+        <td><p>List of content files</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_HasClassification_" data-uid="Microsoft.UpdateServices.Metadata.Update.HasClassification*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_HasClassification" data-uid="Microsoft.UpdateServices.Metadata.Update.HasClassification">HasClassification</h4>
+  <div class="markdown level1 summary"><p>Check if this update has a classification</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasClassification { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_HasFiles_" data-uid="Microsoft.UpdateServices.Metadata.Update.HasFiles*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_HasFiles" data-uid="Microsoft.UpdateServices.Metadata.Update.HasFiles">HasFiles</h4>
+  <div class="markdown level1 summary"><p>Check if an update contains content files</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasFiles { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_HasPrerequisites_" data-uid="Microsoft.UpdateServices.Metadata.Update.HasPrerequisites*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_HasPrerequisites" data-uid="Microsoft.UpdateServices.Metadata.Update.HasPrerequisites">HasPrerequisites</h4>
+  <div class="markdown level1 summary"><p>Determine if the update has prerequisites</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasPrerequisites { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_HasProduct_" data-uid="Microsoft.UpdateServices.Metadata.Update.HasProduct*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_HasProduct" data-uid="Microsoft.UpdateServices.Metadata.Update.HasProduct">HasProduct</h4>
+  <div class="markdown level1 summary"><p>Check if this update has a parent product</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasProduct { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="Microsoft_UpdateServices_Metadata_Update_Identity_" data-uid="Microsoft.UpdateServices.Metadata.Update.Identity*"></a>
   <h4 id="Microsoft_UpdateServices_Metadata_Update_Identity" data-uid="Microsoft.UpdateServices.Metadata.Update.Identity">Identity</h4>
   <div class="markdown level1 summary"><p>Gets the update or category identity, consisting of a GUID and revision number</p>
@@ -130,8 +342,7 @@ public string Description { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
-public Identity Identity { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Identity Identity { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -151,15 +362,14 @@ public Identity Identity { get; }</code></pre>
   </table>
   
   
-  <a id="Microsoft_UpdateServices_Metadata_Update_IsSuperseded_" data-uid="Microsoft.UpdateServices.Metadata.Update.IsSuperseded*"></a>
-  <h4 id="Microsoft_UpdateServices_Metadata_Update_IsSuperseded" data-uid="Microsoft.UpdateServices.Metadata.Update.IsSuperseded">IsSuperseded</h4>
-  <div class="markdown level1 summary"><p>Check if the update is superseded by another update</p>
+  <a id="Microsoft_UpdateServices_Metadata_Update_IsBundle_" data-uid="Microsoft.UpdateServices.Metadata.Update.IsBundle*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_IsBundle" data-uid="Microsoft.UpdateServices.Metadata.Update.IsBundle">IsBundle</h4>
+  <div class="markdown level1 summary"><p>Set for updates that bundle other updates</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
-public bool IsSuperseded { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsBundle { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -178,6 +388,193 @@ public bool IsSuperseded { get; }</code></pre>
   </table>
   
   
+  <a id="Microsoft_UpdateServices_Metadata_Update_IsBundled_" data-uid="Microsoft.UpdateServices.Metadata.Update.IsBundled*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_IsBundled" data-uid="Microsoft.UpdateServices.Metadata.Update.IsBundled">IsBundled</h4>
+  <div class="markdown level1 summary"><p>Set for updates that are bundled together with other updates</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsBundled { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_IsSuperseded_" data-uid="Microsoft.UpdateServices.Metadata.Update.IsSuperseded*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_IsSuperseded" data-uid="Microsoft.UpdateServices.Metadata.Update.IsSuperseded">IsSuperseded</h4>
+  <div class="markdown level1 summary"><p>Check if an update superseds other updates</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsSuperseded { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_IsSupersedingUpdates_" data-uid="Microsoft.UpdateServices.Metadata.Update.IsSupersedingUpdates*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_IsSupersedingUpdates" data-uid="Microsoft.UpdateServices.Metadata.Update.IsSupersedingUpdates">IsSupersedingUpdates</h4>
+  <div class="markdown level1 summary"><p>Check if an update superseds other updates</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsSupersedingUpdates { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_Prerequisites_" data-uid="Microsoft.UpdateServices.Metadata.Update.Prerequisites*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_Prerequisites" data-uid="Microsoft.UpdateServices.Metadata.Update.Prerequisites">Prerequisites</h4>
+  <div class="markdown level1 summary"><p>Get the list of prerequisites</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;Prerequisite&gt; Prerequisites { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite.html">Prerequisite</a>&gt;</td>
+        <td><p>List of prerequisites</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_ProductIds_" data-uid="Microsoft.UpdateServices.Metadata.Update.ProductIds*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_ProductIds" data-uid="Microsoft.UpdateServices.Metadata.Update.ProductIds">ProductIds</h4>
+  <div class="markdown level1 summary"><p>Gets the list of product IDs for the update</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public List&lt;Guid&gt; ProductIds { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><p>List of product IDs. The GUIDs map to a <a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_SupersededUpdates_" data-uid="Microsoft.UpdateServices.Metadata.Update.SupersededUpdates*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_SupersededUpdates" data-uid="Microsoft.UpdateServices.Metadata.Update.SupersededUpdates">SupersededUpdates</h4>
+  <div class="markdown level1 summary"><p>List of Update Ids superseded by an update.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;Guid&gt; SupersededUpdates { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><p>List of update <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Identity">Identity</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_SupersedingUpdate_" data-uid="Microsoft.UpdateServices.Metadata.Update.SupersedingUpdate*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_SupersedingUpdate" data-uid="Microsoft.UpdateServices.Metadata.Update.SupersedingUpdate">SupersedingUpdate</h4>
+  <div class="markdown level1 summary"><p>Get the update that superseded this update</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Identity SupersedingUpdate { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a></td>
+        <td><p>The identity of the update that superseds this update</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="Microsoft_UpdateServices_Metadata_Update_Title_" data-uid="Microsoft.UpdateServices.Metadata.Update.Title*"></a>
   <h4 id="Microsoft_UpdateServices_Metadata_Update_Title" data-uid="Microsoft.UpdateServices.Metadata.Update.Title">Title</h4>
   <div class="markdown level1 summary"><p>Get the category or update title</p>
@@ -185,8 +582,7 @@ public bool IsSuperseded { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
-public string Title { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Title { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -200,6 +596,53 @@ public string Title { get; }</code></pre>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Microsoft_UpdateServices_Metadata_Update_IsApplicable_" data-uid="Microsoft.UpdateServices.Metadata.Update.IsApplicable*"></a>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_IsApplicable_System_Collections_Generic_List_System_Guid__" data-uid="Microsoft.UpdateServices.Metadata.Update.IsApplicable(System.Collections.Generic.List{System.Guid})">IsApplicable(List&lt;Guid&gt;)</h4>
+  <div class="markdown level1 summary"><p>Determines if the update is applicable based on its list of prerequisites and the list of installed updates (prerequisites) on a computer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsApplicable(List&lt;Guid&gt; installedPrerequisites)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><span class="parametername">installedPrerequisites</span></td>
+        <td><p>List of installed updates on a computer</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if all prerequisites are met, false otherwise</p>
+</td>
       </tr>
     </tbody>
   </table>

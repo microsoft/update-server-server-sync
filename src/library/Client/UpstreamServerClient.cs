@@ -14,11 +14,8 @@ namespace Microsoft.UpdateServices.Client
 {
     /// <summary>
     /// Query updates, metadata and content from an upstream update server.
+    /// Results are returned as <see cref="IMetadataSource"/>, through which advanced queries and filtering can be performed.
     /// </summary>
-    /// <remarks>
-    /// It is recommended to use the UpstreamServerClient together with an <see cref="IRepository"/>. This enables caching of access tokens and service configuration,
-    /// speeding up queries. Using a local repository enable retrieval of delta changes between the upstream server and the local repository.
-    /// </remarks>
     public class UpstreamServerClient
     {
         /// <summary>
@@ -33,11 +30,6 @@ namespace Microsoft.UpdateServices.Client
         /// Client used to issue SOAP requests
         /// </summary>
         private readonly IServerSyncWebService ServerSyncClient;
-
-        /// <summary>
-        /// Local updates cache. Contains cached access tokens, service configuration and updates
-        /// </summary>
-        internal IRepository LocalRepository;
 
         /// <summary>
         /// Cached access cookie. If not set in the constructor, a new access token will be obtained
@@ -57,19 +49,22 @@ namespace Microsoft.UpdateServices.Client
         public event EventHandler<MetadataQueryProgress> MetadataQueryProgress;
 
         /// <summary>
+        /// Generate a unique file name for saving the results of a query
+        /// </summary>
+        /// <returns></returns>
+        private string GetQueryResultFileName() => $"QueryResult-{DateTime.Now.ToFileTime()}.zip";
+
+        /// <summary>
         /// Initializes a new instance of UpstreamServerClient.
         /// </summary>
         /// <param name="upstreamEndpoint">The server endpoint this client will connect to.</param>
-        /// <remarks>This constructor is not recommended for performance reasons. It is recommended to use the constructor that takes a local repository.
-        /// Queries take a significant amount of time, and using a local repository enables delta queries, where only changes on the upstream server are retrieved.</remarks>
         public UpstreamServerClient(Endpoint upstreamEndpoint)
         {
             UpstreamEndpoint = upstreamEndpoint;
-            LocalRepository = null;
 
             var httpBindingWithTimeout = new System.ServiceModel.BasicHttpBinding()
             {
-                ReceiveTimeout = new TimeSpan(0, 10, 0),
+                ReceiveTimeout = new TimeSpan(0, 3, 0),
                 SendTimeout = new TimeSpan(0, 3, 0),
                 MaxBufferSize = int.MaxValue,
                 ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max,
@@ -84,95 +79,23 @@ namespace Microsoft.UpdateServices.Client
             }
 
             ServerSyncClient = new ServerSyncWebServiceClient(httpBindingWithTimeout, serviceEndpoint);
-
-            if (LocalRepository != null)
-            {
-                ConfigData = (LocalRepository as IRepositoryInternal).ServiceConfiguration;
-                AccessToken = (LocalRepository as IRepositoryInternal).AccessToken;
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of UpstreamServerClient, based on the specified local repository. The upstream
-        /// server endpoint is inherited from the local repository.
-        /// </summary>
-        /// <param name="localRepository">Local updates repository.
-        /// <para>Cached data from the repository is used for queries.</para>
-        /// <para>Query results are delta changes between the upstread server and the local repository.
-        /// </para>
-        /// </param>
-        /// <example>
-        /// <code>
-        /// // Initialize a new local repository in the current directory, tracking the official Microsoft upstream server
-        /// var newRepo = FileSystemRepository.Init(Environment.CurrentDirectory, Endpoint.Default.URI);
-        /// 
-        /// // Create a new client based on the local repository 
-        /// var client = new UpstreamServerClient(newRepo);
-        /// 
-        /// var categories = await client.GetCategories();
-        /// 
-        /// // Save the categories query result in the local repository
-        /// newRepo.MergeQueryResult(categories);
-        /// </code>
-        /// </example>
-        public UpstreamServerClient(IRepository localRepository)
-        {
-            UpstreamEndpoint = localRepository.Configuration.UpstreamServerEndpoint;
-            LocalRepository = localRepository;
-
-            var httpBindingWithTimeout = new System.ServiceModel.BasicHttpBinding()
-            {
-                ReceiveTimeout = new TimeSpan(0, 10, 0),
-                SendTimeout = new TimeSpan(0, 3, 0),
-                MaxBufferSize = int.MaxValue,
-                ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max,
-                MaxReceivedMessageSize = int.MaxValue,
-                AllowCookies = true
-            };
-
-            var serviceEndpoint = new System.ServiceModel.EndpointAddress(UpstreamEndpoint.ServerSyncURI);
-            if (serviceEndpoint.Uri.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
-            {
-                httpBindingWithTimeout.Security.Mode = System.ServiceModel.BasicHttpSecurityMode.Transport;
-            }
-
-            ServerSyncClient = new ServerSyncWebServiceClient(httpBindingWithTimeout, serviceEndpoint);
-
-            if (LocalRepository != null)
-            {
-                ConfigData = (LocalRepository as IRepositoryInternal).ServiceConfiguration;
-                AccessToken = (LocalRepository as IRepositoryInternal).AccessToken;
-            }
         }
 
         /// <summary>
         /// Updates the access token of this client
         /// </summary>
         /// <returns>Nothing</returns>
-        internal async Task RefreshAccessToken()
+        internal async Task RefreshAccessToken(string accountName, Guid? accountGuid)
         {
             var progress = new MetadataQueryProgress();
             progress.CurrentTask = MetadataQueryStage.AuthenticateStart;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            if (LocalRepository != null)
-            {
-                var authenticator = new ClientAuthenticator(UpstreamEndpoint, LocalRepository.Configuration.AccountName, LocalRepository.Configuration.AccountGuid.Value);
-                AccessToken = await authenticator.Authenticate(AccessToken);
-            }
-            else
-            {
-                var authenticator = new ClientAuthenticator(UpstreamEndpoint);
-                AccessToken = await authenticator.Authenticate(AccessToken);
-            }
-            
+            var authenticator = new ClientAuthenticator(UpstreamEndpoint, accountName, accountGuid.HasValue ? accountGuid.Value : new Guid());
+            AccessToken = await authenticator.Authenticate(AccessToken);
+
             progress.CurrentTask = MetadataQueryStage.AuthenticateEnd;
             MetadataQueryProgress?.Invoke(this, progress);
-
-            if (LocalRepository != null)
-            {
-                (LocalRepository as IRepositoryInternal).SetAccessToken(AccessToken);
-            }
         }
 
         /// <summary>
@@ -181,33 +104,40 @@ namespace Microsoft.UpdateServices.Client
         /// <returns></returns>
         internal async Task RefreshServerConfigData()
         {
+            ConfigData = await GetServerConfigData();
+        }
+
+        /// <summary>
+        /// Retrieves configuration data from the upstream server.
+        /// </summary>
+        /// <returns>Server configuration data</returns>
+        public async Task<ServerSyncConfigData> GetServerConfigData()
+        {
+            await RefreshAccessToken(Guid.NewGuid().ToString(), Guid.NewGuid());
             var progress = new MetadataQueryProgress();
             progress.CurrentTask = MetadataQueryStage.GetServerConfigStart;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            ConfigData = await QueryConfigData();
+            var result = await QueryConfigData();
 
             progress.CurrentTask = MetadataQueryStage.GetServerConfigEnd;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            if (LocalRepository != null)
-            {
-                (LocalRepository as IRepositoryInternal).SetServiceConfiguration(ConfigData);
-            }
+            return result;
         }
 
         /// <summary>
-        /// Gets the list of categories from the upstream update server.
-        /// <para>If the client was initialized with a repository, only new or changed categories not present in the repository are retrieved.</para>
+        /// Gets the list of categories from the upstream server and adds them to the specified metadata collection.
         /// </summary>
-        /// <returns>A query result containing all or changed categories.</returns>
-        public async Task<Query.QueryResult> GetCategories()
+        /// <param name="destination">Metadata collection where to add the results. If the collection implements <see cref="IMetadataSource"/>, only delta changes are retrieved and added to the destination.</param>
+        public async Task GetCategories(IMetadataSink destination)
         {
+            var deltaMetadataSource = destination as IMetadataSource;
             var progress = new MetadataQueryProgress();
-        
+
             if (AccessToken == null || AccessToken.ExpiresIn(TimeSpan.FromMinutes(2)))
             {
-                await RefreshAccessToken();
+                await RefreshAccessToken(deltaMetadataSource?.UpstreamAccountName, deltaMetadataSource?.UpstreamAccountGuid);
             }
 
             // If no configuration is known, query it now
@@ -220,13 +150,13 @@ namespace Microsoft.UpdateServices.Client
             progress.CurrentTask = MetadataQueryStage.GetRevisionIdsStart;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var localRepositoryInternal = LocalRepository == null ? null : LocalRepository as IRepositoryInternal;
-            var categoryQueryResult = await GetCategoryIds(localRepositoryInternal?.GetCategoriesAnchor());
+            var categoriesAnchor = deltaMetadataSource?.CategoriesAnchor;
+            var categoryQueryResult = await GetCategoryIds(categoriesAnchor);
 
             progress.CurrentTask = MetadataQueryStage.GetRevisionIdsEnd;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var cachedCategories = LocalRepository?.CategoriesIndex;
+            var cachedCategories = deltaMetadataSource?.CategoriesIndex;
 
             // Find all updates that did not change
             var unchangedUpdates = GetUnchangedUpdates(cachedCategories, categoryQueryResult.identities);
@@ -242,28 +172,44 @@ namespace Microsoft.UpdateServices.Client
             progress.Current = 0;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var queryResult = Query.QueryResult.CreateCategoriesQueryResult(categoryQueryResult.anchor);
+            destination.SetCategoriesAnchor(categoryQueryResult.anchor);
 
-            await GetUpdateDataForIds(
-                updatesToRetrieveDataFor.Select(id => id.Raw).ToList(), queryResult);
+            GetUpdateDataForIds(
+                updatesToRetrieveDataFor.Select(id => id.Raw).ToList(), destination);
 
             progress.CurrentTask = MetadataQueryStage.GetUpdateMetadataEnd;
             MetadataQueryProgress?.Invoke(this, progress);
+        }
+
+        /// <summary>
+        /// Gets the list of categories from the upstream update server.
+        /// </summary>
+        /// <returns>An updates metadata source containing all.</returns>
+        public async Task<CompressedMetadataStore> GetCategories()
+        {
+            var queryResult = new CompressedMetadataStore(GetQueryResultFileName(), UpstreamEndpoint);
+
+            await GetCategories(queryResult);
+
+            queryResult.Commit();
 
             return queryResult;
         }
 
         /// <summary>
         /// Gets the list of updates matching the query filter from an upstream update server.
+        /// <para>
+        /// If the destinatin metadata sink also implements <see cref="IMetadataSource", a delta query for changed categories is performed./>
+        /// </para>
         /// </summary>
-        /// <param name="updatesFilter">Updates filter. See <see cref="Query.QueryFilter"/> for details.</param>
-        /// <returns>A query result containing all or changed updates that match the filter.</returns>
+        /// <param name="updatesFilter">Updates filter. See <see cref="QueryFilter"/> for details.</param>
+        /// <param name="destination">Metadata collection where to write the result. If the destination implements IMetadataSource, a delta retrieve is performed</param>
         /// <remarks>
-        /// When a local repository is used to initialize the UpstreamServerClient, the query result is a delta relative to the local repository.
-        /// The query result is not merged into the store. The caller can merge the query result using <see cref="IRepository.MergeQueryResult(Query.QueryResult)"/>
         /// </remarks>
-        public async Task<Query.QueryResult> GetUpdates(Query.QueryFilter updatesFilter)
+        public async Task GetUpdates(QueryFilter updatesFilter, IMetadataSink destination)
         {
+            var deltaMetadataSource = destination as IMetadataSource;
+
             var progress = new MetadataQueryProgress();
 
             if (updatesFilter == null || updatesFilter.ProductsFilter.Count == 0 || updatesFilter.ClassificationsFilter.Count == 0)
@@ -273,7 +219,7 @@ namespace Microsoft.UpdateServices.Client
 
             if (AccessToken == null || AccessToken.ExpiresIn(TimeSpan.FromMinutes(2)))
             {
-                await RefreshAccessToken();
+                await RefreshAccessToken(deltaMetadataSource?.UpstreamAccountName, deltaMetadataSource?.UpstreamAccountGuid);
             }
 
             // If no configuration is known, query it now
@@ -285,15 +231,15 @@ namespace Microsoft.UpdateServices.Client
             progress.CurrentTask = MetadataQueryStage.GetRevisionIdsStart;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var localRepositoryInternal = LocalRepository == null ? null : LocalRepository as IRepositoryInternal;
-            updatesFilter.Anchor = localRepositoryInternal?.GetUpdatesAnchorForFilter(updatesFilter);
+            var updatesAnchor = deltaMetadataSource?.GetAnchorForFilter(updatesFilter);
+            updatesFilter.Anchor = updatesAnchor;
             var updatesQueryResult = await GetUpdateIds(updatesFilter);
 
             progress.CurrentTask = MetadataQueryStage.GetRevisionIdsEnd;
             MetadataQueryProgress?.Invoke(this, progress);
 
             // Find all updates that did not change
-            var unchangedUpdates = GetUnchangedUpdates(LocalRepository?.UpdatesIndex, updatesQueryResult.identities);
+            var unchangedUpdates = GetUnchangedUpdates(deltaMetadataSource?.UpdatesIndex, updatesQueryResult.identities);
 
             // Create the list of updates to query data for. Remove those updates that were reported as "new"
             // but for which we already have metadata
@@ -305,13 +251,29 @@ namespace Microsoft.UpdateServices.Client
             progress.Current = 0;
             MetadataQueryProgress?.Invoke(this, progress);
 
-            var queryResult = Query.QueryResult.CreateUpdatesQueryResult(updatesFilter, updatesQueryResult.anchor);
+            GetUpdateDataForIds(
+                updatesToRetrieveDataFor.Select(id => id.Raw).ToList(), destination);
 
-            await GetUpdateDataForIds(
-                updatesToRetrieveDataFor.Select(id => id.Raw).ToList(), queryResult);
+            // Update the QueryResult filter and anchor
+            updatesFilter.Anchor = updatesQueryResult.anchor;
+            destination.SetQueryFilter(updatesFilter);
 
             progress.CurrentTask = MetadataQueryStage.GetUpdateMetadataEnd;
             MetadataQueryProgress?.Invoke(this, progress);
+        }
+
+        /// <summary>
+        /// Gets updates matching the query filter from an upstream update server.
+        /// </summary>
+        /// <param name="updatesFilter">Updates filter. See <see cref="QueryFilter"/> for details.</param>
+        /// <returns>An updates metadata source containing updates that match the filter.</returns>
+        public async Task<CompressedMetadataStore> GetUpdates(QueryFilter updatesFilter)
+        {
+            var queryResult = new CompressedMetadataStore(GetQueryResultFileName(), UpstreamEndpoint);
+
+            await GetUpdates(updatesFilter, queryResult);
+
+            queryResult.Commit();
 
             return queryResult;
         }
@@ -375,7 +337,7 @@ namespace Microsoft.UpdateServices.Client
         /// <param name="filter">The filter to use.</param>
         /// <returns>The list of category IDs and an anchor. If teh filter contains an anchor, the
         /// list of category IDs is a delta list of categories changed since the anchor was generated.</returns>
-        private async Task<(string anchor, IEnumerable<Metadata.Identity> identities)> GetUpdateIds(Query.QueryFilter filter)
+        private async Task<(string anchor, IEnumerable<Metadata.Identity> identities)> GetUpdateIds(QueryFilter filter)
         {
             // Create a request for categories
             var revisionIdRequest = new GetRevisionIdListRequest();
@@ -402,8 +364,8 @@ namespace Microsoft.UpdateServices.Client
         /// Retrieves update data for the list of update ids
         /// </summary>
         /// <param name="updateIds">The ids to retrieve data for</param>
-        /// <param name="result">A QueryResult to which retrieved update metadata is appended</param>
-        private async Task GetUpdateDataForIds(List<UpdateIdentity> updateIds, Query.QueryResult result)
+        /// <param name="destination">The metadata destination to write update metadata to</param>
+        private void GetUpdateDataForIds(List<UpdateIdentity> updateIds, IMetadataSink destination)
         {
             // Data retrieval is done is done in batches of upto MaxNumberOfUpdatesPerRequest
             var retrieveBatches = CreateBatchedListFromFlatList(updateIds, ConfigData.MaxNumberOfUpdatesPerRequest);
@@ -413,7 +375,8 @@ namespace Microsoft.UpdateServices.Client
             var progress = new MetadataQueryProgress() { CurrentTask = MetadataQueryStage.GetUpdateMetadataProgress, Maximum = updateIds.Count, Current = 0 };
             MetadataQueryProgress?.Invoke(this, progress);
 
-            foreach (var batch in retrieveBatches)
+            // Run batches in parallel
+            retrieveBatches.AsParallel().ForAll(batch =>
             {
                 var updateDataRequest = new GetUpdateDataRequest();
                 updateDataRequest.GetUpdateData = new GetUpdateDataRequestBody();
@@ -426,14 +389,14 @@ namespace Microsoft.UpdateServices.Client
                 {
                     try
                     {
-                        updateDataReply = await ServerSyncClient.GetUpdateDataAsync(updateDataRequest);
+                        updateDataReply = ServerSyncClient.GetUpdateDataAsync(updateDataRequest).GetAwaiter().GetResult();
                     }
                     catch (System.TimeoutException)
                     {
                         updateDataReply = null;
                     }
                     retryCount++;
-                } while (updateDataReply != null && retryCount < 3);
+                } while (updateDataReply == null && retryCount < 10);
 
                 if (updateDataReply == null || updateDataReply.GetUpdateDataResponse1 == null || updateDataReply.GetUpdateDataResponse1.GetUpdateDataResult == null)
                 {
@@ -443,20 +406,21 @@ namespace Microsoft.UpdateServices.Client
                 // Parse the list of raw files into a more usable format
                 var filesList = new List<UpdateFileUrl>(updateDataReply.GetUpdateDataResponse1.GetUpdateDataResult.fileUrls.Select(rawFile => new UpdateFileUrl(rawFile)));
 
+                // First add the files information to the store; it will be used to link update files with urls later
+                filesList.ForEach(file => destination.AddFile(file));
+
                 // Add the updates to the result, converting them to a higher level representation
-                foreach (var overTheWireUpdate in updateDataReply.GetUpdateDataResponse1.GetUpdateDataResult.updates)
+                destination.AddUpdates(updateDataReply.GetUpdateDataResponse1.GetUpdateDataResult.updates);
+
+                lock (destination)
                 {
-                    result.AddUpdate(Product.FromServerSyncUpdateData(overTheWireUpdate));
+                    // Track progress
+                    batchesDone++;
+                    progress.PercentDone = ((double)batchesDone * 100) / retrieveBatches.Count;
+                    progress.Current += batch.Count();
+                    MetadataQueryProgress?.Invoke(this, progress);
                 }
-
-                filesList.ForEach(file => result.AddFile(file));
-
-                // Track progress
-                batchesDone++;
-                progress.PercentDone = ((double)batchesDone * 100) / retrieveBatches.Count;
-                progress.Current += batch.Count();
-                MetadataQueryProgress?.Invoke(this, progress);
-            }
+            });
         }
 
         /// <summary>

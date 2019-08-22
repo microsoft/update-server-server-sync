@@ -82,14 +82,6 @@
     <div class="level1"><a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a></div>
     <div class="level2"><span class="xref">DriverUpdate</span></div>
   </div>
-  <div classs="implements">
-    <h5>Implements</h5>
-    <div><a class="xref" href="Microsoft.UpdateServices.Metadata.Prerequisites.IUpdateWithPrerequisites.html">IUpdateWithPrerequisites</a></div>
-    <div><a class="xref" href="Microsoft.UpdateServices.Metadata.Content.IUpdateWithFiles.html">IUpdateWithFiles</a></div>
-    <div><a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithProduct.html">IUpdateWithProduct</a></div>
-    <div><a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithClassification.html">IUpdateWithClassification</a></div>
-    <div><a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithSupersededUpdates.html">IUpdateWithSupersededUpdates</a></div>
-  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
@@ -99,17 +91,65 @@
       <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Title">Update.Title</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Description">Update.Description</a>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsBundle">Update.IsBundle</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsBundled">Update.IsBundled</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_BundledUpdates">Update.BundledUpdates</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_BundleParent">Update.BundleParent</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_HasPrerequisites">Update.HasPrerequisites</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_HasProduct">Update.HasProduct</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_HasClassification">Update.HasClassification</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_ProductIds">Update.ProductIds</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_ClassificationIds">Update.ClassificationIds</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Prerequisites">Update.Prerequisites</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsSupersedingUpdates">Update.IsSupersedingUpdates</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsSuperseded">Update.IsSuperseded</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_SupersededUpdates">Update.SupersededUpdates</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_SupersedingUpdate">Update.SupersedingUpdate</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsApplicable_System_Collections_Generic_List_System_Guid__">Update.IsApplicable(List&lt;Guid&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Description">Update.Description</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_HasFiles">Update.HasFiles</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Files">Update.Files</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.UpdateServices.Metadata.html">Microsoft.UpdateServices.Metadata</a></h6>
   <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
   <h5 id="Microsoft_UpdateServices_Metadata_DriverUpdate_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class DriverUpdate : Update, IUpdateWithPrerequisites, IUpdateWithFiles, IUpdateWithProduct, IUpdateWithProductInternal, IUpdateWithClassification, IUpdateWithClassificationInternal, IUpdateWithSupersededUpdates</code></pre>
+    <pre><code class="lang-csharp hljs">public class DriverUpdate : Update</code></pre>
   </div>
   <h5 id="Microsoft_UpdateServices_Metadata_DriverUpdate_examples"><strong>Examples</strong></h5>
   <pre><code>var server = new UpstreamServerClient(Endpoint.Default);
@@ -128,62 +168,6 @@ var drivers = driversQueryResult.Updates.OfType&lt;DriverUpdate>();</code></pre>
 
   <h3 id="properties">Properties
   </h3>
-  
-  
-  <a id="Microsoft_UpdateServices_Metadata_DriverUpdate_ClassificationIds_" data-uid="Microsoft.UpdateServices.Metadata.DriverUpdate.ClassificationIds*"></a>
-  <h4 id="Microsoft_UpdateServices_Metadata_DriverUpdate_ClassificationIds" data-uid="Microsoft.UpdateServices.Metadata.DriverUpdate.ClassificationIds">ClassificationIds</h4>
-  <div class="markdown level1 summary"><p>Gets the list of classifications for the driver update</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
-public List&lt;Guid&gt; ClassificationIds { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
-        <td><p>List of classification IDs. The GUIDs map to a <a class="xref" href="Microsoft.UpdateServices.Metadata.Classification.html">Classification</a></p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Microsoft_UpdateServices_Metadata_DriverUpdate_Files_" data-uid="Microsoft.UpdateServices.Metadata.DriverUpdate.Files*"></a>
-  <h4 id="Microsoft_UpdateServices_Metadata_DriverUpdate_Files" data-uid="Microsoft.UpdateServices.Metadata.DriverUpdate.Files">Files</h4>
-  <div class="markdown level1 summary"><p>Gets the list of files (content) for the driver update</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonIgnore]
-public List&lt;UpdateFile&gt; Files { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFile.html">UpdateFile</a>&gt;</td>
-        <td><p>List of content files</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   
   
   <a id="Microsoft_UpdateServices_Metadata_DriverUpdate_Metadata_" data-uid="Microsoft.UpdateServices.Metadata.DriverUpdate.Metadata*"></a>
@@ -212,106 +196,6 @@ public List&lt;DriverMetadata&gt; Metadata { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-  
-  
-  <a id="Microsoft_UpdateServices_Metadata_DriverUpdate_Prerequisites_" data-uid="Microsoft.UpdateServices.Metadata.DriverUpdate.Prerequisites*"></a>
-  <h4 id="Microsoft_UpdateServices_Metadata_DriverUpdate_Prerequisites" data-uid="Microsoft.UpdateServices.Metadata.DriverUpdate.Prerequisites">Prerequisites</h4>
-  <div class="markdown level1 summary"><p>Get the list of prerequisites for the driver update.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonIgnore]
-public List&lt;Prerequisite&gt; Prerequisites { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite.html">Prerequisite</a>&gt;</td>
-        <td><p>List of prerequisites</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Microsoft_UpdateServices_Metadata_DriverUpdate_ProductIds_" data-uid="Microsoft.UpdateServices.Metadata.DriverUpdate.ProductIds*"></a>
-  <h4 id="Microsoft_UpdateServices_Metadata_DriverUpdate_ProductIds" data-uid="Microsoft.UpdateServices.Metadata.DriverUpdate.ProductIds">ProductIds</h4>
-  <div class="markdown level1 summary"><p>Gets the list of product IDs for the driver update</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
-public List&lt;Guid&gt; ProductIds { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
-        <td><p>List of product IDs. The GUIDs map to a <a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a></p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Microsoft_UpdateServices_Metadata_DriverUpdate_SupersededUpdates_" data-uid="Microsoft.UpdateServices.Metadata.DriverUpdate.SupersededUpdates*"></a>
-  <h4 id="Microsoft_UpdateServices_Metadata_DriverUpdate_SupersededUpdates" data-uid="Microsoft.UpdateServices.Metadata.DriverUpdate.SupersededUpdates">SupersededUpdates</h4>
-  <div class="markdown level1 summary"><p>Get the list of updates that this driver update superseds</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonIgnore]
-public List&lt;Identity&gt; SupersededUpdates { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
-        <td><p>List of update IDs that this driver update replaced.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="implements">Implements</h3>
-  <div>
-      <a class="xref" href="Microsoft.UpdateServices.Metadata.Prerequisites.IUpdateWithPrerequisites.html">IUpdateWithPrerequisites</a>
-  </div>
-  <div>
-      <a class="xref" href="Microsoft.UpdateServices.Metadata.Content.IUpdateWithFiles.html">IUpdateWithFiles</a>
-  </div>
-  <div>
-      <a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithProduct.html">IUpdateWithProduct</a>
-  </div>
-  <div>
-      <a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithClassification.html">IUpdateWithClassification</a>
-  </div>
-  <div>
-      <a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithSupersededUpdates.html">IUpdateWithSupersededUpdates</a>
-  </div>
 </article>
           </div>
           

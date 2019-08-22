@@ -260,7 +260,7 @@
         </member>
         <member name="T:Microsoft.UpdateServices.Client.ServiceAccessToken">
             <summary>
-            Provides access to updates stored on an upstream update server. Requried all requests to an update server.
+            Grants access to an upstream update server. Requried for most requests to an update server.
             </summary>
         </member>
         <member name="P:Microsoft.UpdateServices.Client.ServiceAccessToken.AuthenticationInfo">
@@ -307,11 +307,8 @@
         <member name="T:Microsoft.UpdateServices.Client.UpstreamServerClient">
             <summary>
             Query updates, metadata and content from an upstream update server.
+            Results are returned as <see cref="T:Microsoft.UpdateServices.Storage.IMetadataSource"/>, through which advanced queries and filtering can be performed.
             </summary>
-            <remarks>
-            It is recommended to use the UpstreamServerClient together with an <see cref="T:Microsoft.UpdateServices.Storage.IRepository"/>. This enables caching of access tokens and service configuration,
-            speeding up queries. Using a local repository enable retrieval of delta changes between the upstream server and the local repository.
-            </remarks>
         </member>
         <member name="P:Microsoft.UpdateServices.Client.UpstreamServerClient.UpstreamEndpoint">
             <summary>
@@ -324,11 +321,6 @@
         <member name="F:Microsoft.UpdateServices.Client.UpstreamServerClient.ServerSyncClient">
             <summary>
             Client used to issue SOAP requests
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Client.UpstreamServerClient.LocalRepository">
-            <summary>
-            Local updates cache. Contains cached access tokens, service configuration and updates
             </summary>
         </member>
         <member name="F:Microsoft.UpdateServices.Client.UpstreamServerClient.AccessToken">
@@ -348,40 +340,19 @@
             </summary>
             <value>Progress data</value>
         </member>
+        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetQueryResultFileName">
+            <summary>
+            Generate a unique file name for saving the results of a query
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.#ctor(Microsoft.UpdateServices.Client.Endpoint)">
             <summary>
             Initializes a new instance of UpstreamServerClient.
             </summary>
             <param name="upstreamEndpoint">The server endpoint this client will connect to.</param>
-            <remarks>Thsi constructor is not recommended for performance reasons. It is recommended to use the constructor that takes a local repository.
-            Queries take a significant amount of time, and using a local repository enables delta queries, where only changes on the upstream server are retrieved.</remarks>
         </member>
-        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.#ctor(Microsoft.UpdateServices.Storage.IRepository)">
-            <summary>
-            Initializes a new instance of UpstreamServerClient, based on the specified local repository. The upstream
-            server endpoint is inherited from the local repository.
-            </summary>
-            <param name="localRepository">Local updates repository.
-            <para>Cached data from the repository is used for queries.</para>
-            <para>Query results are delta changes between the upstread server and the local repository.
-            </para>
-            </param>
-            <example>
-            <code>
-            // Initialize a new local repository in the current directory, tracking the official Microsoft upstream server
-            var newRepo = FileSystemRepository.Init(Environment.CurrentDirectory, Endpoint.Default.URI);
-            
-            // Create a new client based on the local repository 
-            var client = new UpstreamServerClient(newRepo);
-            
-            var categories = await client.GetCategories();
-            
-            // Save the categories query result in the local repository
-            newRepo.MergeQueryResult(categories);
-            </code>
-            </example>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.RefreshAccessToken">
+        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.RefreshAccessToken(System.String,System.Nullable{System.Guid})">
             <summary>
             Updates the access token of this client
             </summary>
@@ -393,23 +364,31 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetServerConfigData">
+            <summary>
+            Retrieves configuration data from the upstream server.
+            </summary>
+            <returns>Server configuration data</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetCategories(Microsoft.UpdateServices.Storage.IMetadataSink)">
+            <summary>
+            Gets the list of categories from the upstream server and adds them to the specified metadata collection.
+            </summary>
+            <param name="destination">Metadata collection where to add the results. If the collection implements <see cref="T:Microsoft.UpdateServices.Storage.IMetadataSource"/>, only delta changes are retrieved and added to the destination.</param>
+        </member>
         <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetCategories">
             <summary>
             Gets the list of categories from the upstream update server.
-            <para>If the client was initialized with a repository, only new or changed categories not present in the repository are retrieved.</para>
             </summary>
-            <returns>A query result containing all or changed categories.</returns>
+            <returns>An updates metadata source containing all.</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates(Microsoft.UpdateServices.Query.QueryFilter)">
+        <!-- Badly formed XML comment ignored for member "M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates(Microsoft.UpdateServices.Metadata.QueryFilter,Microsoft.UpdateServices.Storage.IMetadataSink)" -->
+        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates(Microsoft.UpdateServices.Metadata.QueryFilter)">
             <summary>
-            Gets the list of updates matching the query filter from an upstream update server.
+            Gets updates matching the query filter from an upstream update server.
             </summary>
-            <param name="updatesFilter">Updates filter. See <see cref="T:Microsoft.UpdateServices.Query.QueryFilter"/> for details.</param>
-            <returns>A query result containing all or changed updates that match the filter.</returns>
-            <remarks>
-            When a local repository is used to initialize the UpstreamServerClient, the query result is a delta relative to the local repository.
-            The query result is not merged into the store. The caller can merge the query result using <see cref="M:Microsoft.UpdateServices.Storage.IRepository.MergeQueryResult(Microsoft.UpdateServices.Query.QueryResult)"/>
-            </remarks>
+            <param name="updatesFilter">Updates filter. See <see cref="T:Microsoft.UpdateServices.Metadata.QueryFilter"/> for details.</param>
+            <returns>An updates metadata source containing updates that match the filter.</returns>
         </member>
         <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.QueryConfigData">
             <summary>
@@ -425,7 +404,7 @@
             <returns>The list of category IDs and an anchor. If an anchor was passed in, the
             list of category IDs is a delta list of categories changed since the anchor was generated.</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdateIds(Microsoft.UpdateServices.Query.QueryFilter)">
+        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdateIds(Microsoft.UpdateServices.Metadata.QueryFilter)">
             <summary>
             Retrieves category IDs from the update server: classifications, products and detectoids
             </summary>
@@ -433,12 +412,12 @@
             <returns>The list of category IDs and an anchor. If teh filter contains an anchor, the
             list of category IDs is a delta list of categories changed since the anchor was generated.</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdateDataForIds(System.Collections.Generic.List{Microsoft.UpdateServices.WebServices.ServerSync.UpdateIdentity},Microsoft.UpdateServices.Query.QueryResult)">
+        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdateDataForIds(System.Collections.Generic.List{Microsoft.UpdateServices.WebServices.ServerSync.UpdateIdentity},Microsoft.UpdateServices.Storage.IMetadataSink)">
             <summary>
             Retrieves update data for the list of update ids
             </summary>
             <param name="updateIds">The ids to retrieve data for</param>
-            <param name="result">A QueryResult to which retrieved update metadata is appended</param>
+            <param name="destination">The metadata destination to write update metadata to</param>
         </member>
         <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.CreateBatchedListFromFlatList``1(System.Collections.Generic.List{``0},System.Int32)">
             <summary>
@@ -508,75 +487,588 @@
             </summary>
             <param name="soapException">The inner SOAP exception.</param>
         </member>
-        <member name="T:Microsoft.UpdateServices.Metadata.IUpdateWithBundledUpdates">
-            <summary>
-            Interface implemented by updates that can bundle other updates
-            </summary>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.Cookie">
+            <remarks/>
         </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.IUpdateWithBundledUpdates.BundledUpdates">
-            <summary>
-            List of bundled updates
-            </summary>
-            <value>
-            List of update identities.
-            </value>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.Cookie.Expiration">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.Cookie.EncryptedData">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.SuccessFlag">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.ServicesTime">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.ServicesName">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.ServicesMachine">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.IsHttps">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.RequestContentType">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.ConfigFilePath">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.ConfigFileProjectName">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.ConfigFileEnvironmentName">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.ConfigFileLastModifiedTime">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.ConfigFileVersion">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.ConfigFileNextExpirationTime">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.ConfigFileExpirationModuloInMinutes">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.DatabaseInfo">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.MonitoredServicesResponse.CustomInfo">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerStatusRollupUpdateStatus">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerStatusRollupUpdateStatus.UpdateId">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerStatusRollupUpdateStatus.SummarizationState">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerStatusRollupUpdateStatus.LastChangeTime">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerStatusRollupInfo">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerStatusRollupInfo.InstanceId">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerStatusRollupInfo.ComputerId">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerStatusRollupInfo.EffectiveLastDetectionTime">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerStatusRollupInfo.RollupNumber">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerStatusRollupInfo.IsFullRollup">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerStatusRollupInfo.UpdateStatus">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerLastRollupNumber">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerLastRollupNumber.ComputerId">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerLastRollupNumber.RollupNumber">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.ChangedComputer">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ChangedComputer.ComputerId">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ChangedComputer.Change">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerChangeType">
+            <remarks/>
+        </member>
+        <member name="F:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerChangeType.Deleted">
+            <remarks/>
+        </member>
+        <member name="F:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerChangeType.NewParent">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.TargetGroupIdList">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.RequestedTargetGroupNames">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.IPAddress">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.FullDomainName">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.OSMajorVersion">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.OSMinorVersion">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.OSBuildNumber">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.OSServicePackMajorNumber">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.OSServicePackMinorNumber">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.OSLocale">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.OSFamily">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.OSDescription">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.ComputerMake">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.ComputerModel">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.BiosVersion">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.BiosName">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.BiosReleaseDate">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.ProcessorArchitecture">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.SuiteMask">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.OldProductType">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.NewProductType">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.SystemMetrics">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupDetails.ClientVersion">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupInfo">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupInfo.Details">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupInfo.ComputerId">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupInfo.LastSyncTime">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupInfo.LastSyncResult">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupInfo.LastReportedRebootTime">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupInfo.LastReportedStatusTime">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupInfo.LastInventoryTime">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupInfo.ParentServerId">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientActivitySummary">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientActivitySummary.UpdateId">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientActivitySummary.RevisionNumber">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientActivitySummary.InstallSuccessCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientActivitySummary.InstallFailureCount">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.OSMajorVersion">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.OSMinorVersion">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.OSBuildNumber">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.OSServicePackMajorNumber">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.OSServicePackMinorNumber">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.OSLocale">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.SuiteMask">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.OldProductType">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.NewProductType">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.SystemMetrics">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.ProcessorArchitecture">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.Count">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupClientSummary.ActivitySummaries">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.UpdateCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.DeclinedUpdateCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.ApprovedUpdateCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.NotApprovedUpdateCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.UpdatesWithStaleUpdateApprovalsCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.ExpiredUpdateCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.CriticalOrSecurityUpdatesNotApprovedForInstallCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.WsusInfrastructureUpdatesNotApprovedForInstallCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.UpdatesWithClientErrorsCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.UpdatesWithServerErrorsCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.UpdatesNeedingFilesCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.UpdatesNeededByComputersCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.UpdatesUpToDateCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.CustomComputerTargetGroupCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.ComputerTargetCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.ComputerTargetsNeedingUpdatesCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.ComputerTargetsWithUpdateErrorsCount">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupServerSummary.ComputersUpToDateCount">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupInfo">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupInfo.ServerId">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupInfo.FullDomainName">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupInfo.LastSyncTime">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupInfo.ParentServerId">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupInfo.Version">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupInfo.IsReplica">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupInfo.LastRollupTime">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupInfo.ServerSummary">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupInfo.ClientSummaries">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.RollupConfiguration">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.RollupConfiguration.DoDetailedRollup">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.RollupConfiguration.RollupResetGuid">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.RollupConfiguration.ServerId">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.RollupConfiguration.RollupDownstreamServersMaxBatchSize">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.RollupConfiguration.RollupComputersMaxBatchSize">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.RollupConfiguration.GetOutOfSyncComputersMaxBatchSize">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.RollupConfiguration.RollupComputerStatusMaxBatchSize">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.ReportingInventory">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ReportingInventory.IsCompressed">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ReportingInventory.RawXml">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ReportingInventory.CompressedXml">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.PrivateData">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.PrivateData.ComputerDnsName">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.PrivateData.UserAccountName">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.DetailedVersion">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DetailedVersion.Major">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DetailedVersion.Minor">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DetailedVersion.Build">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DetailedVersion.Revision">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DetailedVersion.ServicePackMajor">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.DetailedVersion.ServicePackMinor">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.ExtendedData">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ExtendedData.ReplacementStrings">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ExtendedData.MiscData">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ExtendedData.ComputerBrand">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ExtendedData.ComputerModel">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ExtendedData.BiosRevision">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ExtendedData.ProcessorArchitecture">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ExtendedData.OSVersion">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ExtendedData.OSLocaleID">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ExtendedData.DeviceID">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.ProcessorArchitecture">
+            <remarks/>
+        </member>
+        <member name="F:Microsoft.UpdateServices.WebServices.ServerReporting.ProcessorArchitecture.Unknown">
+            <remarks/>
+        </member>
+        <member name="F:Microsoft.UpdateServices.WebServices.ServerReporting.ProcessorArchitecture.X86Compatible">
+            <remarks/>
+        </member>
+        <member name="F:Microsoft.UpdateServices.WebServices.ServerReporting.ProcessorArchitecture.IA64Compatible">
+            <remarks/>
+        </member>
+        <member name="F:Microsoft.UpdateServices.WebServices.ServerReporting.ProcessorArchitecture.Amd64Compatible">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.UpdateRevisionIdentifier">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.UpdateRevisionIdentifier.UpdateID">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.UpdateRevisionIdentifier.RevisionNumber">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerTargetIdentifier">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ComputerTargetIdentifier.Sid">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.BasicData">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.BasicData.TargetID">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.BasicData.SequenceNumber">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.BasicData.TimeAtTarget">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.BasicData.EventInstanceID">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.BasicData.NamespaceID">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.BasicData.EventID">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.BasicData.SourceID">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.BasicData.UpdateID">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.BasicData.Win32HResult">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.BasicData.AppName">
+            <remarks/>
+        </member>
+        <member name="T:Microsoft.UpdateServices.WebServices.ServerReporting.ReportingEvent">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ReportingEvent.BasicData">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ReportingEvent.ExtendedData">
+            <remarks/>
+        </member>
+        <member name="P:Microsoft.UpdateServices.WebServices.ServerReporting.ReportingEvent.PrivateData">
+            <remarks/>
         </member>
         <member name="T:Microsoft.UpdateServices.Metadata.BundlesUpdatesParser">
             <summary>
             Parses bundled updates information from update XML blob
             </summary>
         </member>
-        <member name="T:Microsoft.UpdateServices.Metadata.IUpdateWithClassification">
-            <summary>
-            Interface implemented by updates that have one or more classifications
-            </summary>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.IUpdateWithClassification.ClassificationIds">
-            <summary>
-            Get the list of classifications for an update
-            </summary>
-            <value>
-            List of GUIDs; each GUID maps to a classification GUID
-            </value>
-        </member>
         <member name="T:Microsoft.UpdateServices.Metadata.Classification">
-            <summary>
-            Represents a Classification. Used to clasify updates on an upstream server.
-            <para>
-            Example classifications: drivers, security updates, feature packs etc.
-            </para>
-            </summary>
-            <example>
-            <code>
-            var server = new UpstreamServerClient(Endpoint.Default);
+             <summary>
+             Represents a Classification. Used to clasify updates on an upstream server.
+             <para>
+             Example classifications: drivers, security updates, feature packs etc.
+             </para>
+             </summary>
+             <example>
+             <code>
+             // Query categories
+             var categoriesSource = await server.GetCategories();
+             
+             // Get classifications
+             var classifications = categoriesSource.ClassificationsIndex.Values;
             
-            // Query categories
-            var categoriesQueryResult = await server.GetCategories();
-            
-            // Get classifications
-            var products = categoriesQueryResult.Updates.OfType&lt;Classification&gt;();
-            </code>
-            </example>
+             // Delete the query result from disk when done with it.
+             categoriesSource.Delete();
+             </code>
+             </example>
         </member>
         <member name="T:Microsoft.UpdateServices.Metadata.Detectoid">
-            <summary>
-            Represents a detectoid. Detectoids determine applicabilty of updates for a computer and as such are used
-            as pre-requisites for other updates.
-            <para>
-            Example detectoids: x64, x86, arm64, DirectX12 supported, etc.
-            </para>
-            </summary>
-            <example>
-            <code>
-            var server = new UpstreamServerClient(Endpoint.Default);
+             <summary>
+             Represents a detectoid. Detectoids determine applicabilty of updates for a computer and as such are used
+             as pre-requisites for other updates.
+             <para>
+             Example detectoids: x64, x86, arm64, DirectX12 supported, etc.
+             </para>
+             </summary>
+             <example>
+             <code>
+             var categoriesSource = await server.GetCategories();
             
-            // Query categories
-            var categoriesQueryResult = await server.GetCategories();
-            
-            // Get detectoids
-            var detectoids = categoriesQueryResult.Updates.OfType&lt;Detectoid&gt;();
-            </code>
-            </example>
+             // Create a filter for quering drivers
+             var filter = new QueryFilter(
+                  categoriesSource.ProductsIndex.Values,
+                  categoriesSource.ClassificationsIndex.Values.Where(c => c.Title.Equals("Driver")));
+             
+             // Get drivers
+             var updatesSource = await server.GetUpdates(filter);
+             var drivers = updatesSource.UpdatesIndex.Values.OfType&lt;DriverUpdate&gt;();
+             
+             updatesSource.Delete();
+             categoriesSource.Delete();
+             
+             </code>
+             </example>
         </member>
         <member name="T:Microsoft.UpdateServices.Metadata.DriverMetadata">
             <summary>
@@ -675,18 +1167,6 @@
             </code>
             </example>
         </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.DriverUpdate.ProductIds">
-            <summary>
-            Gets the list of product IDs for the driver update
-            </summary>
-            <value>List of product IDs. The GUIDs map to a <see cref="T:Microsoft.UpdateServices.Metadata.Product"/></value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.DriverUpdate.ClassificationIds">
-            <summary>
-            Gets the list of classifications for the driver update
-            </summary>
-            <value>List of classification IDs. The GUIDs map to a <see cref="T:Microsoft.UpdateServices.Metadata.Classification"/></value>
-        </member>
         <member name="P:Microsoft.UpdateServices.Metadata.DriverUpdate.Metadata">
             <summary>
             Gets the list of driver update extended metadata.
@@ -695,76 +1175,23 @@
             List of driver metadata (hardware ID, version, etc.)
             </value>
         </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.DriverUpdate.Files">
-            <summary>
-            Gets the list of files (content) for the driver update
-            </summary>
-            <value>
-            List of content files
-            </value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.DriverUpdate.Prerequisites">
-            <summary>
-            Get the list of prerequisites for the driver update.
-            </summary>
-            <value>
-            List of prerequisites
-            </value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.DriverUpdate.SupersededUpdates">
-            <summary>
-            Get the list of updates that this driver update superseds
-            </summary>
-            <value>
-            List of update IDs that this driver update replaced.
-            </value>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.DriverUpdate.#ctor(Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData,System.Xml.Linq.XDocument)">
+        <member name="M:Microsoft.UpdateServices.Metadata.DriverUpdate.#ctor(Microsoft.UpdateServices.Metadata.Identity,System.Xml.Linq.XDocument)">
             <summary>
             Create a DriverUpdate from an update XML and raw update data
             </summary>
-            <param name="serverSyncUpdateData"></param>
+            <param name="id">Update ID</param>
             <param name="xdoc">Update XML document</param>
         </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.DriverUpdate.LoadExtendedAttributesFromXml(System.IO.StreamReader,System.Collections.Generic.Dictionary{System.String,Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl})">
+        <member name="M:Microsoft.UpdateServices.Metadata.DriverUpdate.LoadAttributesFromMetadataSource">
             <summary>
             Sets extended attributes from the XML metadata.
             </summary>
-            <param name="xmlReader">XML stream</param>
-            <param name="contentFiles">All known content files. Used to resolve the hash from XML metadata to an actual file</param>
         </member>
         <member name="M:Microsoft.UpdateServices.Metadata.DriverUpdate.ParseDriverMetadata(System.Xml.Linq.XDocument)">
             <summary>
              Parse the inner metadata from XML
             </summary>
             <param name="xdoc">Update XML document</param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.DriverUpdate.Microsoft#UpdateServices#Metadata#IUpdateWithProductInternal#ResolveProduct(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Product})">
-            <summary>
-            Resolves the parent product of this driver.
-            This is done by finding the "AtleastOne" prerequisite with IsCategory attribute that matches a product ID
-            </summary>
-            <param name="allProducts">All known products</param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.DriverUpdate.Microsoft#UpdateServices#Metadata#Prerequisites#IUpdateWithClassificationInternal#ResolveClassification(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Classification})">
-            <summary>
-            Resolves the classification of this driver.
-            This is done by finding the "AtleastOne" prerequisite with IsCategory attribute that matches a classification ID
-            </summary>
-            <param name="allClassifications">All known classifications</param>
-        </member>
-        <member name="T:Microsoft.UpdateServices.Metadata.Content.IUpdateWithFiles">
-            <summary>
-            Interface implemented by updates that have content (<see cref="T:Microsoft.UpdateServices.Metadata.Content.IUpdateWithFiles"/>)
-            </summary>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.Content.IUpdateWithFiles.Files">
-            <summary>
-            Gets the list of <see cref="T:Microsoft.UpdateServices.Metadata.Content.UpdateFile"/> for an update
-            </summary>
-            <value>
-            List of files
-            </value>
         </member>
         <member name="T:Microsoft.UpdateServices.Metadata.Content.UpdateFile">
             <summary>
@@ -858,17 +1285,22 @@
             </summary>
             <value>Base64 encoded string</value>
         </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.HexString">
+            <summary>
+            Gets the HEX string representation of the digest 
+            </summary>
+        </member>
         <member name="T:Microsoft.UpdateServices.Metadata.Content.UpdateFileParser">
             <summary>
             Parses file information from update XML blob
             </summary>
         </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.Content.UpdateFileParser.Parse(System.Xml.Linq.XDocument,System.Collections.Generic.Dictionary{System.String,Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl})">
+        <member name="M:Microsoft.UpdateServices.Metadata.Content.UpdateFileParser.Parse(System.Xml.Linq.XDocument,Microsoft.UpdateServices.Storage.IMetadataSource)">
             <summary>
             Create an UpdateFile object with metadata from the XML blob and URLs from the url data array
             </summary>
             <param name="xdoc">The XML element that holds file metadata</param>
-            <param name="urlData">Dictionary of known file URLs</param>
+            <param name="metadataSource">The metadata source that contains files URL information.</param>
             <returns></returns>
         </member>
         <member name="T:Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl">
@@ -937,6 +1369,65 @@
             <param name="rhs">Right UpdateFileUrl</param>
             <returns>False if the two UpdateFileUrl have the same content hash, true otherwise</returns>
         </member>
+        <member name="T:Microsoft.UpdateServices.Metadata.MetadataFilter">
+            <summary>
+            Represents a filter that can be applied to update metadata
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.MetadataFilter.ClassificationFilter">
+            <summary>
+            Get or set the Classification filter. 
+            </summary>
+            <value>List of classification IDs (ID only, no revision)</value>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.MetadataFilter.ProductFilter">
+            <summary>
+            Get or set the Product filter.
+            </summary>
+            <value>List of product IDs (ID only, no revision)</value>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.MetadataFilter.IdFilter">
+            <summary>
+            Get of set the ID filter.
+            </summary>
+            <value>List of update IDs (ID only, no revision)</value>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.MetadataFilter.TitleFilter">
+            <summary>
+            Get or set the title filter.
+            </summary>
+            <value>Title filter string</value>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.MetadataFilter.SkipSuperseded">
+            <summary>
+            Get or set whether to filter or not superseded updates
+            </summary>
+            <value>True to skip superseded updates, false otherwise</value>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.MetadataFilter.FirstX">
+            <summary>
+            Returns the first X results only
+            </summary>
+            <value>0 to include all updates, greater than 0 value to limit output.</value>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.MetadataFilter.#ctor">
+            <summary>
+            Initialize a new filter. A newly initialized filter matches all updates or categories.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.MetadataFilter.FromJson(System.String)">
+            <summary>
+            Create a filter from JSON
+            </summary>
+            <param name="source">The JSON string</param>
+            <returns>A filter for metadata in a updates metadata source</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.MetadataFilter.ToJson">
+            <summary>
+            Serializes this filter to JSON
+            </summary>
+            <returns>The JSON string</returns>
+        </member>
         <member name="T:Microsoft.UpdateServices.Metadata.Prerequisites.AtLeastOne">
             <summary>
             A collection of prerequisites, of which at least one must be met for the AtLeastOne prerequisite to be satisfied.
@@ -968,7 +1459,7 @@
             This is needed because the category and classification for an update is encoded as a prerequisite
             </summary>
         </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.Prerequisites.CategoryResolver.ResolveProductFromPrerequisites(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite},System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Product})">
+        <member name="M:Microsoft.UpdateServices.Metadata.Prerequisites.CategoryResolver.ResolveProductFromPrerequisites(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite},System.Collections.Generic.IReadOnlyList{Microsoft.UpdateServices.Metadata.Identity})">
             <summary>
             Resolve product from prerequisites and list of all known products
             </summary>
@@ -976,7 +1467,7 @@
             <param name="allProducts">All known products</param>
             <returns>All products that were found in the prerequisites list</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.Prerequisites.CategoryResolver.ResolveClassificationFromPrerequisites(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite},System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Classification})">
+        <member name="M:Microsoft.UpdateServices.Metadata.Prerequisites.CategoryResolver.ResolveClassificationFromPrerequisites(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite},System.Collections.Generic.HashSet{Microsoft.UpdateServices.Metadata.Identity})">
             <summary>
             Resolve classification from prerequisites and list of all known classifications
             </summary>
@@ -989,19 +1480,6 @@
             Base, abstract class for update prerequisites.
             <para>See <see cref="T:Microsoft.UpdateServices.Metadata.Prerequisites.Simple"/> and <see cref="T:Microsoft.UpdateServices.Metadata.Prerequisites.AtLeastOne"/> for possible prerequisite classes.</para>
             </summary>
-        </member>
-        <member name="T:Microsoft.UpdateServices.Metadata.Prerequisites.IUpdateWithPrerequisites">
-            <summary>
-            Interface implemented by updates that have prerequisites
-            </summary>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.Prerequisites.IUpdateWithPrerequisites.Prerequisites">
-            <summary>
-            Gets the list of prerequisites for an update
-            </summary>
-            <value>
-            List of prerequisites (<see cref="T:Microsoft.UpdateServices.Metadata.Prerequisites.Simple"/>, <see cref="T:Microsoft.UpdateServices.Metadata.Prerequisites.AtLeastOne"/> etc.)
-            </value>
         </member>
         <member name="T:Microsoft.UpdateServices.Metadata.Prerequisites.Simple">
             <summary>
@@ -1021,60 +1499,125 @@
             </summary>
             <param name="xmlData">The XML that contains the data for the prerequisite</param>
         </member>
-        <member name="T:Microsoft.UpdateServices.Metadata.IUpdateWithProduct">
-            <summary>
-            Interface implemeted by updates that belong to a <see cref="T:Microsoft.UpdateServices.Metadata.Product"/>
-            </summary>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.IUpdateWithProduct.ProductIds">
-            <summary>
-            Gets the list of parent Products Ids of this update.
-            </summary>
-            <value>
-            List of GUIDs
-            </value>
-        </member>
-        <member name="T:Microsoft.UpdateServices.Metadata.IUpdateWithProductInternal">
-            <summary>
-            Internal interface that exposes the ResolveProduct operation on an update that has a parent Product
-            </summary>
-        </member>
         <member name="T:Microsoft.UpdateServices.Metadata.Product">
-            <summary>
-            Metadata for a product category.
-            </summary>
-            <example>
-            <code>
-            var server = new UpstreamServerClient(Endpoint.Default);
+             <summary>
+             Metadata for a product category.
+             </summary>
+             <example>
+             <code>
+             // Query categories
+             var categoriesSource = await server.GetCategories();
+             
+             // Get products
+             var products = categoriesSource.ProductsIndex.Values;
             
-            // Query categories
-            var categoriesQueryResult = await server.GetCategories();
+             // Delete the query result from disk when done with it.
+             categoriesSource.Delete();
+             </code>
+             </example>
+        </member>
+        <member name="T:Microsoft.UpdateServices.Metadata.QueryFilter">
+             <summary>
+             Represents a filter used for quering updates. Combines categories and classifications filters
+             <para>To create a QueryFilter, query the categories on the upstream server first.</para>
+             </summary>
+             <example>
+             <code>
+             var server = new UpstreamServerClient(Endpoint.Default);
+             
+             var categories = await server.GetCategories();
+             
+             // Create a filter for first product and all classifications
+             var filter = new QueryFilter(
+                 categories.Updates.OfType&lt;Product&gt;().Take(1),
+                 categories.Updates.OfType&lt;Classification&gt;());
             
-            // Get Products
-            var products = categoriesQueryResult.Updates.OfType&lt;Product&gt;();
-            </code>
-            </example>
+             // Get updates
+             var updatesQueryResult = await server.GetUpdates(filter);
+             </code>
+             </example>
         </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.Product.ProductIds">
+        <member name="P:Microsoft.UpdateServices.Metadata.QueryFilter.ProductsFilter">
             <summary>
-            Gets the list of parent Products of this Product.
-            <para>For example, Microsoft is the parent product of the "Windows" product, which is the parent product of the "Windows 8.1" product.</para>
+            Gets the list of products in the filter.
             </summary>
-            <value>
-            List of GUIDs
-            </value>
+            <value>List of product identities.</value>
         </member>
-        <member name="F:Microsoft.UpdateServices.Metadata.Product.TemporaryPrerequisites">
+        <member name="P:Microsoft.UpdateServices.Metadata.QueryFilter.ClassificationsFilter">
             <summary>
-            Temporary list of prerequisites; Used to resolve the parent product, after which the list is released.
+            Gets the list of classifications in the filter.
+            </summary>
+            <value>List of classification identities.</value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.QueryFilter.Anchor">
+            <summary>
+            Server returned anchor for this query. Save it to use in the future when using this filter
             </summary>
         </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.Product.Microsoft#UpdateServices#Metadata#IUpdateWithProductInternal#ResolveProduct(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Product})">
+        <member name="M:Microsoft.UpdateServices.Metadata.QueryFilter.#ctor(System.String)">
             <summary>
-            Resolves the parent product of this update.
-            This is done by finding the "AtleastOne" prerequisite with IsCategory attribute that matches a product ID
+            Create a filter with an anchor and no categories or products
             </summary>
-            <param name="allProducts">All known products</param>
+            <param name="anchor"></param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.QueryFilter.#ctor(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Update},System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Update},System.String)">
+            <summary>
+            Create a filter that contains categories or classifications
+            </summary>
+            <param name="categories">The categories filter used</param>
+            <param name="classifications">The classifications filter used</param>
+            <param name="anchor">The anchor received from the service after the query</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.QueryFilter.#ctor(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Product},System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Classification})">
+            <summary>
+            Initialize a new QueryFilter from the specified products and categories.
+            </summary>
+            <param name="products">The products filter</param>
+            <param name="classifications">The classifications filter</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.QueryFilter.ToServerSyncFilter">
+            <summary>
+            Creates a ServerSyncFilter object to be used with GetRevisionIdListAsync
+            </summary>
+            <returns>A ServerSyncFilter instance</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.QueryFilter.Equals(System.Object)">
+            <summary>
+            Override Equals for 2 QueryFilter objects
+            </summary>
+            <param name="obj">Other QueryFilter</param>
+            <returns>
+            <para>True if the two QueryFilter are identical (same product and classification filters).</para>
+            <para>False otherwise</para>
+            </returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.QueryFilter.op_Equality(Microsoft.UpdateServices.Metadata.QueryFilter,Microsoft.UpdateServices.Metadata.QueryFilter)">
+            <summary>
+            Override equality operator QueryFilter objects
+            </summary>
+            <param name="lhs">Left QueryFilter</param>
+            <param name="rhs">Right QueryFilter</param>
+            <returns>
+            <para>True if both lhs and rhs are QueryFilter and they contain the same classification and product filters</para>
+            <para>False otherwise</para>
+            </returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.QueryFilter.op_Inequality(Microsoft.UpdateServices.Metadata.QueryFilter,Microsoft.UpdateServices.Metadata.QueryFilter)">
+            <summary>
+            Override inequality operator QueryFilter objects
+            </summary>
+            <param name="lhs">Left QueryFilter</param>
+            <param name="rhs">Right QueryFilter</param>
+            <returns>
+            <para>True if both lhs and rhs are not QueryFilter or they contain different classification and product filters</para>
+            <para>False otherwise</para>
+            </returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.QueryFilter.GetHashCode">
+            <summary>
+            Returns a hash code based on the hash codes of the contained classification and products
+            </summary>
+            <returns>Hash code</returns>
         </member>
         <member name="T:Microsoft.UpdateServices.Metadata.SoftwareUpdate">
             <summary>
@@ -1082,65 +1625,23 @@
             </summary>
             <example>
             <code>
-            var server = new UpstreamServerClient(Endpoint.Default);
             
             // Query categories
-            var categories = await server.GetCategories();
+            var categoriesSource = await server.GetCategories();
             
             // Create a filter for Windows 10 1803 updates
             var filter = new QueryFilter(
-                categories.Updates.OfType&lt;Product&gt;().Where(p => p.Title.Contains("Windows 10 version 1803 and Later")),
-                categories.Updates.OfType&lt;Classification&gt;());
-                
+                categoriesSource.ProductsIndex.Values.Where(p => p.Title.Contains("Windows 10 version 1803 and Later")),
+                categoriesSource.ClassificationsIndex.Values);
+            
             // Get updates
-            var updatesQueryResult = await server.GetUpdates(filter);
-            var softwareUpdates = updatesQueryResult.Updates.OfType&lt;SoftwareUpdate&gt;();
+            var metadataSource = await server.GetUpdates(filter);
+            var softwareUpdates = metadataSource.UpdatesIndex.Values.OfType&lt;SoftwareUpdate&gt;();
+            
+            metadataSource.Delete();
+            categoriesSource.Delete();
             </code>
             </example>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.SoftwareUpdate.ProductIds">
-            <summary>
-            Gets the list of product IDs for the software update
-            </summary>
-            <value>List of product IDs. The GUIDs map to a <see cref="T:Microsoft.UpdateServices.Metadata.Product"/></value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.SoftwareUpdate.ClassificationIds">
-            <summary>
-            Gets the list of classifications for the software update
-            </summary>
-            <value>List of classification IDs. The GUIDs map to a <see cref="T:Microsoft.UpdateServices.Metadata.Classification"/></value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.SoftwareUpdate.Files">
-            <summary>
-            Gets the list of files (content) for the software update
-            </summary>
-            <value>
-            List of content files
-            </value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.SoftwareUpdate.Prerequisites">
-            <summary>
-            Get the list of prerequisites for the software update.
-            </summary>
-            <value>
-            List of prerequisites
-            </value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.SoftwareUpdate.SupersededUpdates">
-            <summary>
-            Get the list of updates that this software update superseds
-            </summary>
-            <value>
-            List of update IDs that this software update replaced.
-            </value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.SoftwareUpdate.BundledUpdates">
-            <summary>
-            Get the list of other updates bundled with this software update. 
-            </summary>
-            <value>
-            List of update IDs that this software update contains.
-            </value>
         </member>
         <member name="P:Microsoft.UpdateServices.Metadata.SoftwareUpdate.SupportUrl">
             <summary>
@@ -1169,55 +1670,23 @@
             OS upgrade type string
             </value>
         </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.SoftwareUpdate.#ctor">
-            <summary>
-            Private constructor used by the deserializer
-            </summary>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.SoftwareUpdate.#ctor(Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData,System.Xml.Linq.XDocument)">
+        <member name="M:Microsoft.UpdateServices.Metadata.SoftwareUpdate.#ctor(Microsoft.UpdateServices.Metadata.Identity,System.Xml.Linq.XDocument)">
             <summary>
             Create a SoftwareUpdate by parsing it's properties from the specified XML and raw update data
             </summary>
-            <param name="serverSyncUpdateData">The raw update metadata received from the upstream server</param>
+            <param name="id">Update ID</param>
             <param name="xdoc">XML document with update metadata</param>
         </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.SoftwareUpdate.LoadExtendedAttributesFromXml(System.IO.StreamReader,System.Collections.Generic.Dictionary{System.String,Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl})">
+        <member name="M:Microsoft.UpdateServices.Metadata.SoftwareUpdate.LoadAttributesFromMetadataSource">
             <summary>
             Sets extended attributes from the XML metadata.
             </summary>
-            <param name="xmlReader">XML stream containing metadata</param>
-            <param name="contentFiles">All known content files. Used to resolve the hash from XML metadata to an actual file</param>
         </member>
         <member name="M:Microsoft.UpdateServices.Metadata.SoftwareUpdate.GetPropertiesFromXml(System.Xml.Linq.XDocument)">
             <summary>
             Decode SoftwareUpdate specific properties
             </summary>
             <param name="xdoc"></param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.SoftwareUpdate.Microsoft#UpdateServices#Metadata#IUpdateWithProductInternal#ResolveProduct(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Product})">
-            <summary>
-            Resolves the parent product of this software update.
-            This is done by finding the "AtleastOne" prerequisite with IsCategory attribute that matches a product ID
-            </summary>
-            <param name="allProducts">All known products</param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.SoftwareUpdate.Microsoft#UpdateServices#Metadata#Prerequisites#IUpdateWithClassificationInternal#ResolveClassification(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Classification})">
-            <summary>
-            Resolves the classification of this software update.
-            This is done by finding the "AtleastOne" prerequisite with IsCategory attribute that matches a classification ID
-            </summary>
-            <param name="allClassifications">All known products</param>
-        </member>
-        <member name="T:Microsoft.UpdateServices.Metadata.IUpdateWithSupersededUpdates">
-            <summary>
-            Interface implemented by updates that superseed other updates
-            </summary>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.IUpdateWithSupersededUpdates.SupersededUpdates">
-            <summary>
-            List of Update Ids superseded by an update.
-            </summary>
-            <value>List of update <see cref="T:Microsoft.UpdateServices.Metadata.Identity"/></value>
         </member>
         <member name="T:Microsoft.UpdateServices.Metadata.SupersededUpdatesParser">
             <summary>
@@ -1267,54 +1736,132 @@
             Update identity.
             </value>
         </member>
-        <member name="F:Microsoft.UpdateServices.Metadata.Update.UpdateType">
-            <summary>
-            The type of update
-            </summary>
-        </member>
         <member name="P:Microsoft.UpdateServices.Metadata.Update.Title">
             <summary>
             Get the category or update title
             </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.IsBundle">
+            <summary>
+            Set for updates that bundle other updates
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.IsBundled">
+            <summary>
+            Set for updates that are bundled together with other updates
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.BundledUpdates">
+            <summary>
+            List of bundled updates
+            </summary>
+            <value>
+            List of update identities.
+            </value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.BundleParent">
+            <summary>
+            Gets the update within which this update is bundled
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.HasPrerequisites">
+            <summary>
+            Determine if the update has prerequisites
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.HasProduct">
+            <summary>
+            Check if this update has a parent product
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.HasClassification">
+            <summary>
+            Check if this update has a classification
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.ProductIds">
+            <summary>
+            Gets the list of product IDs for the update
+            </summary>
+            <value>List of product IDs. The GUIDs map to a <see cref="T:Microsoft.UpdateServices.Metadata.Product"/></value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.ClassificationIds">
+            <summary>
+            Gets the list of classifications for the driver update
+            </summary>
+            <value>List of classification IDs. The GUIDs map to a <see cref="T:Microsoft.UpdateServices.Metadata.Classification"/></value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.Prerequisites">
+            <summary>
+            Get the list of prerequisites
+            </summary>
+            <value>
+            List of prerequisites
+            </value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.IsSupersedingUpdates">
+            <summary>
+            Check if an update superseds other updates
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.IsSuperseded">
+            <summary>
+            Check if an update superseds other updates
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.SupersededUpdates">
+            <summary>
+            List of Update Ids superseded by an update.
+            </summary>
+            <value>List of update <see cref="P:Microsoft.UpdateServices.Metadata.Update.Identity"/></value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.SupersedingUpdate">
+            <summary>
+            Get the update that superseded this update
+            </summary>
+            <value>The identity of the update that superseds this update</value>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.Update.IsApplicable(System.Collections.Generic.List{System.Guid})">
+            <summary>
+            Determines if the update is applicable based on its list of prerequisites and the list of installed updates (prerequisites) on a computer
+            </summary>
+            <param name="installedPrerequisites">List of installed updates on a computer</param>
+            <returns>True if all prerequisites are met, false otherwise</returns>
         </member>
         <member name="P:Microsoft.UpdateServices.Metadata.Update.Description">
             <summary>
             Get the category or update description
             </summary>
         </member>
-        <member name="F:Microsoft.UpdateServices.Metadata.Update.LastChanged">
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.HasFiles">
             <summary>
-            Time when the update was added to the repository
+            Check if an update contains content files
             </summary>
         </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.Update.IsSuperseded">
+        <member name="P:Microsoft.UpdateServices.Metadata.Update.Files">
             <summary>
-            Check if the update is superseded by another update
+            Gets the list of files (content) for update
             </summary>
+            <value>
+            List of content files
+            </value>
         </member>
-        <member name="F:Microsoft.UpdateServices.Metadata.Update.XmlData">
-            <summary>
-            XML data received from the server. It is not serialized with this object but rather
-            saved independently to an XML file on disk
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Metadata.Update.ExtendedAttributesLoaded">
+        <member name="F:Microsoft.UpdateServices.Metadata.Update.AttributesLoaded">
             <summary>
             True if extended attributes have been loaded
             </summary>
         </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.Update.FromServerSyncUpdateData(Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData)">
+        <member name="M:Microsoft.UpdateServices.Metadata.Update.FromUpdateXml(Microsoft.UpdateServices.Metadata.Identity,System.Xml.Linq.XDocument)">
             <summary>
-            Construct an update by decoding the contained XML
+            Construct an update from update metadata (XML)
             </summary>
-            <param name="serverSyncUpdateData"></param>
+            <param name="id">Update ID</param>
+            <param name="xdoc">Update XML metadata</param>
         </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.Update.LoadExtendedAttributesFromXml(System.IO.StreamReader,System.Collections.Generic.Dictionary{System.String,Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl})">
+        <member name="M:Microsoft.UpdateServices.Metadata.Update.LoadAttributesFromMetadataSource">
             <summary>
             Loads extended attributes from XML. Classes that inherit should provide an implementation.
             </summary>
-            <param name="xmlReader">The XML stream</param>
-            <param name="contentFiles">Dictionary of known update files. Used to resolve file hashes to URLs</param>
         </member>
         <member name="M:Microsoft.UpdateServices.Metadata.Update.GetUpdateTypeFromXml(System.Xml.Linq.XDocument)">
             <summary>
@@ -1330,7 +1877,14 @@
             <param name="xdoc"></param>
             <returns></returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.Update.GetTitleAndDescriptionFromXml(System.Xml.Linq.XDocument)">
+        <member name="M:Microsoft.UpdateServices.Metadata.Update.GetDescriptionFromXml(System.Xml.Linq.XDocument)">
+            <summary>
+            Parse update title and description
+            </summary>
+            <param name="xdoc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.Update.GetTitleFromXml(System.Xml.Linq.XDocument)">
             <summary>
             Parse update title and description
             </summary>
@@ -1448,207 +2002,6 @@
             </summary>
             <returns>Identity string</returns>
         </member>
-        <member name="T:Microsoft.UpdateServices.Query.QueryFilter">
-             <summary>
-             Represents a filter used for quering updates. Combines categories and classifications filters
-             <para>To create a QueryFilter, query the categories on the upstream server first.</para>
-             </summary>
-             <example>
-             <code>
-             var server = new UpstreamServerClient(Endpoint.Default);
-             
-             var categories = await server.GetCategories();
-             
-             // Create a filter for first product and all classifications
-             var filter = new QueryFilter(
-                 categories.Updates.OfType&lt;Product&gt;().Take(1),
-                 categories.Updates.OfType&lt;Classification&gt;());
-            
-             // Get updates
-             var updatesQueryResult = await server.GetUpdates(filter);
-             </code>
-             </example>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Query.QueryFilter.ProductsFilter">
-            <summary>
-            Gets the list of products in the filter.
-            </summary>
-            <value>List of product identities.</value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Query.QueryFilter.ClassificationsFilter">
-            <summary>
-            Gets the list of classifications in the filter.
-            </summary>
-            <value>List of classification identities.</value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Query.QueryFilter.Anchor">
-            <summary>
-            Server returned anchor for this query. Save it to use in the future when using this filter
-            </summary>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Query.QueryFilter.IsCategoriesQuery">
-            <summary>
-            True if this filter was used to query categories; false otherwise.
-            </summary>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryFilter.#ctor(System.String)">
-            <summary>
-            Create a filter with an anchor and no categories or products
-            </summary>
-            <param name="anchor"></param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryFilter.#ctor(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Update},System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Update},System.String)">
-            <summary>
-            Create a filter that contains categories or classifications
-            </summary>
-            <param name="categories">The categories filter used</param>
-            <param name="classifications">The classifications filter used</param>
-            <param name="anchor">The anchor received from the service after the query</param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryFilter.#ctor(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Product},System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Classification})">
-            <summary>
-            Initialize a new QueryFilter from the specified products and categories.
-            </summary>
-            <param name="products">The products filter</param>
-            <param name="classifications">The classifications filter</param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryFilter.ToServerSyncFilter">
-            <summary>
-            Creates a ServerSyncFilter object to be used with GetRevisionIdListAsync
-            </summary>
-            <returns>A ServerSyncFilter instance</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryFilter.Equals(System.Object)">
-            <summary>
-            Override Equals for 2 QueryFilter objects
-            </summary>
-            <param name="obj">Other QueryFilter</param>
-            <returns>
-            <para>True if the two QueryFilter are identical (same product and classification filters).</para>
-            <para>False otherwise</para>
-            </returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryFilter.op_Equality(Microsoft.UpdateServices.Query.QueryFilter,Microsoft.UpdateServices.Query.QueryFilter)">
-            <summary>
-            Override equality operator QueryFilter objects
-            </summary>
-            <param name="lhs">Left QueryFilter</param>
-            <param name="rhs">Right QueryFilter</param>
-            <returns>
-            <para>True if both lhs and rhs are QueryFilter and they contain the same classification and product filters</para>
-            <para>False otherwise</para>
-            </returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryFilter.op_Inequality(Microsoft.UpdateServices.Query.QueryFilter,Microsoft.UpdateServices.Query.QueryFilter)">
-            <summary>
-            Override inequality operator QueryFilter objects
-            </summary>
-            <param name="lhs">Left QueryFilter</param>
-            <param name="rhs">Right QueryFilter</param>
-            <returns>
-            <para>True if both lhs and rhs are not QueryFilter or they contain different classification and product filters</para>
-            <para>False otherwise</para>
-            </returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryFilter.GetHashCode">
-            <summary>
-            Returns a hash code based on the hash codes of the contained classification and products
-            </summary>
-            <returns>Hash code</returns>
-        </member>
-        <member name="T:Microsoft.UpdateServices.Query.QueryResult">
-            <summary>
-            Stores the result of a query for updates or categories.
-            <para>A QueryResult can be merged into a <see cref="T:Microsoft.UpdateServices.Storage.IRepository"/> to persist the results.</para>
-            </summary>
-            <remarks>
-            The QueryResult is partially backed by the file system. Dispose the QueryResult object to delete those temporary files.
-            </remarks>
-            <example>
-            <code>
-            // Create a new local repository
-            var localRepo = FileSystemRepository.Init(Environment.CurrentDirectory, Endpoint.Default.URI);
-            
-            // Create a new UpstreamServerClient using the local repository
-            var server = new UpstreamServerClient(localRepo);
-            
-            // Query categories
-            var categoriesQueryResult = await server.GetCategories();
-            
-            // Save the categories query result in the local repository
-            localRepo.MergeQueryResult(categoriesQueryResult);
-            </code>
-            </example>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Query.QueryResult.Filter">
-            <summary>
-            Gets the filter used for the query
-            </summary>
-            <value>Query filtery</value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Query.QueryResult.Updates">
-            <summary>
-            Gets the list of updates or categories returned by a query.
-            </summary>
-            <value>List of updates</value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Query.QueryResult.Files">
-            <summary>
-            Gets the dictionary of file URLs associated with updates returned by the query, indexed by file content hash.
-            </summary>
-            <value>Dictionary of update files</value>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Query.QueryResult.TempDirectory">
-            <summary>
-            Temporary directory that contains XML metadata for updates.
-            XML data is written to disk to avoid running out of memory when sync'ing a large number
-            of updates
-            </summary>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryResult.CreateCategoriesQueryResult(System.String)">
-            <summary>
-            Create a query result for a categories query
-            </summary>
-            <param name="anchor">The anchor returned by the service</param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryResult.CreateUpdatesQueryResult(Microsoft.UpdateServices.Query.QueryFilter,System.String)">
-            <summary>
-            Create a query result for an updates query
-            </summary>
-            <param name="filter">The filter used for the query</param>
-            <param name="anchor">The anchor returned by the service</param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryResult.AddFile(Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl)">
-            <summary>
-            Adds an update content file URL () to the result
-            </summary>
-            <param name="file">The file to add</param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryResult.AddUpdate(Microsoft.UpdateServices.Metadata.Update)">
-            <summary>
-            Adds an update to the query result. The XML metadata is written to disk to avoid running out of memory
-            </summary>
-            <param name="update">The update to add. The in-memory XML string is released after writing it to disk</param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryResult.GetUpdateXmlPath(Microsoft.UpdateServices.Metadata.Update)">
-            <summary>
-            Returns the path to the update XML in the temporary directory
-            </summary>
-            <param name="update">The update to get the path for.</param>
-            <returns>A fully qualified path to the XML file belonging to the specified update</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryResult.GetUpdateIndex(Microsoft.UpdateServices.Metadata.Update)">
-            <summary>
-            Returns an index for an update (number between 0 and 255) based on the update\s ID.
-            </summary>
-            <param name="update">The update to get the index for</param>
-            <returns>String representation of the index</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Query.QueryResult.Dispose">
-            <summary>
-            Deletes the temporary directory that contains XML metadata
-            </summary>
-        </member>
         <member name="T:Microsoft.UpdateServices.Server.ContentController">
             <summary>
             MVC controller for handling content requests on an upstream updates server.
@@ -1656,11 +2009,19 @@
         </member>
         <member name="M:Microsoft.UpdateServices.Server.ContentController.GetUpdateContent(System.String,System.String)">
             <summary>
-            Handle HTTP get requests on the Content/(Directory)/(FileName) URLs
+            Handle HTTP GET requests on the Content/(Directory)/(FileName) URLs
             </summary>
             <param name="directory">The directory name for an update file</param>
             <param name="name">The file name for an update file</param>
             <returns>File content on success, other error codes otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Server.ContentController.GetUpdateContentHead(System.String,System.String)">
+            <summary>
+            Handle HTTP HEAD requests on the Content/(Directory)/(FileName) URLs
+            </summary>
+            <param name="directory">The directory name for an update file</param>
+            <param name="name">The file name for an update file</param>
+            <returns>File header on success, other error codes otherwise</returns>
         </member>
         <member name="T:Microsoft.UpdateServices.Server.AuthenticationWebService">
             <summary>
@@ -1680,6 +2041,11 @@
             GetAuthorizationCookieAsync returns AuthorizationCookie instead of the nested GetAuthorizationCookieResult\GetAuthorizationResultBody
             </summary>
         </member>
+        <member name="T:Microsoft.UpdateServices.Server.IReportingServiceAspNetCore">
+            <summary>
+            Declare an interface for the reporting web service (WCF) that can be used in AspNetCore with slight modifications.
+            </summary>
+        </member>
         <member name="T:Microsoft.UpdateServices.Server.IServerSyncAspNetCore">
             <summary>
             Declare an interface for the ServerSyncWebService (WCF) that can be used in AspNetCore with slight modifications.
@@ -1687,14 +2053,19 @@
             ensures proper serialization with SoapCore
             </summary>
         </member>
+        <member name="T:Microsoft.UpdateServices.Server.ReportingWebService">
+            <summary>
+            Reporting service implementation.
+            </summary>
+        </member>
         <member name="T:Microsoft.UpdateServices.Server.ServerSyncWebService">
             <summary>
             Upstream update server implementation. Provides updates over the ServerSync protocol to downstream servers.
             </summary>
         </member>
-        <member name="F:Microsoft.UpdateServices.Server.ServerSyncWebService.LocalRepository">
+        <member name="F:Microsoft.UpdateServices.Server.ServerSyncWebService.MetadataSource">
             <summary>
-            The local repository from where updates are served.
+            The source of upate metadata that this server serves.
             </summary>
         </member>
         <member name="F:Microsoft.UpdateServices.Server.ServerSyncWebService.ServiceConfiguration">
@@ -1702,14 +2073,13 @@
             Cached service configuration
             </summary>
         </member>
-        <member name="M:Microsoft.UpdateServices.Server.ServerSyncWebService.#ctor(Microsoft.UpdateServices.Storage.IRepository,Microsoft.UpdateServices.Storage.RepositoryFilter,System.Boolean)">
+        <member name="M:Microsoft.UpdateServices.Server.ServerSyncWebService.#ctor(Microsoft.UpdateServices.Storage.IMetadataSource,Microsoft.UpdateServices.Metadata.MetadataFilter,Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)">
             <summary>
             Instantiate the server and serve updates from the local repo
             </summary>
-            <param name="localRepo">The repository to server updates from</param>
+            <param name="metadataSource">The update metadata source to serve updates from</param>
             <param name="filter">The filter for which updates to serve.</param>
-            <param name="serveOnlyMetadata">Serve only update metadata, not content. Clients must use the MUUrl to
-            download content</param>
+            <param name="serviceConfig">Service configuration.</param>
         </member>
         <member name="M:Microsoft.UpdateServices.Server.ServerSyncWebService.GetAuthConfigAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetAuthConfigRequest)">
             <summary>
@@ -1752,36 +2122,6 @@
             <para>A web service started with UpstreamServerStartup can act as an upstream server for WSUS.</para>
             <para><see cref="T:Microsoft.UpdateServices.Client.UpstreamServerClient"/> can be used to query updates from a web service started with UpstreamServerStartup.</para>
             </summary>
-            <example>
-            <code>
-            // Open an existing local repository.
-            // This sample assumes updates were sync'ed from an upstream server and merged
-            // into this local repository
-            var localRepo = FileSystemRepository.Open(Environment.CurrentDirectory);
-            
-            // Create an empty filter; serves all updates in repository
-            var filter = new RepositoryFilter();
-            
-            // Create and initialize an ASP.NET web host builder
-            var host = new WebHostBuilder()
-               .UseUrls($"http://localhost:24222")
-               .UseStartup&lt;Microsoft.UpdateServices.Server.UpstreamServerStartup&gt;()
-               .UseKestrel()
-               .ConfigureAppConfiguration((hostingContext, config) =>
-               {
-                   config.AddInMemoryCollection(
-                   new Dictionary&lt;string, string&gt;()
-                   {
-                       { "repo-path", Environment.CurrentDirectory },
-                       { "updates-filter", filter.ToJson() }
-                   });
-               })
-               .Build();
-            
-            // Run the ASP.NET service
-            host.Run();
-            </code>
-            </example>
         </member>
         <member name="M:Microsoft.UpdateServices.Server.UpstreamServerStartup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
@@ -1790,9 +2130,13 @@
             <param name="config">
             <para>ASP.NET configuration.</para>
             
-            <para>Must contain a string entry "repo-path" with the path to the repository to use.</para>
+            <para>Must contain a string entry "metadata-path" with the path to the metadata source to use</para>
             
-            <para>Must contain a string entry "updates-filter" with a JSON serialized filter for the repository.</para>
+            <para>Must contain a string entry "updates-filter" with a JSON serialized updates metadata filter</para>
+            
+            <para>Must contain a string entry "service-config-path" with the path to the service configuration JSON</para>
+            
+            <para>Can contain a string entry "content-path" with the path to the content store to use if serving update content</para>
             </param>
         </member>
         <member name="M:Microsoft.UpdateServices.Server.UpstreamServerStartup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
@@ -1812,96 +2156,6 @@
             </param>
             <param name="env">Hosting environment.</param>
             <param name="loggerFactory">Logging factory.</param>
-        </member>
-        <member name="T:Microsoft.UpdateServices.Storage.CategoriesCache">
-            <summary>
-            Stores categories and update metadata locally, together with any anchors and filters
-            used to retrieve the metadata
-            </summary>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.CategoriesCache.LastQuery">
-            <summary>
-            The last categories query used. The categories query does not have filters, only an anchor
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.CategoriesCache.Version">
-            <summary>
-            The version of this object. Used to compare against the current version when deserializing
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.CategoriesCache.CurrentVersion">
-            <summary>
-            The object version currently implemented by this code
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.CategoriesCache.Categories">
-            <summary>
-            All known categories
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.CategoriesCache.Detectoids">
-            <summary>
-            Detectoids index
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.CategoriesCache.Products">
-            <summary>
-            Products index
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.CategoriesCache.Classifications">
-            <summary>
-            Classifications index
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.CategoriesCache.CategoriesIndex">
-            <summary>
-            All categories index
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.CategoriesCache.ParentRepository">
-            <summary>
-            The updates repository that contains this object. Used when serializing-deserializing to 
-            resolve paths
-            </summary>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.CategoriesCache.#ctor">
-            <summary>
-            Private constructor used by the deserializer
-            </summary>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.CategoriesCache.#ctor(Microsoft.UpdateServices.Storage.IRepository)">
-            <summary>
-            Internal constructor called when a new updates repository is created
-            </summary>
-            <param name="parentRepository"></param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.CategoriesCache.FromJson(System.IO.StreamReader,Microsoft.UpdateServices.Storage.IRepository)">
-            <summary>
-            Loads a categories cache from JSON
-            </summary>
-            <param name="jsonStream">The JSON stream to deserialize from</param>
-            <param name="parentRepository">The repository that becomes the parent repository of the deserialized cache object</param>
-            <returns>Cached categories</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.CategoriesCache.ToJson(System.IO.StreamWriter)">
-            <summary>
-            Serializes the categories cache to JSON
-            </summary>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.CategoriesCache.GetCategories(Microsoft.UpdateServices.Storage.RepositoryFilter)">
-            <summary>
-            Returns all categories in the repository that match the specified filter
-            </summary>
-            <param name="filter">The filter to apply</param>
-            <returns>Categories that match the filter</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.CategoriesCache.MergeQueryResult(Microsoft.UpdateServices.Query.QueryResult,System.Boolean@)">
-            <summary>
-            Adds new updates or categories to the store.
-            </summary>
-            <param name="queryResult">The query result to merge with the store.</param>
-            <param name="cachedChanged">On return, set to true if there were changes to this cache, false otherwise</param>
         </member>
         <member name="M:Microsoft.UpdateServices.Storage.ContentDownloader.DownloadToFile(System.String,Microsoft.UpdateServices.Metadata.Content.UpdateFile,System.Threading.CancellationToken)">
             <summary>
@@ -1933,118 +2187,54 @@
             <param name="filePath">The path to the file to checksum</param>
             <returns>The string representatin of the hash</returns>
         </member>
-        <member name="T:Microsoft.UpdateServices.Storage.FileSystemRepository">
+        <member name="T:Microsoft.UpdateServices.Storage.FileSystemContentStore">
             <summary>
-            Updates repository implementation that stores all metadata, content and configuration
-            on the local file system.
+            Downloads and stores update content as files on the local file system.
             </summary>
         </member>
-        <member name="F:Microsoft.UpdateServices.Storage.FileSystemRepository.RepositoryConfigFileName">
+        <member name="E:Microsoft.UpdateServices.Storage.FileSystemContentStore.Progress">
             <summary>
-            The file containing repository configuration
+            Notifications for download progress to the content store
             </summary>
         </member>
-        <member name="F:Microsoft.UpdateServices.Storage.FileSystemRepository.AuthenticationFileName">
+        <member name="F:Microsoft.UpdateServices.Storage.FileSystemContentStore.LocalPath">
             <summary>
-            The file containing authentication data
+            Directory under which the store structure is created
             </summary>
         </member>
-        <member name="F:Microsoft.UpdateServices.Storage.FileSystemRepository.ServiceConfigurationFileName">
-            <summary>
-            The file containing server configuration data
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.FileSystemRepository.CategoriesFileName">
-            <summary>
-            The file containing categories data
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.FileSystemRepository.UpdatesFileName">
-            <summary>
-            The file containing updates metadata
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.FileSystemRepository.ContentDirectoryName">
+        <member name="F:Microsoft.UpdateServices.Storage.FileSystemContentStore.ContentDirectoryName">
             <summary>
             Root content directory name
             </summary>
         </member>
-        <member name="F:Microsoft.UpdateServices.Storage.FileSystemRepository.XmlMetadataDirectoryName">
+        <member name="M:Microsoft.UpdateServices.Storage.FileSystemContentStore.#ctor(System.String)">
             <summary>
-            Root XML metadata directory name
+            Opens or creates a new file system based content store.
+            If the specified directory does not exist, it will be created.
             </summary>
+            <param name="path"></param>
         </member>
-        <member name="F:Microsoft.UpdateServices.Storage.FileSystemRepository.ContentFilesFileName">
+        <member name="M:Microsoft.UpdateServices.Storage.FileSystemContentStore.Add(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Content.UpdateFile})">
             <summary>
-            Update content files index
+            Download content
             </summary>
+            <param name="files">The files to download</param>
         </member>
-        <member name="F:Microsoft.UpdateServices.Storage.FileSystemRepository.Categories">
+        <member name="M:Microsoft.UpdateServices.Storage.FileSystemContentStore.Contains(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
             <summary>
-            Manager for locally cached categories
+            Checks if an update file has been downloaded
             </summary>
+            <param name="file">File to check if it was downloaded</param>
+            <returns>True if the file was downloaded, false otherwise</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetCategoriesIndexReader">
+        <member name="M:Microsoft.UpdateServices.Storage.FileSystemContentStore.Get(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
             <summary>
-            Returns a stream reader for the categories index file
+            Gets a read only stream for an update content file
             </summary>
-            <returns>Stream reader</returns>
+            <param name="updateFile">The update file to open</param>
+            <returns>Read only stream for the requested update content file</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetCategoriesIndexWriter">
-            <summary>
-            Returns a stream writer for the categories index file. The index file is overwritten.
-            </summary>
-            <returns>Stream writer</returns>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.FileSystemRepository.HasUpdatesIndex">
-            <summary>
-            Check if the repository has an updates index
-            </summary>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdatesIndexReader">
-            <summary>
-            Returns a stream reader for the updates index file
-            </summary>
-            <returns>Stream reader</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdatesIndexWriter">
-            <summary>
-            Returns a stream writer for the updates index file. The index file is overwritten.
-            </summary>
-            <returns>Stream writer</returns>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.FileSystemRepository.Updates">
-            <summary>
-            Manager for locally cached updates
-            </summary>
-        </member>
-        <member name="E:Microsoft.UpdateServices.Storage.FileSystemRepository.RepositoryOperationProgress">
-            <summary>
-            Raised on progress for long running repository operations
-            </summary>
-            <value>
-            Progress data.
-            </value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.FileSystemRepository.Configuration">
-            <summary>
-            Gets the configuration of the repository
-            </summary>
-            <value>Repository configuration</value>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.FileSystemRepository.Files">
-            <summary>
-            Index with metadata for update content files
-            </summary>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateFilePath(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
-            <summary>
-            Given an update file, returns the path to the file in local store
-            </summary>
-            <param name="updateFile">The file to get the path for</param>
-            <returns>Fully qualified path to the file. The path might not exist.</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateFileMarkerPath(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
+        <member name="M:Microsoft.UpdateServices.Storage.FileSystemContentStore.GetUpdateFileMarkerPath(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
             <summary>
             Returns the path to the file that marks whether an update content file was successfully downloaded.
             The marker file is written after the update content file is downloaded and its hash verified
@@ -2052,477 +2242,915 @@
             <param name="updateFile">Update content file for which to retrieve the marker file path</param>
             <returns>The marker file path. This file might not exist.</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateXmlPath(Microsoft.UpdateServices.Metadata.Update)">
+        <member name="M:Microsoft.UpdateServices.Storage.FileSystemContentStore.GetUpdateFilePath(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
             <summary>
-            Given an update, returns the path to its XML file in the store.
+            Given an update file, returns the path to the file in local store
             </summary>
-            <param name="update">The update to get the path for</param>
+            <param name="updateFile">The file to get the path for</param>
             <returns>Fully qualified path to the file. The path might not exist.</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.RepoExists(System.String)">
+        <member name="T:Microsoft.UpdateServices.Storage.IUpdateContentSink">
             <summary>
-            Checks if a repository exists at the specified path
-            </summary>
-            <param name="repoDirectory">Path to check</param>
-            <returns>True if a repository exists at the specified path, false otherwise</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.Init(System.String,System.String)">
-            <summary>
-            Initializes a new local updates repository that sync's updates from the specified upstream update server
-            </summary>
-            <param name="repoDirectory">Directory to initialize the new repository in</param>
-            <param name="upstreamServerAddress">Upstream server from where to sync updates</param>
-            <returns>A newly initialize repository</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.Open(System.String)">
-            <summary>
-            Opens a repository from a directory
-            </summary>
-            <param name="repoDirectory">The directory path to the repository</param>
-            <returns>An updates repository</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.ReadFilesIndex(System.String)">
-            <summary>
-            Reads the content files index from a JSON file
-            </summary>
-            <param name="path">Path to the JSON file</param>
-            <returns>A content files index (dictionary)</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.WriteFilesIndex">
-            <summary>
-            Writes the current file index to a JSON file
+            Defines access methods to a source of update content
             </summary>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.Delete(System.String)">
+        <member name="E:Microsoft.UpdateServices.Storage.IUpdateContentSink.Progress">
             <summary>
-            Delete the repository stored at the specified path
+            Raised on progress for long running content store operations
             </summary>
-            <param name="path">The path that contains the repository to delete</param>
+            <value>
+            Progress data.
+            </value>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.Delete">
+        <member name="M:Microsoft.UpdateServices.Storage.IUpdateContentSink.Add(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Content.UpdateFile})">
             <summary>
-            Deletes the repository from disk and clears all cached data from memory
+            Download content
             </summary>
+            <param name="files">The files to download</param>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.MergeQueryResult(Microsoft.UpdateServices.Query.QueryResult)">
+        <member name="T:Microsoft.UpdateServices.Storage.IUpdateContentSource">
             <summary>
-            Merge new updates or categories into the repository
-            </summary>
-            <param name="queryResult">The query results to merge</param>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.FileSystemRepository.AccessToken">
-            <summary>
-            Cached access token
+            Defines access methods to a source of update content
             </summary>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.SetAccessToken(Microsoft.UpdateServices.Client.ServiceAccessToken)">
+        <member name="E:Microsoft.UpdateServices.Storage.IUpdateContentSource.Progress">
             <summary>
-            Caches an access token for future use. Overwrites the previusly cached token.
+            Raised on progress for long running content store operations
             </summary>
-            <param name="accessToken">The token to cache.</param>
+            <value>
+            Progress data.
+            </value>
         </member>
-        <member name="P:Microsoft.UpdateServices.Storage.FileSystemRepository.Microsoft#UpdateServices#Storage#IRepositoryInternal#ServiceConfiguration">
-            <summary>
-            Cached service configuration
-            </summary>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.SetServiceConfiguration(Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)">
-            <summary>
-            Cache service configuration to disk. Overwrites the previously cached configuration.
-            </summary>
-            <param name="serverConfig">The configuration to cache</param>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.FileSystemRepository.ProductsIndex">
-            <summary>
-            Gets the products index
-            </summary>
-            <value>List of products</value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.FileSystemRepository.ClassificationsIndex">
-            <summary>
-            Gets the classifications index
-            </summary>
-            <value>List of classifications</value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.FileSystemRepository.DetectoidsIndex">
-            <summary>
-            Gets the detectoids index
-            </summary>
-            <value>List of detectoids</value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.FileSystemRepository.UpdatesIndex">
-            <summary>
-            Gets the updates indexUpdates index
-            </summary>
-            <value>List of updates</value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.FileSystemRepository.CategoriesIndex">
-            <summary>
-            Gets the categories index (products, classifications, detectoids)
-            </summary>
-            <value>List of categories</value>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.IsFileDownloaded(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
+        <member name="M:Microsoft.UpdateServices.Storage.IUpdateContentSource.Contains(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
             <summary>
             Checks if an update file has been downloaded
             </summary>
             <param name="file">File to check if it was downloaded</param>
             <returns>True if the file was downloaded, false otherwise</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.DownloadUpdateContent(Microsoft.UpdateServices.Metadata.Content.IUpdateWithFiles)">
+        <member name="M:Microsoft.UpdateServices.Storage.IUpdateContentSource.Get(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
             <summary>
-            Download content for an update
+            Gets a read only stream for an update content file
             </summary>
-            <param name="update">The update to download content for</param>
+            <param name="updateFile">The update file to open</param>
+            <returns>Read only stream for the requested update content file</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.HashChecker_OnHashingProgress(System.Object,Microsoft.UpdateServices.Storage.OperationProgress)">
+        <member name="T:Microsoft.UpdateServices.Storage.CompressedMetadataStore">
             <summary>
-            Forwards hashing progress notifications to listeners of repository progress notifications
+            Stores update metadata into a compressed file on disk. Supports storing incremental changes in metadata from a baseline.
             </summary>
-            <param name="sender"></param>
-            <param name="e">Hashing progress notification</param>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.ContentDownloader_OnDownloadProgress(System.Object,Microsoft.UpdateServices.Storage.OperationProgress)">
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.BaselineChecksum">
             <summary>
-            Handles download progress notifications from the content downloader by forwarding them to registered event handlers of the store
+            The checksum of the baseline metadata source. A delta metadata source can only be merged into a baseline
+            that matches this checksum
             </summary>
-            <param name="sender">The content downloader</param>
-            <param name="e">Progress data</param>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.Export(Microsoft.UpdateServices.Storage.RepositoryFilter,System.String,Microsoft.UpdateServices.Storage.RepoExportFormat)">
+        <member name="F:Microsoft.UpdateServices.Storage.CompressedMetadataStore.BaselineSource">
             <summary>
-            Export selected updates from the repository, using the specified format
+            The metadata source that is the baseline for this delta metadata source
             </summary>
-            <param name="filter">Filter which updates to export from the repository</param>
-            <param name="exportFilePath">Export file path</param>
-            <param name="format">Export file format</param>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.Exporter_ExportProgress(System.Object,Microsoft.UpdateServices.Storage.OperationProgress)">
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.BaselineIndexesEnd">
             <summary>
-            Forwarder for export notifications
+            The largest update index present in the baseline; indexes are continuous and increasing
             </summary>
-            <param name="sender"></param>
-            <param name="e">Export progress</param>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.Microsoft#UpdateServices#Storage#IRepositoryInternal#IsUpdateXmlAvailable(Microsoft.UpdateServices.Metadata.Update)">
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.DeltaIndex">
             <summary>
-            Check if an update XML is available locally
+            This metadata source's index in a chain of delta sources
             </summary>
-            <param name="update">The update to check</param>
-            <returns>True if the updates's XML is available, false otherwise</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.Microsoft#UpdateServices#Storage#IRepositoryInternal#GetUpdateXmlWriteStream(Microsoft.UpdateServices.Metadata.Update)">
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.BaselineIdentities">
             <summary>
-            Opens a writeable stream for an update's XML
+            The list of updates identites that are expected to exist in the baseline
             </summary>
-            <param name="update">The update whose XML will be written</param>
-            <returns>FileStream for update XML</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.Microsoft#UpdateServices#Storage#IRepositoryInternal#GetUpdateXmlReader(Microsoft.UpdateServices.Metadata.Update)">
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.IsInBaseline(System.Int32)">
             <summary>
-            Opens an update's XML for reading
+            Check if an index fall withing the range of indexes in the baseline file
             </summary>
-            <param name="update">The update to read XML</param>
-            <returns>StreamReader for the update XML</returns>
+            <param name="index">The index to check</param>
+            <returns>True if the update index is present in the baseline, false otherwise</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetCategories(Microsoft.UpdateServices.Storage.RepositoryFilter)">
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.#ctor(Microsoft.UpdateServices.Storage.CompressedMetadataStore)">
             <summary>
-            Returns all categories that match the filter
+            Creates a new metadata source as a delta from a baseline metadata source
             </summary>
-            <param name="filter">Categories filter</param>
-            <returns>List of categories that match the filter</returns>
+            <param name="baseline"></param>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetCategories">
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.SaveBundlesIndex">
             <summary>
-            Returns all categories present in the repository
+            Saves the bundling information to the metadata source
             </summary>
-            <returns>List of categories: classifications, detectoids, products</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdates(Microsoft.UpdateServices.Storage.RepositoryFilter,Microsoft.UpdateServices.Storage.UpdateRetrievalMode)">
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.IsBundle(Microsoft.UpdateServices.Metadata.Identity)">
             <summary>
-            Returns all updates that match the filter
+            Checks if an update is a bundle (contains other updates)
             </summary>
-            <param name="filter">Updates filter</param>
-            <param name="metadataMode">Level of metadata to retrieve.</param>
-            <returns>List of updates that match the filter</returns>
+            <param name="updateIdentity">The update to check</param>
+            <returns>True if the update contains other updates, false otherwise</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdates(Microsoft.UpdateServices.Storage.UpdateRetrievalMode)">
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.IsBundled(Microsoft.UpdateServices.Metadata.Identity)">
             <summary>
-            Returns all updates present in the repository
+            Checks if an update is bundled with another update
             </summary>
-            <param name="metadataMode">Level of metadata to retrieve.</param>
-            <returns>List of updates</returns>
+            <param name="updateIdentity">The update to check</param>
+            <returns>True if there is another update that contains this update</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdate(Microsoft.UpdateServices.Metadata.Identity,Microsoft.UpdateServices.Storage.UpdateRetrievalMode)">
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetBundle(Microsoft.UpdateServices.Metadata.Identity)">
             <summary>
-            Get an update in the repository by ID
+            Gets the bundle update to which this update belongs to
             </summary>
-            <param name="updateId">The update ID to lookup</param>
-            <param name="metadataMode">Level of metadata to retrieve.</param>
-            <returns>The requested update</returns>
+            <param name="updateIdentity">The update whose parent bundle to get</param>
+            <returns>The parent bundle</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.Microsoft#UpdateServices#Storage#IRepositoryInternal#GetCategoriesAnchor">
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetBundledUpdates(Microsoft.UpdateServices.Metadata.Identity)">
             <summary>
-            Returns the anchor received after the last categories query
+            Gets the list of updates that are bundled withing the specified update
             </summary>
-            <returns>Anchor string</returns>
+            <param name="updateIdentity">The update to get bundled updates for</param>
+            <returns>List of bundled updates</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.Microsoft#UpdateServices#Storage#IRepositoryInternal#GetUpdatesAnchorForFilter(Microsoft.UpdateServices.Query.QueryFilter)">
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Checksum">
+            <summary>
+            The checksum of the updates in the metadata source.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.ComputeChecksum">
+            <summary>
+            Computes the checksum of this medata source.
+            The checksum is computed from the list of triples [update index, update guid, update revision], sorted by update index
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Identities">
+            <summary>
+            Gets the list of updates or categories returned by a query.
+            </summary>
+            <value>List of updates</value>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetIndex">
+            <summary>
+            Gets the int based index of all update identities in the metadata source
+            </summary>
+            <returns>Dictionary of int to Identity</returns>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Files">
+            <summary>
+            Files indexed by content hash
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.CompressedMetadataStore.UpdateFilesIndex">
+            <summary>
+            Files indexes by update index
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.ReadFilesIndex">
+            <summary>
+            Reads the index of files indexed by hash
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.ReadUpdateFilesIndex">
+            <summary>
+            Reads the index of files indexed by update index
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasFile(System.String)">
+            <summary>
+            Checks if the metadata source contains URL information for a file identified by its content checksum
+            </summary>
+            <param name="checksum">The file contents checksum</param>
+            <returns>True if the store contains file URL information, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetFile(System.String)">
+            <summary>
+            Retrieves url information for a file
+            </summary>
+            <param name="checksum">The file checksum</param>
+            <returns>Update URL information</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasFiles(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Checks if an update contains files
+            </summary>
+            <param name="updateIdentity">Update identity</param>
+            <returns>True if the update contains files, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetFiles(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Retrieves files for an update
+            </summary>
+            <param name="updateIdentity">Update identity</param>
+            <returns>List of files in the update</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetLeafUpdates">
+            <summary>
+            Gets updates that have prerequisites and no other update depends on them
+            </summary>
+            <returns>List of GUIDS of leaf updates</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetNonLeafUpdates">
+            <summary>
+            Gets updates that have prerequisites and have other updates depende on them
+            </summary>
+            <returns>List of GUIDS of non leaf updates</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetRootUpdates">
+            <summary>
+            Get updates with no prerequisites
+            </summary>
+            <returns>List of GUIDS of root updates</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.SavePrerequisitesIndex">
+            <summary>
+            Saves the prerequisites information to the metadata source
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasPrerequisites(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Check if an update has prerequisites
+            </summary>
+            <param name="updateIdentity">The update to check prerequisites for</param>
+            <returns>True if an update has prerequisites, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetPrerequisites(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Gets the list of prerequisites for an update
+            </summary>
+            <param name="updateIdentity">The update to get prerequisites for</param>
+            <returns>List of prerequisites</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.SaveProductClassificationIndex">
+            <summary>
+            Saves the product and classification information to the metadata source
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetUpdateProductIds(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Gets an updates's product IDs
+            </summary>
+            <param name="updateIdentity">The update ID to get products Ids for</param>
+            <returns>List of product ids for an update</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetUpdateClassificationIds(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Gets an updates's classification IDs
+            </summary>
+            <param name="updateIdentity">The update ID to get classification Ids for</param>
+            <returns>List of classification ids for an update</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasProduct(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Check if this update has a parent product
+            </summary>
+            <param name="updateIdentity">The update to check</param>
+            <returns>True if the update has a parent product, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasClassification(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Check if this update has a classification
+            </summary>
+            <param name="updateIdentity">The update to check classifications</param>
+            <returns>True if the update has classifications, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.InstantiateUpdatePlaceholders">
+            <summary>
+            Create Update objects for all updates in this source; no metadata is loaded at this time, and each update
+            is given a pointer to this source so it can load metadata on demand
+            </summary>
+        </member>
+        <member name="E:Microsoft.UpdateServices.Storage.CompressedMetadataStore.CommitProgress">
+            <summary>
+            Progress notifications during the commit phase of creating an updates metadata source
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Commit">
+            <summary>
+            Flushes out all query results content to the output file and puts the metadata store in read mode
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData})">
+            <summary>
+            Adds a list of updates to the query result. The XML metadata is written to disk to avoid running out of memory
+            </summary>
+            <param name="overTheWireUpdates">The updates to add to the result</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdate(Microsoft.UpdateServices.Metadata.Update,System.String,System.Int32@,System.Xml.Linq.XDocument)">
+            <summary>
+            Adds an update to the query result. The XML metadata is written to disk to avoid running out of memory
+            </summary>
+            <param name="update">The updates to add to the result</param>
+            <param name="updateMetadata">The update metadata to add</param>
+            <param name="newUpdateIndex">The index of the new entry, if it was added to the index</param>
+            <param name="updateXmlDoc">Update XML document used to load additional data if needed</param>
+            <returns>True if a new entry was added, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetQueryFilter(Microsoft.UpdateServices.Metadata.QueryFilter)">
+            <summary>
+            Sets the filter used when adding updates to the metadata collection
+            </summary>
+            <param name="filter">Filter</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetCategoriesAnchor(System.String)">
+            <summary>
+            Sets the categories anchor for categories in this collection
+            </summary>
+            <param name="anchor"></param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddFile(Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl)">
+            <summary>
+            Adds an update content file URL () to the result
+            </summary>
+            <param name="file">The file to add</param>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.CompressedMetadataStore.SupersededUpdates">
+            <summary>
+            Dictionary of superseded updates; the key is a superseded update, the value is the index
+            of the update that superseded it
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.CompressedMetadataStore.SupersedingUpdates">
+            <summary>
+            Index of updates that supersed other updates; values are list of updates being superseded
+            by the key update
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.IsSuperseded(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Checks if an update has been superseded
+            </summary>
+            <param name="updateIdentity">Update identity to check if superseded</param>
+            <returns>false if not superseded, true otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetSupersedingUpdate(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Gets the update that superseded the update specified
+            </summary>
+            <param name="updateIdentity">Update identity to check if superseded</param>
+            <returns>The update that superseded the update specified</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetSupersedingUpdateIndex(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Checks if an update has been superseded, and if yes, returns the index of the update that superseded it
+            </summary>
+            <param name="updateIdentity">Update identity to check if superseded</param>
+            <returns>-1 if the update was not superseded, index of superseding update otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.IsSuperseding(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Checks if an update superseds other updates
+            </summary>
+            <param name="updateIdentity">The update to check if it superseds other updates</param>
+            <returns>True if the update superseds other updates, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetSupersededUpdates(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Gets the list of update that the specified update superseds
+            </summary>
+            <param name="updateIdentity">The update to get list of superseded updates for</param>
+            <returns>List of updates superseded by the specified update</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetUpdateTitle(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Retrieves the title of an update
+            </summary>
+            <param name="updateIdentity"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Filters">
+            <summary>
+            Gets the filters used for the query. A QueryResult has exactly one filter.
+            </summary>
+            <value>Query filter</value>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetAnchorForFilter(Microsoft.UpdateServices.Metadata.QueryFilter)">
             <summary>
             Returns the anchor received after the last updates query that used the specified filter
             </summary>
             <param name="filter">The filter used in the query</param>
             <returns>Anchor string</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.FileSystemRepository.GetUpdateFileStream(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
+        <member name="F:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Filter">
             <summary>
-            Gets a read only stream for an update content file
-            </summary>
-            <param name="updateFile">The update file to open</param>
-            <returns>Read only stream for the requested update content file</returns>
-        </member>
-        <member name="T:Microsoft.UpdateServices.Storage.RepoExportFormat">
-            <summary>
-            Supported repository export formats
+            The 1 filter applied to this QueryResult
             </summary>
         </member>
-        <member name="F:Microsoft.UpdateServices.Storage.RepoExportFormat.WSUS_2016">
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.CategoriesAnchor">
             <summary>
-            Export format compatible with WSUS 2016
+            Server anchor received when sync'ing categories
             </summary>
         </member>
-        <member name="T:Microsoft.UpdateServices.Storage.UpdateRetrievalMode">
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.UpstreamAccountName">
             <summary>
-            The <see cref="T:Microsoft.UpdateServices.Storage.UpdateRetrievalMode"/> enumeration contains retrieval modes for updates in a local repository.
-            <para>Because update extended attributes are large, they don't get loaded when a repository
-            is opened. They can be retrieved by calling one of the GetUpdates method for a IRepository, like <see cref="M:Microsoft.UpdateServices.Storage.IRepository.GetUpdate(Microsoft.UpdateServices.Metadata.Identity,Microsoft.UpdateServices.Storage.UpdateRetrievalMode)"/> or <see cref="M:Microsoft.UpdateServices.Storage.IRepository.GetUpdates(Microsoft.UpdateServices.Storage.UpdateRetrievalMode)"/></para>
+            The account name used when updates were added to this metadata source
             </summary>
         </member>
-        <member name="F:Microsoft.UpdateServices.Storage.UpdateRetrievalMode.Basic">
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.UpstreamAccountGuid">
             <summary>
-            Basic metadata includes ID, title, description, superseded, classifications, products
+            The account GUID used when updates were added to this metadata source
             </summary>
         </member>
-        <member name="F:Microsoft.UpdateServices.Storage.UpdateRetrievalMode.Extended">
+        <member name="F:Microsoft.UpdateServices.Storage.CompressedMetadataStore.InputFile">
             <summary>
-            Extended metadata is update type specifyc and can include driver HW ID, KB article numbers, file information, pre-requisites etc.
+            Gets the dictionary of file URLs associated with updates returned by the query, indexed by file content hash.
+            </summary>
+            <value>Dictionary of update files</value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.FilePath">
+            <summary>
+            Gets the path to the file on disk that contains a serialized version of this query result.
             </summary>
         </member>
-        <member name="T:Microsoft.UpdateServices.Storage.IRepository">
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.UpdatesIndex">
             <summary>
-            Interface to manage a repository that contains Microsoft updates.
-            <para>A repository tracks an upstream update server.</para>
+            Gets the updates (software, drivers) index
+            </summary>
+            <value>List of products</value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.ClassificationsIndex">
+            <summary>
+            Gets the classifications index
+            </summary>
+            <value>List of classifications</value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.DetectoidsIndex">
+            <summary>
+            Gets the detectoids index
+            </summary>
+            <value>List of detectoids</value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.CategoriesIndex">
+            <summary>
+            Gets the categories index (products, classifications, detectoids)
+            </summary>
+            <value>List of categories</value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.ProductsIndex">
+            <summary>
+            Gets the products index
+            </summary>
+            <value>List of updates</value>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Version">
+            <summary>
+            The serialization version of this object
             </summary>
         </member>
-        <member name="E:Microsoft.UpdateServices.Storage.IRepository.RepositoryOperationProgress">
+        <member name="F:Microsoft.UpdateServices.Storage.CompressedMetadataStore.CurrentVersion">
             <summary>
-            Raised on progress for long running repository operations
-            </summary>
-            <value>
-            Progress data.
-            </value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.IRepository.Configuration">
-            <summary>
-            Gets the configuration of the repository
-            </summary>
-            <value>Repository configuration</value>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepository.MergeQueryResult(Microsoft.UpdateServices.Query.QueryResult)">
-            <summary>
-            Merge new updates or categories into the repository
-            </summary>
-            <param name="queryResult">The query results to merge</param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepository.DownloadUpdateContent(Microsoft.UpdateServices.Metadata.Content.IUpdateWithFiles)">
-            <summary>
-            Download content for an update
-            </summary>
-            <param name="update">The update to download content for</param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepository.Delete">
-            <summary>
-            Delete the repository
+            The current serialization version of this object
             </summary>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepository.Export(Microsoft.UpdateServices.Storage.RepositoryFilter,System.String,Microsoft.UpdateServices.Storage.RepoExportFormat)">
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.IsHydrated">
             <summary>
-            Export selected updates from the repository, using the specified format
+            Flag that indicates that metadata for the contained updates has been loaded.
+            If false, call the Hydrate() method.
             </summary>
-            <param name="filter">Filter which updates to export from the repository</param>
-            <param name="exportFilePath">Export file path</param>
-            <param name="format">Export file format</param>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepository.GetCategories(Microsoft.UpdateServices.Storage.RepositoryFilter)">
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.UpstreamSource">
+            <summary>
+            Gets the endpoint of the upstream server that is the source for this metadata source
+            </summary>
+        </member>
+        <member name="E:Microsoft.UpdateServices.Storage.CompressedMetadataStore.ExportProgress">
+            <summary>
+            Progress notifications during the export operations
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.#ctor(System.String,Microsoft.UpdateServices.Client.Endpoint)">
+            <summary>
+            Create a new update metadata store that saves its content to the specified file
+            </summary>
+            <param name="storeFile">File where to save the store</param>
+            <param name="upstreamSource">The upstream from which stored metadata was aquired from</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Open(System.String)">
+            <summary>
+            Create a QueryResult from a serialized result.
+            </summary>
+            <param name="queryResultFile">The file that contains a serialized query result</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetUpdateMetadataStream(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Returns a stream over the update XML metadata
+            </summary>
+            <param name="updateId">The update ID to get XML metadata for</param>
+            <returns>Stream of the XML metadata</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetUpdateXmlPath(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Returns the path to the update XML in query result ZIP archive
+            </summary>
+            <param name="updateId">The update to get the path for.</param>
+            <returns>A fully qualified path to the XML file belonging to the specified update</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetUpdateIndex(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Returns an index for an update (number between 0 and 255) based on the update\s ID.
+            </summary>
+            <param name="updateId">The update to get the index for</param>
+            <returns>String representation of the index</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Dispose">
+            <summary>
+            Deletes the temporary directory that contains XML metadata
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Delete">
+            <summary>
+            Delete the query result
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetCategories">
+            <summary>
+            Returns all categories present in the metadata store
+            </summary>
+            <returns>List of categories: classifications, detectoids, products</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetCategories(Microsoft.UpdateServices.Metadata.MetadataFilter)">
             <summary>
             Returns all categories that match the filter
             </summary>
             <param name="filter">Categories filter</param>
             <returns>List of categories that match the filter</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepository.GetCategories">
-            <summary>
-            Returns all categories present in the repository
-            </summary>
-            <returns>List of categories: classifications, detectoids, products</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepository.GetUpdates(Microsoft.UpdateServices.Storage.RepositoryFilter,Microsoft.UpdateServices.Storage.UpdateRetrievalMode)">
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetUpdates(Microsoft.UpdateServices.Metadata.MetadataFilter)">
             <summary>
             Returns all updates that match the filter
             </summary>
             <param name="filter">Updates filter</param>
-            <param name="metadataMode">Level of metadata to retrieve.</param>
             <returns>List of updates that match the filter</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepository.GetUpdates(Microsoft.UpdateServices.Storage.UpdateRetrievalMode)">
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetUpdates">
             <summary>
-            Returns all updates present in the repository
+            Returns all updates 
             </summary>
-            <param name="metadataMode">Level of metadata to retrieve.</param>
             <returns>List of updates</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepository.GetUpdate(Microsoft.UpdateServices.Metadata.Identity,Microsoft.UpdateServices.Storage.UpdateRetrievalMode)">
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetUpdate(Microsoft.UpdateServices.Metadata.Identity)">
             <summary>
-            Get an update in the repository by ID
+            Get an update by ID
             </summary>
             <param name="updateId">The update ID to lookup</param>
-            <param name="metadataMode">Level of metadata to retrieve.</param>
             <returns>The requested update</returns>
         </member>
-        <member name="P:Microsoft.UpdateServices.Storage.IRepository.ProductsIndex">
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetUpstreamCredentials(System.String,System.Guid)">
             <summary>
-            Gets the products index
+            Set the credentials used to connecto to the upstream server
+            </summary>
+            <param name="accountName"></param>
+            <param name="AccountGuid"></param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Export(Microsoft.UpdateServices.Metadata.MetadataFilter,System.String,Microsoft.UpdateServices.Storage.RepoExportFormat,Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)">
+            <summary>
+            Exports the selected updates from the metadata source
+            </summary>
+            <param name="filter">Export filter</param>
+            <param name="exportFile">Export file path</param>
+            <param name="format">Export format</param>
+            <param name="serverConfiguration">Server configuration.</param>
+            <returns>List of categories that match the filter</returns>
+        </member>
+        <member name="T:Microsoft.UpdateServices.Storage.IMetadataSink">
+            <summary>
+            Interface for objects that can store update metadata
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSink.Commit">
+            <summary>
+            Flushes out all pending changes and closes the sink. No more changes can be made to the sink after calling this method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSink.AddUpdates(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData})">
+            <summary>
+            Adds a list of updates to the update metadata collection.
+            </summary>
+            <param name="overTheWireUpdates">The updates to add to the result, as received from the upstream server</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSink.SetCategoriesAnchor(System.String)">
+            <summary>
+            Sets the categories anchor for the categories in the metadata collection
+            </summary>
+            <param name="anchor"></param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSink.SetQueryFilter(Microsoft.UpdateServices.Metadata.QueryFilter)">
+            <summary>
+            Sets the filter used when adding updates to the metadata collection
+            </summary>
+            <param name="filter">Filter</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSink.AddFile(Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl)">
+            <summary>
+            Adds an update content file URL to the metadata collection
+            </summary>
+            <param name="file">The file to add</param>
+        </member>
+        <member name="E:Microsoft.UpdateServices.Storage.IMetadataSink.CommitProgress">
+            <summary>
+            Event raised on progress during a long-running commit operation
+            </summary>
+        </member>
+        <member name="T:Microsoft.UpdateServices.Storage.IMetadataSource">
+            <summary>
+            Provides access to update metadata as well as indexes for fast queries on update metadata.
+            IMetadataSource is obtained from the <see cref="T:Microsoft.UpdateServices.Client.UpstreamServerClient"/> when retrieving categories or updates.
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.IMetadataSource.UpstreamSource">
+            <summary>
+            Get the upstream server that this metadata source was created from
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.IMetadataSource.Filters">
+            <summary>
+            List of filters applied to updates when added to this metadata source
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetAnchorForFilter(Microsoft.UpdateServices.Metadata.QueryFilter)">
+            <summary>
+            Returns the anchor received after the last updates query that used the specified filter
+            </summary>
+            <param name="filter">The filter used in the query</param>
+            <returns>Anchor string</returns>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.IMetadataSource.CategoriesAnchor">
+            <summary>
+            The upstream server anchor associated with categories stored in a metadata collection
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetCategories">
+            <summary>
+            Returns all categories present in the metadata store
+            </summary>
+            <returns>List of categories: classifications, detectoids, products</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetCategories(Microsoft.UpdateServices.Metadata.MetadataFilter)">
+            <summary>
+            Returns all categories that match the filter
+            </summary>
+            <param name="filter">Categories filter</param>
+            <returns>List of categories that match the filter</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetUpdates(Microsoft.UpdateServices.Metadata.MetadataFilter)">
+            <summary>
+            Returns all updates that match the filter
+            </summary>
+            <param name="filter">Updates filter</param>
+            <returns>List of updates that match the filter</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetUpdates">
+            <summary>
+            Returns all updates 
+            </summary>
+            <returns>List of updates</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetUpdate(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Get an update by ID
+            </summary>
+            <param name="updateId">The update ID to lookup</param>
+            <returns>The requested update</returns>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.IMetadataSource.UpdatesIndex">
+            <summary>
+            Gets the updates (software, drivers) index
             </summary>
             <value>List of products</value>
         </member>
-        <member name="P:Microsoft.UpdateServices.Storage.IRepository.ClassificationsIndex">
-            <summary>
-            Gets the classifications index
-            </summary>
-            <value>List of classifications</value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.IRepository.DetectoidsIndex">
-            <summary>
-            Gets the detectoids index
-            </summary>
-            <value>List of detectoids</value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.IRepository.CategoriesIndex">
+        <member name="P:Microsoft.UpdateServices.Storage.IMetadataSource.CategoriesIndex">
             <summary>
             Gets the categories index (products, classifications, detectoids)
             </summary>
             <value>List of categories</value>
         </member>
-        <member name="P:Microsoft.UpdateServices.Storage.IRepository.UpdatesIndex">
+        <member name="P:Microsoft.UpdateServices.Storage.IMetadataSource.ClassificationsIndex">
             <summary>
-            Gets the updates indexUpdates index
+            Gets the classifications index
+            </summary>
+            <value>List of classifications</value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.IMetadataSource.DetectoidsIndex">
+            <summary>
+            Gets the detectoids index
+            </summary>
+            <value>List of detectoids</value>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Storage.IMetadataSource.ProductsIndex">
+            <summary>
+            Gets the products index
             </summary>
             <value>List of updates</value>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepository.GetUpdateFileStream(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetUpdateMetadataStream(Microsoft.UpdateServices.Metadata.Identity)">
             <summary>
-            Gets a read only stream for an update content file
+            Gets a stream over an update's XML data
             </summary>
-            <param name="updateFile">The update file to open</param>
-            <returns>Read only stream for the requested update content file</returns>
+            <param name="updateIdentity">The update ID to get the XML metadata stream for</param>
+            <returns>Metadata stream</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepository.IsFileDownloaded(Microsoft.UpdateServices.Metadata.Content.UpdateFile)">
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetUpdateProductIds(Microsoft.UpdateServices.Metadata.Identity)">
             <summary>
-            Checks if an update file has been downloaded
+            Gets an updates's product IDs
             </summary>
-            <param name="file">File to check if it was downloaded</param>
-            <returns>True if the file was downloaded, false otherwise</returns>
+            <param name="updateIdentity">The update ID to get products Ids for</param>
+            <returns>List of product ids for an update</returns>
         </member>
-        <member name="P:Microsoft.UpdateServices.Storage.IRepositoryInternal.ServiceConfiguration">
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetUpdateClassificationIds(Microsoft.UpdateServices.Metadata.Identity)">
             <summary>
-            Returns the configuration of the upstream this repository is tracking
+            Gets an updates's classification IDs
             </summary>
+            <param name="updateIdentity">The update ID to get classification Ids for</param>
+            <returns>List of classification ids for an update</returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepositoryInternal.SetServiceConfiguration(Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)">
+        <member name="P:Microsoft.UpdateServices.Storage.IMetadataSource.Checksum">
             <summary>
-            Update the upstream server configuration
-            </summary>
-            <param name="configData">New service configuration</param>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.IRepositoryInternal.AccessToken">
-            <summary>
-            Returns the access token for the upstream server
+            The checksum of the updates in the metadata source.
             </summary>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepositoryInternal.SetAccessToken(Microsoft.UpdateServices.Client.ServiceAccessToken)">
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.SetUpstreamCredentials(System.String,System.Guid)">
             <summary>
-            Set the access token for the upstream server
+            Set the credentials used to connec to to the upstream server
             </summary>
-            <param name="newAccessToken"></param>
+            <param name="accountName">Account name</param>
+            <param name="AccountGuid">Account GUID</param>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepositoryInternal.IsUpdateXmlAvailable(Microsoft.UpdateServices.Metadata.Update)">
+        <member name="P:Microsoft.UpdateServices.Storage.IMetadataSource.UpstreamAccountName">
             <summary>
-            Checks the existence of the XML belonging to an update
-            </summary>
-            <param name="update">The update to check</param>
-            <returns>True if XML data is available for the update, false otherwise</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepositoryInternal.GetUpdateXmlWriteStream(Microsoft.UpdateServices.Metadata.Update)">
-            <summary>
-            Get a writeable stream to add or change an update's XML data
-            </summary>
-            <param name="update">The update to get the write stream for</param>
-            <returns>Writeable stream</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepositoryInternal.GetUpdateXmlReader(Microsoft.UpdateServices.Metadata.Update)">
-            <summary>
-            Gets a stream reader to an update's XML data
-            </summary>
-            <param name="update">The update to get the read stream for </param>
-            <returns>stream reader</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepositoryInternal.GetCategoriesAnchor">
-            <summary>
-            Get the last anchor received for a categories sync
-            </summary>
-            <returns>Anchor string</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.IRepositoryInternal.GetUpdatesAnchorForFilter(Microsoft.UpdateServices.Query.QueryFilter)">
-            <summary>
-            Gets the last anchor received for updates sync for a specific filter
-            </summary>
-            <param name="filter">The filter used to query for updates.</param>
-            <returns>Anchor string</returns>
-        </member>
-        <member name="T:Microsoft.UpdateServices.Storage.RepoConfiguration">
-            <summary>
-            Represents configuration for an updates repository.
+            The account name used when updates were added to this metadata source
             </summary>
         </member>
-        <member name="P:Microsoft.UpdateServices.Storage.RepoConfiguration.UpstreamServerEndpoint">
+        <member name="P:Microsoft.UpdateServices.Storage.IMetadataSource.UpstreamAccountGuid">
             <summary>
-            The address of the upstream server from which this repository was cloned
-            </summary>
-            <value>Upstream update server endpoint</value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.RepoConfiguration.AccountName">
-            <summary>
-            The account name used when authenticating with the upstream server
+            The account GUID used when updates were added to this metadata source
             </summary>
         </member>
-        <member name="P:Microsoft.UpdateServices.Storage.RepoConfiguration.AccountGuid">
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetUpdateTitle(Microsoft.UpdateServices.Metadata.Identity)">
             <summary>
-            The account GUID used when authenticating with the upstream server
+            Retrieves the title of an update
+            </summary>
+            <param name="updateIdentity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.IsBundle(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Checks if an update is a bundle (contains other updates)
+            </summary>
+            <param name="updateIdentity">The update to check</param>
+            <returns>True if the update contains other updates, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.IsBundled(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Checks if an update is a bundle (contains other updates)
+            </summary>
+            <param name="updateIdentity">The update to check</param>
+            <returns>True if the update contains other updates, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetBundledUpdates(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Gets the list of updates that are bundled withing the specified update
+            </summary>
+            <param name="updateIdentity">The update to get bundled updates for</param>
+            <returns>List of bundled updates</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetBundle(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Gets the bundle update to which this update belongs to
+            </summary>
+            <param name="updateIdentity">The update whose parent bundle to get</param>
+            <returns>List of bundle updates that contain this update</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.HasPrerequisites(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Check if an update has prerequisites
+            </summary>
+            <param name="updateIdentity">The update to check prerequisites for</param>
+            <returns>True if an update has prerequisites, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetPrerequisites(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Gets the list of prerequisites for an update
+            </summary>
+            <param name="updateIdentity">The update to get prerequisites for</param>
+            <returns>List of prerequisites</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.HasProduct(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Check if this update has a parent product
+            </summary>
+            <param name="updateIdentity">The update to check</param>
+            <returns>True if the update has a parent product, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.HasClassification(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Check if this update has a classification
+            </summary>
+            <param name="updateIdentity">The update to check classifications</param>
+            <returns>True if the update has classifications, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetFile(System.String)">
+            <summary>
+            Retrieves url information for a file
+            </summary>
+            <param name="checksum">The file checksum</param>
+            <returns>Update URL information</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.HasFile(System.String)">
+            <summary>
+            Checks if the metadata source contains URL information for a file identified by its content checksum
+            </summary>
+            <param name="checksum">The file contents checksum</param>
+            <returns>True if the store contains file URL information, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.HasFiles(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Checks if an update contains files
+            </summary>
+            <param name="updateIdentity">Update identity</param>
+            <returns>True if the update contains files, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetFiles(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Retrieves files for an update
+            </summary>
+            <param name="updateIdentity">Update identity</param>
+            <returns>List of files in the update</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.IsSuperseding(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Checks if an update superseds other updates
+            </summary>
+            <param name="updateIdentity">The update to check if it superseds other updates</param>
+            <returns>True if the update superseds other updates, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.IsSuperseded(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Checks if an update has been superseded
+            </summary>
+            <param name="updateIdentity">Update identity to check if superseded</param>
+            <returns>false if not superseded, true otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetSupersedingUpdate(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Gets the update that superseded the update specified
+            </summary>
+            <param name="updateIdentity">Update identity to check if superseded</param>
+            <returns>The update that superseded the update specified</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetSupersededUpdates(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Gets the list of updates superseded by the specified update
+            </summary>
+            <param name="updateIdentity">The update to get list of superseded updates for</param>
+            <returns>List of updates superseded by the specified update</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetLeafUpdates">
+            <summary>
+            Gets updates that have prerequisites and no other update depends on them
+            </summary>
+            <returns>List of GUIDS of leaf updates</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetNonLeafUpdates">
+            <summary>
+            Gets updates that have prerequisites and have other updates depende on them
+            </summary>
+            <returns>List of GUIDS of non leaf updates</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetRootUpdates">
+            <summary>
+            Get updates with no prerequisites
+            </summary>
+            <returns>List of GUIDS of root updates</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetIndex">
+            <summary>
+            Gets the int based index of all update identities in the metadata source
+            </summary>
+            <returns>Dictionary of int to Identity</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.Export(Microsoft.UpdateServices.Metadata.MetadataFilter,System.String,Microsoft.UpdateServices.Storage.RepoExportFormat,Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)">
+            <summary>
+            Exports the selected updates from the metadata source
+            </summary>
+            <param name="filter">Export filter</param>
+            <param name="exportFile">Export file path</param>
+            <param name="format">Export format</param>
+            <param name="serverConfiguration">Server configuration.</param>
+            <returns>List of categories that match the filter</returns>
+        </member>
+        <member name="T:Microsoft.UpdateServices.Storage.RepoExportFormat">
+            <summary>
+            Formats for exporting from a metadata source
             </summary>
         </member>
-        <member name="F:Microsoft.UpdateServices.Storage.RepoConfiguration.Version">
+        <member name="F:Microsoft.UpdateServices.Storage.RepoExportFormat.WSUS_2016">
             <summary>
-            The version of this object. Used to compare against the current version when deserializing
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.RepoConfiguration.CurrentVersion">
-            <summary>
-            The object version currently implemented by this code
+            Export to WSUS 2016 compatible format
             </summary>
         </member>
         <member name="T:Microsoft.UpdateServices.Storage.OperationType">
             <summary>
-            The RepoOperationType enumeration represents, for reporting purposes, the possible sub states of a repository operation
+            The OperationType enumeration represents, for reporting purposes, the possible sub states of an operation on a metadata source
             </summary>
         </member>
         <member name="F:Microsoft.UpdateServices.Storage.OperationType.Unknown">
@@ -2595,6 +3223,96 @@
             Completed the hash check for a file
             </summary>
         </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.PrerequisiteGraphUpdateStart">
+            <summary>
+            Started updating the prerequisite graph
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.PrerequisiteGraphUpdateProgress">
+            <summary>
+            Progress for updating the prerequisite graph
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.PrerequisiteGraphUpdateEnd">
+            <summary>
+            Completed updating the prerequisite graph
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.ProcessSupersedeDataStart">
+            <summary>
+            Start processing superseding data
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.ProcessSupersedeDataEnd">
+            <summary>
+            Progress while processing superseding data
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingTitlesStart">
+            <summary>
+            Indexing update titles progress
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingTitlesEnd">
+            <summary>
+            Indexing update titles progress
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingCategoriesStart">
+            <summary>
+            Indexing update categories
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingCategoriesProgress">
+            <summary>
+            Indexing update categories
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingCategoriesEnd">
+            <summary>
+            Indexing update categories
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.HashMetadataStart">
+            <summary>
+            Compute update metadata checksum
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.HashMetadataEnd">
+            <summary>
+            Compute update metadata checksum
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingBundlesStart">
+            <summary>
+            Compute bundles index
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingBundlesEnd">
+            <summary>
+            Compute bundles index
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingFilesStart">
+            <summary>
+            Compute files index
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingFilesEnd">
+            <summary>
+            Compute files index
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingPrerequisitesStart">
+            <summary>
+            Compute prerequisites index
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingPrerequisitesEnd">
+            <summary>
+            Compute prerequisites index
+            </summary>
+        </member>
         <member name="T:Microsoft.UpdateServices.Storage.OperationProgress">
             <summary>
             Represents progress data for operations on local repositories
@@ -2640,159 +3358,11 @@
             </summary>
             <value>Update file processed</value>
         </member>
-        <member name="T:Microsoft.UpdateServices.Storage.RepositoryFilter">
-            <summary>
-            Represents a filter that can be applied to an updates repository to filter updates
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.RepositoryFilter.ClassificationFilter">
-            <summary>
-            Get or set the Classification filter. 
-            </summary>
-            <value>List of classification IDs (ID only, no revision)</value>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.RepositoryFilter.ProductFilter">
-            <summary>
-            Get or set the Product filter.
-            </summary>
-            <value>List of product IDs (ID only, no revision)</value>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.RepositoryFilter.IdFilter">
-            <summary>
-            Get of set the ID filter.
-            </summary>
-            <value>List of update IDs (ID only, no revision)</value>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.RepositoryFilter.TitleFilter">
-            <summary>
-            Get or set the title filter.
-            </summary>
-            <value>Title filter string</value>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.RepositoryFilter.SkipSuperseded">
-            <summary>
-            Get or set whether to filter or not superseded updates
-            </summary>
-            <value>True to skip superseded updates, false otherwise</value>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.RepositoryFilter.FirstX">
-            <summary>
-            Returns the first X results only
-            </summary>
-            <value>0 to include all updates, greater than 0 value to limit output.</value>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.RepositoryFilter.#ctor">
-            <summary>
-            Initialize a new filter. A newly initialized filter matches all updates or categories in a repository.
-            </summary>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.RepositoryFilter.FromJson(System.String)">
-            <summary>
-            Create a repository filter from JSON
-            </summary>
-            <param name="source">The JSON string</param>
-            <returns>A repository filter</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.RepositoryFilter.ToJson">
-            <summary>
-            Serializes this filter to JSON
-            </summary>
-            <returns>The JSON string</returns>
-        </member>
-        <member name="T:Microsoft.UpdateServices.Storage.UpdatesCache">
-            <summary>
-            Stores update metadata locally, together with any anchors and filters
-            used to retrieve the metadata
-            </summary>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.UpdatesCache.Index">
-            <summary>
-            Dictionary of known updates
-            </summary>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.UpdatesCache.Updates">
-            <summary>
-            List of known updates
-            </summary>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.UpdatesCache.UpdatesList">
-            <summary>
-            List of known updates; only used to serialize the dictionary above as a flat list
-            </summary>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Storage.UpdatesCache.UpdateQueries">
-            <summary>
-            List of update queries used. Each update query contains the filters used and the anchor associated
-            with the filter
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.UpdatesCache.Version">
-            <summary>
-            The version of this object. Used to compare against the current version when deserializing
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.UpdatesCache.CurrentVersion">
-            <summary>
-            The object version currently implemented by this code
-            </summary>
-        </member>
-        <member name="F:Microsoft.UpdateServices.Storage.UpdatesCache.ParentRepository">
-            <summary>
-            The updates repository that contains this object. Used when serializing-deserializing to 
-            resolve paths
-            </summary>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.UpdatesCache.#ctor">
-            <summary>
-            Private constructor used by the deserializer
-            </summary>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.UpdatesCache.#ctor(Microsoft.UpdateServices.Storage.IRepository)">
-            <summary>
-            Internal constructor called when a new updates repository is created
-            </summary>
-            <param name="parentRepository"></param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.UpdatesCache.FromJson(System.IO.StreamReader,Microsoft.UpdateServices.Storage.IRepository)">
-            <summary>
-            Loads an updates cache from JSON
-            </summary>
-            <param name="jsonStream">The JSON stream to deserialize from</param>
-            <param name="parentRepository">The repository that becomes the parent of the deserialized cache</param>
-            <returns>Cached updates</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.UpdatesCache.GetUpdates(Microsoft.UpdateServices.Storage.RepositoryFilter)">
-            <summary>
-            Returns all updates in the repository that match the specified filter
-            </summary>
-            <param name="filter">The filter to apply</param>
-            <returns>Updates that match the filter</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.UpdatesCache.GetUpdates">
-            <summary>
-            Returns all updates in the cache
-            </summary>
-            <returns>Updates all updates in the cache</returns>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.UpdatesCache.MergeQueryResult(Microsoft.UpdateServices.Query.QueryResult,Microsoft.UpdateServices.Storage.CategoriesCache,System.Boolean@)">
-            <summary>
-            Adds new updates or categories to the store.
-            </summary>
-            <param name="queryResult">The query result to merge with the store.</param>
-            <param name="categories">The known categories. Used to resolve update product IDs to a product category</param>
-            <param name="cacheChanged">On return, set to true if there were changes to this cache, false otherwise</param>
-        </member>
-        <member name="M:Microsoft.UpdateServices.Storage.UpdatesCache.ToJson(System.IO.StreamWriter)">
-            <summary>
-            Serializes the updates cache to JSON
-            </summary>
-            <param name="jsonStream">The stream to serialize to</param>
-        </member>
         <member name="M:Microsoft.UpdateServices.Storage.WsusExport.Export(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Update},System.String)">
             <summary>
-            Exports the specified updates from a local repository to a format compatible with WSUS 2016
+            Exports the specified updates from a local update metadata source to a format compatible with WSUS 2016
             </summary>
-            <param name="updatesToExport">The updates to export. All categories from the repository are also exported</param>
+            <param name="updatesToExport">The updates to export. All categories from the source are also exported</param>
             <param name="exportFilePath">The export destination file (CAB)</param>
         </member>
         <member name="M:Microsoft.UpdateServices.Storage.WsusExport.WriteMetadataFile(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Update},System.String)">
@@ -2830,13 +3400,13 @@
             <param name="updates">The updates to export</param>
             <returns></returns>
         </member>
-        <member name="M:Microsoft.UpdateServices.Storage.WsusExport.CompleteTheListOfExportUpdates(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Update},Microsoft.UpdateServices.Storage.IRepository)">
+        <member name="M:Microsoft.UpdateServices.Storage.WsusExport.CompleteTheListOfExportUpdates(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.Update},Microsoft.UpdateServices.Storage.IMetadataSource)">
             <summary>
             Given a list of updates to export, it finds all updates bundled with updates to be exported and adds them
             to the list as well. This is done recursively, until all bundled updates have been included
             </summary>
             <param name="updatesToExport">The updates to export. Bundled updates are added to this list</param>
-            <param name="repository">The repository to export from.</param>
+            <param name="source">The update metadata to export from.</param>
         </member>
     </members>
 </doc>

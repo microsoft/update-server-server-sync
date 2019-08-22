@@ -21,7 +21,7 @@ namespace Microsoft.UpdateServices.Client
     /// var accessToken = await authenticator.Authenticate();
     /// </code>
     /// </example>
-    public class ClientAuthenticator
+    class ClientAuthenticator
     {
         /// <summary>
         /// Gets the update server endpoint this instance of ClientAuthenticator authenticates with.
@@ -70,8 +70,24 @@ namespace Microsoft.UpdateServices.Client
         public ClientAuthenticator(Endpoint endpoint, string accountName, Guid accountGuid)
         {
             UpstreamEndpoint = endpoint;
-            AccountGuid = accountGuid;
-            AccountName = accountName;
+
+            if (accountGuid != null)
+            {
+                AccountGuid = accountGuid;
+            }
+            else
+            {
+                AccountGuid = new Guid();
+            }
+            
+            if (!string.IsNullOrEmpty(accountName))
+            {
+                AccountName = accountName;
+            }
+            else
+            {
+                AccountName = new Guid().ToString();
+            }
         }
 
         /// <summary>

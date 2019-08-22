@@ -25,12 +25,14 @@ namespace Microsoft.UpdateServices.Metadata
         /// Gets the ID part of the identity
         /// </summary>
         /// <value>GUID identity</value>
+        [JsonIgnore]
         public Guid ID => Raw.UpdateID;
 
         /// <summary>
         /// Gets the revision part of the identity
         /// </summary>
         /// <value>Revision integer</value>
+        [JsonIgnore]
         public int Revision => Raw.RevisionNumber;
 
         // Keys used for fast equality comparison.
@@ -132,7 +134,7 @@ namespace Microsoft.UpdateServices.Metadata
         /// <returns>True if identities are equal, false otherwise</returns>
         public override bool Equals(object obj)
         {
-            if (!(obj is Identity))
+            if (object.ReferenceEquals(obj, null) || !(obj is Identity))
             {
                 return false;
             }
@@ -149,7 +151,14 @@ namespace Microsoft.UpdateServices.Metadata
         /// <returns>True if the two Identity objects are equal, false otherwise</returns>
         public static bool operator ==(Identity lhs, Identity rhs)
         {
-            return lhs.Equals(rhs);
+            if (object.ReferenceEquals(lhs, null))
+            {
+                return object.ReferenceEquals(rhs, null);
+            }
+            else 
+            {
+                return lhs.Equals(rhs);
+            }
         }
 
         /// <summary>

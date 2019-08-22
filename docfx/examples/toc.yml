@@ -1,14 +1,11 @@
-- name: Sync update metadata
-  href: repository_basic.md
+- name: Fetch update metadata
+  href: metadata_basic.md
 
 - name: Query a repository
-  href: repository_query.md
+  href: metadata_query.md
 
-- name: Export updates to WSUS
-  href: repository_export.md
-
-- name: Sync update content
-  href: repository_sync_content.md
+- name: Incremental fetch of update metadata
+  href: incremental-fetch.md
 
 - name: Run an upstream server
   href: upstream_server.md

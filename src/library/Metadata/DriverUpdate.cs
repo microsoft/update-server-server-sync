@@ -3,6 +3,7 @@
 
 using Microsoft.UpdateServices.Metadata.Content;
 using Microsoft.UpdateServices.Metadata.Prerequisites;
+using Microsoft.UpdateServices.Storage;
 using Microsoft.UpdateServices.WebServices.ServerSync;
 using Newtonsoft.Json;
 using System;
@@ -33,30 +34,8 @@ namespace Microsoft.UpdateServices.Metadata
     /// var drivers = driversQueryResult.Updates.OfType&lt;DriverUpdate&gt;();
     /// </code>
     /// </example>
-    public class DriverUpdate :
-        Update,
-        IUpdateWithPrerequisites,
-        IUpdateWithFiles,
-        IUpdateWithProduct,
-        IUpdateWithProductInternal,
-        IUpdateWithClassification,
-        IUpdateWithClassificationInternal,
-        IUpdateWithSupersededUpdates
+    public class DriverUpdate : Update
     {
-        /// <summary>
-        /// Gets the list of product IDs for the driver update
-        /// </summary>
-        /// <value>List of product IDs. The GUIDs map to a <see cref="Product"/></value>
-        [JsonProperty]
-        public List<Guid> ProductIds { get; private set; }
-
-        /// <summary>
-        /// Gets the list of classifications for the driver update
-        /// </summary>
-        /// <value>List of classification IDs. The GUIDs map to a <see cref="Classification"/></value>
-        [JsonProperty]
-        public List<Guid> ClassificationIds { get; private set; }
-
         /// <summary>
         /// Gets the list of driver update extended metadata.
         /// </summary>
@@ -66,75 +45,40 @@ namespace Microsoft.UpdateServices.Metadata
         [JsonIgnore]
         public List<DriverMetadata> Metadata { get; private set; }
 
-        /// <summary>
-        /// Gets the list of files (content) for the driver update
-        /// </summary>
-        /// <value>
-        /// List of content files
-        /// </value>
-        [JsonIgnore]
-        public List<UpdateFile> Files { get; private set; }
-
-        /// <summary>
-        /// Get the list of prerequisites for the driver update.
-        /// </summary>
-        /// <value>
-        /// List of prerequisites
-        /// </value>
-        [JsonIgnore]
-        public List<Prerequisites.Prerequisite> Prerequisites { get; private set; }
-
-        /// <summary>
-        /// Get the list of updates that this driver update superseds
-        /// </summary>
-        /// <value>
-        /// List of update IDs that this driver update replaced.
-        /// </value>
-        [JsonIgnore]
-        public List<Identity> SupersededUpdates { get; private set; }
-
-        [JsonConstructor]
-        private DriverUpdate()
+        internal DriverUpdate(Identity id, IMetadataSource source) : base(id, source)
         {
-
         }
 
         /// <summary>
         /// Create a DriverUpdate from an update XML and raw update data
         /// </summary>
-        /// <param name="serverSyncUpdateData"></param>
+        /// <param name="id">Update ID</param>
         /// <param name="xdoc">Update XML document</param>
-        internal DriverUpdate(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc) : base(serverSyncUpdateData)
+        internal DriverUpdate(Identity id, XDocument xdoc) : base(id, null)
         {
-            GetTitleAndDescriptionFromXml(xdoc);
-            UpdateType = UpdateType.Driver;
-
-            Prerequisites = Prerequisite.FromXml(xdoc);
-
-            // Parse superseded updates
-            SupersededUpdates = SupersededUpdatesParser.Parse(xdoc);
         }
 
         /// <summary>
         /// Sets extended attributes from the XML metadata.
         /// </summary>
-        /// <param name="xmlReader">XML stream</param>
-        /// <param name="contentFiles">All known content files. Used to resolve the hash from XML metadata to an actual file</param>
-        internal override void LoadExtendedAttributesFromXml(StreamReader xmlReader, Dictionary<string, UpdateFileUrl> contentFiles)
+        internal override void LoadAttributesFromMetadataSource()
         {
-            if (!ExtendedAttributesLoaded)
+            lock (this)
             {
-                var xdoc = XDocument.Parse(xmlReader.ReadToEnd(), LoadOptions.None);
-                Metadata = new List<DriverMetadata>();
-                ParseDriverMetadata(xdoc);
+                if (!AttributesLoaded)
+                {
+                    using (var metadataStream = MetadataSource.GetUpdateMetadataStream(Identity))
+                    using (var metadataReader = new StreamReader(metadataStream))
+                    {
+                        var xdoc = XDocument.Parse(metadataReader.ReadToEnd(), LoadOptions.None);
+                        GetDescriptionFromXml(xdoc);
 
-                Files = UpdateFileParser.Parse(xdoc, contentFiles);
+                        Metadata = new List<DriverMetadata>();
+                        ParseDriverMetadata(xdoc);
+                    }
 
-                Prerequisites = Prerequisite.FromXml(xdoc);
-
-                SupersededUpdates = SupersededUpdatesParser.Parse(xdoc);
-
-                ExtendedAttributesLoaded = true;
+                    AttributesLoaded = true;
+                }
             }
         }
 
@@ -149,41 +93,6 @@ namespace Microsoft.UpdateServices.Metadata
             foreach (var metadataElement in metadataElements)
             {
                 Metadata.Add(new DriverMetadata(metadataElement));
-            }
-        }
-
-        /// <summary>
-        /// Resolves the parent product of this driver.
-        /// This is done by finding the "AtleastOne" prerequisite with IsCategory attribute that matches a product ID
-        /// </summary>
-        /// <param name="allProducts">All known products</param>
-        void IUpdateWithProductInternal.ResolveProduct(List<Product> allProducts)
-        {
-            if (ProductIds == null && Prerequisites != null)
-            {
-                ProductIds = CategoryResolver.ResolveProductFromPrerequisites(Prerequisites, allProducts);
-                if (ProductIds == null)
-                {
-                    throw new Exception($"Cannot resolve product for update {Identity}");
-                }
-            }
-        }
-
-        /// <summary>
-        /// Resolves the classification of this driver.
-        /// This is done by finding the "AtleastOne" prerequisite with IsCategory attribute that matches a classification ID
-        /// </summary>
-        /// <param name="allClassifications">All known classifications</param>
-        void IUpdateWithClassificationInternal.ResolveClassification(List<Classification> allClassifications)
-        {
-            if (ClassificationIds == null && Prerequisites != null)
-            {
-                ClassificationIds = CategoryResolver.ResolveClassificationFromPrerequisites(Prerequisites, allClassifications);
-
-                if (ClassificationIds == null)
-                {
-                    throw new Exception($"Cannot resolve classification for update {Identity}");
-                }
             }
         }
     }

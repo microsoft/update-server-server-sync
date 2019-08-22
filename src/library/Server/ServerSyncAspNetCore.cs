@@ -11,6 +11,7 @@ using Microsoft.UpdateServices.Metadata;
 using Microsoft.UpdateServices.Metadata.Content;
 using System.IO;
 using Microsoft.UpdateServices.Metadata.Prerequisites;
+using Microsoft.AspNetCore.Builder;
 
 namespace Microsoft.UpdateServices.Server
 {
@@ -20,51 +21,46 @@ namespace Microsoft.UpdateServices.Server
     class ServerSyncWebService : IServerSyncAspNetCore
     {
         /// <summary>
-        /// The local repository from where updates are served.
+        /// The source of upate metadata that this server serves.
         /// </summary>
-        private readonly IRepository LocalRepository;
+        private readonly IMetadataSource MetadataSource;
 
         /// <summary>
         /// Cached service configuration
         /// </summary>
         private readonly ServerSyncConfigData ServiceConfiguration;
 
-        private readonly RepositoryFilter UpdatesFilter;
+        private readonly MetadataFilter UpdatesFilter;
 
         private readonly Dictionary<Guid, List<Update>> ProductsIndex;
         private readonly Dictionary<Guid, List<Update>> ClassificationsIndex;
         private readonly Dictionary<Identity, Update> FilteredUpdates;
 
-        private readonly List<Update> Categories;
+        private readonly ICollection<Update> Categories;
 
         /// <summary>
         /// Instantiate the server and serve updates from the local repo
         /// </summary>
-        /// <param name="localRepo">The repository to server updates from</param>
+        /// <param name="metadataSource">The update metadata source to serve updates from</param>
         /// <param name="filter">The filter for which updates to serve.</param>
-        /// <param name="serveOnlyMetadata">Serve only update metadata, not content. Clients must use the MUUrl to
-        /// download content</param>
-        public ServerSyncWebService(IRepository localRepo, RepositoryFilter filter, bool serveOnlyMetadata)
+        /// <param name="serviceConfig">Service configuration.</param>
+        public ServerSyncWebService(IMetadataSource metadataSource, MetadataFilter filter, ServerSyncConfigData serviceConfig)
         {
-            LocalRepository = localRepo;
-
-            ServiceConfiguration = (LocalRepository as IRepositoryInternal).ServiceConfiguration;
-
-            ServiceConfiguration.CatalogOnlySync = serveOnlyMetadata;
+            MetadataSource = metadataSource;
+            ServiceConfiguration = serviceConfig;
 
             UpdatesFilter = filter;
 
-            Categories = LocalRepository.GetCategories();
-
-            FilteredUpdates = LocalRepository.GetUpdates(filter, UpdateRetrievalMode.Extended).ToDictionary(u => u.Identity);
+            Categories = metadataSource.GetCategories();
+            FilteredUpdates = metadataSource.GetUpdates(filter).ToDictionary(u => u.Identity);
 
             // If an update contains bundled updates, those bundled updates must also be made available to downstream servers
-            var bundledUpdates = FilteredUpdates.OfType<IUpdateWithBundledUpdates>().SelectMany(u => u.BundledUpdates).Distinct().ToList();
+            var bundledUpdates = FilteredUpdates.Values.Where(u => u.IsBundle).SelectMany(u => u.BundledUpdates).Distinct().ToList();
             foreach(var bundledUpdateId in bundledUpdates)
             {
                 if (!FilteredUpdates.ContainsKey(bundledUpdateId))
                 {
-                    FilteredUpdates.Add(bundledUpdateId, LocalRepository.GetUpdate(bundledUpdateId, UpdateRetrievalMode.Extended));
+                    FilteredUpdates.Add(bundledUpdateId, metadataSource.GetUpdate(bundledUpdateId));
                 }
             }
 
@@ -74,24 +70,30 @@ namespace Microsoft.UpdateServices.Server
 
             foreach (var update in FilteredUpdates.Values)
             {
-                foreach(var productId in (update as IUpdateWithProduct).ProductIds)
+                if (update.HasProduct)
                 {
-                    if (!ProductsIndex.ContainsKey(productId))
+                    foreach (var productId in update.ProductIds)
                     {
-                        ProductsIndex[productId] = new List<Update>();
-                    }
+                        if (!ProductsIndex.ContainsKey(productId))
+                        {
+                            ProductsIndex[productId] = new List<Update>();
+                        }
 
-                    ProductsIndex[productId].Add(update);
+                        ProductsIndex[productId].Add(update);
+                    }
                 }
-
-                foreach (var classificationId in (update as IUpdateWithClassification).ClassificationIds)
+                
+                if (update.HasClassification)
                 {
-                    if (!ClassificationsIndex.ContainsKey(classificationId))
+                    foreach (var classificationId in update.ClassificationIds)
                     {
-                        ClassificationsIndex[classificationId] = new List<Update>();
-                    }
+                        if (!ClassificationsIndex.ContainsKey(classificationId))
+                        {
+                            ClassificationsIndex[classificationId] = new List<Update>();
+                        }
 
-                    ClassificationsIndex[classificationId].Add(update);
+                        ClassificationsIndex[classificationId].Add(update);
+                    }
                 }
             }
         }
@@ -154,7 +156,6 @@ namespace Microsoft.UpdateServices.Server
                 {
                     // If we have an anchor, return only categories that have changed after the anchor
                     response.NewRevisions = Categories
-                        .Where(u => u.LastChanged > anchorTime)
                         .Select(u => u.Identity.Raw)
                         .ToArray();
                 }
@@ -192,11 +193,11 @@ namespace Microsoft.UpdateServices.Server
                     var classificationFilterIds = classificationsFilter.Select(filter => filter.Id).ToList();
 
                     // Remove all updates that don't have classifications
-                    requestedUpdateIds.RemoveAll(u => !(u is IUpdateWithClassification));
+                    requestedUpdateIds.RemoveAll(u => !u.HasClassification);
 
                     // Remove all updates that don't have a classification that matches the filter
                     requestedUpdateIds.RemoveAll(
-                        u => !(u as IUpdateWithClassification).ClassificationIds.Any(c => classificationFilterIds.Contains(c)));
+                        u => !u.ClassificationIds.Any(c => classificationFilterIds.Contains(c)));
                 }
 
                 // Deduplicate result and convert to raw identity format
@@ -215,8 +216,6 @@ namespace Microsoft.UpdateServices.Server
         {
             var response = new ServerUpdateData();
 
-            var localRepositoryInternal = LocalRepository as IRepositoryInternal;
-
             // Make sure the request is not larger than the config says
             var updateRequestCount = request.GetUpdateData.updateIds.Count();
             if (updateRequestCount > ServiceConfiguration.MaxNumberOfUpdatesPerRequest)
@@ -234,17 +233,16 @@ namespace Microsoft.UpdateServices.Server
                 Update update;
                 if (!FilteredUpdates.TryGetValue(updateIdentity, out update))
                 {
-                    if ((update = Categories.Find(c => c.Identity.Equals(updateIdentity))) == null)
+                    if ((update = Categories.First(c => c.Identity.Equals(updateIdentity))) == null)
                     {
                         throw new Exception("Update not found");
                     }
                 }
 
-                // if update contains files, we must also gather file information
-                if (update is IUpdateWithFiles)
+                if (update.HasFiles)
                 {
-                    var updateFiles = (update as IUpdateWithFiles).Files;
-                    foreach(var updateFile in updateFiles)
+                    // if update contains files, we must also gather file information
+                    foreach (var updateFile in update.Files)
                     {
                         returnFilesList.Add(
                             new ServerSyncUrlData()
@@ -254,12 +252,15 @@ namespace Microsoft.UpdateServices.Server
                                 UssUrl = $"Content/{updateFile.GetContentDirectoryName()}/{updateFile.FileName}"
                             });
                     }
-                    
                 }
 
                 var rawUpdateData = new ServerSyncUpdateData();
                 rawUpdateData.Id = rawIdentity;
-                rawUpdateData.XmlUpdateBlob = localRepositoryInternal.GetUpdateXmlReader(update).ReadToEnd();
+
+                using (var metadataReader = new StreamReader(MetadataSource.GetUpdateMetadataStream(update.Identity)))
+                {
+                    rawUpdateData.XmlUpdateBlob = metadataReader.ReadToEnd();
+                }
 
                 returnUpdatesList.Add(rawUpdateData);
             }

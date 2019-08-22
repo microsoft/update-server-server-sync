@@ -4,25 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Microsoft.UpdateServices.Storage;
 using Microsoft.UpdateServices.WebServices.ServerSync;
 using Newtonsoft.Json;
 
 namespace Microsoft.UpdateServices.Metadata
 {
-    /// <summary>
-    /// Interface implemented by updates that have one or more classifications
-    /// </summary>
-    public interface IUpdateWithClassification
-    {
-        /// <summary>
-        /// Get the list of classifications for an update
-        /// </summary>
-        /// <value>
-        /// List of GUIDs; each GUID maps to a classification GUID
-        /// </value>
-        List<Guid> ClassificationIds { get; }
-    }
-
     /// <summary>
     /// Represents a Classification. Used to clasify updates on an upstream server.
     /// <para>
@@ -31,27 +18,20 @@ namespace Microsoft.UpdateServices.Metadata
     /// </summary>
     /// <example>
     /// <code>
-    /// var server = new UpstreamServerClient(Endpoint.Default);
-    /// 
     /// // Query categories
-    /// var categoriesQueryResult = await server.GetCategories();
+    /// var categoriesSource = await server.GetCategories();
     /// 
     /// // Get classifications
-    /// var products = categoriesQueryResult.Updates.OfType&lt;Classification&gt;();
+    /// var classifications = categoriesSource.ClassificationsIndex.Values;
+    ///
+    /// // Delete the query result from disk when done with it.
+    /// categoriesSource.Delete();
     /// </code>
     /// </example>
     public class Classification : Update
     {
-        [JsonConstructor]
-        private Classification()
-        {
+        internal Classification(Identity id, IMetadataSource source) : base(id, source) { }
 
-        }
-
-        internal Classification(ServerSyncUpdateData serverSyncUpdateData, XDocument xdoc) : base(serverSyncUpdateData)
-        {
-            GetTitleAndDescriptionFromXml(xdoc);
-            UpdateType = UpdateType.Classification;
-        }
+        internal Classification(Identity id, XDocument xdoc) : base(id, null) { }
     }
 }

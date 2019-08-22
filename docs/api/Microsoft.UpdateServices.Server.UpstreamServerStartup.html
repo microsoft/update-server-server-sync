@@ -89,34 +89,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class UpstreamServerStartup</code></pre>
   </div>
-  <h5 id="Microsoft_UpdateServices_Server_UpstreamServerStartup_examples"><strong>Examples</strong></h5>
-  <pre><code>// Open an existing local repository.
-// This sample assumes updates were sync&apos;ed from an upstream server and merged
-// into this local repository
-var localRepo = FileSystemRepository.Open(Environment.CurrentDirectory);
-
-// Create an empty filter; serves all updates in repository
-var filter = new RepositoryFilter();
-
-// Create and initialize an ASP.NET web host builder
-var host = new WebHostBuilder()
-   .UseUrls($&quot;http://localhost:24222&quot;)
-   .UseStartup&lt;Microsoft.UpdateServices.Server.UpstreamServerStartup>()
-   .UseKestrel()
-   .ConfigureAppConfiguration((hostingContext, config) =>
-   {
-       config.AddInMemoryCollection(
-       new Dictionary&lt;string, string>()
-       {
-           { &quot;repo-path&quot;, Environment.CurrentDirectory },
-           { &quot;updates-filter&quot;, filter.ToJson() }
-       });
-   })
-   .Build();
-
-// Run the ASP.NET service
-host.Run();</code></pre>
-
   <h3 id="constructors">Constructors
   </h3>
   
@@ -144,8 +116,10 @@ host.Run();</code></pre>
         <td><span class="xref">Microsoft.Extensions.Configuration.IConfiguration</span></td>
         <td><span class="parametername">config</span></td>
         <td><p>ASP.NET configuration.</p>
-<p>Must contain a string entry &quot;repo-path&quot; with the path to the repository to use.</p>
-<p>Must contain a string entry &quot;updates-filter&quot; with a JSON serialized filter for the repository.</p>
+<p>Must contain a string entry &quot;metadata-path&quot; with the path to the metadata source to use</p>
+<p>Must contain a string entry &quot;updates-filter&quot; with a JSON serialized updates metadata filter</p>
+<p>Must contain a string entry &quot;service-config-path&quot; with the path to the service configuration JSON</p>
+<p>Can contain a string entry &quot;content-path&quot; with the path to the content store to use if serving update content</p>
 </td>
       </tr>
     </tbody>

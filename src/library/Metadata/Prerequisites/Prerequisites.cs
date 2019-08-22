@@ -11,22 +11,44 @@ using System.Xml.Linq;
 
 namespace Microsoft.UpdateServices.Metadata.Prerequisites
 {
-    /// <summary>
-    /// Interface implemented by updates that have prerequisites
-    /// </summary>
-    public interface IUpdateWithPrerequisites
+    class PrerequisitesAnalyzer
     {
-        /// <summary>
-        /// Gets the list of prerequisites for an update
-        /// </summary>
-        /// <value>
-        /// List of prerequisites (<see cref="Simple"/>, <see cref="AtLeastOne"/> etc.)
-        /// </value>
-        List<Prerequisite> Prerequisites { get; }
-    }
+        public static bool IsApplicable(Update update, List<Guid> installedPrerequisites)
+        {
+            if (update.Prerequisites == null)
+            {
+                return true;
+            }
 
-    interface IUpdateWithClassificationInternal
-    {
-        void ResolveClassification(List<Classification> allClassifications);
+            foreach(var prereq in update.Prerequisites)
+            {
+                if (prereq is Simple)
+                {
+                    if (!installedPrerequisites.Contains((prereq as Simple).UpdateId))
+                    {
+                        return false;
+                    }
+                }
+                else if (prereq is AtLeastOne)
+                {
+                    var atLeastOne = false;
+                    foreach(var atLeastOnePrereq in (prereq as AtLeastOne).Simple)
+                    {
+                        if (installedPrerequisites.Contains(atLeastOnePrereq.UpdateId))
+                        {
+                            atLeastOne = true;
+                            break;
+                        }
+                    }
+
+                    if (!atLeastOne)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
     }
 }

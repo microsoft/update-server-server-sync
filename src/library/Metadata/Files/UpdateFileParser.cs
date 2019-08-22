@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.UpdateServices.Storage;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -17,9 +18,9 @@ namespace Microsoft.UpdateServices.Metadata.Content
         /// Create an UpdateFile object with metadata from the XML blob and URLs from the url data array
         /// </summary>
         /// <param name="xdoc">The XML element that holds file metadata</param>
-        /// <param name="urlData">Dictionary of known file URLs</param>
+        /// <param name="metadataSource">The metadata source that contains files URL information.</param>
         /// <returns></returns>
-        public static List<UpdateFile> Parse(XDocument xdoc, Dictionary<string, UpdateFileUrl> urlData)
+        public static List<UpdateFile> Parse(XDocument xdoc, IMetadataSource metadataSource)
         {
             var parsedFiles = new List<UpdateFile>();
 
@@ -36,9 +37,9 @@ namespace Microsoft.UpdateServices.Metadata.Content
             {
                 foreach(var hash in file.Digests)
                 {
-                    if (urlData.TryGetValue(hash.DigestBase64, out UpdateFileUrl fileUrl))
+                    if (metadataSource.HasFile(hash.DigestBase64))
                     {
-                        file.Urls.Add(fileUrl);
+                        file.Urls.Add(metadataSource.GetFile(hash.DigestBase64));
                         break;
                     }
                 }

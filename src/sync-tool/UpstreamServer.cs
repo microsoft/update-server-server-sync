@@ -13,22 +13,14 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 {
     /// <summary>
     /// Runs a service hat provides updates to downstream updates servers (WSUS)
-    /// Requires a local repository. All or a subset of updates from the local repository can be served.
+    /// Requires a local source of update metadata. All or a subset of updates from the local source can be served.
     /// </summary>
     class UpstreamServer
     {
         public static void Run(RunUpstreamServerOptions options)
         {
-            // Check that the repository exists
-            var repoPath = string.IsNullOrEmpty(options.RepositoryPath) ? Environment.CurrentDirectory : options.RepositoryPath;
-            if (!FileSystemRepository.RepoExists(repoPath))
-            {
-                ConsoleOutput.WriteRed($"There is no repository at path {repoPath}");
-                return;
-            }
-
             // Create the updates filter configuration
-            var filter = MetadataFilter.RepositoryFilterFromCommandLineFilter(options as IUpdatesFilter);
+            var filter = FilterBuilder.MetadataFilterFromCommandLine(options as IMetadataFilterOptions);
 
             var host = new WebHostBuilder()
                 .UseUrls($"http://{options.Endpoint}:{options.Port}")
@@ -46,14 +38,11 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 {
                     var configDictionary = new Dictionary<string, string>()
                     {
-                        { "repo-path", repoPath },
-                        { "updates-filter", filter.ToJson() }
+                        { "metadata-path", options.MetadataSourcePath },
+                        { "content-path", options.ContentSourcePath },
+                        { "updates-filter", filter.ToJson() },
+                        { "service-config-path", options.ServiceConfigurationPath }
                     };
-
-                    if (options.MetadataOnly)
-                    {
-                        configDictionary.Add("metadata-only", "true");
-                    }
 
                     config.AddInMemoryCollection(configDictionary);
                 })

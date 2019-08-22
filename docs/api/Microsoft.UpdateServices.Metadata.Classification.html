@@ -94,10 +94,58 @@ Example classifications: drivers, security updates, feature packs etc.
       <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Title">Update.Title</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Description">Update.Description</a>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsBundle">Update.IsBundle</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsBundled">Update.IsBundled</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_BundledUpdates">Update.BundledUpdates</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_BundleParent">Update.BundleParent</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_HasPrerequisites">Update.HasPrerequisites</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_HasProduct">Update.HasProduct</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_HasClassification">Update.HasClassification</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_ProductIds">Update.ProductIds</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_ClassificationIds">Update.ClassificationIds</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Prerequisites">Update.Prerequisites</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsSupersedingUpdates">Update.IsSupersedingUpdates</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsSuperseded">Update.IsSuperseded</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_SupersededUpdates">Update.SupersededUpdates</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_SupersedingUpdate">Update.SupersedingUpdate</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsApplicable_System_Collections_Generic_List_System_Guid__">Update.IsApplicable(List&lt;Guid&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Description">Update.Description</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_HasFiles">Update.HasFiles</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Files">Update.Files</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.UpdateServices.Metadata.html">Microsoft.UpdateServices.Metadata</a></h6>
@@ -107,13 +155,14 @@ Example classifications: drivers, security updates, feature packs etc.
     <pre><code class="lang-csharp hljs">public class Classification : Update</code></pre>
   </div>
   <h5 id="Microsoft_UpdateServices_Metadata_Classification_examples"><strong>Examples</strong></h5>
-  <pre><code>var server = new UpstreamServerClient(Endpoint.Default);
-
-// Query categories
-var categoriesQueryResult = await server.GetCategories();
+  <pre><code>// Query categories
+var categoriesSource = await server.GetCategories();
 
 // Get classifications
-var products = categoriesQueryResult.Updates.OfType&lt;Classification>();</code></pre>
+var classifications = categoriesSource.ClassificationsIndex.Values;
+
+// Delete the query result from disk when done with it.
+categoriesSource.Delete();</code></pre>
 
 </article>
           </div>

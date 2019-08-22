@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.UpdateServices.Metadata;
 using Microsoft.UpdateServices.Metadata.Content;
 using Microsoft.UpdateServices.Storage;
 using System;
@@ -15,14 +16,16 @@ namespace Microsoft.UpdateServices.Server
     /// </summary>
     public class ContentController : Controller
     {
-        IRepository LocalRepository;
+        IMetadataSource MetadataSource;
+        IUpdateContentSource ContentSource;
         Dictionary<string, UpdateFile> UpdateFiles;
 
-        internal ContentController(IRepository localRepo, RepositoryFilter filter)
+        internal ContentController(IMetadataSource metadataSource, IUpdateContentSource contentSource, MetadataFilter filter)
         {
-            LocalRepository = localRepo;
+            MetadataSource = metadataSource;
+            ContentSource = contentSource;
 
-            var updatesWithFiles = LocalRepository.GetUpdates(filter, UpdateRetrievalMode.Extended).OfType<IUpdateWithFiles>();
+            var updatesWithFiles = MetadataSource.GetUpdates(filter).Where(u => u.HasFiles);
 
             UpdateFiles = updatesWithFiles.SelectMany(u => u.Files).Distinct().ToDictionary(
                 f => $"{f.GetContentDirectoryName().ToLower()}/{f.Digests[0].HexString.ToLower() + System.IO.Path.GetExtension(f.FileName).ToLower()}");
@@ -40,11 +43,11 @@ namespace Microsoft.UpdateServices.Server
             var lookupKey = $"{directory.ToLower()}/{name.ToLower()}";
 
             if (UpdateFiles.TryGetValue(lookupKey, out UpdateFile file) &&
-                 LocalRepository.IsFileDownloaded(file))
+                 ContentSource.Contains(file))
             {
                 var request = HttpContext.Request;
 
-                var fileResult = new FileStreamResult(LocalRepository.GetUpdateFileStream(file), "application/octet-stream");
+                var fileResult = new FileStreamResult(ContentSource.Get(file), "application/octet-stream");
                 fileResult.FileDownloadName = name;
                 fileResult.EnableRangeProcessing = true;
                 return fileResult;
@@ -69,11 +72,11 @@ namespace Microsoft.UpdateServices.Server
             var lookupKey = $"{directory.ToLower()}/{name.ToLower()}";
 
             if (UpdateFiles.TryGetValue(lookupKey, out UpdateFile file) &&
-                LocalRepository.IsFileDownloaded(file))
+                ContentSource.Contains(file))
             {
                 var okResult = new OkResult();
 
-                using (var contentStream = LocalRepository.GetUpdateFileStream(file))
+                using (var contentStream = ContentSource.Get(file))
                 {
                     HttpContext.Response.ContentLength = contentStream.Length;
                 }

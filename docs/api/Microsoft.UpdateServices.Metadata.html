@@ -100,28 +100,21 @@ Example detectoids: x64, x86, arm64, DirectX12 supported, etc.
       <section><p>Represents the identity of an update.</p>
 <p>An update&apos;s identity is the pair ID (Guid) - Revision (integer).</p>
 </section>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.MetadataFilter.html">MetadataFilter</a></h4>
+      <section><p>Represents a filter that can be applied to update metadata</p>
+</section>
       <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a></h4>
       <section><p>Metadata for a product category.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.QueryFilter.html">QueryFilter</a></h4>
+      <section><p>Represents a filter used for quering updates. Combines categories and classifications filters</p>
+<p>To create a QueryFilter, query the categories on the upstream server first.</p>
 </section>
       <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.SoftwareUpdate.html">SoftwareUpdate</a></h4>
       <section><p>Reprerents a software update.</p>
 </section>
       <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a></h4>
       <section><p>A base class for all updates stored on an upstream update server. Stores generic update metadata applicable to both categories and updates.</p>
-</section>
-    <h3 id="interfaces">Interfaces
-  </h3>
-      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithBundledUpdates.html">IUpdateWithBundledUpdates</a></h4>
-      <section><p>Interface implemented by updates that can bundle other updates</p>
-</section>
-      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithClassification.html">IUpdateWithClassification</a></h4>
-      <section><p>Interface implemented by updates that have one or more classifications</p>
-</section>
-      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithProduct.html">IUpdateWithProduct</a></h4>
-      <section><p>Interface implemeted by updates that belong to a <a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a></p>
-</section>
-      <h4><a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithSupersededUpdates.html">IUpdateWithSupersededUpdates</a></h4>
-      <section><p>Interface implemented by updates that superseed other updates</p>
 </section>
 </article>
           </div>

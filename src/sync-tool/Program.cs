@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using CommandLine;
 using Microsoft.UpdateServices.Storage;
 
@@ -12,48 +13,112 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         static void Main(string[] args)
         {
             CommandLine.Parser.Default.ParseArguments<
-                RepositoryStatusOptions,
-                UpdatesSyncOptions,
-                QueryRepositoryOptions,
-                InitRepositoryOptions,
-                DeleteRepositoryOptions,
-                RepositoryExportOptions,
-                CategoriesSyncOptions,
+                MetadataSourceStatusOptions,
+                FetchUpdatesOptions,
+                QueryMetadataOptions,
+                MetadataSourceExportOptions,
                 ContentSyncOptions,
-                RunUpstreamServerOptions>(args)
-                .WithParsed<DeleteRepositoryOptions>(opts => RepositoryAccess.Delete(opts))
-                .WithParsed<InitRepositoryOptions>(opts => RepositoryAccess.Init(opts))
-                .WithParsed<UpdatesSyncOptions>(opts => MetadataSync.SyncUpdates(opts))
-                .WithParsed<QueryRepositoryOptions>(opts => RepositoryAccess.Query(opts))
-                .WithParsed<RepositoryExportOptions>(opts => RepositoryExport.ExportUpdates(opts))
-                .WithParsed<CategoriesSyncOptions>(opts => MetadataSync.SyncCategories(opts))
+                RunUpstreamServerOptions,
+                MergeQueryResultOptions,
+                FetchCategoriesOptions,
+                FetchConfigurationOptions>(args)
+                .WithParsed<FetchUpdatesOptions>(opts => MetadataSync.FetchUpdates(opts))
+                .WithParsed<FetchConfigurationOptions>(opts => MetadataSync.FetchConfiguration(opts))
+                .WithParsed<FetchCategoriesOptions>(opts => MetadataSync.FetchCategories(opts))
+                .WithParsed<QueryMetadataOptions>(opts => MetadataQuery.Query(opts))
+                .WithParsed<MetadataSourceExportOptions>(opts => UpdateMetadataExport.ExportUpdates(opts))
                 .WithParsed<ContentSyncOptions>(opts => ContentSync.Run(opts))
-                .WithParsed<RepositoryStatusOptions>(opts => RepositoryAccess.Status(opts))
+                .WithParsed<MetadataSourceStatusOptions>(opts => MetadataQuery.Status(opts))
                 .WithParsed<RunUpstreamServerOptions>(opts => UpstreamServer.Run(opts))
+                .WithParsed<MergeQueryResultOptions>(opts => MetadataSync.MergeQueryResult(opts))
                 .WithNotParsed(failed => Console.WriteLine("Error"));
         }
 
         /// <summary>
-        /// Loads a repository from the path specified on the command line
+        /// Opens an updates metadata source the path specified on the command line
         /// </summary>
-        /// <param name="repositoryOption">The command line switch that contains the path</param>
-        /// <param name="openMode">Open mode: if existing of create if not existing</param>
-        /// <returns>A repository if one was opened or created, null if a repo does not exist at the path and create was not requested</returns>
-        public static IRepository LoadRepositoryFromOptions(IRepositoryPathOption repositoryOption)
+        /// <param name="sourceOptions">The command line switch that contains the path</param>
+        /// <returns>A open updates metadata source</returns>
+        public static IMetadataSource LoadMetadataSourceFromOptions(IMetadataSourceOptions sourceOptions)
         {
-            Console.Write("Opening repository...");
-            var repoPath = string.IsNullOrEmpty(repositoryOption.RepositoryPath) ? Environment.CurrentDirectory : repositoryOption.RepositoryPath;
-            var localRepo = FileSystemRepository.Open(repoPath);
-            if (localRepo == null)
+            IMetadataSource source = null;
+            Console.Write("Opening update metadata source file... ");
+            try
             {
-                ConsoleOutput.WriteRed($"There is no repository at path {repoPath}");
-            }
-            else
-            {
+                source = CompressedMetadataStore.Open(sourceOptions.MetadataSourcePath);
                 ConsoleOutput.WriteGreen("Done!");
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine();
+                ConsoleOutput.WriteRed("Cannot open the query result file:");
+                ConsoleOutput.WriteRed(ex.Message);
+            }
+            
 
-            return localRepo;
+            return source;
+        }
+
+        static Dictionary<OperationType, string> OperationsMessages = new Dictionary<OperationType, string>()
+        {
+            { OperationType.ProcessSupersedeDataStart, "Processing superseding data"},
+            { OperationType.ProcessSupersedeDataEnd, "Processing superseding data"},
+            { OperationType.PrerequisiteGraphUpdateEnd, "Updating prerequisites graph"},
+            { OperationType.PrerequisiteGraphUpdateProgress, "Updating prerequisites graph"},
+            { OperationType.PrerequisiteGraphUpdateStart, "Updating prerequisites graph"},
+            { OperationType.IndexingTitlesEnd, "Indexing update titles"},
+            { OperationType.IndexingTitlesStart, "Indexing update titles"},
+            { OperationType.IndexingCategoriesStart, "Indexing categories"},
+            { OperationType.IndexingCategoriesProgress, "Indexing categories"},
+            { OperationType.IndexingCategoriesEnd, "Indexing categories"},
+            { OperationType.HashMetadataStart, "Creating checksum"},
+            { OperationType.HashMetadataEnd, "Creating checksum"},
+            { OperationType.IndexingBundlesStart, "Indexing bundles"},
+            { OperationType.IndexingBundlesEnd, "Indexing bundles"},
+            { OperationType.IndexingFilesStart, "Indexing files"},
+            { OperationType.IndexingFilesEnd, "Indexing files"}
+        };
+
+        public static void MetadataSourceOperationProgressHandler(object sender, OperationProgress e)
+        {
+            if (!OperationsMessages.TryGetValue(e.CurrentOperation, out string operationMessage))
+            {
+                return;
+            }
+
+            switch (e.CurrentOperation)
+            {
+                case OperationType.IndexingFilesStart:
+                case OperationType.IndexingBundlesStart:
+                case OperationType.IndexingCategoriesStart:
+                case OperationType.HashMetadataStart:
+                case OperationType.PrerequisiteGraphUpdateStart:
+                case OperationType.ProcessSupersedeDataStart:
+                case OperationType.IndexingTitlesStart:
+                case OperationType.IndexingPrerequisitesStart:
+                    Console.CursorLeft = 0;
+                    Console.Write($"{operationMessage} [000.0%]");
+                    break;
+
+                case OperationType.IndexingFilesEnd:
+                case OperationType.IndexingBundlesEnd:
+                case OperationType.IndexingCategoriesEnd:
+                case OperationType.PrerequisiteGraphUpdateEnd:
+                case OperationType.ProcessSupersedeDataEnd:
+                case OperationType.HashMetadataEnd:
+                case OperationType.IndexingTitlesEnd:
+                case OperationType.IndexingPrerequisitesEnd:
+                    Console.CursorLeft = 0;
+                    Console.Write($"{operationMessage}  [100.00%] ");
+                    ConsoleOutput.WriteGreen(" Done!");
+                    break;
+
+                case OperationType.IndexingCategoriesProgress:
+                case OperationType.PrerequisiteGraphUpdateProgress:
+                    Console.CursorLeft = 0;
+                    Console.Write("{1} [{0:000.00}%]", e.PercentDone, operationMessage);
+                    break;
+            }
         }
     }
 }

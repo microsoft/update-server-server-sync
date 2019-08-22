@@ -30,5 +30,10 @@ namespace Microsoft.UpdateServices.Metadata.Prerequisites
             // Parse the guid from the XML data
             UpdateId = new Guid(xmlData.Attributes("UpdateID").First().Value);
         }
+
+        internal Simple(Guid id)
+        {
+            UpdateId = id;
+        }
     }
 }

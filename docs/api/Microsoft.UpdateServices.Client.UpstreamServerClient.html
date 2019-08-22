@@ -73,7 +73,8 @@
   
   <h1 id="Microsoft_UpdateServices_Client_UpstreamServerClient" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient" class="text-break">Class UpstreamServerClient
   </h1>
-  <div class="markdown level0 summary"><p>Query updates, metadata and content from an upstream update server.</p>
+  <div class="markdown level0 summary"><p>Query updates, metadata and content from an upstream update server.
+Results are returned as <a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSource.html">IMetadataSource</a>, through which advanced queries and filtering can be performed.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -87,10 +88,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class UpstreamServerClient</code></pre>
   </div>
-  <h5 id="Microsoft_UpdateServices_Client_UpstreamServerClient_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>It is recommended to use the UpstreamServerClient together with an <a class="xref" href="Microsoft.UpdateServices.Storage.IRepository.html">IRepository</a>. This enables caching of access tokens and service configuration,
-speeding up queries. Using a local repository enable retrieval of delta changes between the upstream server and the local repository.</p>
-</div>
   <h3 id="constructors">Constructors
   </h3>
   
@@ -122,55 +119,6 @@ speeding up queries. Using a local repository enable retrieval of delta changes 
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_UpdateServices_Client_UpstreamServerClient__ctor_Microsoft_UpdateServices_Client_Endpoint__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This constructor is not recommended for performance reasons. It is recommended to use the constructor that takes a local repository.
-Queries take a significant amount of time, and using a local repository enables delta queries, where only changes on the upstream server are retrieved.</p>
-</div>
-  
-  
-  <a id="Microsoft_UpdateServices_Client_UpstreamServerClient__ctor_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.#ctor*"></a>
-  <h4 id="Microsoft_UpdateServices_Client_UpstreamServerClient__ctor_Microsoft_UpdateServices_Storage_IRepository_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.#ctor(Microsoft.UpdateServices.Storage.IRepository)">UpstreamServerClient(IRepository)</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of UpstreamServerClient, based on the specified local repository. The upstream
-server endpoint is inherited from the local repository.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public UpstreamServerClient(IRepository localRepository)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.UpdateServices.Storage.IRepository.html">IRepository</a></td>
-        <td><span class="parametername">localRepository</span></td>
-        <td><p>Local updates repository.</p>
-<p>Cached data from the repository is used for queries.</p>
-<p>Query results are delta changes between the upstread server and the local repository.
-</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_UpdateServices_Client_UpstreamServerClient__ctor_Microsoft_UpdateServices_Storage_IRepository__examples">Examples</h5>
-  <pre><code>// Initialize a new local repository in the current directory, tracking the official Microsoft upstream server
-var newRepo = FileSystemRepository.Init(Environment.CurrentDirectory, Endpoint.Default.URI);
-
-// Create a new client based on the local repository 
-var client = new UpstreamServerClient(newRepo);
-
-var categories = await client.GetCategories();
-
-// Save the categories query result in the local repository
-newRepo.MergeQueryResult(categories);</code></pre>
-
   <h3 id="properties">Properties
   </h3>
   
@@ -207,12 +155,11 @@ newRepo.MergeQueryResult(categories);</code></pre>
   <a id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetCategories_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetCategories*"></a>
   <h4 id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetCategories" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetCategories">GetCategories()</h4>
   <div class="markdown level1 summary"><p>Gets the list of categories from the upstream update server.</p>
-<p>If the client was initialized with a repository, only new or changed categories not present in the repository are retrieved.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;QueryResult&gt; GetCategories()</code></pre>
+    <pre><code class="lang-csharp hljs">public Task&lt;CompressedMetadataStore&gt; GetCategories()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -224,22 +171,22 @@ newRepo.MergeQueryResult(categories);</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Query.QueryResult.html">QueryResult</a>&gt;</td>
-        <td><p>A query result containing all or changed categories.</p>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Storage.CompressedMetadataStore.html">CompressedMetadataStore</a>&gt;</td>
+        <td><p>An updates metadata source containing all.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   
-  <a id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetUpdates_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates*"></a>
-  <h4 id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetUpdates_Microsoft_UpdateServices_Query_QueryFilter_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates(Microsoft.UpdateServices.Query.QueryFilter)">GetUpdates(QueryFilter)</h4>
-  <div class="markdown level1 summary"><p>Gets the list of updates matching the query filter from an upstream update server.</p>
+  <a id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetCategories_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetCategories*"></a>
+  <h4 id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetCategories_Microsoft_UpdateServices_Storage_IMetadataSink_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetCategories(Microsoft.UpdateServices.Storage.IMetadataSink)">GetCategories(IMetadataSink)</h4>
+  <div class="markdown level1 summary"><p>Gets the list of categories from the upstream server and adds them to the specified metadata collection.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;QueryResult&gt; GetUpdates(QueryFilter updatesFilter)</code></pre>
+    <pre><code class="lang-csharp hljs">public Task GetCategories(IMetadataSink destination)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -252,9 +199,9 @@ newRepo.MergeQueryResult(categories);</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.UpdateServices.Query.QueryFilter.html">QueryFilter</a></td>
-        <td><span class="parametername">updatesFilter</span></td>
-        <td><p>Updates filter. See <a class="xref" href="Microsoft.UpdateServices.Query.QueryFilter.html">QueryFilter</a> for details.</p>
+        <td><a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSink.html">IMetadataSink</a></td>
+        <td><span class="parametername">destination</span></td>
+        <td><p>Metadata collection where to add the results. If the collection implements <a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSource.html">IMetadataSource</a>, only delta changes are retrieved and added to the destination.</p>
 </td>
       </tr>
     </tbody>
@@ -269,16 +216,130 @@ newRepo.MergeQueryResult(categories);</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Query.QueryResult.html">QueryResult</a>&gt;</td>
-        <td><p>A query result containing all or changed updates that match the filter.</p>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetServerConfigData_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetServerConfigData*"></a>
+  <h4 id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetServerConfigData" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetServerConfigData">GetServerConfigData()</h4>
+  <div class="markdown level1 summary"><p>Retrieves configuration data from the upstream server.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;ServerSyncConfigData&gt; GetServerConfigData()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<span class="xref">Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData</span>&gt;</td>
+        <td><p>Server configuration data</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetUpdates_Microsoft_UpdateServices_Query_QueryFilter__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>When a local repository is used to initialize the UpstreamServerClient, the query result is a delta relative to the local repository.
-The query result is not merged into the store. The caller can merge the query result using <a class="xref" href="Microsoft.UpdateServices.Storage.IRepository.html#Microsoft_UpdateServices_Storage_IRepository_MergeQueryResult_Microsoft_UpdateServices_Query_QueryResult_">MergeQueryResult(QueryResult)</a></p>
+  
+  
+  <a id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetUpdates_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates*"></a>
+  <h4 id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetUpdates_Microsoft_UpdateServices_Metadata_QueryFilter_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates(Microsoft.UpdateServices.Metadata.QueryFilter)">GetUpdates(QueryFilter)</h4>
+  <div class="markdown level1 summary"><p>Gets updates matching the query filter from an upstream update server.</p>
 </div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;CompressedMetadataStore&gt; GetUpdates(QueryFilter updatesFilter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Metadata.QueryFilter.html">QueryFilter</a></td>
+        <td><span class="parametername">updatesFilter</span></td>
+        <td><p>Updates filter. See <a class="xref" href="Microsoft.UpdateServices.Metadata.QueryFilter.html">QueryFilter</a> for details.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Storage.CompressedMetadataStore.html">CompressedMetadataStore</a>&gt;</td>
+        <td><p>An updates metadata source containing updates that match the filter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetUpdates_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates*"></a>
+  <h4 id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetUpdates_Microsoft_UpdateServices_Metadata_QueryFilter_Microsoft_UpdateServices_Storage_IMetadataSink_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates(Microsoft.UpdateServices.Metadata.QueryFilter,Microsoft.UpdateServices.Storage.IMetadataSink)">GetUpdates(QueryFilter, IMetadataSink)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task GetUpdates(QueryFilter updatesFilter, IMetadataSink destination)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Metadata.QueryFilter.html">QueryFilter</a></td>
+        <td><span class="parametername">updatesFilter</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSink.html">IMetadataSink</a></td>
+        <td><span class="parametername">destination</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="events">Events
   </h3>
   

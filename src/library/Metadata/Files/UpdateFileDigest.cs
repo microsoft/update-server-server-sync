@@ -15,12 +15,14 @@ namespace Microsoft.UpdateServices.Metadata.Content
         /// Gets the digest algorithm used
         /// </summary>
         /// <value>Digest algorithm name</value>
+        [JsonProperty]
         public string Algorithm { get; private set; }
 
         /// <summary>
         /// Gets the base64 encoded digest
         /// </summary>
         /// <value>Base64 encoded string</value>
+        [JsonProperty]
         public string DigestBase64 { get; private set; }
 
         /// <summary>

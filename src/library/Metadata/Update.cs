@@ -3,6 +3,8 @@
 
 using Microsoft.UpdateServices.Compression;
 using Microsoft.UpdateServices.Metadata.Content;
+using Microsoft.UpdateServices.Metadata.Prerequisites;
+using Microsoft.UpdateServices.Storage;
 using Microsoft.UpdateServices.WebServices.ServerSync;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
 
 namespace Microsoft.UpdateServices.Metadata
@@ -17,28 +20,28 @@ namespace Microsoft.UpdateServices.Metadata
     /// <summary>
     /// The UpdateType enumeration defines various types of updates
     /// </summary>
-    internal enum UpdateType
+    internal enum UpdateType : uint
     {
         /// <summary>
         /// <see cref="Metadata.Detectoid"/>
         /// </summary>
-        Detectoid,
+        Detectoid = 0,
         /// <summary>
         /// <see cref="Metadata.Classification"/>
         /// </summary>
-        Classification,
+        Classification = 1,
         /// <summary>
         /// <see cref="Metadata.Product"/>
         /// </summary>
-        Product,
+        Product = 2,
         /// <summary>
         /// <see cref="Metadata.DriverUpdate"/>
         /// </summary>
-        Driver,
+        Driver = 3,
         /// <summary>
         /// <see cref="Metadata.SoftwareUpdate"/>
         /// </summary>
-        Software
+        Software = 4
     }
 
     /// <summary>
@@ -52,51 +55,152 @@ namespace Microsoft.UpdateServices.Metadata
         /// <value>
         /// Update identity.
         /// </value>
-        [JsonProperty]
         public Identity Identity { get; private set; }
 
-        /// <summary>
-        /// The type of update
-        /// </summary>
-        [JsonProperty]
-        internal UpdateType UpdateType;
-
+        private string _Title;
         /// <summary>
         /// Get the category or update title
         /// </summary>
+        public string Title
+        {
+            get
+            {
+                if (_Title == null)
+                {
+                    _Title = MetadataSource.GetUpdateTitle(this.Identity);
+                }
+
+                return _Title;
+            }
+        }
+
+        /// <summary>
+        /// Set for updates that bundle other updates
+        /// </summary>
+        public bool IsBundle =>MetadataSource.IsBundle(this.Identity);
+
+        /// <summary>
+        /// Set for updates that are bundled together with other updates
+        /// </summary>
+        public bool IsBundled => MetadataSource.IsBundled(this.Identity);
+
+        /// <summary>
+        /// List of bundled updates
+        /// </summary>
+        /// <value>
+        /// List of update identities.
+        /// </value>
+        public IEnumerable<Identity> BundledUpdates => MetadataSource.GetBundledUpdates(this.Identity);
+
+        /// <summary>
+        /// Gets the update within which this update is bundled
+        /// </summary>
+        public IEnumerable<Identity> BundleParent => MetadataSource.GetBundle(this.Identity);
+
+        /// <summary>
+        /// Determine if the update has prerequisites
+        /// </summary>
+        public bool HasPrerequisites => MetadataSource.HasPrerequisites(this.Identity);
+
+        /// <summary>
+        /// Check if this update has a parent product
+        /// </summary>
+        public bool HasProduct => MetadataSource.HasProduct(this.Identity);
+
+        /// <summary>
+        /// Check if this update has a classification
+        /// </summary>
+        public bool HasClassification => MetadataSource.HasClassification(this.Identity);
+
+        /// <summary>
+        /// Gets the list of product IDs for the update
+        /// </summary>
+        /// <value>List of product IDs. The GUIDs map to a <see cref="Product"/></value>
         [JsonProperty]
-        public string Title { get; private set; }
+        public List<Guid> ProductIds => MetadataSource.GetUpdateProductIds(this.Identity);
+
+        /// <summary>
+        /// Gets the list of classifications for the driver update
+        /// </summary>
+        /// <value>List of classification IDs. The GUIDs map to a <see cref="Classification"/></value>
+        [JsonProperty]
+        public List<Guid> ClassificationIds => MetadataSource.GetUpdateClassificationIds(this.Identity);
+
+        /// <summary>
+        /// Get the list of prerequisites
+        /// </summary>
+        /// <value>
+        /// List of prerequisites
+        /// </value>
+        public List<Prerequisites.Prerequisite> Prerequisites => MetadataSource.GetPrerequisites(this.Identity);
+
+        /// <summary>
+        /// Check if an update superseds other updates
+        /// </summary>
+        public bool IsSupersedingUpdates => MetadataSource.IsSuperseding(this.Identity);
+
+        /// <summary>
+        /// Check if an update superseds other updates
+        /// </summary>
+        public bool IsSuperseded => MetadataSource.IsSuperseded(this.Identity);
+
+        /// <summary>
+        /// List of Update Ids superseded by an update.
+        /// </summary>
+        /// <value>List of update <see cref="Identity"/></value>
+        public IReadOnlyList<Guid> SupersededUpdates => MetadataSource.GetSupersededUpdates(this.Identity);
+
+        /// <summary>
+        /// Get the update that superseded this update
+        /// </summary>
+        /// <value>The identity of the update that superseds this update</value>
+        public Identity SupersedingUpdate => MetadataSource.GetSupersedingUpdate(this.Identity);
+
+        /// <summary>
+        /// Determines if the update is applicable based on its list of prerequisites and the list of installed updates (prerequisites) on a computer
+        /// </summary>
+        /// <param name="installedPrerequisites">List of installed updates on a computer</param>
+        /// <returns>True if all prerequisites are met, false otherwise</returns>
+        public bool IsApplicable(List<Guid> installedPrerequisites)
+        {
+            return PrerequisitesAnalyzer.IsApplicable(this, installedPrerequisites);
+        }
+
+        internal string _Description;
 
         /// <summary>
         /// Get the category or update description
         /// </summary>
-        [JsonProperty]
-        public string Description { get; private set; }
-
-        /// <summary>
-        /// Time when the update was added to the repository
-        /// </summary>
-        [JsonProperty]
-        internal DateTime LastChanged;
-
-        /// <summary>
-        /// Check if the update is superseded by another update
-        /// </summary>
-        [JsonProperty]
-        public bool IsSuperseded { get; internal set; }
-
-        /// <summary>
-        /// XML data received from the server. It is not serialized with this object but rather
-        /// saved independently to an XML file on disk
-        /// </summary>
         [JsonIgnore]
-        internal string XmlData;
+        public string Description
+        {
+            get
+            {
+                LoadAttributesFromMetadataSource();
+                return _Description;
+            }
+        }
+
+        /// <summary>
+        /// Check if an update contains content files
+        /// </summary>
+        public bool HasFiles => MetadataSource.HasFiles(this.Identity);
+
+        /// <summary>
+        /// Gets the list of files (content) for update
+        /// </summary>
+        /// <value>
+        /// List of content files
+        /// </value>
+        public List<UpdateFile> Files => MetadataSource.GetFiles(this.Identity);
 
         /// <summary>
         /// True if extended attributes have been loaded
         /// </summary>
         [JsonIgnore]
-        internal bool ExtendedAttributesLoaded = false;
+        internal bool AttributesLoaded = false;
+
+        internal readonly IMetadataSource MetadataSource;
 
         internal bool MatchTitle(string[] keywords)
         {
@@ -119,53 +223,35 @@ namespace Microsoft.UpdateServices.Metadata
             Identity = new Identity(serverSyncUpdateData.Id);
         }
 
-        /// <summary>
-        /// Construct an update by decoding the contained XML
-        /// </summary>
-        /// <param name="serverSyncUpdateData"></param>
-        internal static Update FromServerSyncUpdateData(ServerSyncUpdateData serverSyncUpdateData)
+        internal Update(Identity id, IMetadataSource source)
         {
-            // We need to parse the XML update blob
-            string updateXml = serverSyncUpdateData.XmlUpdateBlob;
-            if (string.IsNullOrEmpty(updateXml))
-            {
-                // If the plain text blob is not availabe, use the compressed XML blob
-                if (serverSyncUpdateData.XmlUpdateBlobCompressed == null || serverSyncUpdateData.XmlUpdateBlobCompressed.Length == 0)
-                {
-                    throw new Exception("Missing XmlUpdateBlobCompressed");
-                }
+            Identity = id;
+            MetadataSource = source;
+        }
 
-                // Note: This only works on Windows.
-                updateXml = CabinetUtility.DecompressData(serverSyncUpdateData.XmlUpdateBlobCompressed);
-            }
-
-            var xdoc = XDocument.Parse(updateXml, LoadOptions.None);
-
+        /// <summary>
+        /// Construct an update from update metadata (XML)
+        /// </summary>
+        /// <param name="id">Update ID</param>
+        /// <param name="xdoc">Update XML metadata</param>
+        internal static Update FromUpdateXml(Identity id, XDocument xdoc)
+        {
             // Get the update type
             var updateType = GetUpdateTypeFromXml(xdoc).ToLowerInvariant();
             switch (updateType)
             {
                 case "detectoid":
-                    return new Detectoid(serverSyncUpdateData, xdoc)
-                    {
-                        XmlData = updateXml
-                    };
+                    return new Detectoid(id, xdoc);
 
                 case "category":
                     var categoryType = GetCategoryFromXml(xdoc).ToLowerInvariant();
                     if (categoryType == "updateclassification")
                     {
-                        return new Classification(serverSyncUpdateData, xdoc)
-                        {
-                            XmlData = updateXml
-                        };
+                        return new Classification(id, xdoc);
                     }
                     else if (categoryType == "product" || categoryType == "company" || categoryType == "productfamily")
                     {
-                        return new Product(serverSyncUpdateData, xdoc)
-                        {
-                            XmlData = updateXml
-                        };
+                        return new Product(id, xdoc);
                     }
                     else
                     {
@@ -173,16 +259,10 @@ namespace Microsoft.UpdateServices.Metadata
                     }
 
                 case "driver":
-                    return new DriverUpdate(serverSyncUpdateData, xdoc)
-                    {
-                        XmlData = updateXml
-                    };
+                    return new DriverUpdate(id, xdoc);
 
                 case "software":
-                    return new SoftwareUpdate(serverSyncUpdateData, xdoc)
-                    {
-                        XmlData = updateXml
-                    };
+                    return new SoftwareUpdate(id, xdoc);
 
                 default:
                     throw new Exception($"Unexpected update type: {updateType}");
@@ -192,11 +272,22 @@ namespace Microsoft.UpdateServices.Metadata
         /// <summary>
         /// Loads extended attributes from XML. Classes that inherit should provide an implementation.
         /// </summary>
-        /// <param name="xmlReader">The XML stream</param>
-        /// <param name="contentFiles">Dictionary of known update files. Used to resolve file hashes to URLs</param>
-        internal virtual void LoadExtendedAttributesFromXml(StreamReader xmlReader, Dictionary<string, UpdateFileUrl> contentFiles)
+        internal virtual void LoadAttributesFromMetadataSource()
         {
-            ExtendedAttributesLoaded = true;
+            lock (this)
+            {
+                if (!AttributesLoaded)
+                {
+                    using (var metadataStream = MetadataSource.GetUpdateMetadataStream(Identity))
+                    using (var metadataReader = new StreamReader(metadataStream))
+                    {
+                        var xdoc = XDocument.Parse(metadataReader.ReadToEnd(), LoadOptions.None);
+                        GetDescriptionFromXml(xdoc);
+                    }
+
+                    AttributesLoaded = true;
+                }
+            }
         }
 
         /// <summary>
@@ -254,7 +345,7 @@ namespace Microsoft.UpdateServices.Metadata
         /// </summary>
         /// <param name="xdoc"></param>
         /// <returns></returns>
-        internal void GetTitleAndDescriptionFromXml(XDocument xdoc)
+        internal void GetDescriptionFromXml(XDocument xdoc)
         {
             // Get the title and description (if available)
             var localizedProperties = xdoc.Descendants(XName.Get("LocalizedProperties", "http://schemas.microsoft.com/msus/2002/12/Update"));
@@ -263,15 +354,34 @@ namespace Microsoft.UpdateServices.Metadata
                 var language = localizedProperty.Descendants(XName.Get("Language", "http://schemas.microsoft.com/msus/2002/12/Update")).First();
                 if (language.Value == "en")
                 {
-                    Title = localizedProperty.Descendants(XName.Get("Title", "http://schemas.microsoft.com/msus/2002/12/Update")).First().Value;
-
                     var descriptions = localizedProperty.Descendants(XName.Get("Description", "http://schemas.microsoft.com/msus/2002/12/Update"));
                     if (descriptions.Count() > 0)
                     {
-                        Description = descriptions.First().Value;
+                        _Description = descriptions.First().Value;
                     }
 
                     return;
+                }
+            }
+
+            throw new Exception("Cannot find update title");
+        }
+
+        /// <summary>
+        /// Parse update title and description
+        /// </summary>
+        /// <param name="xdoc"></param>
+        /// <returns></returns>
+        internal static string GetTitleFromXml(XDocument xdoc)
+        {
+            // Get the title and description (if available)
+            var localizedProperties = xdoc.Descendants(XName.Get("LocalizedProperties", "http://schemas.microsoft.com/msus/2002/12/Update"));
+            foreach (var localizedProperty in localizedProperties)
+            {
+                var language = localizedProperty.Descendants(XName.Get("Language", "http://schemas.microsoft.com/msus/2002/12/Update")).First();
+                if (language.Value == "en")
+                {
+                    return localizedProperty.Descendants(XName.Get("Title", "http://schemas.microsoft.com/msus/2002/12/Update")).First().Value;
                 }
             }
 

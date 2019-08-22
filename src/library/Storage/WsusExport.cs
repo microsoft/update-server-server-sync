@@ -5,6 +5,7 @@ using Microsoft.UpdateServices.Compression;
 using Microsoft.UpdateServices.Metadata;
 using Microsoft.UpdateServices.Metadata.Content;
 using Microsoft.UpdateServices.Metadata.Prerequisites;
+using Microsoft.UpdateServices.WebServices.ServerReporting;
 using Microsoft.UpdateServices.WebServices.ServerSync;
 using System;
 using System.Collections.Generic;
@@ -18,19 +19,21 @@ namespace Microsoft.UpdateServices.Storage
 {
     class WsusExport
     {
-        private readonly IRepository SourceRepository;
+        private readonly IMetadataSource MetadataSource;
+        ServerSyncConfigData ServiceConfiguration;
 
         public event EventHandler<OperationProgress> ExportProgress;
 
-        public WsusExport(IRepository sourceRepository)
+        public WsusExport(IMetadataSource source, ServerSyncConfigData serviceConfiguration)
         {
-            SourceRepository = sourceRepository;
+            MetadataSource = source;
+            ServiceConfiguration = serviceConfiguration;
         }
 
         /// <summary>
-        /// Exports the specified updates from a local repository to a format compatible with WSUS 2016
+        /// Exports the specified updates from a local update metadata source to a format compatible with WSUS 2016
         /// </summary>
-        /// <param name="updatesToExport">The updates to export. All categories from the repository are also exported</param>
+        /// <param name="updatesToExport">The updates to export. All categories from the source are also exported</param>
         /// <param name="exportFilePath">The export destination file (CAB)</param>
         public void Export(List<Update> updatesToExport, string exportFilePath)
         {
@@ -96,25 +99,24 @@ namespace Microsoft.UpdateServices.Storage
             // Open the metadata file for writing
             using (var metadataFile = File.CreateText(metadataTextFile))
             {
-                var allUpdates = SourceRepository.GetCategories();
+                var allUpdates = new List<Update>(MetadataSource.GetCategories());
                 allUpdates.AddRange(updatesToExport);
 
-                var sourceRepositoryInternal = SourceRepository as IRepositoryInternal;
                 var progress = new OperationProgress() { CurrentOperation = OperationType.ExportUpdateXmlBlobProgress, Maximum = allUpdates.Count, Current = 0 };
                 foreach (var update in allUpdates)
-                {
-                    if (!sourceRepositoryInternal.IsUpdateXmlAvailable(update))
+                {                    
+                    using (var metadataStream = MetadataSource.GetUpdateMetadataStream(update.Identity))
                     {
-                        throw new Exception($"Update XML not available for {update.Identity}");
-                    }
-                    
-                    var xmlData = sourceRepositoryInternal.GetUpdateXmlReader(update).ReadToEnd();
+                        using (var metadataReader = new StreamReader(metadataStream))
+                        {
+                            var xmlData = metadataReader.ReadToEnd();
 
-                    // Write one line with GUID, revision, XML length, XML data
-                    metadataFile.WriteLine("{0},{1:x8},{2:x8},{3}", update.Identity.Raw.UpdateID, update.Identity.Raw.RevisionNumber, xmlData.Length, xmlData);
+                            // Write one line with GUID, revision, XML length, XML data
+                            metadataFile.WriteLine("{0},{1:x8},{2:x8},{3}", update.Identity.Raw.UpdateID, update.Identity.Raw.RevisionNumber, xmlData.Length, xmlData);
+                        }
+                    }
 
                     progress.Current += 1;
-                    progress.PercentDone = ((double)progress.Current * 100) / progress.Maximum;
                     ExportProgress?.Invoke(this, progress);
                 }
             }
@@ -140,8 +142,7 @@ namespace Microsoft.UpdateServices.Storage
             exportElement.Add(new XAttribute("ProtocolVersion", "1.20"));
 
             // Create Languages element and add it to the XML
-            var serverConfigData = (SourceRepository as IRepositoryInternal).ServiceConfiguration;
-            exportElement.Add(CreateLanguagesElement(serverConfigData));
+            exportElement.Add(CreateLanguagesElement(ServiceConfiguration));
 
             // Create a Files element and add it to the top level ExportPackage element
             exportElement.Add(CreateFilesElement(updates));
@@ -189,7 +190,7 @@ namespace Microsoft.UpdateServices.Storage
 
         private static XElement CreateFilesElement(List<Update> updates)
         {
-            var filesToExport = updates.OfType<IUpdateWithFiles>().SelectMany(u => u.Files).Distinct();
+            var filesToExport = updates.Where(u => u.HasFiles).SelectMany(u => u.Files).Distinct();
 
             // Add all the files
             // Get the distinct list of files to export
@@ -220,7 +221,7 @@ namespace Microsoft.UpdateServices.Storage
         private List<XElement> CreateCategoriesElements()
         {
             var categoriesElements = new List<XElement>();
-            var allCategories = SourceRepository.GetCategories();
+            var allCategories = MetadataSource.GetCategories();
             foreach (var category in allCategories)
             {
                 var categoryElement = new XElement("Update");
@@ -256,10 +257,9 @@ namespace Microsoft.UpdateServices.Storage
 
                 // Add the update's files
                 var filesElement = new XElement("Files");
-                if (update is IUpdateWithFiles)
+                if (update.HasFiles)
                 {
-                    var files = (update as IUpdateWithFiles).Files;
-                    foreach (var file in files)
+                    foreach (var file in update.Files)
                     {
                         var fileElement = new XElement("File");
                         fileElement.Add(new XAttribute("Digest", file.Digests[0].DigestBase64));
@@ -270,9 +270,9 @@ namespace Microsoft.UpdateServices.Storage
 
                 // Add the update's categories
                 var categoriesElement = new XElement("Categories");
-                if (update is IUpdateWithProduct)
+                if (update.HasProduct)
                 {
-                    var products = (update as IUpdateWithProduct).ProductIds;
+                    var products = update.ProductIds;
                     foreach (var product in products)
                     {
                         var categoryElement = new XElement("Category");
@@ -284,9 +284,9 @@ namespace Microsoft.UpdateServices.Storage
 
                 // Add the update's classifications
                 var classificationsElement = new XElement("Classifications");
-                if (update is IUpdateWithProduct)
+                if (update.HasClassification)
                 {
-                    var classifications = (update as IUpdateWithClassification).ClassificationIds;
+                    var classifications = update.ClassificationIds;
                     foreach (var classification in classifications)
                     {
                         var classificationElement = new XElement("Classification");
@@ -308,8 +308,8 @@ namespace Microsoft.UpdateServices.Storage
         /// to the list as well. This is done recursively, until all bundled updates have been included
         /// </summary>
         /// <param name="updatesToExport">The updates to export. Bundled updates are added to this list</param>
-        /// <param name="repository">The repository to export from.</param>
-        public static void CompleteTheListOfExportUpdates(List<Update> updatesToExport, IRepository repository)
+        /// <param name="source">The update metadata to export from.</param>
+        public static void CompleteTheListOfExportUpdates(List<Update> updatesToExport, IMetadataSource source)
         {
             bool additionalUpdatesFound = false;
             do
@@ -317,10 +317,9 @@ namespace Microsoft.UpdateServices.Storage
                 var additionalUpdates = new List<Identity>();
                 foreach (var selectedUpdate in updatesToExport)
                 {
-                    if (selectedUpdate is IUpdateWithBundledUpdates)
+                    if (selectedUpdate.IsBundle)
                     {
-                        var updateWithBundles = selectedUpdate as IUpdateWithBundledUpdates;
-                        foreach (var bundledUpdate in updateWithBundles.BundledUpdates)
+                        foreach (var bundledUpdate in selectedUpdate.BundledUpdates)
                         {
                             if (!updatesToExport.Any(u => u.Identity.Equals(bundledUpdate)))
                             {
@@ -333,7 +332,7 @@ namespace Microsoft.UpdateServices.Storage
                 foreach (var additionalUpdate in additionalUpdates)
                 {
                     // Bundled updates should appear in the list before the updates that bundle them
-                    updatesToExport.Insert(0, repository.GetUpdate(additionalUpdate, UpdateRetrievalMode.Extended));
+                    updatesToExport.Insert(0, source.GetUpdate(additionalUpdate));
                 }
 
                 additionalUpdatesFound = additionalUpdates.Count > 0;

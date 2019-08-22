@@ -9,9 +9,9 @@ using System.Collections.Generic;
 namespace Microsoft.UpdateServices.Client
 {
     /// <summary>
-    /// Provides access to updates stored on an upstream update server. Requried all requests to an update server.
+    /// Grants access to an upstream update server. Requried for most requests to an update server.
     /// </summary>
-    public class ServiceAccessToken
+    class ServiceAccessToken
     {
         /// <summary>
         /// Authentication data received from an update server

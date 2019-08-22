@@ -77,12 +77,6 @@
   <div class="markdown level0 remarks"></div>
     <h3 id="classes">Classes
   </h3>
-      <h4><a class="xref" href="Microsoft.UpdateServices.Client.ClientAuthenticator.html">ClientAuthenticator</a></h4>
-      <section><p>Implements authentication with an upstream update server.</p>
-<p>
-Use the ClientAuthenticator to obtain an access token for accessing metadata and content on an upstream update server.
-</p>
-</section>
       <h4><a class="xref" href="Microsoft.UpdateServices.Client.Endpoint.html">Endpoint</a></h4>
       <section><p>Identifies an Upstream Update Server.</p>
 <p>
@@ -92,11 +86,9 @@ Use <a class="xref" href="Microsoft.UpdateServices.Client.Endpoint.html#Microsof
       <h4><a class="xref" href="Microsoft.UpdateServices.Client.MetadataQueryProgress.html">MetadataQueryProgress</a></h4>
       <section><p>Provides progress data for a metadata query.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.UpdateServices.Client.ServiceAccessToken.html">ServiceAccessToken</a></h4>
-      <section><p>Provides access to updates stored on an upstream update server. Requried all requests to an update server.</p>
-</section>
       <h4><a class="xref" href="Microsoft.UpdateServices.Client.UpstreamServerClient.html">UpstreamServerClient</a></h4>
-      <section><p>Query updates, metadata and content from an upstream update server.</p>
+      <section><p>Query updates, metadata and content from an upstream update server.
+Results are returned as <a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSource.html">IMetadataSource</a>, through which advanced queries and filtering can be performed.</p>
 </section>
       <h4><a class="xref" href="Microsoft.UpdateServices.Client.UpstreamServerException.html">UpstreamServerException</a></h4>
       <section><p>The exception that is thrown when an error code is received from an upstream update server.

@@ -82,10 +82,6 @@
     <div class="level1"><a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a></div>
     <div class="level2"><span class="xref">Product</span></div>
   </div>
-  <div classs="implements">
-    <h5>Implements</h5>
-    <div><a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithProduct.html">IUpdateWithProduct</a></div>
-  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
@@ -95,61 +91,76 @@
       <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Title">Update.Title</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Description">Update.Description</a>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsBundle">Update.IsBundle</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsBundled">Update.IsBundled</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_BundledUpdates">Update.BundledUpdates</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_BundleParent">Update.BundleParent</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_HasPrerequisites">Update.HasPrerequisites</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_HasProduct">Update.HasProduct</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_HasClassification">Update.HasClassification</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_ProductIds">Update.ProductIds</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_ClassificationIds">Update.ClassificationIds</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Prerequisites">Update.Prerequisites</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsSupersedingUpdates">Update.IsSupersedingUpdates</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsSuperseded">Update.IsSuperseded</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_SupersededUpdates">Update.SupersededUpdates</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_SupersedingUpdate">Update.SupersedingUpdate</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsApplicable_System_Collections_Generic_List_System_Guid__">Update.IsApplicable(List&lt;Guid&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Description">Update.Description</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_HasFiles">Update.HasFiles</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Files">Update.Files</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.UpdateServices.Metadata.html">Microsoft.UpdateServices.Metadata</a></h6>
   <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
   <h5 id="Microsoft_UpdateServices_Metadata_Product_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Product : Update, IUpdateWithProduct, IUpdateWithProductInternal</code></pre>
+    <pre><code class="lang-csharp hljs">public class Product : Update</code></pre>
   </div>
   <h5 id="Microsoft_UpdateServices_Metadata_Product_examples"><strong>Examples</strong></h5>
-  <pre><code>var server = new UpstreamServerClient(Endpoint.Default);
+  <pre><code>// Query categories
+var categoriesSource = await server.GetCategories();
 
-// Query categories
-var categoriesQueryResult = await server.GetCategories();
+// Get products
+var products = categoriesSource.ProductsIndex.Values;
 
-// Get Products
-var products = categoriesQueryResult.Updates.OfType&lt;Product>();</code></pre>
+// Delete the query result from disk when done with it.
+categoriesSource.Delete();</code></pre>
 
-  <h3 id="properties">Properties
-  </h3>
-  
-  
-  <a id="Microsoft_UpdateServices_Metadata_Product_ProductIds_" data-uid="Microsoft.UpdateServices.Metadata.Product.ProductIds*"></a>
-  <h4 id="Microsoft_UpdateServices_Metadata_Product_ProductIds" data-uid="Microsoft.UpdateServices.Metadata.Product.ProductIds">ProductIds</h4>
-  <div class="markdown level1 summary"><p>Gets the list of parent Products of this Product.</p>
-<p>For example, Microsoft is the parent product of the &quot;Windows&quot; product, which is the parent product of the &quot;Windows 8.1&quot; product.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public List&lt;Guid&gt; ProductIds { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
-        <td><p>List of GUIDs</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="implements">Implements</h3>
-  <div>
-      <a class="xref" href="Microsoft.UpdateServices.Metadata.IUpdateWithProduct.html">IUpdateWithProduct</a>
-  </div>
 </article>
           </div>
           

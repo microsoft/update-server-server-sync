@@ -11,6 +11,10 @@ using SoapCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using System.Reflection;
+using Microsoft.UpdateServices.WebServices.ServerSync;
+using Newtonsoft.Json;
+using System.IO;
+using Microsoft.UpdateServices.Metadata;
 
 namespace Microsoft.UpdateServices.Server
 {
@@ -19,43 +23,13 @@ namespace Microsoft.UpdateServices.Server
     /// <para>A web service started with UpstreamServerStartup can act as an upstream server for WSUS.</para>
     /// <para><see cref="Client.UpstreamServerClient"/> can be used to query updates from a web service started with UpstreamServerStartup.</para>
     /// </summary>
-    /// <example>
-    /// <code>
-    /// // Open an existing local repository.
-    /// // This sample assumes updates were sync'ed from an upstream server and merged
-    /// // into this local repository
-    /// var localRepo = FileSystemRepository.Open(Environment.CurrentDirectory);
-    /// 
-    /// // Create an empty filter; serves all updates in repository
-    /// var filter = new RepositoryFilter();
-    /// 
-    /// // Create and initialize an ASP.NET web host builder
-    /// var host = new WebHostBuilder()
-    ///    .UseUrls($"http://localhost:24222")
-    ///    .UseStartup&lt;Microsoft.UpdateServices.Server.UpstreamServerStartup&gt;()
-    ///    .UseKestrel()
-    ///    .ConfigureAppConfiguration((hostingContext, config) =>
-    ///    {
-    ///        config.AddInMemoryCollection(
-    ///        new Dictionary&lt;string, string&gt;()
-    ///        {
-    ///            { "repo-path", Environment.CurrentDirectory },
-    ///            { "updates-filter", filter.ToJson() }
-    ///        });
-    ///    })
-    ///    .Build();
-    /// 
-    /// // Run the ASP.NET service
-    /// host.Run();
-    /// </code>
-    /// </example>
     public class UpstreamServerStartup
     {
-        IRepository LocalRepository;
+        IMetadataSource LocalMetadataSource;
+        IUpdateContentSource LocalContentSource;
+        ServerSyncConfigData ServiceConfiguration;
 
-        RepositoryFilter Filter;
-
-        bool MetadataOnly;
+        MetadataFilter Filter;
 
         /// <summary>
         /// Initialize a new instance of UpstreamServerStartup.
@@ -63,30 +37,43 @@ namespace Microsoft.UpdateServices.Server
         /// <param name="config">
         /// <para>ASP.NET configuration.</para>
         /// 
-        /// <para>Must contain a string entry "repo-path" with the path to the repository to use.</para>
+        /// <para>Must contain a string entry "metadata-path" with the path to the metadata source to use</para>
         /// 
-        /// <para>Must contain a string entry "updates-filter" with a JSON serialized filter for the repository.</para>
+        /// <para>Must contain a string entry "updates-filter" with a JSON serialized updates metadata filter</para>
+        /// 
+        /// <para>Must contain a string entry "service-config-path" with the path to the service configuration JSON</para>
+        /// 
+        /// <para>Can contain a string entry "content-path" with the path to the content store to use if serving update content</para>
         /// </param>
         public UpstreamServerStartup(IConfiguration config)
         {
-            // Get the repository path from the configuration
-            var repoPath = config.GetValue<string>("repo-path");
+            // Get the metadata source path from the configuration
+            var sourcePath = config.GetValue<string>("metadata-path");
+
+            var contentPath = config.GetValue<string>("content-path");
 
             // Get the filteres to apply to updates; restricts which updates are shared with downstream servers
-            Filter = RepositoryFilter.FromJson(config.GetValue<string>("updates-filter"));
+            Filter = MetadataFilter.FromJson(config.GetValue<string>("updates-filter"));
 
-            // Load the repository. It must exist
-            LocalRepository = FileSystemRepository.Open(repoPath);
-            if (LocalRepository == null)
+            // Open the updates metadata source. It must exist
+            LocalMetadataSource = CompressedMetadataStore.Open(sourcePath);
+            if (LocalMetadataSource == null)
             {
-                throw new System.Exception("Cannot find local repository; a local updates repository is required to run an upstream server.");
+                throw new System.Exception($"Cannot open the specified metadata source at {sourcePath}");
             }
 
-            // Get the repository path from the configuration
-            var metadataOnly = config.GetValue<string>("metadata-only");
-            if (!string.IsNullOrEmpty(metadataOnly))
+            var serviceConfigPath = config.GetValue<string>("service-config-path");
+            ServiceConfiguration = JsonConvert.DeserializeObject<ServerSyncConfigData>(
+                File.OpenText(serviceConfigPath).ReadToEnd());
+
+            if (!string.IsNullOrEmpty(contentPath))
             {
-                MetadataOnly = true;
+                LocalContentSource = new FileSystemContentStore(contentPath);
+                ServiceConfiguration.CatalogOnlySync = false;
+            }
+            else
+            {
+                ServiceConfiguration.CatalogOnlySync = true;
             }
         }
 
@@ -102,14 +89,14 @@ namespace Microsoft.UpdateServices.Server
             services.AddSoapCore();
 
             // Enable the upstream WCF services
-            services.TryAddSingleton<ServerSyncWebService>(new Server.ServerSyncWebService(LocalRepository, Filter, MetadataOnly));
+            services.TryAddSingleton<ServerSyncWebService>(new Server.ServerSyncWebService(LocalMetadataSource, Filter, ServiceConfiguration));
             services.TryAddSingleton<AuthenticationWebService>();
             services.TryAddSingleton<ReportingWebService>();
 
-            if (!MetadataOnly)
+            if (LocalContentSource != null)
             {
                 // Enable the content controller if serving content
-                services.TryAddSingleton<ContentController>(new ContentController(LocalRepository, Filter));
+                services.TryAddSingleton<ContentController>(new ContentController(LocalMetadataSource, LocalContentSource, Filter));
 
                 // Add ContentController from this assembly
                 services.AddMvc().AddApplicationPart(Assembly.GetExecutingAssembly()).AddControllersAsServices();
@@ -126,7 +113,7 @@ namespace Microsoft.UpdateServices.Server
         /// <param name="loggerFactory">Logging factory.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (!MetadataOnly)
+            if (LocalContentSource != null)
             {
                 // Create routes for the content controller
                 app.UseMvc(routes =>

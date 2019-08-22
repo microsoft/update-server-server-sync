@@ -10,20 +10,6 @@ using System.Xml.Linq;
 namespace Microsoft.UpdateServices.Metadata.Content
 {
     /// <summary>
-    /// Interface implemented by updates that have content (<see cref="IUpdateWithFiles"/>)
-    /// </summary>
-    public interface IUpdateWithFiles
-    {
-        /// <summary>
-        /// Gets the list of <see cref="UpdateFile"/> for an update
-        /// </summary>
-        /// <value>
-        /// List of files
-        /// </value>
-        List<UpdateFile> Files { get; }
-    }
-
-    /// <summary>
     /// Represents a content file for an update.
     /// </summary>
     public class UpdateFile
@@ -89,11 +75,16 @@ namespace Microsoft.UpdateServices.Metadata.Content
         {
             if (string.IsNullOrEmpty(CachedContentDirectoryName))
             {
-                byte[] hashBytes = Convert.FromBase64String(Digests[0].DigestBase64);
-                CachedContentDirectoryName = string.Format("{0:X}", hashBytes.Last());
+                CachedContentDirectoryName = GetContentDirectoryNameFromHash(Digests[0].DigestBase64);
             }
 
             return CachedContentDirectoryName;
+        }
+
+        internal static string GetContentDirectoryNameFromHash(string digetsBase64)
+        {
+            byte[] hashBytes = Convert.FromBase64String(digetsBase64);
+            return string.Format("{0:X}", hashBytes.Last());
         }
 
         [JsonConstructor]

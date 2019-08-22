@@ -69,29 +69,29 @@
             <article class="content wrap" id="_content" data-uid="">
 
 <p>The following example shows how to run an upstream server that serves updates to a downstream WSUS server from a local repository.</p>
-<pre><code>// Open an existing local repository.
-// This sample assumes updates were sync'ed from an upstream server and merged
-// into this local repository
-var localRepo = FileSystemRepository.Open(Environment.CurrentDirectory);
+<pre><code>// Create an empty filter; serves all updates from the source
+var filter = new MetadataFilter();
 
-// Create an empty filter; serves all updates in repository
-var filter = new RepositoryFilter();
-
-// Create and initialize an ASP.NET web host builder
 var host = new WebHostBuilder()
-   .UseUrls($&quot;http://localhost:24222&quot;)
-   .UseStartup&lt;Microsoft.UpdateServices.Server.UpstreamServerStartup&gt;()
-   .UseKestrel()
-   .ConfigureAppConfiguration((hostingContext, config) =&gt;
-   {
-       config.AddInMemoryCollection(
-       new Dictionary&lt;string, string&gt;()
-       {
-           { &quot;repo-path&quot;, Environment.CurrentDirectory },
-           { &quot;updates-filter&quot;, filter.ToJson() }
-       });
-   })
-   .Build();
+    .UseUrls($&quot;http://localhost:32150&quot;)
+    .UseStartup&lt;Server.UpstreamServerStartup&gt;()
+    .UseKestrel()
+    .ConfigureKestrel((context, opts) =&gt; { })
+    .ConfigureAppConfiguration((hostingContext, config) =&gt;
+    {
+        var configDictionary = new Dictionary&lt;string, string&gt;()
+        {
+            // Assumes updates were fetched from an upstream server into master.zip
+            { &quot;metadata-path&quot;, &quot;master.zip&quot; },
+            { &quot;content-path&quot;, @&quot;.\&quot; },
+            { &quot;updates-filter&quot;, filter.ToJson() },
+            // Use UpstreamServerClient.GetServerConfigData to get the official
+            // server's configuration as a starting point
+            { &quot;service-config-path&quot;, &quot;service-config.json&quot; }
+        };
+        config.AddInMemoryCollection(configDictionary);
+    })
+    .Build();
 
 // Run the ASP.NET service
 host.Run();

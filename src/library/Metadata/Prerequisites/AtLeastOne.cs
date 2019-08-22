@@ -56,5 +56,16 @@ namespace Microsoft.UpdateServices.Metadata.Prerequisites
                 }
             }
         }
+
+        internal AtLeastOne(IEnumerable<Guid> ids)
+        {
+            Simple = new List<Simple>(ids.Select(id => new Prerequisites.Simple(id)));
+            IsCategory = ids.Last().Equals(Guid.Empty);
+
+            if (IsCategory)
+            {
+                Simple.RemoveAt(Simple.Count - 1);
+            }
+        }
     }
 }
