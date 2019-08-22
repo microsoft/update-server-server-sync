@@ -132,7 +132,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of categories</p>
 </td>
       </tr>
@@ -185,7 +185,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Classification.html">Classification</a>&gt;</td>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Classification.html">Classification</a>&gt;</td>
         <td><p>List of classifications</p>
 </td>
       </tr>
@@ -212,7 +212,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Detectoid.html">Detectoid</a>&gt;</td>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Detectoid.html">Detectoid</a>&gt;</td>
         <td><p>List of detectoids</p>
 </td>
       </tr>
@@ -239,7 +239,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.QueryFilter.html">QueryFilter</a>&gt;</td>
+        <td><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.QueryFilter.html">QueryFilter</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -265,7 +265,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a>&gt;</td>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a>&gt;</td>
         <td><p>List of updates</p>
 </td>
       </tr>
@@ -292,7 +292,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of products</p>
 </td>
       </tr>
@@ -319,7 +319,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Guid</span></td>
+        <td><span class="xref">Guid</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -378,6 +378,53 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
   </table>
   <h3 id="methods">Methods
   </h3>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_IMetadataSource_Export_" data-uid="Microsoft.UpdateServices.Storage.IMetadataSource.Export*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_IMetadataSource_Export_Microsoft_UpdateServices_Metadata_MetadataFilter_System_String_Microsoft_UpdateServices_Storage_RepoExportFormat_Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncConfigData_" data-uid="Microsoft.UpdateServices.Storage.IMetadataSource.Export(Microsoft.UpdateServices.Metadata.MetadataFilter,System.String,Microsoft.UpdateServices.Storage.RepoExportFormat,Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)">Export(MetadataFilter, String, RepoExportFormat, ServerSyncConfigData)</h4>
+  <div class="markdown level1 summary"><p>Exports the selected updates from the metadata source</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Export(MetadataFilter filter, string exportFile, RepoExportFormat format, ServerSyncConfigData serverConfiguration)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Metadata.MetadataFilter.html">MetadataFilter</a></td>
+        <td><span class="parametername">filter</span></td>
+        <td><p>Export filter</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">exportFile</span></td>
+        <td><p>Export file path</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Storage.RepoExportFormat.html">RepoExportFormat</a></td>
+        <td><span class="parametername">format</span></td>
+        <td><p>Export format</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData</span></td>
+        <td><span class="parametername">serverConfiguration</span></td>
+        <td><p>Server configuration.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   
   
   <a id="Microsoft_UpdateServices_Storage_IMetadataSource_GetAnchorForFilter_" data-uid="Microsoft.UpdateServices.Storage.IMetadataSource.GetAnchorForFilter*"></a>
@@ -462,7 +509,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
         <td><p>List of bundle updates that contain this update</p>
 </td>
       </tr>
@@ -507,7 +554,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
         <td><p>List of bundled updates</p>
 </td>
       </tr>
@@ -534,7 +581,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.ICollection</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><span class="xref">ICollection</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of categories: classifications, detectoids, products</p>
 </td>
       </tr>
@@ -579,7 +626,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of categories that match the filter</p>
 </td>
       </tr>
@@ -669,7 +716,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFile.html">UpdateFile</a>&gt;</td>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFile.html">UpdateFile</a>&gt;</td>
         <td><p>List of files in the update</p>
 </td>
       </tr>
@@ -696,7 +743,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<span class="xref">System.Int32</span>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.Int32</span>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
         <td><p>Dictionary of int to Identity</p>
 </td>
       </tr>
@@ -723,7 +770,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Guid</span>&gt;</td>
         <td><p>List of GUIDS of leaf updates</p>
 </td>
       </tr>
@@ -750,7 +797,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Guid</span>&gt;</td>
         <td><p>List of GUIDS of non leaf updates</p>
 </td>
       </tr>
@@ -795,7 +842,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite.html">Prerequisite</a>&gt;</td>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite.html">Prerequisite</a>&gt;</td>
         <td><p>List of prerequisites</p>
 </td>
       </tr>
@@ -822,7 +869,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Guid</span>&gt;</td>
         <td><p>List of GUIDS of root updates</p>
 </td>
       </tr>
@@ -867,7 +914,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">Guid</span>&gt;</td>
         <td><p>List of updates superseded by the specified update</p>
 </td>
       </tr>
@@ -1002,7 +1049,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><span class="xref">List</span>&lt;<span class="xref">Guid</span>&gt;</td>
         <td><p>List of classification ids for an update</p>
 </td>
       </tr>
@@ -1047,7 +1094,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.IO.Stream</span></td>
+        <td><span class="xref">Stream</span></td>
         <td><p>Metadata stream</p>
 </td>
       </tr>
@@ -1092,7 +1139,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><span class="xref">List</span>&lt;<span class="xref">Guid</span>&gt;</td>
         <td><p>List of product ids for an update</p>
 </td>
       </tr>
@@ -1119,7 +1166,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.ICollection</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><span class="xref">ICollection</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of updates</p>
 </td>
       </tr>
@@ -1164,7 +1211,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of updates that match the filter</p>
 </td>
       </tr>
@@ -1621,7 +1668,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
   
   
   <a id="Microsoft_UpdateServices_Storage_IMetadataSource_SetUpstreamCredentials_" data-uid="Microsoft.UpdateServices.Storage.IMetadataSource.SetUpstreamCredentials*"></a>
-  <h4 id="Microsoft_UpdateServices_Storage_IMetadataSource_SetUpstreamCredentials_System_String_System_Guid_" data-uid="Microsoft.UpdateServices.Storage.IMetadataSource.SetUpstreamCredentials(System.String,System.Guid)">SetUpstreamCredentials(String, Guid)</h4>
+  <h4 id="Microsoft_UpdateServices_Storage_IMetadataSource_SetUpstreamCredentials_System_String_Guid_" data-uid="Microsoft.UpdateServices.Storage.IMetadataSource.SetUpstreamCredentials(System.String,Guid)">SetUpstreamCredentials(String, Guid)</h4>
   <div class="markdown level1 summary"><p>Set the credentials used to connec to to the upstream server</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1646,7 +1693,7 @@ IMetadataSource is obtained from the <a class="xref" href="Microsoft.UpdateServi
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Guid</span></td>
+        <td><span class="xref">Guid</span></td>
         <td><span class="parametername">AccountGuid</span></td>
         <td><p>Account GUID</p>
 </td>

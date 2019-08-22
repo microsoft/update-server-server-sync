@@ -86,7 +86,7 @@
   <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
   <h5 id="Microsoft_UpdateServices_Metadata_QueryFilter_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class QueryFilter</code></pre>
+    <pre><code class="lang-csharp hljs">public class QueryFilter : object</code></pre>
   </div>
   <h5 id="Microsoft_UpdateServices_Metadata_QueryFilter_examples"><strong>Examples</strong></h5>
   <pre><code>var server = new UpstreamServerClient(Endpoint.Default);
@@ -106,7 +106,7 @@ var updatesQueryResult = await server.GetUpdates(filter);</code></pre>
   
   
   <a id="Microsoft_UpdateServices_Metadata_QueryFilter__ctor_" data-uid="Microsoft.UpdateServices.Metadata.QueryFilter.#ctor*"></a>
-  <h4 id="Microsoft_UpdateServices_Metadata_QueryFilter__ctor_System_Collections_Generic_IEnumerable_Microsoft_UpdateServices_Metadata_Product__System_Collections_Generic_IEnumerable_Microsoft_UpdateServices_Metadata_Classification__" data-uid="Microsoft.UpdateServices.Metadata.QueryFilter.#ctor(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Product},System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Classification})">QueryFilter(IEnumerable&lt;Product&gt;, IEnumerable&lt;Classification&gt;)</h4>
+  <h4 id="Microsoft_UpdateServices_Metadata_QueryFilter__ctor_IEnumerable_Microsoft_UpdateServices_Metadata_Product__IEnumerable_Microsoft_UpdateServices_Metadata_Classification__" data-uid="Microsoft.UpdateServices.Metadata.QueryFilter.#ctor(IEnumerable{Microsoft.UpdateServices.Metadata.Product},IEnumerable{Microsoft.UpdateServices.Metadata.Classification})">QueryFilter(IEnumerable&lt;Product&gt;, IEnumerable&lt;Classification&gt;)</h4>
   <div class="markdown level1 summary"><p>Initialize a new QueryFilter from the specified products and categories.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -125,13 +125,13 @@ var updatesQueryResult = await server.GetUpdates(filter);</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a>&gt;</td>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a>&gt;</td>
         <td><span class="parametername">products</span></td>
         <td><p>The products filter</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Classification.html">Classification</a>&gt;</td>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Classification.html">Classification</a>&gt;</td>
         <td><span class="parametername">classifications</span></td>
         <td><p>The classifications filter</p>
 </td>
@@ -149,8 +149,7 @@ var updatesQueryResult = await server.GetUpdates(filter);</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
-public string Anchor { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Anchor { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -188,7 +187,7 @@ public string Anchor { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
         <td><p>List of classification identities.</p>
 </td>
       </tr>
@@ -215,7 +214,7 @@ public string Anchor { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
         <td><p>List of product identities.</p>
 </td>
       </tr>
@@ -269,8 +268,6 @@ public string Anchor { get; set; }</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.Object.Equals(System.Object)</span></div>
   
   
   <a id="Microsoft_UpdateServices_Metadata_QueryFilter_GetHashCode_" data-uid="Microsoft.UpdateServices.Metadata.QueryFilter.GetHashCode*"></a>
@@ -298,8 +295,6 @@ public string Anchor { get; set; }</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.Object.GetHashCode()</span></div>
   <h3 id="operators">Operators
   </h3>
   

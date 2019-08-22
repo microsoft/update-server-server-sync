@@ -301,11 +301,11 @@ references:
   fullName: Microsoft.UpdateServices.Client.UpstreamServerException
   nameWithType: UpstreamServerException
 - uid: Microsoft.UpdateServices.Client.UpstreamServerException.#ctor(System.ServiceModel.FaultException)
-  name: UpstreamServerException(FaultException)
+  name: UpstreamServerException(System.ServiceModel.FaultException)
   href: api/Microsoft.UpdateServices.Client.UpstreamServerException.html#Microsoft_UpdateServices_Client_UpstreamServerException__ctor_System_ServiceModel_FaultException_
   commentId: M:Microsoft.UpdateServices.Client.UpstreamServerException.#ctor(System.ServiceModel.FaultException)
   fullName: Microsoft.UpdateServices.Client.UpstreamServerException.UpstreamServerException(System.ServiceModel.FaultException)
-  nameWithType: UpstreamServerException.UpstreamServerException(FaultException)
+  nameWithType: UpstreamServerException.UpstreamServerException(System.ServiceModel.FaultException)
 - uid: Microsoft.UpdateServices.Client.UpstreamServerException.#ctor*
   name: UpstreamServerException
   href: api/Microsoft.UpdateServices.Client.UpstreamServerException.html#Microsoft_UpdateServices_Client_UpstreamServerException__ctor_
@@ -1003,13 +1003,13 @@ references:
   commentId: T:Microsoft.UpdateServices.Metadata.QueryFilter
   fullName: Microsoft.UpdateServices.Metadata.QueryFilter
   nameWithType: QueryFilter
-- uid: Microsoft.UpdateServices.Metadata.QueryFilter.#ctor(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Product},System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Classification})
+- uid: Microsoft.UpdateServices.Metadata.QueryFilter.#ctor(IEnumerable{Microsoft.UpdateServices.Metadata.Product},IEnumerable{Microsoft.UpdateServices.Metadata.Classification})
   name: QueryFilter(IEnumerable<Product>, IEnumerable<Classification>)
-  href: api/Microsoft.UpdateServices.Metadata.QueryFilter.html#Microsoft_UpdateServices_Metadata_QueryFilter__ctor_System_Collections_Generic_IEnumerable_Microsoft_UpdateServices_Metadata_Product__System_Collections_Generic_IEnumerable_Microsoft_UpdateServices_Metadata_Classification__
-  commentId: M:Microsoft.UpdateServices.Metadata.QueryFilter.#ctor(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Product},System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Classification})
+  href: api/Microsoft.UpdateServices.Metadata.QueryFilter.html#Microsoft_UpdateServices_Metadata_QueryFilter__ctor_IEnumerable_Microsoft_UpdateServices_Metadata_Product__IEnumerable_Microsoft_UpdateServices_Metadata_Classification__
+  commentId: M:Microsoft.UpdateServices.Metadata.QueryFilter.#ctor(IEnumerable{Microsoft.UpdateServices.Metadata.Product},IEnumerable{Microsoft.UpdateServices.Metadata.Classification})
   name.vb: QueryFilter(IEnumerable(Of Product), IEnumerable(Of Classification))
-  fullName: Microsoft.UpdateServices.Metadata.QueryFilter.QueryFilter(System.Collections.Generic.IEnumerable<Microsoft.UpdateServices.Metadata.Product>, System.Collections.Generic.IEnumerable<Microsoft.UpdateServices.Metadata.Classification>)
-  fullName.vb: Microsoft.UpdateServices.Metadata.QueryFilter.QueryFilter(System.Collections.Generic.IEnumerable(Of Microsoft.UpdateServices.Metadata.Product), System.Collections.Generic.IEnumerable(Of Microsoft.UpdateServices.Metadata.Classification))
+  fullName: Microsoft.UpdateServices.Metadata.QueryFilter.QueryFilter(IEnumerable<Microsoft.UpdateServices.Metadata.Product>, IEnumerable<Microsoft.UpdateServices.Metadata.Classification>)
+  fullName.vb: Microsoft.UpdateServices.Metadata.QueryFilter.QueryFilter(IEnumerable(Of Microsoft.UpdateServices.Metadata.Product), IEnumerable(Of Microsoft.UpdateServices.Metadata.Classification))
   nameWithType: QueryFilter.QueryFilter(IEnumerable<Product>, IEnumerable<Classification>)
   nameWithType.vb: QueryFilter.QueryFilter(IEnumerable(Of Product), IEnumerable(Of Classification))
 - uid: Microsoft.UpdateServices.Metadata.QueryFilter.#ctor*
@@ -1291,13 +1291,13 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Metadata.Update.Identity
   nameWithType: Update.Identity
-- uid: Microsoft.UpdateServices.Metadata.Update.IsApplicable(System.Collections.Generic.List{System.Guid})
+- uid: Microsoft.UpdateServices.Metadata.Update.IsApplicable(List{Guid})
   name: IsApplicable(List<Guid>)
-  href: api/Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsApplicable_System_Collections_Generic_List_System_Guid__
-  commentId: M:Microsoft.UpdateServices.Metadata.Update.IsApplicable(System.Collections.Generic.List{System.Guid})
+  href: api/Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsApplicable_List_Guid__
+  commentId: M:Microsoft.UpdateServices.Metadata.Update.IsApplicable(List{Guid})
   name.vb: IsApplicable(List(Of Guid))
-  fullName: Microsoft.UpdateServices.Metadata.Update.IsApplicable(System.Collections.Generic.List<System.Guid>)
-  fullName.vb: Microsoft.UpdateServices.Metadata.Update.IsApplicable(System.Collections.Generic.List(Of System.Guid))
+  fullName: Microsoft.UpdateServices.Metadata.Update.IsApplicable(List<Guid>)
+  fullName.vb: Microsoft.UpdateServices.Metadata.Update.IsApplicable(List(Of Guid))
   nameWithType: Update.IsApplicable(List<Guid>)
   nameWithType.vb: Update.IsApplicable(List(Of Guid))
 - uid: Microsoft.UpdateServices.Metadata.Update.IsApplicable*
@@ -1468,11 +1468,11 @@ references:
   commentId: T:Microsoft.UpdateServices.Server.UpstreamServerStartup
   fullName: Microsoft.UpdateServices.Server.UpstreamServerStartup
   nameWithType: UpstreamServerStartup
-- uid: Microsoft.UpdateServices.Server.UpstreamServerStartup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)
+- uid: Microsoft.UpdateServices.Server.UpstreamServerStartup.#ctor(IConfiguration)
   name: UpstreamServerStartup(IConfiguration)
-  href: api/Microsoft.UpdateServices.Server.UpstreamServerStartup.html#Microsoft_UpdateServices_Server_UpstreamServerStartup__ctor_Microsoft_Extensions_Configuration_IConfiguration_
-  commentId: M:Microsoft.UpdateServices.Server.UpstreamServerStartup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)
-  fullName: Microsoft.UpdateServices.Server.UpstreamServerStartup.UpstreamServerStartup(Microsoft.Extensions.Configuration.IConfiguration)
+  href: api/Microsoft.UpdateServices.Server.UpstreamServerStartup.html#Microsoft_UpdateServices_Server_UpstreamServerStartup__ctor_IConfiguration_
+  commentId: M:Microsoft.UpdateServices.Server.UpstreamServerStartup.#ctor(IConfiguration)
+  fullName: Microsoft.UpdateServices.Server.UpstreamServerStartup.UpstreamServerStartup(IConfiguration)
   nameWithType: UpstreamServerStartup.UpstreamServerStartup(IConfiguration)
 - uid: Microsoft.UpdateServices.Server.UpstreamServerStartup.#ctor*
   name: UpstreamServerStartup
@@ -1481,11 +1481,11 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Server.UpstreamServerStartup.UpstreamServerStartup
   nameWithType: UpstreamServerStartup.UpstreamServerStartup
-- uid: Microsoft.UpdateServices.Server.UpstreamServerStartup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)
+- uid: Microsoft.UpdateServices.Server.UpstreamServerStartup.Configure(IApplicationBuilder,IHostingEnvironment,ILoggerFactory)
   name: Configure(IApplicationBuilder, IHostingEnvironment, ILoggerFactory)
-  href: api/Microsoft.UpdateServices.Server.UpstreamServerStartup.html#Microsoft_UpdateServices_Server_UpstreamServerStartup_Configure_Microsoft_AspNetCore_Builder_IApplicationBuilder_Microsoft_AspNetCore_Hosting_IHostingEnvironment_Microsoft_Extensions_Logging_ILoggerFactory_
-  commentId: M:Microsoft.UpdateServices.Server.UpstreamServerStartup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)
-  fullName: Microsoft.UpdateServices.Server.UpstreamServerStartup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder, Microsoft.AspNetCore.Hosting.IHostingEnvironment, Microsoft.Extensions.Logging.ILoggerFactory)
+  href: api/Microsoft.UpdateServices.Server.UpstreamServerStartup.html#Microsoft_UpdateServices_Server_UpstreamServerStartup_Configure_IApplicationBuilder_IHostingEnvironment_ILoggerFactory_
+  commentId: M:Microsoft.UpdateServices.Server.UpstreamServerStartup.Configure(IApplicationBuilder,IHostingEnvironment,ILoggerFactory)
+  fullName: Microsoft.UpdateServices.Server.UpstreamServerStartup.Configure(IApplicationBuilder, IHostingEnvironment, ILoggerFactory)
   nameWithType: UpstreamServerStartup.Configure(IApplicationBuilder, IHostingEnvironment, ILoggerFactory)
 - uid: Microsoft.UpdateServices.Server.UpstreamServerStartup.Configure*
   name: Configure
@@ -1494,11 +1494,11 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Server.UpstreamServerStartup.Configure
   nameWithType: UpstreamServerStartup.Configure
-- uid: Microsoft.UpdateServices.Server.UpstreamServerStartup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+- uid: Microsoft.UpdateServices.Server.UpstreamServerStartup.ConfigureServices(IServiceCollection)
   name: ConfigureServices(IServiceCollection)
-  href: api/Microsoft.UpdateServices.Server.UpstreamServerStartup.html#Microsoft_UpdateServices_Server_UpstreamServerStartup_ConfigureServices_Microsoft_Extensions_DependencyInjection_IServiceCollection_
-  commentId: M:Microsoft.UpdateServices.Server.UpstreamServerStartup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-  fullName: Microsoft.UpdateServices.Server.UpstreamServerStartup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+  href: api/Microsoft.UpdateServices.Server.UpstreamServerStartup.html#Microsoft_UpdateServices_Server_UpstreamServerStartup_ConfigureServices_IServiceCollection_
+  commentId: M:Microsoft.UpdateServices.Server.UpstreamServerStartup.ConfigureServices(IServiceCollection)
+  fullName: Microsoft.UpdateServices.Server.UpstreamServerStartup.ConfigureServices(IServiceCollection)
   nameWithType: UpstreamServerStartup.ConfigureServices(IServiceCollection)
 - uid: Microsoft.UpdateServices.Server.UpstreamServerStartup.ConfigureServices*
   name: ConfigureServices
@@ -1551,13 +1551,13 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddFile
   nameWithType: CompressedMetadataStore.AddFile
-- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData})
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates(IEnumerable{Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData})
   name: AddUpdates(IEnumerable<ServerSyncUpdateData>)
-  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_AddUpdates_System_Collections_Generic_IEnumerable_Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncUpdateData__
-  commentId: M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData})
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_AddUpdates_IEnumerable_Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncUpdateData__
+  commentId: M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates(IEnumerable{Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData})
   name.vb: AddUpdates(IEnumerable(Of ServerSyncUpdateData))
-  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates(System.Collections.Generic.IEnumerable<Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData>)
-  fullName.vb: Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates(System.Collections.Generic.IEnumerable(Of Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData))
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates(IEnumerable<Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData>)
+  fullName.vb: Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates(IEnumerable(Of Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData))
   nameWithType: CompressedMetadataStore.AddUpdates(IEnumerable<ServerSyncUpdateData>)
   nameWithType.vb: CompressedMetadataStore.AddUpdates(IEnumerable(Of ServerSyncUpdateData))
 - uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates*
@@ -1677,6 +1677,25 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.Dispose
   nameWithType: CompressedMetadataStore.Dispose
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.Export(Microsoft.UpdateServices.Metadata.MetadataFilter,System.String,Microsoft.UpdateServices.Storage.RepoExportFormat,Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)
+  name: Export(MetadataFilter, String, RepoExportFormat, ServerSyncConfigData)
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_Export_Microsoft_UpdateServices_Metadata_MetadataFilter_System_String_Microsoft_UpdateServices_Storage_RepoExportFormat_Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncConfigData_
+  commentId: M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Export(Microsoft.UpdateServices.Metadata.MetadataFilter,System.String,Microsoft.UpdateServices.Storage.RepoExportFormat,Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.Export(Microsoft.UpdateServices.Metadata.MetadataFilter, System.String, Microsoft.UpdateServices.Storage.RepoExportFormat, Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)
+  nameWithType: CompressedMetadataStore.Export(MetadataFilter, String, RepoExportFormat, ServerSyncConfigData)
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.Export*
+  name: Export
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_Export_
+  commentId: Overload:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Export
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.Export
+  nameWithType: CompressedMetadataStore.Export
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.ExportProgress
+  name: ExportProgress
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_ExportProgress
+  commentId: E:Microsoft.UpdateServices.Storage.CompressedMetadataStore.ExportProgress
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.ExportProgress
+  nameWithType: CompressedMetadataStore.ExportProgress
 - uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.FilePath
   name: FilePath
   href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_FilePath
@@ -2157,11 +2176,11 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetQueryFilter
   nameWithType: CompressedMetadataStore.SetQueryFilter
-- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetUpstreamCredentials(System.String,System.Guid)
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetUpstreamCredentials(System.String,Guid)
   name: SetUpstreamCredentials(String, Guid)
-  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_SetUpstreamCredentials_System_String_System_Guid_
-  commentId: M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetUpstreamCredentials(System.String,System.Guid)
-  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetUpstreamCredentials(System.String, System.Guid)
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_SetUpstreamCredentials_System_String_Guid_
+  commentId: M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetUpstreamCredentials(System.String,Guid)
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetUpstreamCredentials(System.String, Guid)
   nameWithType: CompressedMetadataStore.SetUpstreamCredentials(String, Guid)
 - uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetUpstreamCredentials*
   name: SetUpstreamCredentials
@@ -2260,13 +2279,13 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.FileSystemContentStore.FileSystemContentStore
   nameWithType: FileSystemContentStore.FileSystemContentStore
-- uid: Microsoft.UpdateServices.Storage.FileSystemContentStore.Add(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Content.UpdateFile})
+- uid: Microsoft.UpdateServices.Storage.FileSystemContentStore.Add(IEnumerable{Microsoft.UpdateServices.Metadata.Content.UpdateFile})
   name: Add(IEnumerable<UpdateFile>)
-  href: api/Microsoft.UpdateServices.Storage.FileSystemContentStore.html#Microsoft_UpdateServices_Storage_FileSystemContentStore_Add_System_Collections_Generic_IEnumerable_Microsoft_UpdateServices_Metadata_Content_UpdateFile__
-  commentId: M:Microsoft.UpdateServices.Storage.FileSystemContentStore.Add(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Content.UpdateFile})
+  href: api/Microsoft.UpdateServices.Storage.FileSystemContentStore.html#Microsoft_UpdateServices_Storage_FileSystemContentStore_Add_IEnumerable_Microsoft_UpdateServices_Metadata_Content_UpdateFile__
+  commentId: M:Microsoft.UpdateServices.Storage.FileSystemContentStore.Add(IEnumerable{Microsoft.UpdateServices.Metadata.Content.UpdateFile})
   name.vb: Add(IEnumerable(Of UpdateFile))
-  fullName: Microsoft.UpdateServices.Storage.FileSystemContentStore.Add(System.Collections.Generic.IEnumerable<Microsoft.UpdateServices.Metadata.Content.UpdateFile>)
-  fullName.vb: Microsoft.UpdateServices.Storage.FileSystemContentStore.Add(System.Collections.Generic.IEnumerable(Of Microsoft.UpdateServices.Metadata.Content.UpdateFile))
+  fullName: Microsoft.UpdateServices.Storage.FileSystemContentStore.Add(IEnumerable<Microsoft.UpdateServices.Metadata.Content.UpdateFile>)
+  fullName.vb: Microsoft.UpdateServices.Storage.FileSystemContentStore.Add(IEnumerable(Of Microsoft.UpdateServices.Metadata.Content.UpdateFile))
   nameWithType: FileSystemContentStore.Add(IEnumerable<UpdateFile>)
   nameWithType.vb: FileSystemContentStore.Add(IEnumerable(Of UpdateFile))
 - uid: Microsoft.UpdateServices.Storage.FileSystemContentStore.Add*
@@ -2327,13 +2346,13 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.IMetadataSink.AddFile
   nameWithType: IMetadataSink.AddFile
-- uid: Microsoft.UpdateServices.Storage.IMetadataSink.AddUpdates(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData})
+- uid: Microsoft.UpdateServices.Storage.IMetadataSink.AddUpdates(IEnumerable{Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData})
   name: AddUpdates(IEnumerable<ServerSyncUpdateData>)
-  href: api/Microsoft.UpdateServices.Storage.IMetadataSink.html#Microsoft_UpdateServices_Storage_IMetadataSink_AddUpdates_System_Collections_Generic_IEnumerable_Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncUpdateData__
-  commentId: M:Microsoft.UpdateServices.Storage.IMetadataSink.AddUpdates(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData})
+  href: api/Microsoft.UpdateServices.Storage.IMetadataSink.html#Microsoft_UpdateServices_Storage_IMetadataSink_AddUpdates_IEnumerable_Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncUpdateData__
+  commentId: M:Microsoft.UpdateServices.Storage.IMetadataSink.AddUpdates(IEnumerable{Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData})
   name.vb: AddUpdates(IEnumerable(Of ServerSyncUpdateData))
-  fullName: Microsoft.UpdateServices.Storage.IMetadataSink.AddUpdates(System.Collections.Generic.IEnumerable<Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData>)
-  fullName.vb: Microsoft.UpdateServices.Storage.IMetadataSink.AddUpdates(System.Collections.Generic.IEnumerable(Of Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData))
+  fullName: Microsoft.UpdateServices.Storage.IMetadataSink.AddUpdates(IEnumerable<Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData>)
+  fullName.vb: Microsoft.UpdateServices.Storage.IMetadataSink.AddUpdates(IEnumerable(Of Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData))
   nameWithType: IMetadataSink.AddUpdates(IEnumerable<ServerSyncUpdateData>)
   nameWithType.vb: IMetadataSink.AddUpdates(IEnumerable(Of ServerSyncUpdateData))
 - uid: Microsoft.UpdateServices.Storage.IMetadataSink.AddUpdates*
@@ -2459,6 +2478,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.IMetadataSource.DetectoidsIndex
   nameWithType: IMetadataSource.DetectoidsIndex
+- uid: Microsoft.UpdateServices.Storage.IMetadataSource.Export(Microsoft.UpdateServices.Metadata.MetadataFilter,System.String,Microsoft.UpdateServices.Storage.RepoExportFormat,Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)
+  name: Export(MetadataFilter, String, RepoExportFormat, ServerSyncConfigData)
+  href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_Export_Microsoft_UpdateServices_Metadata_MetadataFilter_System_String_Microsoft_UpdateServices_Storage_RepoExportFormat_Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncConfigData_
+  commentId: M:Microsoft.UpdateServices.Storage.IMetadataSource.Export(Microsoft.UpdateServices.Metadata.MetadataFilter,System.String,Microsoft.UpdateServices.Storage.RepoExportFormat,Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)
+  fullName: Microsoft.UpdateServices.Storage.IMetadataSource.Export(Microsoft.UpdateServices.Metadata.MetadataFilter, System.String, Microsoft.UpdateServices.Storage.RepoExportFormat, Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)
+  nameWithType: IMetadataSource.Export(MetadataFilter, String, RepoExportFormat, ServerSyncConfigData)
+- uid: Microsoft.UpdateServices.Storage.IMetadataSource.Export*
+  name: Export
+  href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_Export_
+  commentId: Overload:Microsoft.UpdateServices.Storage.IMetadataSource.Export
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.IMetadataSource.Export
+  nameWithType: IMetadataSource.Export
 - uid: Microsoft.UpdateServices.Storage.IMetadataSource.Filters
   name: Filters
   href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_Filters
@@ -2861,11 +2893,11 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.IMetadataSource.ProductsIndex
   nameWithType: IMetadataSource.ProductsIndex
-- uid: Microsoft.UpdateServices.Storage.IMetadataSource.SetUpstreamCredentials(System.String,System.Guid)
+- uid: Microsoft.UpdateServices.Storage.IMetadataSource.SetUpstreamCredentials(System.String,Guid)
   name: SetUpstreamCredentials(String, Guid)
-  href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_SetUpstreamCredentials_System_String_System_Guid_
-  commentId: M:Microsoft.UpdateServices.Storage.IMetadataSource.SetUpstreamCredentials(System.String,System.Guid)
-  fullName: Microsoft.UpdateServices.Storage.IMetadataSource.SetUpstreamCredentials(System.String, System.Guid)
+  href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_SetUpstreamCredentials_System_String_Guid_
+  commentId: M:Microsoft.UpdateServices.Storage.IMetadataSource.SetUpstreamCredentials(System.String,Guid)
+  fullName: Microsoft.UpdateServices.Storage.IMetadataSource.SetUpstreamCredentials(System.String, Guid)
   nameWithType: IMetadataSource.SetUpstreamCredentials(String, Guid)
 - uid: Microsoft.UpdateServices.Storage.IMetadataSource.SetUpstreamCredentials*
   name: SetUpstreamCredentials
@@ -2932,13 +2964,13 @@ references:
   commentId: T:Microsoft.UpdateServices.Storage.IUpdateContentSink
   fullName: Microsoft.UpdateServices.Storage.IUpdateContentSink
   nameWithType: IUpdateContentSink
-- uid: Microsoft.UpdateServices.Storage.IUpdateContentSink.Add(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Content.UpdateFile})
+- uid: Microsoft.UpdateServices.Storage.IUpdateContentSink.Add(IEnumerable{Microsoft.UpdateServices.Metadata.Content.UpdateFile})
   name: Add(IEnumerable<UpdateFile>)
-  href: api/Microsoft.UpdateServices.Storage.IUpdateContentSink.html#Microsoft_UpdateServices_Storage_IUpdateContentSink_Add_System_Collections_Generic_IEnumerable_Microsoft_UpdateServices_Metadata_Content_UpdateFile__
-  commentId: M:Microsoft.UpdateServices.Storage.IUpdateContentSink.Add(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.Metadata.Content.UpdateFile})
+  href: api/Microsoft.UpdateServices.Storage.IUpdateContentSink.html#Microsoft_UpdateServices_Storage_IUpdateContentSink_Add_IEnumerable_Microsoft_UpdateServices_Metadata_Content_UpdateFile__
+  commentId: M:Microsoft.UpdateServices.Storage.IUpdateContentSink.Add(IEnumerable{Microsoft.UpdateServices.Metadata.Content.UpdateFile})
   name.vb: Add(IEnumerable(Of UpdateFile))
-  fullName: Microsoft.UpdateServices.Storage.IUpdateContentSink.Add(System.Collections.Generic.IEnumerable<Microsoft.UpdateServices.Metadata.Content.UpdateFile>)
-  fullName.vb: Microsoft.UpdateServices.Storage.IUpdateContentSink.Add(System.Collections.Generic.IEnumerable(Of Microsoft.UpdateServices.Metadata.Content.UpdateFile))
+  fullName: Microsoft.UpdateServices.Storage.IUpdateContentSink.Add(IEnumerable<Microsoft.UpdateServices.Metadata.Content.UpdateFile>)
+  fullName.vb: Microsoft.UpdateServices.Storage.IUpdateContentSink.Add(IEnumerable(Of Microsoft.UpdateServices.Metadata.Content.UpdateFile))
   nameWithType: IUpdateContentSink.Add(IEnumerable<UpdateFile>)
   nameWithType.vb: IUpdateContentSink.Add(IEnumerable(Of UpdateFile))
 - uid: Microsoft.UpdateServices.Storage.IUpdateContentSink.Add*
@@ -3248,3 +3280,15 @@ references:
   commentId: F:Microsoft.UpdateServices.Storage.OperationType.Unknown
   fullName: Microsoft.UpdateServices.Storage.OperationType.Unknown
   nameWithType: OperationType.Unknown
+- uid: Microsoft.UpdateServices.Storage.RepoExportFormat
+  name: RepoExportFormat
+  href: api/Microsoft.UpdateServices.Storage.RepoExportFormat.html
+  commentId: T:Microsoft.UpdateServices.Storage.RepoExportFormat
+  fullName: Microsoft.UpdateServices.Storage.RepoExportFormat
+  nameWithType: RepoExportFormat
+- uid: Microsoft.UpdateServices.Storage.RepoExportFormat.WSUS_2016
+  name: WSUS_2016
+  href: api/Microsoft.UpdateServices.Storage.RepoExportFormat.html#Microsoft_UpdateServices_Storage_RepoExportFormat_WSUS_2016
+  commentId: F:Microsoft.UpdateServices.Storage.RepoExportFormat.WSUS_2016
+  fullName: Microsoft.UpdateServices.Storage.RepoExportFormat.WSUS_2016
+  nameWithType: RepoExportFormat.WSUS_2016

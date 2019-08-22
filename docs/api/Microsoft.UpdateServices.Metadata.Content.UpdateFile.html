@@ -85,7 +85,7 @@
   <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
   <h5 id="Microsoft_UpdateServices_Metadata_Content_UpdateFile_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class UpdateFile</code></pre>
+    <pre><code class="lang-csharp hljs">public class UpdateFile : object</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
@@ -98,8 +98,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
-public List&lt;UpdateFileDigest&gt; Digests { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public List&lt;UpdateFileDigest&gt; Digests { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -111,7 +110,7 @@ public List&lt;UpdateFileDigest&gt; Digests { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.html">UpdateFileDigest</a>&gt;</td>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFileDigest.html">UpdateFileDigest</a>&gt;</td>
         <td><p>List of file digests, one per algorithm.</p>
 </td>
       </tr>
@@ -152,8 +151,7 @@ public List&lt;UpdateFileDigest&gt; Digests { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
-public string FileName { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string FileName { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -180,8 +178,7 @@ public string FileName { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
-public DateTime ModifiedDate { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public DateTime ModifiedDate { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -193,7 +190,7 @@ public DateTime ModifiedDate { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.DateTime</span></td>
+        <td><span class="xref">DateTime</span></td>
         <td><p>Last modified DateTime</p>
 </td>
       </tr>
@@ -208,8 +205,7 @@ public DateTime ModifiedDate { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
-public string PatchingType { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string PatchingType { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -236,8 +232,7 @@ public string PatchingType { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
-public ulong Size { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public UInt64 Size { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -249,7 +244,7 @@ public ulong Size { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.UInt64</span></td>
+        <td><span class="xref">UInt64</span></td>
         <td><p>File size</p>
 </td>
       </tr>
@@ -264,8 +259,7 @@ public ulong Size { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonProperty]
-public List&lt;UpdateFileUrl&gt; Urls { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public List&lt;UpdateFileUrl&gt; Urls { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -277,7 +271,7 @@ public List&lt;UpdateFileUrl&gt; Urls { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl.html">UpdateFileUrl</a>&gt;</td>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl.html">UpdateFileUrl</a>&gt;</td>
         <td><p>List of URLs.</p>
 </td>
       </tr>
@@ -330,8 +324,6 @@ public List&lt;UpdateFileUrl&gt; Urls { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.Object.Equals(System.Object)</span></div>
   
   
   <a id="Microsoft_UpdateServices_Metadata_Content_UpdateFile_GetHashCode_" data-uid="Microsoft.UpdateServices.Metadata.Content.UpdateFile.GetHashCode*"></a>
@@ -359,8 +351,6 @@ public List&lt;UpdateFileUrl&gt; Urls { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">System.Object.GetHashCode()</span></div>
 </article>
           </div>
           

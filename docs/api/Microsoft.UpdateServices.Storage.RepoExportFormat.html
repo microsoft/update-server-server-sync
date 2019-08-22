@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Simple
+    <title>Enum RepoExportFormat
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Simple
+    <meta name="title" content="Enum RepoExportFormat
    ">
     <meta name="generator" content="docfx 2.43.2.0">
     
@@ -68,56 +68,37 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Microsoft.UpdateServices.Metadata.Prerequisites.Simple">
+            <article class="content wrap" id="_content" data-uid="Microsoft.UpdateServices.Storage.RepoExportFormat">
   
   
-  <h1 id="Microsoft_UpdateServices_Metadata_Prerequisites_Simple" data-uid="Microsoft.UpdateServices.Metadata.Prerequisites.Simple" class="text-break">Class Simple
+  <h1 id="Microsoft_UpdateServices_Storage_RepoExportFormat" data-uid="Microsoft.UpdateServices.Storage.RepoExportFormat" class="text-break">Enum RepoExportFormat
   </h1>
-  <div class="markdown level0 summary"><p>Simple prerequisite: a single update ID.</p>
-<p>The update ID contained in a simple prerequisite must be installed before the update that has this prerequisite can be installed.</p>
-<p>The detectoid ID contained in a simple prerequisite must evaluate to true before the update that has this prerequisite can be installed. See <a class="xref" href="Microsoft.UpdateServices.Metadata.Detectoid.html">Detectoid</a> for more details.</p>
+  <div class="markdown level0 summary"><p>Formats for exporting from a metadata source</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritance">
-    <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><a class="xref" href="Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite.html">Prerequisite</a></div>
-    <div class="level2"><span class="xref">Simple</span></div>
-  </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.UpdateServices.Metadata.Prerequisites.html">Microsoft.UpdateServices.Metadata.Prerequisites</a></h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.UpdateServices.Storage.html">Microsoft.UpdateServices.Storage</a></h6>
   <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
-  <h5 id="Microsoft_UpdateServices_Metadata_Prerequisites_Simple_syntax">Syntax</h5>
+  <h5 id="Microsoft_UpdateServices_Storage_RepoExportFormat_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Simple : Prerequisite</code></pre>
+    <pre><code class="lang-csharp hljs">public enum RepoExportFormat : int</code></pre>
   </div>
-  <h3 id="properties">Properties
+  <h3 id="fields">Fields
   </h3>
-  
-  
-  <a id="Microsoft_UpdateServices_Metadata_Prerequisites_Simple_UpdateId_" data-uid="Microsoft.UpdateServices.Metadata.Prerequisites.Simple.UpdateId*"></a>
-  <h4 id="Microsoft_UpdateServices_Metadata_Prerequisites_Simple_UpdateId" data-uid="Microsoft.UpdateServices.Metadata.Prerequisites.Simple.UpdateId">UpdateId</h4>
-  <div class="markdown level1 summary"><p>The update ID or detectoid ID that is required before an update can be installed.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Guid UpdateId { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
-        <th>Type</th>
+        <th>Name</th>
         <th>Description</th>
       </tr>
-    </thead>
+    <thead>
     <tbody>
       <tr>
-        <td><span class="xref">Guid</span></td>
-        <td></td>
+        <td id="Microsoft_UpdateServices_Storage_RepoExportFormat_WSUS_2016">WSUS_2016</td>
+        <td><p>Export to WSUS 2016 compatible format</p>
+</td>
       </tr>
     </tbody>
-  </table>
+  </thead></thead></table>
 </article>
           </div>
           

@@ -80,31 +80,26 @@ It contains an inner SOAP FaultException.</p>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">System.Exception</span></div>
-    <div class="level2"><span class="xref">UpstreamServerException</span></div>
-  </div>
-  <div classs="implements">
-    <h5>Implements</h5>
-    <div><span class="xref">System.Runtime.Serialization.ISerializable</span></div>
+    <div class="level1"><span class="xref">UpstreamServerException</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.UpdateServices.Client.html">Microsoft.UpdateServices.Client</a></h6>
   <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
   <h5 id="Microsoft_UpdateServices_Client_UpstreamServerException_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class UpstreamServerException : Exception, ISerializable</code></pre>
+    <pre><code class="lang-csharp hljs">public class UpstreamServerException : Exception</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   
   <a id="Microsoft_UpdateServices_Client_UpstreamServerException__ctor_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerException.#ctor*"></a>
-  <h4 id="Microsoft_UpdateServices_Client_UpstreamServerException__ctor_System_ServiceModel_FaultException_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerException.#ctor(System.ServiceModel.FaultException)">UpstreamServerException(FaultException)</h4>
+  <h4 id="Microsoft_UpdateServices_Client_UpstreamServerException__ctor_System_ServiceModel_FaultException_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerException.#ctor(System.ServiceModel.FaultException)">UpstreamServerException(System.ServiceModel.FaultException)</h4>
   <div class="markdown level1 summary"><p>Initialize a new instance of UpstreamServerException from a SOAP FaultException.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public UpstreamServerException(FaultException soapException)</code></pre>
+    <pre><code class="lang-csharp hljs">public UpstreamServerException(System.ServiceModel.FaultException soapException)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -152,10 +147,6 @@ It contains an inner SOAP FaultException.</p>
       </tr>
     </tbody>
   </table>
-  <h3 id="implements">Implements</h3>
-  <div>
-      <span class="xref">System.Runtime.Serialization.ISerializable</span>
-  </div>
 </article>
           </div>
           

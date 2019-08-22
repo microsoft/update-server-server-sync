@@ -1,6 +1,6 @@
 This library provides a high level abstraction over the underlying server-sync SOAP-based protocol. Authentication, server configuration, batched queries, metadata and content cross-linking are handled internally. Update XML metadata data is parsed and indexed internally and exposed as native C# properties: prerequisites, bundled updates, files, categories, extended metadata.
 
-#### The [UpstreamServerClient](/api/Microsoft.UpdateServices.Client.UpstreamServerClient.html)
+#### The [UpstreamServerClient](Microsoft.UpdateServices.Client.UpstreamServerClient.html)
 Use UpstreamServerClient to retrieve categories and updates from an upstream update server or download update content.
 
 ##### Retrieve update categories:
@@ -40,10 +40,10 @@ updatesSource.Delete();
 categoriesSource.Delete();
 ```
 
-#### The [update metadata source](/api/Microsoft.UpdateServices.Storage.IMetadataSource.html)
+#### The [update metadata source](Microsoft.UpdateServices.Storage.IMetadataSource.html)
 A metadata source caches update metadata locally and is used for filtering, quering and serving updates to Windows PCs or downstream servers. A metadata source stores update metadata from a single upstream update server using at most one filter. Multiple sources can be created to sync from multiple upstream servers or use different filters.
 
-A [compressed metadata store](/api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html) is a metadata source implementation that stores update metadata and indexes within a compressed archive. CompressedMetadataStore supports storing incremental changes from a baseline and can be used with [UpstreamServerClient](/api/Microsoft.UpdateServices.Client.UpstreamServerClient.html) to execute incremental fetching of metadata:
+A [compressed metadata store](Microsoft.UpdateServices.Storage.CompressedMetadataStore.html) is a metadata source implementation that stores update metadata and indexes within a compressed archive. CompressedMetadataStore supports storing incremental changes from a baseline and can be used with [UpstreamServerClient](Microsoft.UpdateServices.Client.UpstreamServerClient.html) to execute incremental fetching of metadata:
 
 ```
 var server = new UpstreamServerClient(Endpoint.Default);
@@ -82,7 +82,7 @@ var metadataSource = CompressedMetadataStore.Open("baseline-1.zip");
 
 #### The update content store
 A content store manages update content received from an upstream server. 
-The [FileSystemContentStore](/api/Microsoft.UpdateServices.Storage.FileSystemContentStore.html) class is an implementation of a content store sink and source. It can be used to both download update content from an upstream server and read content from it with the intent of serving it to Windows PCs or downstream servers.
+The [FileSystemContentStore](Microsoft.UpdateServices.Storage.FileSystemContentStore.html) class is an implementation of a content store sink and source. It can be used to both download update content from an upstream server and read content from it with the intent of serving it to Windows PCs or downstream servers.
 
 To download an update file:
 ```
@@ -120,8 +120,8 @@ if (updateWithFile != null)
 }
 ```
 
-#### The [upsteam server](/api/Microsoft.UpdateServices.Server.UpstreamServerStartup.html)
-Use [UpstreamServerStartup](/api/Microsoft.UpdateServices.Server.UpstreamServerStartup.html) to run an upstream server in your ASP.NET web app.
+#### The [upsteam server](Microsoft.UpdateServices.Server.UpstreamServerStartup.html)
+Use [UpstreamServerStartup](Microsoft.UpdateServices.Server.UpstreamServerStartup.html) to run an upstream server in your ASP.NET web app.
 
 First sync some updates to a metadata source, then configure the upstream server startup to distribute updates from the metadata source to downstream WSUS servers.
 
