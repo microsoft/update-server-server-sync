@@ -90,7 +90,7 @@
   <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
   <h5 id="Microsoft_UpdateServices_Metadata_Update_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class Update : object</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class Update</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
@@ -115,7 +115,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
         <td><p>List of update identities.</p>
 </td>
       </tr>
@@ -142,7 +142,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -156,7 +156,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public List&lt;Guid&gt; ClassificationIds { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public List&lt;Guid&gt; ClassificationIds { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -168,7 +169,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<span class="xref">Guid</span>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
         <td><p>List of classification IDs. The GUIDs map to a <a class="xref" href="Microsoft.UpdateServices.Metadata.Classification.html">Classification</a></p>
 </td>
       </tr>
@@ -183,7 +184,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Description { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public string Description { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -221,7 +223,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFile.html">UpdateFile</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFile.html">UpdateFile</a>&gt;</td>
         <td><p>List of content files</p>
 </td>
       </tr>
@@ -483,7 +485,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite.html">Prerequisite</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite.html">Prerequisite</a>&gt;</td>
         <td><p>List of prerequisites</p>
 </td>
       </tr>
@@ -498,7 +500,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public List&lt;Guid&gt; ProductIds { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public List&lt;Guid&gt; ProductIds { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -510,7 +513,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<span class="xref">Guid</span>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
         <td><p>List of product IDs. The GUIDs map to a <a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a></p>
 </td>
       </tr>
@@ -537,7 +540,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">Guid</span>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
         <td><p>List of update <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Identity">Identity</a></p>
 </td>
       </tr>
@@ -601,7 +604,7 @@
   
   
   <a id="Microsoft_UpdateServices_Metadata_Update_IsApplicable_" data-uid="Microsoft.UpdateServices.Metadata.Update.IsApplicable*"></a>
-  <h4 id="Microsoft_UpdateServices_Metadata_Update_IsApplicable_List_Guid__" data-uid="Microsoft.UpdateServices.Metadata.Update.IsApplicable(List{Guid})">IsApplicable(List&lt;Guid&gt;)</h4>
+  <h4 id="Microsoft_UpdateServices_Metadata_Update_IsApplicable_System_Collections_Generic_List_System_Guid__" data-uid="Microsoft.UpdateServices.Metadata.Update.IsApplicable(System.Collections.Generic.List{System.Guid})">IsApplicable(List&lt;Guid&gt;)</h4>
   <div class="markdown level1 summary"><p>Determines if the update is applicable based on its list of prerequisites and the list of installed updates (prerequisites) on a computer</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -620,7 +623,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<span class="xref">Guid</span>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
         <td><span class="parametername">installedPrerequisites</span></td>
         <td><p>List of installed updates on a computer</p>
 </td>

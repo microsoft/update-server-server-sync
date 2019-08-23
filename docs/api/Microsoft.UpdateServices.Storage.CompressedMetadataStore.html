@@ -84,13 +84,14 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSink.html">IMetadataSink</a></div>
+    <div><span class="xref">System.IDisposable</span></div>
     <div><a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSource.html">IMetadataSource</a></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.UpdateServices.Storage.html">Microsoft.UpdateServices.Storage</a></h6>
   <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
   <h5 id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class CompressedMetadataStore : IDisposable, IMetadataSink, IMetadataSource</code></pre>
+    <pre><code class="lang-csharp hljs">public class CompressedMetadataStore : IMetadataSink, IDisposable, IMetadataSource</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -168,7 +169,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string CategoriesAnchor { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string CategoriesAnchor { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -194,7 +196,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;Identity, Update&gt; CategoriesIndex { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public IReadOnlyDictionary&lt;Identity, Update&gt; CategoriesIndex { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -206,7 +209,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of categories</p>
 </td>
       </tr>
@@ -221,7 +224,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Checksum { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string Checksum { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -247,7 +251,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;Identity, Classification&gt; ClassificationsIndex { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public IReadOnlyDictionary&lt;Identity, Classification&gt; ClassificationsIndex { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -259,7 +264,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Classification.html">Classification</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Classification.html">Classification</a>&gt;</td>
         <td><p>List of classifications</p>
 </td>
       </tr>
@@ -274,7 +279,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;Identity, Detectoid&gt; DetectoidsIndex { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public IReadOnlyDictionary&lt;Identity, Detectoid&gt; DetectoidsIndex { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -286,7 +292,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Detectoid.html">Detectoid</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Detectoid.html">Detectoid</a>&gt;</td>
         <td><p>List of detectoids</p>
 </td>
       </tr>
@@ -301,7 +307,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string FilePath { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public string FilePath { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -327,7 +334,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;QueryFilter&gt; Filters { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public IReadOnlyList&lt;QueryFilter&gt; Filters { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -339,7 +347,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.QueryFilter.html">QueryFilter</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.QueryFilter.html">QueryFilter</a>&gt;</td>
         <td><p>Query filter</p>
 </td>
       </tr>
@@ -354,7 +362,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SortedSet&lt;Identity&gt; Identities { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public SortedSet&lt;Identity&gt; Identities { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -366,7 +375,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">SortedSet</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.SortedSet</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
         <td><p>List of updates</p>
 </td>
       </tr>
@@ -382,7 +391,8 @@ If false, call the Hydrate() method.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsHydrated { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public bool IsHydrated { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -408,7 +418,8 @@ If false, call the Hydrate() method.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;Identity, Product&gt; ProductsIndex { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public IReadOnlyDictionary&lt;Identity, Product&gt; ProductsIndex { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -420,7 +431,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Product.html">Product</a>&gt;</td>
         <td><p>List of updates</p>
 </td>
       </tr>
@@ -435,7 +446,8 @@ If false, call the Hydrate() method.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;Identity, Update&gt; UpdatesIndex { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public IReadOnlyDictionary&lt;Identity, Update&gt; UpdatesIndex { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -447,7 +459,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of products</p>
 </td>
       </tr>
@@ -462,7 +474,8 @@ If false, call the Hydrate() method.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Guid UpstreamAccountGuid { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public Guid UpstreamAccountGuid { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -474,7 +487,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Guid</span></td>
+        <td><span class="xref">System.Guid</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -488,7 +501,8 @@ If false, call the Hydrate() method.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string UpstreamAccountName { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string UpstreamAccountName { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -514,7 +528,8 @@ If false, call the Hydrate() method.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Endpoint UpstreamSource { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public Endpoint UpstreamSource { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -565,7 +580,7 @@ If false, call the Hydrate() method.</p>
   
   
   <a id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_AddUpdates_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates*"></a>
-  <h4 id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_AddUpdates_IEnumerable_Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncUpdateData__" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates(IEnumerable{Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData})">AddUpdates(IEnumerable&lt;ServerSyncUpdateData&gt;)</h4>
+  <h4 id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_AddUpdates_System_Collections_Generic_IEnumerable_Microsoft_UpdateServices_WebServices_ServerSync_ServerSyncUpdateData__" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddUpdates(System.Collections.Generic.IEnumerable{Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData})">AddUpdates(IEnumerable&lt;ServerSyncUpdateData&gt;)</h4>
   <div class="markdown level1 summary"><p>Adds a list of updates to the query result. The XML metadata is written to disk to avoid running out of memory</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -584,7 +599,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData</span>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncUpdateData</span>&gt;</td>
         <td><span class="parametername">overTheWireUpdates</span></td>
         <td><p>The updates to add to the result</p>
 </td>
@@ -755,7 +770,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
         <td><p>The parent bundle</p>
 </td>
       </tr>
@@ -800,7 +815,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
         <td><p>List of bundled updates</p>
 </td>
       </tr>
@@ -827,7 +842,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">ICollection</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.ICollection</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of categories: classifications, detectoids, products</p>
 </td>
       </tr>
@@ -872,7 +887,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of categories that match the filter</p>
 </td>
       </tr>
@@ -962,7 +977,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFile.html">UpdateFile</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Content.UpdateFile.html">UpdateFile</a>&gt;</td>
         <td><p>List of files in the update</p>
 </td>
       </tr>
@@ -989,7 +1004,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IReadOnlyDictionary</span>&lt;<span class="xref">System.Int32</span>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyDictionary</span>&lt;<span class="xref">System.Int32</span>, <a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a>&gt;</td>
         <td><p>Dictionary of int to Identity</p>
 </td>
       </tr>
@@ -1016,7 +1031,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Guid</span>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
         <td><p>List of GUIDS of leaf updates</p>
 </td>
       </tr>
@@ -1043,7 +1058,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Guid</span>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
         <td><p>List of GUIDS of non leaf updates</p>
 </td>
       </tr>
@@ -1088,7 +1103,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite.html">Prerequisite</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Prerequisites.Prerequisite.html">Prerequisite</a>&gt;</td>
         <td><p>List of prerequisites</p>
 </td>
       </tr>
@@ -1115,7 +1130,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Guid</span>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
         <td><p>List of GUIDS of root updates</p>
 </td>
       </tr>
@@ -1160,7 +1175,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IReadOnlyList</span>&lt;<span class="xref">Guid</span>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
         <td><p>List of updates superseded by the specified update</p>
 </td>
       </tr>
@@ -1295,7 +1310,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<span class="xref">Guid</span>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
         <td><p>List of classification ids for an update</p>
 </td>
       </tr>
@@ -1340,7 +1355,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Stream</span></td>
+        <td><span class="xref">System.IO.Stream</span></td>
         <td><p>Stream of the XML metadata</p>
 </td>
       </tr>
@@ -1385,7 +1400,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<span class="xref">Guid</span>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
         <td><p>List of product ids for an update</p>
 </td>
       </tr>
@@ -1412,7 +1427,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">ICollection</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.ICollection</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of updates</p>
 </td>
       </tr>
@@ -1457,7 +1472,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of updates that match the filter</p>
 </td>
       </tr>
@@ -2015,7 +2030,7 @@ If false, call the Hydrate() method.</p>
   
   
   <a id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_SetUpstreamCredentials_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetUpstreamCredentials*"></a>
-  <h4 id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_SetUpstreamCredentials_System_String_Guid_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetUpstreamCredentials(System.String,Guid)">SetUpstreamCredentials(String, Guid)</h4>
+  <h4 id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_SetUpstreamCredentials_System_String_System_Guid_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.SetUpstreamCredentials(System.String,System.Guid)">SetUpstreamCredentials(String, Guid)</h4>
   <div class="markdown level1 summary"><p>Set the credentials used to connecto to the upstream server</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -2039,7 +2054,7 @@ If false, call the Hydrate() method.</p>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Guid</span></td>
+        <td><span class="xref">System.Guid</span></td>
         <td><span class="parametername">AccountGuid</span></td>
         <td></td>
       </tr>
@@ -2067,7 +2082,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Storage.OperationProgress.html">OperationProgress</a>&gt;</td>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Storage.OperationProgress.html">OperationProgress</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -2092,7 +2107,7 @@ If false, call the Hydrate() method.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EventHandler</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Storage.OperationProgress.html">OperationProgress</a>&gt;</td>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Storage.OperationProgress.html">OperationProgress</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -2100,6 +2115,9 @@ If false, call the Hydrate() method.</p>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSink.html">IMetadataSink</a>
+  </div>
+  <div>
+      <span class="xref">System.IDisposable</span>
   </div>
   <div>
       <a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSource.html">IMetadataSource</a>

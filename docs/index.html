@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Microsoft.UpdateServices </title>
+    <title>Microsoft.UpdateServices Server Sync </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Microsoft.UpdateServices ">
+    <meta name="title" content="Microsoft.UpdateServices Server Sync ">
     <meta name="generator" content="docfx 2.43.2.0">
     
     <link rel="shortcut icon" href="favicon.ico">
@@ -60,11 +60,12 @@
         <div class="article row grid">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="microsoftupdateservices">Microsoft.UpdateServices</h1>
+<h1 id="microsoftupdateservices-server-sync">Microsoft.UpdateServices Server Sync</h1>
 
 <p>This code library provides a C# implementation (.NET Core) of the Microsoft Update Server-Server sync protocol, for both the client and server roles.</p>
 <p>Use the <a href="api/index.html#the-upstreamserverclient">client implementation</a> to programmatically browse the Microsoft Update catalog, sync updates locally and run advanced queries on update metadata.</p>
-<p>Use the <a href="api/index.html#the-upsteam-server">server implementation</a> to distribute updates from your ASP.NET web app to downstream WSUS servers or other clients.</p>
+<p>Use the <a href="api/index.html#the-upsteam-server">server implementation</a> to distribute updates to downstream servers, like <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-server-update-services/get-started/windows-server-update-services-wsus">WSUS</a> or server clients built with this library.</p>
+<p>To deploy Microsoft updates fetched with this library to Windows client PCs, use the <a href="https://microsoft.github.io/update-client-server-sync/">Microsoft Update Client Sync library</a> and <a href="https://github.com/microsoft/update-client-server-sync">GitHub repo</a>.</p>
 <p>See <a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wsusss/f49f0c3e-a426-4b4b-b401-9aeb2892815c">MS-WSUSSS</a> for the complete technical documentation of the protocol.</p>
 <p>See <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-server-update-services/get-started/windows-server-update-services-wsus">Windows Server Update Server</a> for an introduction to WSUS.</p>
 </article>

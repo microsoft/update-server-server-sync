@@ -85,7 +85,7 @@
   <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
   <h5 id="Microsoft_UpdateServices_Metadata_Content_UpdateFileUrl_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class UpdateFileUrl : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class UpdateFileUrl</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
@@ -98,7 +98,8 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string DigestBase64 { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string DigestBase64 { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -127,7 +128,8 @@ Microsoft upstream server.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string MuUrl { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string MuUrl { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -155,7 +157,8 @@ Microsoft upstream server.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string UssUrl { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string UssUrl { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -220,6 +223,8 @@ Microsoft upstream server.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.Equals(System.Object)</span></div>
   
   
   <a id="Microsoft_UpdateServices_Metadata_Content_UpdateFileUrl_GetHashCode_" data-uid="Microsoft.UpdateServices.Metadata.Content.UpdateFileUrl.GetHashCode*"></a>
@@ -247,6 +252,8 @@ Microsoft upstream server.</p>
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.GetHashCode()</span></div>
   <h3 id="operators">Operators
   </h3>
   

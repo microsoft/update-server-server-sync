@@ -87,14 +87,14 @@
   <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
   <h5 id="Microsoft_UpdateServices_Server_UpstreamServerStartup_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class UpstreamServerStartup : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class UpstreamServerStartup</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   
   <a id="Microsoft_UpdateServices_Server_UpstreamServerStartup__ctor_" data-uid="Microsoft.UpdateServices.Server.UpstreamServerStartup.#ctor*"></a>
-  <h4 id="Microsoft_UpdateServices_Server_UpstreamServerStartup__ctor_IConfiguration_" data-uid="Microsoft.UpdateServices.Server.UpstreamServerStartup.#ctor(IConfiguration)">UpstreamServerStartup(IConfiguration)</h4>
+  <h4 id="Microsoft_UpdateServices_Server_UpstreamServerStartup__ctor_Microsoft_Extensions_Configuration_IConfiguration_" data-uid="Microsoft.UpdateServices.Server.UpstreamServerStartup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">UpstreamServerStartup(IConfiguration)</h4>
   <div class="markdown level1 summary"><p>Initialize a new instance of UpstreamServerStartup.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -113,7 +113,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IConfiguration</span></td>
+        <td><span class="xref">Microsoft.Extensions.Configuration.IConfiguration</span></td>
         <td><span class="parametername">config</span></td>
         <td><p>ASP.NET configuration.</p>
 <p>Must contain a string entry &quot;metadata-path&quot; with the path to the metadata source to use</p>
@@ -129,7 +129,7 @@
   
   
   <a id="Microsoft_UpdateServices_Server_UpstreamServerStartup_Configure_" data-uid="Microsoft.UpdateServices.Server.UpstreamServerStartup.Configure*"></a>
-  <h4 id="Microsoft_UpdateServices_Server_UpstreamServerStartup_Configure_IApplicationBuilder_IHostingEnvironment_ILoggerFactory_" data-uid="Microsoft.UpdateServices.Server.UpstreamServerStartup.Configure(IApplicationBuilder,IHostingEnvironment,ILoggerFactory)">Configure(IApplicationBuilder, IHostingEnvironment, ILoggerFactory)</h4>
+  <h4 id="Microsoft_UpdateServices_Server_UpstreamServerStartup_Configure_Microsoft_AspNetCore_Builder_IApplicationBuilder_Microsoft_AspNetCore_Hosting_IHostingEnvironment_Microsoft_Extensions_Logging_ILoggerFactory_" data-uid="Microsoft.UpdateServices.Server.UpstreamServerStartup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">Configure(IApplicationBuilder, IHostingEnvironment, ILoggerFactory)</h4>
   <div class="markdown level1 summary"><p>Called by ASP.NET to configure a web app's application pipeline</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -148,20 +148,20 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IApplicationBuilder</span></td>
+        <td><span class="xref">Microsoft.AspNetCore.Builder.IApplicationBuilder</span></td>
         <td><span class="parametername">app</span></td>
         <td><p>Applicatin to configure.</p>
 <p>A SOAP endpoint is configured for this app.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IHostingEnvironment</span></td>
+        <td><span class="xref">Microsoft.AspNetCore.Hosting.IHostingEnvironment</span></td>
         <td><span class="parametername">env</span></td>
         <td><p>Hosting environment.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">ILoggerFactory</span></td>
+        <td><span class="xref">Microsoft.Extensions.Logging.ILoggerFactory</span></td>
         <td><span class="parametername">loggerFactory</span></td>
         <td><p>Logging factory.</p>
 </td>
@@ -171,7 +171,7 @@
   
   
   <a id="Microsoft_UpdateServices_Server_UpstreamServerStartup_ConfigureServices_" data-uid="Microsoft.UpdateServices.Server.UpstreamServerStartup.ConfigureServices*"></a>
-  <h4 id="Microsoft_UpdateServices_Server_UpstreamServerStartup_ConfigureServices_IServiceCollection_" data-uid="Microsoft.UpdateServices.Server.UpstreamServerStartup.ConfigureServices(IServiceCollection)">ConfigureServices(IServiceCollection)</h4>
+  <h4 id="Microsoft_UpdateServices_Server_UpstreamServerStartup_ConfigureServices_Microsoft_Extensions_DependencyInjection_IServiceCollection_" data-uid="Microsoft.UpdateServices.Server.UpstreamServerStartup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">ConfigureServices(IServiceCollection)</h4>
   <div class="markdown level1 summary"><p>Called by ASP.NET to configure services</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -190,7 +190,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IServiceCollection</span></td>
+        <td><span class="xref">Microsoft.Extensions.DependencyInjection.IServiceCollection</span></td>
         <td><span class="parametername">services</span></td>
         <td><p>Service collection.</p>
 <p>The server-server sync and authentication services are added to this list.</p>

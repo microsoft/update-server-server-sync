@@ -133,7 +133,7 @@
       <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_SupersedingUpdate">Update.SupersedingUpdate</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsApplicable_List_Guid__">Update.IsApplicable(List&lt;Guid&gt;)</a>
+      <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_IsApplicable_System_Collections_Generic_List_System_Guid__">Update.IsApplicable(List&lt;Guid&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html#Microsoft_UpdateServices_Metadata_Update_Description">Update.Description</a>
@@ -178,7 +178,8 @@ categoriesSource.Delete();</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string KBArticleId { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public string KBArticleId { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -208,7 +209,8 @@ The property is set only for operating system upgrades.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string OsUpgrade { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public string OsUpgrade { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -235,7 +237,8 @@ The property is set only for operating system upgrades.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string SupportUrl { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[JsonIgnore]
+public string SupportUrl { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
