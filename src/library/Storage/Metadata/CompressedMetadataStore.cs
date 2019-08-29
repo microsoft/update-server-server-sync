@@ -23,7 +23,7 @@ namespace Microsoft.UpdateServices.Storage
     /// <summary>
     /// Stores update metadata into a compressed file on disk. Supports storing incremental changes in metadata from a baseline.
     /// </summary>
-    public partial class CompressedMetadataStore : IDisposable, IMetadataSource
+    public partial class CompressedMetadataStore : IMetadataSource
     {
         /// <summary>
         /// Gets the filters used for the query. A QueryResult has exactly one filter.
@@ -233,7 +233,16 @@ namespace Microsoft.UpdateServices.Storage
                     }
 
                     deserializedResult.FilePath = queryResultFile;
-                    deserializedResult.OnDeserialized();
+
+                    try
+                    {
+                        deserializedResult.OnDeserialized();
+                    }
+                    catch(Exception ex)
+                    {
+                        resultArchive.Close();
+                        throw ex;
+                    }
 
                     deserializedResult.InputFile = resultArchive;
 
@@ -321,6 +330,12 @@ namespace Microsoft.UpdateServices.Storage
             {
                 InputFile.Close();
                 InputFile = null;
+            }
+
+            if (IsDeltaSource && BaselineSource != null)
+            {
+                BaselineSource.Dispose();
+                BaselineSource = null;
             }
         }
 

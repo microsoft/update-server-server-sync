@@ -17,7 +17,7 @@ namespace Microsoft.UpdateServices.Storage
     /// Provides access to update metadata as well as indexes for fast queries on update metadata.
     /// IMetadataSource is obtained from the <see cref="UpstreamServerClient"/> when retrieving categories or updates.
     /// </summary>
-    public interface IMetadataSource
+    public interface IMetadataSource : IDisposable
     {
         /// <summary>
         /// Get the upstream server that this metadata source was created from
