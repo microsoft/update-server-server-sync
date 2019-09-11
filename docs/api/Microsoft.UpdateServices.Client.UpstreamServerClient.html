@@ -297,7 +297,11 @@ Results are returned as <a class="xref" href="Microsoft.UpdateServices.Storage.I
   
   <a id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetUpdates_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates*"></a>
   <h4 id="Microsoft_UpdateServices_Client_UpstreamServerClient_GetUpdates_Microsoft_UpdateServices_Metadata_QueryFilter_Microsoft_UpdateServices_Storage_IMetadataSink_" data-uid="Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates(Microsoft.UpdateServices.Metadata.QueryFilter,Microsoft.UpdateServices.Storage.IMetadataSink)">GetUpdates(QueryFilter, IMetadataSink)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Gets the list of updates matching the query filter from an upstream update server.</p>
+<p>
+If the destinatin metadata sink also implements <a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSource.html">IMetadataSource</a>, a delta query for changed categories is performed./>
+</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -316,12 +320,14 @@ Results are returned as <a class="xref" href="Microsoft.UpdateServices.Storage.I
       <tr>
         <td><a class="xref" href="Microsoft.UpdateServices.Metadata.QueryFilter.html">QueryFilter</a></td>
         <td><span class="parametername">updatesFilter</span></td>
-        <td></td>
+        <td><p>Updates filter. See <a class="xref" href="Microsoft.UpdateServices.Metadata.QueryFilter.html">QueryFilter</a> for details.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSink.html">IMetadataSink</a></td>
         <td><span class="parametername">destination</span></td>
-        <td></td>
+        <td><p>Metadata collection where to write the result. If the destination implements IMetadataSource, a delta retrieve is performed</p>
+</td>
       </tr>
     </tbody>
   </table>

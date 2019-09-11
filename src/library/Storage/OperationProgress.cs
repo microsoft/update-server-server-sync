@@ -140,7 +140,15 @@ namespace Microsoft.UpdateServices.Storage
         /// <summary>
         /// Compute prerequisites index
         /// </summary>
-        IndexingPrerequisitesEnd
+        IndexingPrerequisitesEnd,
+        /// <summary>
+        /// Start saving the drivers index
+        /// </summary>
+        IndexingDriversStart,
+        /// <summary>
+        /// Done saving the drivers index
+        /// </summary>
+        IndexingDriversEnd
     }
 
     /// <summary>

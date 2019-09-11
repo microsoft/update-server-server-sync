@@ -33,8 +33,22 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         {
             var filter = new MetadataFilter()
             {
-                TitleFilter = filterOptions.TitleFilter
+                TitleFilter = filterOptions.TitleFilter,
+                HardwareIdFilter = filterOptions.HardwareIdFilter,
             };
+
+            if (!string.IsNullOrEmpty(filterOptions.ComputerHardwareIdFilter))
+            {
+                if (!Guid.TryParse(filterOptions.ComputerHardwareIdFilter, out Guid computerHardwareIdFilterGuid))
+                {
+                    ConsoleOutput.WriteRed($"The computer hardware id must be a GUID. It was {filterOptions.ComputerHardwareIdFilter}");
+                    return null;
+                }
+                else
+                {
+                    filter.ComputerHardwareIdFilter = computerHardwareIdFilterGuid;
+                }
+            }
 
             filter.ClassificationFilter = StringGuidsToGuids(filterOptions.ClassificationsFilter);
             if (filter.ClassificationFilter == null)

@@ -44,6 +44,7 @@ namespace Microsoft.UpdateServices.Storage
                 SaveProductClassificationIndex();
                 SaveFilesIndex();
                 SaveSupersededndex();
+                SaveDriversIndex();
 
                 // Come last, after all indexes have been updated
                 WriteIndex();
@@ -171,6 +172,11 @@ namespace Microsoft.UpdateServices.Storage
             AddPrerequisiteInformation(newUpdateIndex, update.Identity, updateXmlDoc);
             AddUpdateFileInformationToIndex(newUpdateIndex, update.Identity, updateXmlDoc);
             ExtractSupersedingInformation(newUpdateIndex, update.Identity, updateXmlDoc);
+
+            if (update is DriverUpdate)
+            {
+                ExtractAndIndexDriverMetadata(newUpdateIndex, updateXmlDoc);
+            }
 
             return newUpdateIndex;
         }

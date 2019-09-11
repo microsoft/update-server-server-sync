@@ -26,6 +26,7 @@ namespace Microsoft.UpdateServices.Storage
         /// <summary>
         /// The checksum of the updates in the metadata source.
         /// </summary>
+        /// <value>SHA512 checksum of metadata source in base64 string format</value>
         [JsonProperty]
         public string Checksum { get; private set; }
 

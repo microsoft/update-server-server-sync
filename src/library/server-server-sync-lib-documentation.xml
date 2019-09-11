@@ -382,7 +382,18 @@
             </summary>
             <returns>An updates metadata source containing all.</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates(Microsoft.UpdateServices.Metadata.QueryFilter,Microsoft.UpdateServices.Storage.IMetadataSink)" -->
+        <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates(Microsoft.UpdateServices.Metadata.QueryFilter,Microsoft.UpdateServices.Storage.IMetadataSink)">
+            <summary>
+            Gets the list of updates matching the query filter from an upstream update server.
+            <para>
+            If the destinatin metadata sink also implements <see cref="T:Microsoft.UpdateServices.Storage.IMetadataSource"/>, a delta query for changed categories is performed./>
+            </para>
+            </summary>
+            <param name="updatesFilter">Updates filter. See <see cref="T:Microsoft.UpdateServices.Metadata.QueryFilter"/> for details.</param>
+            <param name="destination">Metadata collection where to write the result. If the destination implements IMetadataSource, a delta retrieve is performed</param>
+            <remarks>
+            </remarks>
+        </member>
         <member name="M:Microsoft.UpdateServices.Client.UpstreamServerClient.GetUpdates(Microsoft.UpdateServices.Metadata.QueryFilter)">
             <summary>
             Gets updates matching the query filter from an upstream update server.
@@ -1070,9 +1081,44 @@
              </code>
              </example>
         </member>
+        <member name="T:Microsoft.UpdateServices.Metadata.DriverFeatureScore">
+            <summary>
+            Stores driver feature score.
+            <para>
+            For more information, see <see href="https://docs.microsoft.com/en-us/windows-hardware/drivers/install/feature-score--windows-vista-and-later-">driver feature score documentation</see>
+            </para>
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.DriverFeatureScore.OperatingSystem">
+            <summary>
+            Operating system
+            </summary>
+            <value>
+            Operating system or processor architecture
+            </value>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.DriverFeatureScore.Score">
+            <summary>
+            FeatureScore; higher is better when comparing two drivers that match the same HW ID
+            </summary>
+            <value>
+            Value between 0 and 255; lower is better
+            </value>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.DriverFeatureScore.CompareTo(System.Object)">
+            <summary>
+            Compare two driver feature scores
+            <para>
+            A smaller feature score is better; if sorting feature scores, take the smaller value as the better driver
+            </para>;
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
         <member name="T:Microsoft.UpdateServices.Metadata.DriverMetadata">
             <summary>
-            Extended metadata for a DriverUpdate
+            Extended information about a hardware ID handled by a driver update.
+            A driver update matches one or more hardware ids; each match has its own metadata that describes it.
             </summary>
         </member>
         <member name="P:Microsoft.UpdateServices.Metadata.DriverMetadata.HardwareID">
@@ -1115,17 +1161,9 @@
             Driver provider name
             </value>
         </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerDate">
+        <member name="P:Microsoft.UpdateServices.Metadata.DriverMetadata.Versioning">
             <summary>
-            Gets the driver timestamp
-            </summary>
-            <value>
-            Driver timestamp
-            </value>
-        </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerVersion">
-            <summary>
-            Gets the driver version
+            Gets driver vesion information
             </summary>
             <value>
             Driver version
@@ -1139,11 +1177,53 @@
             Driver class (graphics, USB, etc.)
             </value>
         </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.DriverMetadata.FeatureScores">
+            <summary>
+            List of driver feature scores.
+            <para>
+            See <see href="https://docs.microsoft.com/en-us/windows-hardware/drivers/install/feature-score--windows-vista-and-later-">feature score documentation</see> for more information.
+            </para>
+            </summary>
+            <value>
+            List of feature scores
+            </value>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.DriverMetadata.DistributionComputerHardwareId">
+            <summary>
+            List of distribution computer hardware ids. A driver update that contains distribution computer hardware ids is only offered to computers that match the computer hardware id, regardless of device hardware id matching.
+            <para>
+            See the <see href="http://download.microsoft.com/download/B/A/8/BA89DCE0-DB25-4425-9EFF-1037E0BA06F9/windows10_driver_publishing_workflow.docx">driver publishing manual</see> for information on how this field is used
+            for device matching.
+            </para>
+            </summary>
+            <value>
+            List of distribution computer hardware ids.
+            </value>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.DriverMetadata.TargetComputerHardwareId">
+            <summary>
+            List of target computer hardware ids. A driver update that contains target computer hardware ids is only offered to computers that match the computer hardware id, regardless of device hardware id matching.
+            <para>
+            See the <see href="http://download.microsoft.com/download/B/A/8/BA89DCE0-DB25-4425-9EFF-1037E0BA06F9/windows10_driver_publishing_workflow.docx">driver publishing manual</see> for information on hwo this field is used
+            for device matching.
+            </para>
+            </summary>
+            <value>
+            List of target computer hardware ids.
+            </value>
+        </member>
         <member name="M:Microsoft.UpdateServices.Metadata.DriverMetadata.#ctor(System.Xml.Linq.XElement)">
             <summary>
             Constructor; parses the passed WindowsDriverMetaData XML element
             </summary>
             <param name="xmlMetadata">The WindowsDriverMetaData element to parse data from</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.DriverMetadata.CompareTo(System.Object)">
+            <summary>
+            Compare two DriverMetadata by their date and version
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
         </member>
         <member name="T:Microsoft.UpdateServices.Metadata.DriverUpdate">
             <summary>
@@ -1167,14 +1247,6 @@
             </code>
             </example>
         </member>
-        <member name="P:Microsoft.UpdateServices.Metadata.DriverUpdate.Metadata">
-            <summary>
-            Gets the list of driver update extended metadata.
-            </summary>
-            <value>
-            List of driver metadata (hardware ID, version, etc.)
-            </value>
-        </member>
         <member name="M:Microsoft.UpdateServices.Metadata.DriverUpdate.#ctor(Microsoft.UpdateServices.Metadata.Identity,System.Xml.Linq.XDocument)">
             <summary>
             Create a DriverUpdate from an update XML and raw update data
@@ -1182,16 +1254,73 @@
             <param name="id">Update ID</param>
             <param name="xdoc">Update XML document</param>
         </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.DriverUpdate.GetDriverMetadata">
+            <summary>
+            Gets the driver metadata for a driver update
+            </summary>
+            <returns>Driver specific metadata</returns>
+        </member>
         <member name="M:Microsoft.UpdateServices.Metadata.DriverUpdate.LoadAttributesFromMetadataSource">
             <summary>
             Sets extended attributes from the XML metadata.
             </summary>
         </member>
-        <member name="M:Microsoft.UpdateServices.Metadata.DriverUpdate.ParseDriverMetadata(System.Xml.Linq.XDocument)">
+        <member name="T:Microsoft.UpdateServices.Metadata.DriverVersion">
             <summary>
-             Parse the inner metadata from XML
+            Stores driver versioning data, comprised of driver date and 4 part version.
+            Implements custom comparison and equality check for driver version
             </summary>
-            <param name="xdoc">Update XML document</param>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.DriverVersion.Date">
+            <summary>
+            Drive date
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.DriverVersion.Version">
+            <summary>
+            Driver version; 4 part version
+            </summary>
+        </member>
+        <member name="P:Microsoft.UpdateServices.Metadata.DriverVersion.VersionString">
+            <summary>
+            Gets the driver version in 4 part string format
+            </summary>
+            <value>
+            Driver version in 4 part format</value>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.DriverVersion.ParseDateFromString(System.String)">
+            <summary>
+            Parses a driver date string into a DateTime. The date string is expected to be in the format yyyy-mm-dd
+            </summary>
+            <param name="dateString">Date string</param>
+            <returns>DateTime parsed from the input string</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.DriverVersion.ParseVersionFromString(System.String)">
+            <summary>
+            Parses a 4-part version string x.y.z.y into a 64 bit version
+            </summary>
+            <param name="versionString">4 part version string</param>
+            <returns>64 bit version</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.DriverVersion.CompareTo(System.Object)">
+            <summary>
+            Compare two driver versions by date and version
+            </summary>
+            <param name="obj">Other driver version to compare to</param>
+            <returns>-1, 0, 1 for less than, equal and greated than respectively</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.DriverVersion.Equals(System.Object)">
+            <summary>
+            Equality override for driver versions.
+            </summary>
+            <param name="obj">Other driver version to check equality with</param>
+            <returns>True if versions match (same date and version), false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Metadata.DriverVersion.GetHashCode">
+            <summary>
+            GetHashCode override
+            </summary>
+            <returns>Hash code</returns>
         </member>
         <member name="T:Microsoft.UpdateServices.Metadata.Content.UpdateFile">
             <summary>
@@ -1409,6 +1538,18 @@
             Returns the first X results only
             </summary>
             <value>0 to include all updates, greater than 0 value to limit output.</value>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.MetadataFilter.HardwareIdFilter">
+            <summary>
+            Returns only driver updates that match this hardware ID.
+            </summary>
+            <value>Hardware id string</value>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Metadata.MetadataFilter.ComputerHardwareIdFilter">
+            <summary>
+            Returns only driver updates that target this computer hardware ID
+            </summary>
+            <value>Computer hardware ID (GUID)</value>
         </member>
         <member name="M:Microsoft.UpdateServices.Metadata.MetadataFilter.#ctor">
             <summary>
@@ -2187,6 +2328,43 @@
             <param name="filePath">The path to the file to checksum</param>
             <returns>The string representatin of the hash</returns>
         </member>
+        <member name="T:Microsoft.UpdateServices.Storage.DriverMatchResult">
+            <summary>
+            The result of finding the best device driver update in the driver updates source. Contains ranking information that can be used to determine
+            if the driver update is better than an installed driver.
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.DriverMatchResult.Driver">
+            <summary>
+            The matched driver
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedVersion">
+            <summary>
+            The version of the matched driver
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedFeatureScore">
+            <summary>
+            The feature score of the matched driver if available; null otherwise
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedHardwareId">
+            <summary>
+            The device hardwared ID that was matched
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedComputerHardwareId">
+            <summary>
+            The computer hardware ID that was matched, if any. Null otherwise
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.DriverMatchResult.#ctor(Microsoft.UpdateServices.Metadata.DriverUpdate)">
+            <summary>
+            Create a driver match result for a device
+            </summary>
+            <param name="driver">The driver that matched a device hardware id</param>
+        </member>
         <member name="T:Microsoft.UpdateServices.Storage.FileSystemContentStore">
             <summary>
             Downloads and stores update content as files on the local file system.
@@ -2376,6 +2554,7 @@
             <summary>
             The checksum of the updates in the metadata source.
             </summary>
+            <value>SHA512 checksum of metadata source in base64 string format</value>
         </member>
         <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.ComputeChecksum">
             <summary>
@@ -2394,6 +2573,107 @@
             Gets the int based index of all update identities in the metadata source
             </summary>
             <returns>Dictionary of int to Identity</returns>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.CompressedMetadataStore.DriverMetadataStore">
+            <summary>
+            Driver metadata serialized as JSON for quick reading.
+            The data in this list is parsed from driver update metadata XML
+            </summary>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.ExtractAndIndexDriverMetadata(System.Int32,System.Xml.Linq.XDocument)">
+            <summary>
+            Extract driver metadata from an update XML and added relevant information to indexes and maps
+            for quick retrieval
+            </summary>
+            <param name="updateIndex">The index of the update to parse.</param>
+            <param name="xdoc">The XML document that contains the metadata</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddDriverFeatureScoreToIndex(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.DriverMetadata},System.Int32)">
+            <summary>
+            Index feature scores from the list of drivers metadata
+            </summary>
+            <param name="driverMetadata">List of driver metadata</param>
+            <param name="startIndexInMetadataStore">The index of the first update in this list when added to the metadata store</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddDriverVersionToIndex(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.DriverMetadata},System.Int32)">
+            <summary>
+            Index driver versions from the driver metadata list
+            </summary>
+            <param name="driverMetadata">List of driver metadata to add</param>
+            <param name="startIndexInMetadataStore">The index of the first update in this list when added to the metadata store</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddDriverMetadataToHWIDIndex(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.DriverMetadata},System.Int32)">
+            <summary>
+            Index hardware ids from the driver metadata list
+            </summary>
+            <param name="driverMetadata">List of driver metadata to add</param>
+            <param name="startIndexInMetadataStore">The index of the first update in this list when added to the metadata store</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.AddDriverMetadataToComputerHwIdIndex(System.Collections.Generic.List{Microsoft.UpdateServices.Metadata.DriverMetadata},System.Int32)">
+            <summary>
+            Index computer hardware ids from the driver metadata list
+            </summary>
+            <param name="driverMetadata">List of driver metadata to add</param>
+            <param name="startIndexInMetadataStore">The index of the first update in this list when added to the metadata store</param>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Checks if an update contains driver metadata
+            </summary>
+            <param name="updateIdentity">Update identity</param>
+            <returns>True if the update has driver metadata, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Retrieves driver metadata for an update
+            </summary>
+            <param name="updateIdentity">Update identity</param>
+            <returns>Collection of driver metadata entries</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchDriver(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Guid},System.Collections.Generic.List{System.Guid})">
+            <summary>
+            Finds the best match for a driver update that matches the specified hardware ids and computer hardware ids
+            </summary>
+            <param name="hardwareIds">Device hardware ids, sorted from specific to generic</param>
+            <param name="computerHardwareIds">List of computer hardware ids</param>
+            <param name="installedPrerequisites">List of prerequisites installed on the target computer. Used to filter updates to just those applicable to a system</param>
+            <returns>If a driver match is found, matching information; null otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchDriverMetadata(System.String,System.Collections.Generic.IEnumerable{System.Guid},System.Collections.Generic.List{System.Guid})">
+            <summary>
+            Finds the best match for a hardware id and computer hardware ids
+            </summary>
+            <param name="hardwareId">Device hardware id</param>
+            <param name="computerHardwareIds">List of computer hardware ids</param>
+            <param name="installedPrerequisites">List of prerequisites installed on the target computer. Used to filter updates to just those applicable to a system</param>
+            <returns>Best matched driver</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchByComputerHardwareId(System.Collections.Generic.List{System.Int32},System.Collections.Generic.IEnumerable{System.Guid})">
+            <summary>
+            From the list of drivers matched to a device on hardware id, attempts to match by computer hardware id
+            </summary>
+            <param name="metadataMatchedByHwId">List of driver metadata that was matched by a hardware id</param>
+            <param name="computerHardwareIds">List of computer hardware ids compatible with a system</param>
+            <returns>Best driver match based on computer hardware id matching</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchBySimpleHardwareId(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Finds the best match for a driver that was matched by just hardware ID matching (no computer hardware id or feature score available)
+            </summary>
+            <param name="metadataMatchedByHwId">The list of drivers matched by hardware id</param>
+            <returns>Best driver match based on device hardware id</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetDriverMetadataForHardwareId(System.String)">
+            <summary>
+            Gets driver metadata entries that match the specified HW ID. This method is recursive across all delta baselines.
+            </summary>
+            <param name="hardwareId">Device hardware id</param>
+            <returns>List of driver metadata indexes that match the device hardware id</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetDriverUpdateFromMetadataIndex(System.Int32)">
+            These getters recusively go into all delta baselines for a metadata source and retrieve driver metadata
+            Recursive getters are prefered to avoid having to accumulate driver indexes into the latest delta source - it can lead to huge memory utilization over time.
+            Instead, each incremental metadata source contains its own complete set of driver metadata and we query recursively across all deltas
         </member>
         <member name="F:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Files">
             <summary>
@@ -2691,7 +2971,7 @@
             </summary>
             <value>List of updates</value>
         </member>
-        <member name="F:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Version">
+        <member name="P:Microsoft.UpdateServices.Storage.CompressedMetadataStore.Version">
             <summary>
             The serialization version of this object
             </summary>
@@ -2967,6 +3247,7 @@
             <summary>
             The checksum of the updates in the metadata source.
             </summary>
+            <value>Checksum in base64 string format</value>
         </member>
         <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.SetUpstreamCredentials(System.String,System.Guid)">
             <summary>
@@ -3137,6 +3418,29 @@
             <param name="format">Export format</param>
             <param name="serverConfiguration">Server configuration.</param>
             <returns>List of categories that match the filter</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.HasDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Checks if an update contains driver metadata
+            </summary>
+            <param name="updateIdentity">Update identity</param>
+            <returns>True if the update has driver metadata, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.GetDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)">
+            <summary>
+            Retrieves driver metadata for an update
+            </summary>
+            <param name="updateIdentity">Update identity</param>
+            <returns>Collection of driver metadata entries</returns>
+        </member>
+        <member name="M:Microsoft.UpdateServices.Storage.IMetadataSource.MatchDriver(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Guid},System.Collections.Generic.List{System.Guid})">
+            <summary>
+            Finds the best driver update that matches the specified hardware ids and computer hardware ids
+            </summary>
+            <param name="hardwareIds">Device hardware ids, sorted from specific to generic</param>
+            <param name="computerHardwareIds">List of computer hardware ids, sorted from specific to generic</param>
+            <param name="installedPrerequisites">List of prerequisites installed on the target computer. Used to filter updates to just those applicable to a system</param>
+            <returns>If a driver match is found, matching information; null otherwise</returns>
         </member>
         <member name="T:Microsoft.UpdateServices.Storage.RepoExportFormat">
             <summary>
@@ -3311,6 +3615,16 @@
         <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingPrerequisitesEnd">
             <summary>
             Compute prerequisites index
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingDriversStart">
+            <summary>
+            Start saving the drivers index
+            </summary>
+        </member>
+        <member name="F:Microsoft.UpdateServices.Storage.OperationType.IndexingDriversEnd">
+            <summary>
+            Done saving the drivers index
             </summary>
         </member>
         <member name="T:Microsoft.UpdateServices.Storage.OperationProgress">

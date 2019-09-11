@@ -128,6 +128,7 @@ namespace Microsoft.UpdateServices.Storage
         /// <summary>
         /// The checksum of the updates in the metadata source.
         /// </summary>
+        /// <value>Checksum in base64 string format</value>
         string Checksum { get; }
 
         /// <summary>
@@ -300,6 +301,29 @@ namespace Microsoft.UpdateServices.Storage
         /// <param name="serverConfiguration">Server configuration.</param>
         /// <returns>List of categories that match the filter</returns>
         void Export(MetadataFilter filter, string exportFile, RepoExportFormat format, ServerSyncConfigData serverConfiguration);
+
+        /// <summary>
+        /// Checks if an update contains driver metadata
+        /// </summary>
+        /// <param name="updateIdentity">Update identity</param>
+        /// <returns>True if the update has driver metadata, false otherwise</returns>
+        bool HasDriverMetadata(Identity updateIdentity);
+
+        /// <summary>
+        /// Retrieves driver metadata for an update
+        /// </summary>
+        /// <param name="updateIdentity">Update identity</param>
+        /// <returns>Collection of driver metadata entries</returns>
+        IEnumerable<DriverMetadata> GetDriverMetadata(Identity updateIdentity);
+
+        /// <summary>
+        /// Finds the best driver update that matches the specified hardware ids and computer hardware ids
+        /// </summary>
+        /// <param name="hardwareIds">Device hardware ids, sorted from specific to generic</param>
+        /// <param name="computerHardwareIds">List of computer hardware ids, sorted from specific to generic</param>
+        /// <param name="installedPrerequisites">List of prerequisites installed on the target computer. Used to filter updates to just those applicable to a system</param>
+        /// <returns>If a driver match is found, matching information; null otherwise</returns>
+        DriverMatchResult MatchDriver(IEnumerable<string> hardwareIds, IEnumerable<Guid> computerHardwareIds, List<Guid> installedPrerequisites);
     }
 
     /// <summary>

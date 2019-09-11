@@ -21,11 +21,13 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 RunUpstreamServerOptions,
                 MergeQueryResultOptions,
                 FetchCategoriesOptions,
-                FetchConfigurationOptions>(args)
+                FetchConfigurationOptions,
+                MatchDriverOptions>(args)
                 .WithParsed<FetchUpdatesOptions>(opts => MetadataSync.FetchUpdates(opts))
                 .WithParsed<FetchConfigurationOptions>(opts => MetadataSync.FetchConfiguration(opts))
                 .WithParsed<FetchCategoriesOptions>(opts => MetadataSync.FetchCategories(opts))
                 .WithParsed<QueryMetadataOptions>(opts => MetadataQuery.Query(opts))
+                .WithParsed<MatchDriverOptions>(opts => MetadataQuery.MatchDrivers(opts))
                 .WithParsed<MetadataSourceExportOptions>(opts => UpdateMetadataExport.ExportUpdates(opts))
                 .WithParsed<ContentSyncOptions>(opts => ContentSync.Run(opts))
                 .WithParsed<MetadataSourceStatusOptions>(opts => MetadataQuery.Status(opts))
@@ -76,7 +78,9 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             { OperationType.IndexingBundlesStart, "Indexing bundles"},
             { OperationType.IndexingBundlesEnd, "Indexing bundles"},
             { OperationType.IndexingFilesStart, "Indexing files"},
-            { OperationType.IndexingFilesEnd, "Indexing files"}
+            { OperationType.IndexingFilesEnd, "Indexing files"},
+            { OperationType.IndexingDriversStart, "Indexing driver metadata"},
+            { OperationType.IndexingDriversEnd, "Indexing driver metadata"}
         };
 
         public static void MetadataSourceOperationProgressHandler(object sender, OperationProgress e)
@@ -96,6 +100,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 case OperationType.ProcessSupersedeDataStart:
                 case OperationType.IndexingTitlesStart:
                 case OperationType.IndexingPrerequisitesStart:
+                case OperationType.IndexingDriversStart:
                     Console.CursorLeft = 0;
                     Console.Write($"{operationMessage} [000.0%]");
                     break;
@@ -108,6 +113,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 case OperationType.HashMetadataEnd:
                 case OperationType.IndexingTitlesEnd:
                 case OperationType.IndexingPrerequisitesEnd:
+                case OperationType.IndexingDriversEnd:
                     Console.CursorLeft = 0;
                     Console.Write($"{operationMessage}  [100.00%] ");
                     ConsoleOutput.WriteGreen(" Done!");

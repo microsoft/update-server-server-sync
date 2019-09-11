@@ -124,6 +124,8 @@ namespace Microsoft.UpdateServices.Storage
         /// <param name="baseline"></param>
         public CompressedMetadataStore(CompressedMetadataStore baseline)
         {
+            Version = CurrentVersion;
+
             DeltaIndex = baseline.DeltaIndex + 1;
 
             // Generate a file name that follows the indexed naming scheme.
@@ -197,6 +199,9 @@ namespace Microsoft.UpdateServices.Storage
 
             // Initialize superseding index
             OnDeltaStore_InitializeSupersededIndex();
+
+            // Initialize driver indexes
+            OnDeltaStore_InitializeDriversIndex();
         }
     }
 }

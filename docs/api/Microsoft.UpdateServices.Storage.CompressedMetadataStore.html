@@ -84,14 +84,14 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSink.html">IMetadataSink</a></div>
-    <div><span class="xref">System.IDisposable</span></div>
     <div><a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSource.html">IMetadataSource</a></div>
+    <div><span class="xref">System.IDisposable</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.UpdateServices.Storage.html">Microsoft.UpdateServices.Storage</a></h6>
   <h6><strong>Assembly</strong>: server-server-sync-lib.dll</h6>
   <h5 id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class CompressedMetadataStore : IMetadataSink, IDisposable, IMetadataSource</code></pre>
+    <pre><code class="lang-csharp hljs">public class CompressedMetadataStore : IMetadataSink, IMetadataSource, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -238,7 +238,8 @@ public string Checksum { get; }</code></pre>
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td></td>
+        <td><p>SHA512 checksum of metadata source in base64 string format</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -889,6 +890,51 @@ public Endpoint UpstreamSource { get; }</code></pre>
       <tr>
         <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.Update.html">Update</a>&gt;</td>
         <td><p>List of categories that match the filter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_GetDriverMetadata_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetDriverMetadata*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_GetDriverMetadata_Microsoft_UpdateServices_Metadata_Identity_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)">GetDriverMetadata(Identity)</h4>
+  <div class="markdown level1 summary"><p>Retrieves driver metadata for an update</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;DriverMetadata&gt; GetDriverMetadata(Identity updateIdentity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a></td>
+        <td><span class="parametername">updateIdentity</span></td>
+        <td><p>Update identity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.UpdateServices.Metadata.DriverMetadata.html">DriverMetadata</a>&gt;</td>
+        <td><p>Collection of driver metadata entries</p>
 </td>
       </tr>
     </tbody>
@@ -1568,6 +1614,51 @@ public Endpoint UpstreamSource { get; }</code></pre>
   </table>
   
   
+  <a id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_HasDriverMetadata_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasDriverMetadata*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_HasDriverMetadata_Microsoft_UpdateServices_Metadata_Identity_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)">HasDriverMetadata(Identity)</h4>
+  <div class="markdown level1 summary"><p>Checks if an update contains driver metadata</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasDriverMetadata(Identity updateIdentity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Metadata.Identity.html">Identity</a></td>
+        <td><span class="parametername">updateIdentity</span></td>
+        <td><p>Update identity</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the update has driver metadata, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_HasFile_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasFile*"></a>
   <h4 id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_HasFile_System_String_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasFile(System.String)">HasFile(String)</h4>
   <div class="markdown level1 summary"><p>Checks if the metadata source contains URL information for a file identified by its content checksum</p>
@@ -1928,6 +2019,63 @@ public Endpoint UpstreamSource { get; }</code></pre>
   </table>
   
   
+  <a id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_MatchDriver_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchDriver*"></a>
+  <h4 id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_MatchDriver_System_Collections_Generic_IEnumerable_System_String__System_Collections_Generic_IEnumerable_System_Guid__System_Collections_Generic_List_System_Guid__" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchDriver(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Guid},System.Collections.Generic.List{System.Guid})">MatchDriver(IEnumerable&lt;String&gt;, IEnumerable&lt;Guid&gt;, List&lt;Guid&gt;)</h4>
+  <div class="markdown level1 summary"><p>Finds the best match for a driver update that matches the specified hardware ids and computer hardware ids</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DriverMatchResult MatchDriver(IEnumerable&lt;string&gt; hardwareIds, IEnumerable&lt;Guid&gt; computerHardwareIds, List&lt;Guid&gt; installedPrerequisites)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">hardwareIds</span></td>
+        <td><p>Device hardware ids, sorted from specific to generic</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><span class="parametername">computerHardwareIds</span></td>
+        <td><p>List of computer hardware ids</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><span class="parametername">installedPrerequisites</span></td>
+        <td><p>List of prerequisites installed on the target computer. Used to filter updates to just those applicable to a system</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.UpdateServices.Storage.DriverMatchResult.html">DriverMatchResult</a></td>
+        <td><p>If a driver match is found, matching information; null otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
   <a id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_Open_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.Open*"></a>
   <h4 id="Microsoft_UpdateServices_Storage_CompressedMetadataStore_Open_System_String_" data-uid="Microsoft.UpdateServices.Storage.CompressedMetadataStore.Open(System.String)">Open(String)</h4>
   <div class="markdown level1 summary"><p>Create a QueryResult from a serialized result.</p>
@@ -2117,10 +2265,10 @@ public Endpoint UpstreamSource { get; }</code></pre>
       <a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSink.html">IMetadataSink</a>
   </div>
   <div>
-      <span class="xref">System.IDisposable</span>
+      <a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSource.html">IMetadataSource</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.UpdateServices.Storage.IMetadataSource.html">IMetadataSource</a>
+      <span class="xref">System.IDisposable</span>
   </div>
 </article>
           </div>

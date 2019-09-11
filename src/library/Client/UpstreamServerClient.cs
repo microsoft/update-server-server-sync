@@ -199,7 +199,7 @@ namespace Microsoft.UpdateServices.Client
         /// <summary>
         /// Gets the list of updates matching the query filter from an upstream update server.
         /// <para>
-        /// If the destinatin metadata sink also implements <see cref="IMetadataSource", a delta query for changed categories is performed./>
+        /// If the destinatin metadata sink also implements <see cref="IMetadataSource"/>, a delta query for changed categories is performed./>
         /// </para>
         /// </summary>
         /// <param name="updatesFilter">Updates filter. See <see cref="QueryFilter"/> for details.</param>

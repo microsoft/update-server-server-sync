@@ -608,6 +608,37 @@ references:
   commentId: T:Microsoft.UpdateServices.Metadata.Detectoid
   fullName: Microsoft.UpdateServices.Metadata.Detectoid
   nameWithType: Detectoid
+- uid: Microsoft.UpdateServices.Metadata.DriverFeatureScore
+  name: DriverFeatureScore
+  href: api/Microsoft.UpdateServices.Metadata.DriverFeatureScore.html
+  commentId: T:Microsoft.UpdateServices.Metadata.DriverFeatureScore
+  fullName: Microsoft.UpdateServices.Metadata.DriverFeatureScore
+  nameWithType: DriverFeatureScore
+- uid: Microsoft.UpdateServices.Metadata.DriverFeatureScore.CompareTo(System.Object)
+  name: CompareTo(Object)
+  href: api/Microsoft.UpdateServices.Metadata.DriverFeatureScore.html#Microsoft_UpdateServices_Metadata_DriverFeatureScore_CompareTo_System_Object_
+  commentId: M:Microsoft.UpdateServices.Metadata.DriverFeatureScore.CompareTo(System.Object)
+  fullName: Microsoft.UpdateServices.Metadata.DriverFeatureScore.CompareTo(System.Object)
+  nameWithType: DriverFeatureScore.CompareTo(Object)
+- uid: Microsoft.UpdateServices.Metadata.DriverFeatureScore.CompareTo*
+  name: CompareTo
+  href: api/Microsoft.UpdateServices.Metadata.DriverFeatureScore.html#Microsoft_UpdateServices_Metadata_DriverFeatureScore_CompareTo_
+  commentId: Overload:Microsoft.UpdateServices.Metadata.DriverFeatureScore.CompareTo
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Metadata.DriverFeatureScore.CompareTo
+  nameWithType: DriverFeatureScore.CompareTo
+- uid: Microsoft.UpdateServices.Metadata.DriverFeatureScore.OperatingSystem
+  name: OperatingSystem
+  href: api/Microsoft.UpdateServices.Metadata.DriverFeatureScore.html#Microsoft_UpdateServices_Metadata_DriverFeatureScore_OperatingSystem
+  commentId: F:Microsoft.UpdateServices.Metadata.DriverFeatureScore.OperatingSystem
+  fullName: Microsoft.UpdateServices.Metadata.DriverFeatureScore.OperatingSystem
+  nameWithType: DriverFeatureScore.OperatingSystem
+- uid: Microsoft.UpdateServices.Metadata.DriverFeatureScore.Score
+  name: Score
+  href: api/Microsoft.UpdateServices.Metadata.DriverFeatureScore.html#Microsoft_UpdateServices_Metadata_DriverFeatureScore_Score
+  commentId: F:Microsoft.UpdateServices.Metadata.DriverFeatureScore.Score
+  fullName: Microsoft.UpdateServices.Metadata.DriverFeatureScore.Score
+  nameWithType: DriverFeatureScore.Score
 - uid: Microsoft.UpdateServices.Metadata.DriverMetadata
   name: DriverMetadata
   href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html
@@ -640,32 +671,31 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.Company
   nameWithType: DriverMetadata.Company
-- uid: Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerDate
-  name: DriverVerDate
-  href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_DriverVerDate
-  commentId: P:Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerDate
-  fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerDate
-  nameWithType: DriverMetadata.DriverVerDate
-- uid: Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerDate*
-  name: DriverVerDate
-  href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_DriverVerDate_
-  commentId: Overload:Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerDate
+- uid: Microsoft.UpdateServices.Metadata.DriverMetadata.CompareTo(System.Object)
+  name: CompareTo(Object)
+  href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_CompareTo_System_Object_
+  commentId: M:Microsoft.UpdateServices.Metadata.DriverMetadata.CompareTo(System.Object)
+  fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.CompareTo(System.Object)
+  nameWithType: DriverMetadata.CompareTo(Object)
+- uid: Microsoft.UpdateServices.Metadata.DriverMetadata.CompareTo*
+  name: CompareTo
+  href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_CompareTo_
+  commentId: Overload:Microsoft.UpdateServices.Metadata.DriverMetadata.CompareTo
   isSpec: "True"
-  fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerDate
-  nameWithType: DriverMetadata.DriverVerDate
-- uid: Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerVersion
-  name: DriverVerVersion
-  href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_DriverVerVersion
-  commentId: P:Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerVersion
-  fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerVersion
-  nameWithType: DriverMetadata.DriverVerVersion
-- uid: Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerVersion*
-  name: DriverVerVersion
-  href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_DriverVerVersion_
-  commentId: Overload:Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerVersion
-  isSpec: "True"
-  fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.DriverVerVersion
-  nameWithType: DriverMetadata.DriverVerVersion
+  fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.CompareTo
+  nameWithType: DriverMetadata.CompareTo
+- uid: Microsoft.UpdateServices.Metadata.DriverMetadata.DistributionComputerHardwareId
+  name: DistributionComputerHardwareId
+  href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_DistributionComputerHardwareId
+  commentId: F:Microsoft.UpdateServices.Metadata.DriverMetadata.DistributionComputerHardwareId
+  fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.DistributionComputerHardwareId
+  nameWithType: DriverMetadata.DistributionComputerHardwareId
+- uid: Microsoft.UpdateServices.Metadata.DriverMetadata.FeatureScores
+  name: FeatureScores
+  href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_FeatureScores
+  commentId: F:Microsoft.UpdateServices.Metadata.DriverMetadata.FeatureScores
+  fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.FeatureScores
+  nameWithType: DriverMetadata.FeatureScores
 - uid: Microsoft.UpdateServices.Metadata.DriverMetadata.HardwareID
   name: HardwareID
   href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_HardwareID
@@ -705,6 +735,25 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.Provider
   nameWithType: DriverMetadata.Provider
+- uid: Microsoft.UpdateServices.Metadata.DriverMetadata.TargetComputerHardwareId
+  name: TargetComputerHardwareId
+  href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_TargetComputerHardwareId
+  commentId: F:Microsoft.UpdateServices.Metadata.DriverMetadata.TargetComputerHardwareId
+  fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.TargetComputerHardwareId
+  nameWithType: DriverMetadata.TargetComputerHardwareId
+- uid: Microsoft.UpdateServices.Metadata.DriverMetadata.Versioning
+  name: Versioning
+  href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_Versioning
+  commentId: P:Microsoft.UpdateServices.Metadata.DriverMetadata.Versioning
+  fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.Versioning
+  nameWithType: DriverMetadata.Versioning
+- uid: Microsoft.UpdateServices.Metadata.DriverMetadata.Versioning*
+  name: Versioning
+  href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_Versioning_
+  commentId: Overload:Microsoft.UpdateServices.Metadata.DriverMetadata.Versioning
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Metadata.DriverMetadata.Versioning
+  nameWithType: DriverMetadata.Versioning
 - uid: Microsoft.UpdateServices.Metadata.DriverMetadata.WhqlDriverID
   name: WhqlDriverID
   href: api/Microsoft.UpdateServices.Metadata.DriverMetadata.html#Microsoft_UpdateServices_Metadata_DriverMetadata_WhqlDriverID
@@ -724,19 +773,89 @@ references:
   commentId: T:Microsoft.UpdateServices.Metadata.DriverUpdate
   fullName: Microsoft.UpdateServices.Metadata.DriverUpdate
   nameWithType: DriverUpdate
-- uid: Microsoft.UpdateServices.Metadata.DriverUpdate.Metadata
-  name: Metadata
-  href: api/Microsoft.UpdateServices.Metadata.DriverUpdate.html#Microsoft_UpdateServices_Metadata_DriverUpdate_Metadata
-  commentId: P:Microsoft.UpdateServices.Metadata.DriverUpdate.Metadata
-  fullName: Microsoft.UpdateServices.Metadata.DriverUpdate.Metadata
-  nameWithType: DriverUpdate.Metadata
-- uid: Microsoft.UpdateServices.Metadata.DriverUpdate.Metadata*
-  name: Metadata
-  href: api/Microsoft.UpdateServices.Metadata.DriverUpdate.html#Microsoft_UpdateServices_Metadata_DriverUpdate_Metadata_
-  commentId: Overload:Microsoft.UpdateServices.Metadata.DriverUpdate.Metadata
+- uid: Microsoft.UpdateServices.Metadata.DriverUpdate.GetDriverMetadata
+  name: GetDriverMetadata()
+  href: api/Microsoft.UpdateServices.Metadata.DriverUpdate.html#Microsoft_UpdateServices_Metadata_DriverUpdate_GetDriverMetadata
+  commentId: M:Microsoft.UpdateServices.Metadata.DriverUpdate.GetDriverMetadata
+  fullName: Microsoft.UpdateServices.Metadata.DriverUpdate.GetDriverMetadata()
+  nameWithType: DriverUpdate.GetDriverMetadata()
+- uid: Microsoft.UpdateServices.Metadata.DriverUpdate.GetDriverMetadata*
+  name: GetDriverMetadata
+  href: api/Microsoft.UpdateServices.Metadata.DriverUpdate.html#Microsoft_UpdateServices_Metadata_DriverUpdate_GetDriverMetadata_
+  commentId: Overload:Microsoft.UpdateServices.Metadata.DriverUpdate.GetDriverMetadata
   isSpec: "True"
-  fullName: Microsoft.UpdateServices.Metadata.DriverUpdate.Metadata
-  nameWithType: DriverUpdate.Metadata
+  fullName: Microsoft.UpdateServices.Metadata.DriverUpdate.GetDriverMetadata
+  nameWithType: DriverUpdate.GetDriverMetadata
+- uid: Microsoft.UpdateServices.Metadata.DriverVersion
+  name: DriverVersion
+  href: api/Microsoft.UpdateServices.Metadata.DriverVersion.html
+  commentId: T:Microsoft.UpdateServices.Metadata.DriverVersion
+  fullName: Microsoft.UpdateServices.Metadata.DriverVersion
+  nameWithType: DriverVersion
+- uid: Microsoft.UpdateServices.Metadata.DriverVersion.CompareTo(System.Object)
+  name: CompareTo(Object)
+  href: api/Microsoft.UpdateServices.Metadata.DriverVersion.html#Microsoft_UpdateServices_Metadata_DriverVersion_CompareTo_System_Object_
+  commentId: M:Microsoft.UpdateServices.Metadata.DriverVersion.CompareTo(System.Object)
+  fullName: Microsoft.UpdateServices.Metadata.DriverVersion.CompareTo(System.Object)
+  nameWithType: DriverVersion.CompareTo(Object)
+- uid: Microsoft.UpdateServices.Metadata.DriverVersion.CompareTo*
+  name: CompareTo
+  href: api/Microsoft.UpdateServices.Metadata.DriverVersion.html#Microsoft_UpdateServices_Metadata_DriverVersion_CompareTo_
+  commentId: Overload:Microsoft.UpdateServices.Metadata.DriverVersion.CompareTo
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Metadata.DriverVersion.CompareTo
+  nameWithType: DriverVersion.CompareTo
+- uid: Microsoft.UpdateServices.Metadata.DriverVersion.Date
+  name: Date
+  href: api/Microsoft.UpdateServices.Metadata.DriverVersion.html#Microsoft_UpdateServices_Metadata_DriverVersion_Date
+  commentId: F:Microsoft.UpdateServices.Metadata.DriverVersion.Date
+  fullName: Microsoft.UpdateServices.Metadata.DriverVersion.Date
+  nameWithType: DriverVersion.Date
+- uid: Microsoft.UpdateServices.Metadata.DriverVersion.Equals(System.Object)
+  name: Equals(Object)
+  href: api/Microsoft.UpdateServices.Metadata.DriverVersion.html#Microsoft_UpdateServices_Metadata_DriverVersion_Equals_System_Object_
+  commentId: M:Microsoft.UpdateServices.Metadata.DriverVersion.Equals(System.Object)
+  fullName: Microsoft.UpdateServices.Metadata.DriverVersion.Equals(System.Object)
+  nameWithType: DriverVersion.Equals(Object)
+- uid: Microsoft.UpdateServices.Metadata.DriverVersion.Equals*
+  name: Equals
+  href: api/Microsoft.UpdateServices.Metadata.DriverVersion.html#Microsoft_UpdateServices_Metadata_DriverVersion_Equals_
+  commentId: Overload:Microsoft.UpdateServices.Metadata.DriverVersion.Equals
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Metadata.DriverVersion.Equals
+  nameWithType: DriverVersion.Equals
+- uid: Microsoft.UpdateServices.Metadata.DriverVersion.GetHashCode
+  name: GetHashCode()
+  href: api/Microsoft.UpdateServices.Metadata.DriverVersion.html#Microsoft_UpdateServices_Metadata_DriverVersion_GetHashCode
+  commentId: M:Microsoft.UpdateServices.Metadata.DriverVersion.GetHashCode
+  fullName: Microsoft.UpdateServices.Metadata.DriverVersion.GetHashCode()
+  nameWithType: DriverVersion.GetHashCode()
+- uid: Microsoft.UpdateServices.Metadata.DriverVersion.GetHashCode*
+  name: GetHashCode
+  href: api/Microsoft.UpdateServices.Metadata.DriverVersion.html#Microsoft_UpdateServices_Metadata_DriverVersion_GetHashCode_
+  commentId: Overload:Microsoft.UpdateServices.Metadata.DriverVersion.GetHashCode
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Metadata.DriverVersion.GetHashCode
+  nameWithType: DriverVersion.GetHashCode
+- uid: Microsoft.UpdateServices.Metadata.DriverVersion.Version
+  name: Version
+  href: api/Microsoft.UpdateServices.Metadata.DriverVersion.html#Microsoft_UpdateServices_Metadata_DriverVersion_Version
+  commentId: F:Microsoft.UpdateServices.Metadata.DriverVersion.Version
+  fullName: Microsoft.UpdateServices.Metadata.DriverVersion.Version
+  nameWithType: DriverVersion.Version
+- uid: Microsoft.UpdateServices.Metadata.DriverVersion.VersionString
+  name: VersionString
+  href: api/Microsoft.UpdateServices.Metadata.DriverVersion.html#Microsoft_UpdateServices_Metadata_DriverVersion_VersionString
+  commentId: P:Microsoft.UpdateServices.Metadata.DriverVersion.VersionString
+  fullName: Microsoft.UpdateServices.Metadata.DriverVersion.VersionString
+  nameWithType: DriverVersion.VersionString
+- uid: Microsoft.UpdateServices.Metadata.DriverVersion.VersionString*
+  name: VersionString
+  href: api/Microsoft.UpdateServices.Metadata.DriverVersion.html#Microsoft_UpdateServices_Metadata_DriverVersion_VersionString_
+  commentId: Overload:Microsoft.UpdateServices.Metadata.DriverVersion.VersionString
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Metadata.DriverVersion.VersionString
+  nameWithType: DriverVersion.VersionString
 - uid: Microsoft.UpdateServices.Metadata.Identity
   name: Identity
   href: api/Microsoft.UpdateServices.Metadata.Identity.html
@@ -872,6 +991,12 @@ references:
   commentId: F:Microsoft.UpdateServices.Metadata.MetadataFilter.ClassificationFilter
   fullName: Microsoft.UpdateServices.Metadata.MetadataFilter.ClassificationFilter
   nameWithType: MetadataFilter.ClassificationFilter
+- uid: Microsoft.UpdateServices.Metadata.MetadataFilter.ComputerHardwareIdFilter
+  name: ComputerHardwareIdFilter
+  href: api/Microsoft.UpdateServices.Metadata.MetadataFilter.html#Microsoft_UpdateServices_Metadata_MetadataFilter_ComputerHardwareIdFilter
+  commentId: F:Microsoft.UpdateServices.Metadata.MetadataFilter.ComputerHardwareIdFilter
+  fullName: Microsoft.UpdateServices.Metadata.MetadataFilter.ComputerHardwareIdFilter
+  nameWithType: MetadataFilter.ComputerHardwareIdFilter
 - uid: Microsoft.UpdateServices.Metadata.MetadataFilter.FirstX
   name: FirstX
   href: api/Microsoft.UpdateServices.Metadata.MetadataFilter.html#Microsoft_UpdateServices_Metadata_MetadataFilter_FirstX
@@ -891,6 +1016,12 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Metadata.MetadataFilter.FromJson
   nameWithType: MetadataFilter.FromJson
+- uid: Microsoft.UpdateServices.Metadata.MetadataFilter.HardwareIdFilter
+  name: HardwareIdFilter
+  href: api/Microsoft.UpdateServices.Metadata.MetadataFilter.html#Microsoft_UpdateServices_Metadata_MetadataFilter_HardwareIdFilter
+  commentId: F:Microsoft.UpdateServices.Metadata.MetadataFilter.HardwareIdFilter
+  fullName: Microsoft.UpdateServices.Metadata.MetadataFilter.HardwareIdFilter
+  nameWithType: MetadataFilter.HardwareIdFilter
 - uid: Microsoft.UpdateServices.Metadata.MetadataFilter.IdFilter
   name: IdFilter
   href: api/Microsoft.UpdateServices.Metadata.MetadataFilter.html#Microsoft_UpdateServices_Metadata_MetadataFilter_IdFilter
@@ -1780,6 +1911,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetCategories
   nameWithType: CompressedMetadataStore.GetCategories
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)
+  name: GetDriverMetadata(Identity)
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_GetDriverMetadata_Microsoft_UpdateServices_Metadata_Identity_
+  commentId: M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)
+  nameWithType: CompressedMetadataStore.GetDriverMetadata(Identity)
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetDriverMetadata*
+  name: GetDriverMetadata
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_GetDriverMetadata_
+  commentId: Overload:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetDriverMetadata
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetDriverMetadata
+  nameWithType: CompressedMetadataStore.GetDriverMetadata
 - uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetFile(System.String)
   name: GetFile(String)
   href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_GetFile_System_String_
@@ -1994,6 +2138,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasClassification
   nameWithType: CompressedMetadataStore.HasClassification
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)
+  name: HasDriverMetadata(Identity)
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_HasDriverMetadata_Microsoft_UpdateServices_Metadata_Identity_
+  commentId: M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)
+  nameWithType: CompressedMetadataStore.HasDriverMetadata(Identity)
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasDriverMetadata*
+  name: HasDriverMetadata
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_HasDriverMetadata_
+  commentId: Overload:Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasDriverMetadata
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasDriverMetadata
+  nameWithType: CompressedMetadataStore.HasDriverMetadata
 - uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.HasFile(System.String)
   name: HasFile(String)
   href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_HasFile_System_String_
@@ -2124,6 +2281,22 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.IsSuperseding
   nameWithType: CompressedMetadataStore.IsSuperseding
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchDriver(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Guid},System.Collections.Generic.List{System.Guid})
+  name: MatchDriver(IEnumerable<String>, IEnumerable<Guid>, List<Guid>)
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_MatchDriver_System_Collections_Generic_IEnumerable_System_String__System_Collections_Generic_IEnumerable_System_Guid__System_Collections_Generic_List_System_Guid__
+  commentId: M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchDriver(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Guid},System.Collections.Generic.List{System.Guid})
+  name.vb: MatchDriver(IEnumerable(Of String), IEnumerable(Of Guid), List(Of Guid))
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchDriver(System.Collections.Generic.IEnumerable<System.String>, System.Collections.Generic.IEnumerable<System.Guid>, System.Collections.Generic.List<System.Guid>)
+  fullName.vb: Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchDriver(System.Collections.Generic.IEnumerable(Of System.String), System.Collections.Generic.IEnumerable(Of System.Guid), System.Collections.Generic.List(Of System.Guid))
+  nameWithType: CompressedMetadataStore.MatchDriver(IEnumerable<String>, IEnumerable<Guid>, List<Guid>)
+  nameWithType.vb: CompressedMetadataStore.MatchDriver(IEnumerable(Of String), IEnumerable(Of Guid), List(Of Guid))
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchDriver*
+  name: MatchDriver
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_MatchDriver_
+  commentId: Overload:Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchDriver
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.MatchDriver
+  nameWithType: CompressedMetadataStore.MatchDriver
 - uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.Open(System.String)
   name: Open(String)
   href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_Open_System_String_
@@ -2260,6 +2433,55 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.ContentOperationProgress.File
   nameWithType: ContentOperationProgress.File
+- uid: Microsoft.UpdateServices.Storage.DriverMatchResult
+  name: DriverMatchResult
+  href: api/Microsoft.UpdateServices.Storage.DriverMatchResult.html
+  commentId: T:Microsoft.UpdateServices.Storage.DriverMatchResult
+  fullName: Microsoft.UpdateServices.Storage.DriverMatchResult
+  nameWithType: DriverMatchResult
+- uid: Microsoft.UpdateServices.Storage.DriverMatchResult.#ctor(Microsoft.UpdateServices.Metadata.DriverUpdate)
+  name: DriverMatchResult(DriverUpdate)
+  href: api/Microsoft.UpdateServices.Storage.DriverMatchResult.html#Microsoft_UpdateServices_Storage_DriverMatchResult__ctor_Microsoft_UpdateServices_Metadata_DriverUpdate_
+  commentId: M:Microsoft.UpdateServices.Storage.DriverMatchResult.#ctor(Microsoft.UpdateServices.Metadata.DriverUpdate)
+  fullName: Microsoft.UpdateServices.Storage.DriverMatchResult.DriverMatchResult(Microsoft.UpdateServices.Metadata.DriverUpdate)
+  nameWithType: DriverMatchResult.DriverMatchResult(DriverUpdate)
+- uid: Microsoft.UpdateServices.Storage.DriverMatchResult.#ctor*
+  name: DriverMatchResult
+  href: api/Microsoft.UpdateServices.Storage.DriverMatchResult.html#Microsoft_UpdateServices_Storage_DriverMatchResult__ctor_
+  commentId: Overload:Microsoft.UpdateServices.Storage.DriverMatchResult.#ctor
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.DriverMatchResult.DriverMatchResult
+  nameWithType: DriverMatchResult.DriverMatchResult
+- uid: Microsoft.UpdateServices.Storage.DriverMatchResult.Driver
+  name: Driver
+  href: api/Microsoft.UpdateServices.Storage.DriverMatchResult.html#Microsoft_UpdateServices_Storage_DriverMatchResult_Driver
+  commentId: F:Microsoft.UpdateServices.Storage.DriverMatchResult.Driver
+  fullName: Microsoft.UpdateServices.Storage.DriverMatchResult.Driver
+  nameWithType: DriverMatchResult.Driver
+- uid: Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedComputerHardwareId
+  name: MatchedComputerHardwareId
+  href: api/Microsoft.UpdateServices.Storage.DriverMatchResult.html#Microsoft_UpdateServices_Storage_DriverMatchResult_MatchedComputerHardwareId
+  commentId: F:Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedComputerHardwareId
+  fullName: Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedComputerHardwareId
+  nameWithType: DriverMatchResult.MatchedComputerHardwareId
+- uid: Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedFeatureScore
+  name: MatchedFeatureScore
+  href: api/Microsoft.UpdateServices.Storage.DriverMatchResult.html#Microsoft_UpdateServices_Storage_DriverMatchResult_MatchedFeatureScore
+  commentId: F:Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedFeatureScore
+  fullName: Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedFeatureScore
+  nameWithType: DriverMatchResult.MatchedFeatureScore
+- uid: Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedHardwareId
+  name: MatchedHardwareId
+  href: api/Microsoft.UpdateServices.Storage.DriverMatchResult.html#Microsoft_UpdateServices_Storage_DriverMatchResult_MatchedHardwareId
+  commentId: F:Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedHardwareId
+  fullName: Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedHardwareId
+  nameWithType: DriverMatchResult.MatchedHardwareId
+- uid: Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedVersion
+  name: MatchedVersion
+  href: api/Microsoft.UpdateServices.Storage.DriverMatchResult.html#Microsoft_UpdateServices_Storage_DriverMatchResult_MatchedVersion
+  commentId: F:Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedVersion
+  fullName: Microsoft.UpdateServices.Storage.DriverMatchResult.MatchedVersion
+  nameWithType: DriverMatchResult.MatchedVersion
 - uid: Microsoft.UpdateServices.Storage.FileSystemContentStore
   name: FileSystemContentStore
   href: api/Microsoft.UpdateServices.Storage.FileSystemContentStore.html
@@ -2562,6 +2784,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.IMetadataSource.GetCategories
   nameWithType: IMetadataSource.GetCategories
+- uid: Microsoft.UpdateServices.Storage.IMetadataSource.GetDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)
+  name: GetDriverMetadata(Identity)
+  href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_GetDriverMetadata_Microsoft_UpdateServices_Metadata_Identity_
+  commentId: M:Microsoft.UpdateServices.Storage.IMetadataSource.GetDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)
+  fullName: Microsoft.UpdateServices.Storage.IMetadataSource.GetDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)
+  nameWithType: IMetadataSource.GetDriverMetadata(Identity)
+- uid: Microsoft.UpdateServices.Storage.IMetadataSource.GetDriverMetadata*
+  name: GetDriverMetadata
+  href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_GetDriverMetadata_
+  commentId: Overload:Microsoft.UpdateServices.Storage.IMetadataSource.GetDriverMetadata
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.IMetadataSource.GetDriverMetadata
+  nameWithType: IMetadataSource.GetDriverMetadata
 - uid: Microsoft.UpdateServices.Storage.IMetadataSource.GetFile(System.String)
   name: GetFile(String)
   href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_GetFile_System_String_
@@ -2776,6 +3011,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.IMetadataSource.HasClassification
   nameWithType: IMetadataSource.HasClassification
+- uid: Microsoft.UpdateServices.Storage.IMetadataSource.HasDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)
+  name: HasDriverMetadata(Identity)
+  href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_HasDriverMetadata_Microsoft_UpdateServices_Metadata_Identity_
+  commentId: M:Microsoft.UpdateServices.Storage.IMetadataSource.HasDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)
+  fullName: Microsoft.UpdateServices.Storage.IMetadataSource.HasDriverMetadata(Microsoft.UpdateServices.Metadata.Identity)
+  nameWithType: IMetadataSource.HasDriverMetadata(Identity)
+- uid: Microsoft.UpdateServices.Storage.IMetadataSource.HasDriverMetadata*
+  name: HasDriverMetadata
+  href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_HasDriverMetadata_
+  commentId: Overload:Microsoft.UpdateServices.Storage.IMetadataSource.HasDriverMetadata
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.IMetadataSource.HasDriverMetadata
+  nameWithType: IMetadataSource.HasDriverMetadata
 - uid: Microsoft.UpdateServices.Storage.IMetadataSource.HasFile(System.String)
   name: HasFile(String)
   href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_HasFile_System_String_
@@ -2880,6 +3128,22 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.IMetadataSource.IsSuperseding
   nameWithType: IMetadataSource.IsSuperseding
+- uid: Microsoft.UpdateServices.Storage.IMetadataSource.MatchDriver(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Guid},System.Collections.Generic.List{System.Guid})
+  name: MatchDriver(IEnumerable<String>, IEnumerable<Guid>, List<Guid>)
+  href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_MatchDriver_System_Collections_Generic_IEnumerable_System_String__System_Collections_Generic_IEnumerable_System_Guid__System_Collections_Generic_List_System_Guid__
+  commentId: M:Microsoft.UpdateServices.Storage.IMetadataSource.MatchDriver(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Guid},System.Collections.Generic.List{System.Guid})
+  name.vb: MatchDriver(IEnumerable(Of String), IEnumerable(Of Guid), List(Of Guid))
+  fullName: Microsoft.UpdateServices.Storage.IMetadataSource.MatchDriver(System.Collections.Generic.IEnumerable<System.String>, System.Collections.Generic.IEnumerable<System.Guid>, System.Collections.Generic.List<System.Guid>)
+  fullName.vb: Microsoft.UpdateServices.Storage.IMetadataSource.MatchDriver(System.Collections.Generic.IEnumerable(Of System.String), System.Collections.Generic.IEnumerable(Of System.Guid), System.Collections.Generic.List(Of System.Guid))
+  nameWithType: IMetadataSource.MatchDriver(IEnumerable<String>, IEnumerable<Guid>, List<Guid>)
+  nameWithType.vb: IMetadataSource.MatchDriver(IEnumerable(Of String), IEnumerable(Of Guid), List(Of Guid))
+- uid: Microsoft.UpdateServices.Storage.IMetadataSource.MatchDriver*
+  name: MatchDriver
+  href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_MatchDriver_
+  commentId: Overload:Microsoft.UpdateServices.Storage.IMetadataSource.MatchDriver
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.IMetadataSource.MatchDriver
+  nameWithType: IMetadataSource.MatchDriver
 - uid: Microsoft.UpdateServices.Storage.IMetadataSource.ProductsIndex
   name: ProductsIndex
   href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_ProductsIndex
@@ -3208,6 +3472,18 @@ references:
   commentId: F:Microsoft.UpdateServices.Storage.OperationType.IndexingCategoriesStart
   fullName: Microsoft.UpdateServices.Storage.OperationType.IndexingCategoriesStart
   nameWithType: OperationType.IndexingCategoriesStart
+- uid: Microsoft.UpdateServices.Storage.OperationType.IndexingDriversEnd
+  name: IndexingDriversEnd
+  href: api/Microsoft.UpdateServices.Storage.OperationType.html#Microsoft_UpdateServices_Storage_OperationType_IndexingDriversEnd
+  commentId: F:Microsoft.UpdateServices.Storage.OperationType.IndexingDriversEnd
+  fullName: Microsoft.UpdateServices.Storage.OperationType.IndexingDriversEnd
+  nameWithType: OperationType.IndexingDriversEnd
+- uid: Microsoft.UpdateServices.Storage.OperationType.IndexingDriversStart
+  name: IndexingDriversStart
+  href: api/Microsoft.UpdateServices.Storage.OperationType.html#Microsoft_UpdateServices_Storage_OperationType_IndexingDriversStart
+  commentId: F:Microsoft.UpdateServices.Storage.OperationType.IndexingDriversStart
+  fullName: Microsoft.UpdateServices.Storage.OperationType.IndexingDriversStart
+  nameWithType: OperationType.IndexingDriversStart
 - uid: Microsoft.UpdateServices.Storage.OperationType.IndexingFilesEnd
   name: IndexingFilesEnd
   href: api/Microsoft.UpdateServices.Storage.OperationType.html#Microsoft_UpdateServices_Storage_OperationType_IndexingFilesEnd

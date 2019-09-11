@@ -133,12 +133,12 @@ namespace Microsoft.UpdateServices.Storage
         /// The serialization version of this object
         /// </summary>
         [JsonProperty]
-        private int Version = 1;
+        private int Version { get; set; }
 
         /// <summary>
         /// The current serialization version of this object
         /// </summary>
-        private const int CurrentVersion = 1;
+        private const int CurrentVersion = 2;
 
         /// <summary>
         /// Flag that indicates that metadata for the contained updates has been loaded.
@@ -171,6 +171,8 @@ namespace Microsoft.UpdateServices.Storage
         /// <param name="upstreamSource">The upstream from which stored metadata was aquired from</param>
         public CompressedMetadataStore(string storeFile, Endpoint upstreamSource)
         {
+            Version = CurrentVersion;
+
             OutputFile = new ZipOutputStream(File.Create(storeFile));
             FilePath = storeFile;
 
@@ -210,6 +212,9 @@ namespace Microsoft.UpdateServices.Storage
 
             // Initialize superseding index
             OnNewStore_InitializeSupersededIndex();
+
+            // Initialize drivers index
+            OnNewStore_InitializeDriversIndex();
         }
 
         /// <summary>

@@ -35,25 +35,79 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             repoQuery.Query();
         }
 
+        public static void MatchDrivers(MatchDriverOptions options)
+        {
+            using (var source = Program.LoadMetadataSourceFromOptions(options as IMetadataSourceOptions))
+            {
+                if (source == null)
+                {
+                    return;
+                }
+
+                List<Guid> computerHardwareIds = FilterBuilder.StringGuidsToGuids(options.ComputerHardwareIds);
+                if (computerHardwareIds == null)
+                {
+                    ConsoleOutput.WriteRed($"The computer hardware ID must be a GUID");
+                    return;
+                }
+
+                var prerequisites = FilterBuilder.StringGuidsToGuids(options.InstalledPrerequisites);
+                if (prerequisites == null)
+                {
+                    ConsoleOutput.WriteRed($"Prerequisites must be a list of GUIDs separated by '+'");
+                    return;
+                }
+
+                var driverMatch = source.MatchDriver(options.HardwareIds, computerHardwareIds, prerequisites);
+
+                if (driverMatch != null)
+                {
+                    ConsoleOutput.WriteGreen("Matching result:");
+                    Console.WriteLine($"    Matched hardware id          : {driverMatch.MatchedHardwareId}");
+                    Console.WriteLine($"    Driver version               : [Date {driverMatch.MatchedVersion.Date} Version {driverMatch.MatchedVersion.VersionString}]");
+
+                    if (driverMatch.MatchedComputerHardwareId.HasValue)
+                    {
+                        
+                        Console.WriteLine($"    Matched computer hardware ID : {driverMatch.MatchedComputerHardwareId.Value}");
+                    }
+
+                    if (driverMatch.MatchedFeatureScore != null)
+                    {
+                        Console.WriteLine($"    Driver feature score         : [OS {driverMatch.MatchedFeatureScore.OperatingSystem}, Score  {driverMatch.MatchedFeatureScore.Score}]");
+                    }
+
+                    PrintUpdateMetadata(driverMatch.Driver, source);
+                }
+                else
+                {
+                    ConsoleOutput.WriteRed("No match found");
+                }
+            }
+        }
+
         public static void Status(MetadataSourceStatusOptions options)
         {
-            var source = Program.LoadMetadataSourceFromOptions(options as IMetadataSourceOptions);
-            if (source == null)
+            using (var source = Program.LoadMetadataSourceFromOptions(options as IMetadataSourceOptions))
             {
-                return;
+                if (source == null)
+                {
+                    return;
+                }
+
+                Console.WriteLine($"Upstream server   : {source.UpstreamSource.URI}");
+                Console.WriteLine($"Checksum          : {source.Checksum}");
+                Console.WriteLine($"Categories anchor : {source.CategoriesAnchor}");
+
+                Console.WriteLine($"User name         : {source.UpstreamAccountName}");
+                Console.WriteLine($"User guid         : {source.UpstreamAccountGuid}");
+
+                foreach (var filter in source.Filters)
+                {
+                    PrintFilter(filter, source);
+                }
             }
-
-            Console.WriteLine($"Upstream server   : {source.UpstreamSource.URI}");
-            Console.WriteLine($"Checksum          : {source.Checksum}");
-            Console.WriteLine($"Categories anchor : {source.CategoriesAnchor}");
-
-            Console.WriteLine($"User name         : {source.UpstreamAccountName}");
-            Console.WriteLine($"User guid         : {source.UpstreamAccountGuid}");
-
-            foreach (var filter in source.Filters)
-            {
-                PrintFilter(filter, source);
-            }
+                
         }
 
         public static void PrintFilter(QueryFilter filter, IMetadataSource metadataSource)
@@ -142,7 +196,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                         {
                             if (updateFile.Digests.Any(d => d.HexString.Equals(options.FileHash, StringComparison.OrdinalIgnoreCase)))
                             {
-                                PrintUpdateMetadata(update);
+                                PrintUpdateMetadata(update, MetadataSource);
                                 break;
                             }
                         }
@@ -255,7 +309,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 {
                     foreach (var update in filteredUpdates)
                     {
-                        PrintUpdateMetadata(update);
+                        PrintUpdateMetadata(update, MetadataSource);
                     }
                 }
 
@@ -267,7 +321,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         /// Print update metadata
         /// </summary>
         /// <param name="update">The update to print metadata for</param>
-        void PrintUpdateMetadata(Update update)
+        static void PrintUpdateMetadata(Update update, IMetadataSource source)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\r\nID: {0}", update.Identity.ID);
@@ -276,7 +330,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             Console.WriteLine("    Description    : {0}", update.Description);
             Console.WriteLine("    Is superseded  : {0}", update.IsSuperseded ? $"By {update.SupersedingUpdate.ToString()}" : "no");
 
-            PrintBundleChainRecursive(update, 0);
+            PrintBundleChainRecursive(source, update, 0);
 
             if (update.HasProduct || update.HasClassification)
             {
@@ -290,7 +344,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                     foreach (var updateParentId in updateParentIds)
                     {
                         Console.WriteLine("        Product ID          : {0}", updateParentId);
-                        var matchindProducts = MetadataSource.ProductsIndex.Values.Where(p => p.Identity.ID == updateParentId).ToList();
+                        var matchindProducts = source.ProductsIndex.Values.Where(p => p.Identity.ID == updateParentId).ToList();
                         if (matchindProducts.Count > 0)
                         {
                             Console.WriteLine("        Product name        : {0}", matchindProducts[0].Title);
@@ -304,7 +358,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                     foreach (var classificationId in classificationIds)
                     {
                         Console.WriteLine("        Classification ID   : {0}", classificationId);
-                        var matchingClassification = MetadataSource.ClassificationsIndex.Values.Where(p => p.Identity.ID == classificationId).ToList();
+                        var matchingClassification = source.ClassificationsIndex.Values.Where(p => p.Identity.ID == classificationId).ToList();
                         if (matchingClassification.Count > 0)
                         {
                             Console.WriteLine("        Classification name : {0}", matchingClassification[0].Title);
@@ -313,12 +367,12 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 }
             }
 
-           /* if (update is DriverUpdate)
+            if (update is DriverUpdate)
             {
                 PrintDriverMetadata(update as DriverUpdate);
 
             }
-            else if (update is SoftwareUpdate)
+           /* else if (update is SoftwareUpdate)
             {
                 PrintSoftwareUpdateMetadata(update as SoftwareUpdate);
             }*/
@@ -335,7 +389,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
             if (update.IsBundle)
             {
-                PrintBundledUpdates(update);
+                PrintBundledUpdates(update, source);
             }
 
             if (update.HasPrerequisites)
@@ -344,7 +398,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             }
         }
 
-        void PrintBundleChainRecursive(Update update, int recursionIndex)
+        static void PrintBundleChainRecursive(IMetadataSource source, Update update, int recursionIndex)
         {
             const int indentSize = 4;
 
@@ -355,28 +409,68 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                     Console.CursorLeft = indentSize * recursionIndex + indentSize;
                     Console.WriteLine("Bundled in     : {0}", parentBundleID);
                     Console.CursorLeft = indentSize * recursionIndex + indentSize;
-                    Console.WriteLine("               : {0}", MetadataSource.GetUpdateTitle(parentBundleID));
+                    Console.WriteLine("               : {0}", source.GetUpdateTitle(parentBundleID));
 
-                    PrintBundleChainRecursive(MetadataSource.GetUpdate(parentBundleID), recursionIndex + 1);
+                    PrintBundleChainRecursive(source, source.GetUpdate(parentBundleID), recursionIndex + 1);
                 }
             }
         }
 
-        void PrintDriverMetadata(DriverUpdate driverUpdate)
+        static void PrintDriverMetadata(DriverUpdate driverUpdate)
         {
-            foreach (var driverMetadata in driverUpdate.Metadata)
+            var driverMetadataList = driverUpdate.GetDriverMetadata();
+            if (driverMetadataList != null)
             {
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                Console.WriteLine("    Metadata:");
-                Console.ResetColor();
-                Console.WriteLine("        HardwareId : {0}", driverMetadata.HardwareID);
-                Console.WriteLine("        Date       : {0}", driverMetadata.DriverVerDate);
-                Console.WriteLine("        Version    : {0}", driverMetadata.DriverVerVersion);
-                Console.WriteLine("        Class      : {0}", driverMetadata.Class);
+                foreach (var driverMetadata in driverMetadataList)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine("    Driver metadata:");
+                    Console.ResetColor();
+                    Console.WriteLine("        HardwareId : {0}", driverMetadata.HardwareID);
+                    Console.WriteLine("        Date       : {0}", driverMetadata.Versioning.Date);
+                    Console.WriteLine("        Version    : {0}", driverMetadata.Versioning.VersionString);
+                    Console.WriteLine("        Class      : {0}", driverMetadata.Class);
+
+                    if (driverMetadata.FeatureScores.Count > 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine("        Feature score:");
+                        Console.ResetColor();
+                        foreach (var featureScore in driverMetadata.FeatureScores)
+                        {
+                            
+                            Console.WriteLine("            Operating System : {0}", featureScore.OperatingSystem);
+                            Console.WriteLine("            Score       : {0}", featureScore.Score);
+                        }
+                    }
+
+                    if (driverMetadata.TargetComputerHardwareId.Count > 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine("        Target computer hardware id:");
+                        Console.ResetColor();
+                        foreach (var targetComputerHwId in driverMetadata.TargetComputerHardwareId)
+                        {
+                            Console.WriteLine("            {0}", targetComputerHwId);
+                        }
+                    }
+
+                    if (driverMetadata.DistributionComputerHardwareId.Count > 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine("        Distribution computer hardware id:");
+                        Console.ResetColor();
+                        foreach (var distributionComputerHardwareId in driverMetadata.DistributionComputerHardwareId)
+                        {
+
+                            Console.WriteLine("            {0}", distributionComputerHardwareId);
+                        }
+                    }
+                }
             }
         }
 
-        void PrintSoftwareUpdateMetadata(SoftwareUpdate softwareUpdate)
+        static void PrintSoftwareUpdateMetadata(SoftwareUpdate softwareUpdate)
         {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("    Metadata:");
@@ -390,7 +484,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             }
         }
 
-        void PrintFileDetails(List<UpdateFile> files)
+        static void PrintFileDetails(List<UpdateFile> files)
         {
             foreach (var file in files)
             {
@@ -426,7 +520,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             }
         }
 
-        void PrintSupersededUpdates(Update updateWithSuperseeds)
+        static void PrintSupersededUpdates(Update updateWithSuperseeds)
         {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("    Superseeds:");
@@ -438,7 +532,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             }
         }
 
-        void PrintBundledUpdates(Update updateWithBundledUpdates)
+        static void PrintBundledUpdates(Update updateWithBundledUpdates, IMetadataSource metadataSource)
         {
             if (updateWithBundledUpdates.BundledUpdates.Count() > 0)
             {
@@ -449,12 +543,12 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 foreach (var id in updateWithBundledUpdates.BundledUpdates)
                 {
                     Console.WriteLine("        ID        : {0}", id);
-                    Console.WriteLine("        Title     : {0}", MetadataSource.GetUpdateTitle(id));
+                    Console.WriteLine("        Title     : {0}", metadataSource.GetUpdateTitle(id));
                 }
             }
         }
 
-        void PrintPrerequisites(Update updateWithPrereqs)
+        static void PrintPrerequisites(Update updateWithPrereqs)
         {
             if (updateWithPrereqs.Prerequisites.Count > 0)
             {
@@ -464,21 +558,27 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
                 foreach (var prereq in updateWithPrereqs.Prerequisites)
                 {
-                    var atLeastOneOf = prereq as AtLeastOne;
-                    if (atLeastOneOf != null && !atLeastOneOf.IsCategory)
+                    if (prereq is AtLeastOne atLeastOneOf)
                     {
                         Console.WriteLine("        At least one of:");
-
+                        Console.WriteLine("            ******************************");
                         foreach (var subPrereq in atLeastOneOf.Simple)
                         {
-                            Console.WriteLine("            ID          : {0}", subPrereq.UpdateId);
+                            if (atLeastOneOf.IsCategory)
+                            {
+                                Console.WriteLine("            *ID          : {0} (is category)", subPrereq.UpdateId);
+                            }
+                            else
+                            {
+                                Console.WriteLine("            *ID          : {0}", subPrereq.UpdateId);
+                            }
                         }
 
-                        Console.WriteLine();
+                        Console.WriteLine("            ******************************");
                     }
-                    else if (prereq is Simple)
+                    else if (prereq is Simple simple)
                     {
-                        Console.WriteLine("            ID          : {0}", (prereq as Simple).UpdateId);
+                        Console.WriteLine("            ID          : {0}", simple.UpdateId);
                     }
                 }
             }

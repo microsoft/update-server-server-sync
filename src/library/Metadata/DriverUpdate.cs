@@ -36,15 +36,6 @@ namespace Microsoft.UpdateServices.Metadata
     /// </example>
     public class DriverUpdate : Update
     {
-        /// <summary>
-        /// Gets the list of driver update extended metadata.
-        /// </summary>
-        /// <value>
-        /// List of driver metadata (hardware ID, version, etc.)
-        /// </value>
-        [JsonIgnore]
-        public List<DriverMetadata> Metadata { get; private set; }
-
         internal DriverUpdate(Identity id, IMetadataSource source) : base(id, source)
         {
         }
@@ -57,6 +48,12 @@ namespace Microsoft.UpdateServices.Metadata
         internal DriverUpdate(Identity id, XDocument xdoc) : base(id, null)
         {
         }
+
+        /// <summary>
+        /// Gets the driver metadata for a driver update
+        /// </summary>
+        /// <returns>Driver specific metadata</returns>
+        public IEnumerable<DriverMetadata> GetDriverMetadata() => MetadataSource.GetDriverMetadata(this.Identity);
 
         /// <summary>
         /// Sets extended attributes from the XML metadata.
@@ -72,27 +69,10 @@ namespace Microsoft.UpdateServices.Metadata
                     {
                         var xdoc = XDocument.Parse(metadataReader.ReadToEnd(), LoadOptions.None);
                         GetDescriptionFromXml(xdoc);
-
-                        Metadata = new List<DriverMetadata>();
-                        ParseDriverMetadata(xdoc);
                     }
 
                     AttributesLoaded = true;
                 }
-            }
-        }
-
-        /// <summary>
-        ///  Parse the inner metadata from XML
-        /// </summary>
-        /// <param name="xdoc">Update XML document</param>
-        private void ParseDriverMetadata(XDocument xdoc)
-        {
-            // Get the driver metadata nodes
-            var metadataElements = xdoc.Descendants(XName.Get("WindowsDriverMetaData", "http://schemas.microsoft.com/msus/2002/12/UpdateHandlers/WindowsDriver"));
-            foreach (var metadataElement in metadataElements)
-            {
-                Metadata.Add(new DriverMetadata(metadataElement));
             }
         }
     }

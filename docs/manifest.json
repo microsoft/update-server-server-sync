@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "D:/src/update-server-server-sync/docfx",
+  "source_base_path": "E:/src/update-server-server-sync/docfx",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -45,7 +45,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.UpdateServices.Client.UpstreamServerClient.html",
-          "hash": "dAXYtCSoUsbi9GDGHjoQkw=="
+          "hash": "MM/FQR6qs18nunRtu2O3SQ=="
         }
       },
       "is_incremental": true,
@@ -161,11 +161,23 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.DriverFeatureScore.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.DriverFeatureScore.html",
+          "hash": "m6Cit7K4128x/4rRsa9Cdw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Microsoft.UpdateServices.Metadata.DriverMetadata.yml",
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.UpdateServices.Metadata.DriverMetadata.html",
-          "hash": "kHUBCTR7uk1rfJ8OVrieXQ=="
+          "hash": "/VIO/whWSLznVYmhrOSR4Q=="
         }
       },
       "is_incremental": true,
@@ -177,7 +189,19 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.UpdateServices.Metadata.DriverUpdate.html",
-          "hash": "ikKiAjRFcerR5wPWjO//Qg=="
+          "hash": "wPAD5zhKNDz8gXpWmi6tew=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Metadata.DriverVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Metadata.DriverVersion.html",
+          "hash": "NJeiz0z73pD3PvogJmJ0jw=="
         }
       },
       "is_incremental": true,
@@ -201,7 +225,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.UpdateServices.Metadata.MetadataFilter.html",
-          "hash": "YH1Qm+8RqqZZZPOUenqeyQ=="
+          "hash": "5xPISZntIwRwocgbH65Jkg=="
         }
       },
       "is_incremental": true,
@@ -309,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.UpdateServices.Metadata.html",
-          "hash": "Pgjr9Rq90eun8nGXnjj8ow=="
+          "hash": "MQhYugsXV6hcK7+YEDbr1A=="
         }
       },
       "is_incremental": true,
@@ -357,10 +381,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html",
-          "hash": "hDF4y+bCjkb9jGEeCSdPbw=="
+          "hash": "JC5D3SBe8Nu+XXOoDHHgQA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -373,6 +397,18 @@
         }
       },
       "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.UpdateServices.Storage.DriverMatchResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.UpdateServices.Storage.DriverMatchResult.html",
+          "hash": "IneRb3KPJSjXT94z40gRWQ=="
+        }
+      },
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -405,10 +441,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.UpdateServices.Storage.IMetadataSource.html",
-          "hash": "FwuoUq34pFOUUevA4at7CQ=="
+          "hash": "hDamg9f4K6ChkBDLdqTwGg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -453,7 +489,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.UpdateServices.Storage.OperationType.html",
-          "hash": "eUs94XfXGOe4KEffZWQWqg=="
+          "hash": "5PF1iHkGAT9G1YOIBcdnMA=="
         }
       },
       "is_incremental": true,
@@ -477,10 +513,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.UpdateServices.Storage.html",
-          "hash": "X+QlMzwPIn5sJsw52T6Z2g=="
+          "hash": "U7cF7jGF3JxlNqU+ZXgWZg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -504,7 +540,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "gejF7UqxcHk2Ri8KCR/fhg=="
+          "hash": "6ujJAwN0aLZMMYXhQiyYsw=="
         }
       },
       "is_incremental": false,
@@ -619,24 +655,24 @@
         "skipped_file_count": 0
       },
       "processors": {
-        "ConceptualDocumentProcessor": {
-          "can_incremental": true,
-          "incrementalPhase": "build",
-          "total_file_count": 7,
-          "skipped_file_count": 7
-        },
-        "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
-          "incrementalPhase": "build",
-          "total_file_count": 40,
-          "skipped_file_count": 40
-        },
         "TocDocumentProcessor": {
           "can_incremental": false,
           "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build",
           "total_file_count": 0,
           "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 43,
+          "skipped_file_count": 42
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 7,
+          "skipped_file_count": 7
         }
       }
     },

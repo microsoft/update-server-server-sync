@@ -20,7 +20,11 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         IEnumerable<string> ClassificationsFilter { get; }
 
         IEnumerable<string> IdFilter { get; }
-        
+
+        string HardwareIdFilter { get; }
+
+        string ComputerHardwareIdFilter { get; set; }
+
         string TitleFilter { get; }
 
         bool SkipSuperseded { get; }
@@ -105,6 +109,12 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         [Option("title-filter", Required = false, HelpText = "Title filter")]
         public string TitleFilter { get; set; }
 
+        [Option("hwid-filter", Required = false, HelpText = "Hardware ID filter")]
+        public string HardwareIdFilter { get; set; }
+
+        [Option("computer-hwid-filter", Required = false, HelpText = "Computer hardware ID filter")]
+        public string ComputerHardwareIdFilter { get; set; }
+
         [Option("skip-superseded", Required = false, Default = false, HelpText = "Do not consider superseded updates for download")]
         public bool SkipSuperseded { get; set; }
     }
@@ -160,6 +170,12 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         [Option("title-filter", Required = false, HelpText = "Title filter")]
         public string TitleFilter { get; set; }
 
+        [Option("hwid-filter", Required = false, HelpText = "Hardware ID filter")]
+        public string HardwareIdFilter { get; set; }
+
+        [Option("computer-hwid-filter", Required = false, HelpText = "Computer hardware ID filter")]
+        public string ComputerHardwareIdFilter { get; set; }
+
         [Option("product-filter", Required = false, Separator = '+', HelpText = "Product filter")]
         public IEnumerable<string> ProductsFilter { get; set; }
 
@@ -174,6 +190,26 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
         [Option("first", Required = false, Default = 0, HelpText = "Display first x updates only")]
         public int FirstX { get; set; }
+    }
+
+    [Verb("match-driver", HelpText = "Find drivers")]
+    public class MatchDriverOptions : IMetadataSourceOptions
+    {
+        [Option("source", Required = true, HelpText = "Query content from a metadata source file")]
+        public string MetadataSourcePath { get; set; }
+
+        [Option("hwid", Required = true, Separator = '+', HelpText = "Match drivers for this list of hardware ids; Add HwIds from specific to generic")]
+        public IEnumerable<string> HardwareIds { get; set; }
+
+        [Option("computer-hwid", Required = false, Separator = '+', HelpText = "Match drivers that target these computer hardware ids.")]
+        public IEnumerable<string> ComputerHardwareIds { get; set; }
+
+        [Option("installed-prerequisites", Required = true, Separator = '+', HelpText = "Prerequisites installed on the target computer. Used for driver applicability checks")]
+        public IEnumerable<string> InstalledPrerequisites { get; set; }
+
+
+        [Option("all-matches", Required = false, Default = false, HelpText = "Show all matches, not just the best one")]
+        public bool ShowAllMatches { get; set; }
     }
 
     [Verb("export", HelpText = "Export select update metadata from a metadata source.")]
@@ -199,6 +235,12 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
         [Option("title-filter", Required = false, HelpText = "Title filter")]
         public string TitleFilter { get; set; }
+
+        [Option("hwid-filter", Required = false, HelpText = "Hardware ID filter")]
+        public string HardwareIdFilter { get; set; }
+
+        [Option("computer-hwid-filter", Required = false, HelpText = "Computer hardware ID filter")]
+        public string ComputerHardwareIdFilter { get; set; }
 
         [Option("skip-superseded", Required = false, Default = false, HelpText = "Do not export superseded updates")]
         public bool SkipSuperseded { get; set; }
@@ -227,6 +269,12 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
         [Option("title-filter", Required = false, HelpText = "Title filter")]
         public string TitleFilter { get; set; }
+
+        [Option("hwid-filter", Required = false, HelpText = "Hardware ID filter")]
+        public string HardwareIdFilter { get; set; }
+
+        [Option("computer-hwid-filter", Required = false, HelpText = "Computer hardware ID filter")]
+        public string ComputerHardwareIdFilter { get; set; }
 
         [Option("product-filter", Required = false, Separator = '+', HelpText = "Product filter")]
         public IEnumerable<string> ProductsFilter { get; set; }

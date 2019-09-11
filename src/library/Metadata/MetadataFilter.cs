@@ -50,6 +50,18 @@ namespace Microsoft.UpdateServices.Metadata
         public int FirstX;
 
         /// <summary>
+        /// Returns only driver updates that match this hardware ID.
+        /// </summary>
+        /// <value>Hardware id string</value>
+        public string HardwareIdFilter;
+
+        /// <summary>
+        /// Returns only driver updates that target this computer hardware ID
+        /// </summary>
+        /// <value>Computer hardware ID (GUID)</value>
+        public Guid ComputerHardwareIdFilter;
+
+        /// <summary>
         /// Initialize a new filter. A newly initialized filter matches all updates or categories.
         /// </summary>
         public MetadataFilter()
@@ -78,27 +90,52 @@ namespace Microsoft.UpdateServices.Metadata
 
         internal static List<Update> FilterUpdatesList(IEnumerable<Update> updates, MetadataFilter filter)
         {
-            var filteredUpdates = new List<Update>(updates);
+            IEnumerable<Update> filteredUpdates;
+
+            if (!string.IsNullOrEmpty(filter.HardwareIdFilter) || (Guid.Empty != filter.ComputerHardwareIdFilter))
+            {
+                filteredUpdates = updates.OfType<DriverUpdate>();
+            }
+            else
+            {
+                filteredUpdates = updates;
+            }
+
+            if (!string.IsNullOrEmpty(filter.HardwareIdFilter))
+            {
+                filteredUpdates = filteredUpdates.Where(
+                    u => (u as DriverUpdate)
+                    .GetDriverMetadata()
+                    .Any(metadata => metadata.HardwareID.Equals(filter.HardwareIdFilter, StringComparison.OrdinalIgnoreCase)));
+            }
+
+            if (filter.ComputerHardwareIdFilter != Guid.Empty)
+            {
+                filteredUpdates = filteredUpdates.Where(
+                    u => (u as DriverUpdate)
+                    .GetDriverMetadata()
+                    .Any(metadata => metadata.DistributionComputerHardwareId.Contains(filter.ComputerHardwareIdFilter)));
+            }
 
             if (filter.ClassificationFilter.Count > 0)
             {
-                filteredUpdates.RemoveAll(u => !u.HasClassification);
+                filteredUpdates = filteredUpdates.Where(u => u.HasClassification);
 
                 // Apply the classification filter
                 foreach (var classificationId in filter.ClassificationFilter)
                 {
-                    filteredUpdates.RemoveAll(u => !u.ClassificationIds.Contains(classificationId));
+                    filteredUpdates = filteredUpdates.Where(u => u.ClassificationIds.Contains(classificationId));
                 }
             }
 
             if (filter.ProductFilter.Count > 0)
             {
-                filteredUpdates.RemoveAll(u => !u.HasProduct);
+                filteredUpdates = filteredUpdates.Where(u => u.HasProduct);
 
                 // Apply the product filter
                 foreach (var productId in filter.ProductFilter)
                 {
-                    filteredUpdates.RemoveAll(u => !u.ProductIds.Contains(productId));
+                    filteredUpdates = filteredUpdates.Where(u => u.ProductIds.Contains(productId));
                 }
             }
 
@@ -106,29 +143,29 @@ namespace Microsoft.UpdateServices.Metadata
             if (!string.IsNullOrEmpty(filter.TitleFilter))
             {
                 var filterTokens = filter.TitleFilter.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                filteredUpdates.RemoveAll(category => !category.MatchTitle(filterTokens));
+                filteredUpdates = filteredUpdates.Where(category => category.MatchTitle(filterTokens));
             }
 
             // Apply the id filter
             if (filter.IdFilter.Count > 0)
             {
                 // Remove all updates that don't match the ID filter
-                filteredUpdates.RemoveAll(u => !filter.IdFilter.Contains(u.Identity.Raw.UpdateID));
+                filteredUpdates = filteredUpdates.Where(u => filter.IdFilter.Contains(u.Identity.Raw.UpdateID));
             }
 
             if (filter.SkipSuperseded)
             {
-                filteredUpdates.RemoveAll(u => u.IsSuperseded);
+                filteredUpdates = filteredUpdates.Where(u => !u.IsSuperseded);
             }
 
             // Return first X matches, if requested
             if (filter.FirstX > 0)
             {
-                return filteredUpdates.Take(Math.Min(filter.FirstX, filteredUpdates.Count)).ToList();
+                return filteredUpdates.Take(filter.FirstX).ToList();
             }
             else
             {
-                return filteredUpdates;
+                return filteredUpdates.ToList();
             }
         }
     }
