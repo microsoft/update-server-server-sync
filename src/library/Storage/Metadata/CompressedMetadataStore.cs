@@ -227,33 +227,40 @@ namespace Microsoft.UpdateServices.Storage
             var resultArchive = new ZipFile(queryResultFile);
 
             var indexEntry = resultArchive.GetEntry(IndexFileName);
-            using (var indexStream = resultArchive.GetInputStream(indexEntry))
+
+            try
             {
-                using (var indexStreamReader = new StreamReader(indexStream))
+                if (indexEntry == null)
                 {
-                    var deserializedResult = JsonConvert.DeserializeObject<CompressedMetadataStore>(indexStreamReader.ReadToEnd());
-                    if (deserializedResult.Version != CurrentVersion)
-                    {
-                        throw new Exception("Invalid version");
-                    }
+                    throw new Exception("Index missing from metadata source file");
+                }
 
-                    deserializedResult.FilePath = queryResultFile;
-
-                    try
+                using (var indexStream = resultArchive.GetInputStream(indexEntry))
+                {
+                    using (var indexStreamReader = new StreamReader(indexStream))
                     {
+                        var deserializedResult = JsonConvert.DeserializeObject<CompressedMetadataStore>(indexStreamReader.ReadToEnd());
+                        if (deserializedResult.Version != CurrentVersion)
+                        {
+                            throw new Exception("Invalid version");
+                        }
+
+                        deserializedResult.FilePath = queryResultFile;
+
                         deserializedResult.OnDeserialized();
-                    }
-                    catch(Exception ex)
-                    {
-                        resultArchive.Close();
-                        throw ex;
-                    }
 
-                    deserializedResult.InputFile = resultArchive;
+                        deserializedResult.InputFile = resultArchive;
 
-                    return deserializedResult;
+                        return deserializedResult;
+                    }
                 }
             }
+            catch(Exception ex)
+            {
+                resultArchive.Close();
+                throw ex;
+            }
+            
         }
 
         /// <summary>

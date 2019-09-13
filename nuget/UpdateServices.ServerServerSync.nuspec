@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>UpdateServices.ServerServerSync</id>
-    <version>2.5.3</version>
+    <version>2.5.4</version>
     <title>Microsoft Update Services: Server-Server Sync</title>
     <summary>Provides programmatic access to the Microsoft Update catalog from .NET Core</summary>
     <authors>Cristian Petruta</authors>
@@ -11,7 +11,7 @@
     <license type="expression">MIT</license>
     <projectUrl>https://microsoft.github.io/update-server-server-sync/</projectUrl>
     <description>Provides programmatic access to the Microsoft Update catalog from .NET Core</description>
-    <releaseNotes>Index driver metadata. Implement query filters by hardware ID and computer hardware ID. Implement matching drivers to devices based on hardware ID, computer hardware ID and prerequisites. Changes to CompressedMetadataStore are not backwards compatible with previous files and must be re-created</releaseNotes>
+    <releaseNotes>Release compressed metadata source file when failing to open it.</releaseNotes>
     <tags>Windows Update WSUS WU MS-WSUSSS</tags>
     <repository type="GIT" url="https://github.com/microsoft/update-server-server-sync" />
     <dependencies>
