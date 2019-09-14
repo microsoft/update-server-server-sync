@@ -61,6 +61,18 @@ namespace Microsoft.UpdateServices.Metadata
         }
 
         /// <summary>
+        /// Initialize an update identity from GUID and revision
+        /// </summary>
+        /// <param name="id">Update GUID</param>
+        /// <param name="revision">Update revision</param>
+        public Identity(Guid id, int revision)
+        {
+            Raw = new UpdateIdentity() { UpdateID = id, RevisionNumber = revision };
+
+            GenerateQuickLookupKeys();
+        }
+
+        /// <summary>
         /// Re-creates the quick lookup keys after this object is deserialized. The keys are not serialized to save storage space
         /// </summary>
         /// <param name="context">Deserialization context. Not used.</param>
