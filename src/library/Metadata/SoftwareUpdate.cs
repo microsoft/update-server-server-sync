@@ -46,7 +46,16 @@ namespace Microsoft.UpdateServices.Metadata
         /// Support URL string
         /// </value>
         [JsonIgnore]
-        public string SupportUrl { get; private set; }
+        public string SupportUrl
+        {
+            get
+            {
+                LoadAttributesFromMetadataSource();
+                return _SupportUrl;
+            }
+        }
+
+        private string _SupportUrl;
 
         /// <summary>
         /// Knowledge base (KB) article ID
@@ -55,7 +64,16 @@ namespace Microsoft.UpdateServices.Metadata
         /// KB article ID string
         /// </value>
         [JsonIgnore]
-        public string KBArticleId { get; private set; }
+        public string KBArticleId
+        {
+            get
+            {
+                LoadAttributesFromMetadataSource();
+                return _KBArticleId;
+            }
+        }
+
+        private string _KBArticleId;
 
         /// <summary>
         /// Gets the OsUpgrade type ("swap" etc.)
@@ -134,13 +152,13 @@ namespace Microsoft.UpdateServices.Metadata
             var supportUrlNodes = propertyNode.Descendants(XName.Get("SupportUrl", "http://schemas.microsoft.com/msus/2002/12/Update"));
             if (supportUrlNodes.Count() > 0)
             {
-                SupportUrl = supportUrlNodes.First().Value;
+                _SupportUrl = supportUrlNodes.First().Value;
             }
 
             var KBArticleIDNodes = propertyNode.Descendants(XName.Get("KBArticleID", "http://schemas.microsoft.com/msus/2002/12/Update"));
             if (KBArticleIDNodes.Count() > 0)
             {
-                KBArticleId = KBArticleIDNodes.First().Value;
+                _KBArticleId = KBArticleIDNodes.First().Value;
             }
         }
     }

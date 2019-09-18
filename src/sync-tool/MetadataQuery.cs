@@ -372,10 +372,10 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
                 PrintDriverMetadata(update as DriverUpdate);
 
             }
-           /* else if (update is SoftwareUpdate)
+            else if (update is SoftwareUpdate)
             {
                 PrintSoftwareUpdateMetadata(update as SoftwareUpdate);
-            }*/
+            }
 
             if (update.HasFiles)
             {
