@@ -62,6 +62,12 @@ namespace Microsoft.UpdateServices.Metadata
         public Guid ComputerHardwareIdFilter;
 
         /// <summary>
+        /// Get or set the KB article filter
+        /// </summary>
+        /// <value>List of KB article ids - numbers only</value>
+        public List<string> KbArticleFilter;
+
+        /// <summary>
         /// Initialize a new filter. A newly initialized filter matches all updates or categories.
         /// </summary>
         public MetadataFilter()
@@ -95,6 +101,10 @@ namespace Microsoft.UpdateServices.Metadata
             if (!string.IsNullOrEmpty(filter.HardwareIdFilter) || (Guid.Empty != filter.ComputerHardwareIdFilter))
             {
                 filteredUpdates = updates.OfType<DriverUpdate>();
+            }
+            else if (filter.KbArticleFilter.Count > 0)
+            {
+                filteredUpdates = updates.OfType<SoftwareUpdate>();
             }
             else
             {
@@ -137,6 +147,12 @@ namespace Microsoft.UpdateServices.Metadata
                 {
                     filteredUpdates = filteredUpdates.Where(u => u.ProductIds.Contains(productId));
                 }
+            }
+
+            if (filter.KbArticleFilter.Count > 0)
+            {
+                var kbLookup = filter.KbArticleFilter.ToHashSet();
+                filteredUpdates = filteredUpdates.OfType<SoftwareUpdate>().Where(u => kbLookup.Contains(u.KBArticleId));
             }
 
             // Apply the title filter

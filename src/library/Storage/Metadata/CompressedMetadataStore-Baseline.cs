@@ -202,6 +202,9 @@ namespace Microsoft.UpdateServices.Storage
 
             // Initialize driver indexes
             OnDeltaStore_InitializeDriversIndex();
+
+            // Initialize KB articles index
+            OnDeltaStore_InitializeKbArticles();
         }
     }
 }

@@ -324,6 +324,13 @@ namespace Microsoft.UpdateServices.Storage
         /// <param name="installedPrerequisites">List of prerequisites installed on the target computer. Used to filter updates to just those applicable to a system</param>
         /// <returns>If a driver match is found, matching information; null otherwise</returns>
         DriverMatchResult MatchDriver(IEnumerable<string> hardwareIds, IEnumerable<Guid> computerHardwareIds, List<Guid> installedPrerequisites);
+
+        /// <summary>
+        /// Retrieves the KB article for a software update
+        /// </summary>
+        /// <param name="updateIdentity">update identity</param>
+        /// <returns></returns>
+        string GetKbArticle(Identity updateIdentity);
     }
 
     /// <summary>

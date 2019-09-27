@@ -138,7 +138,7 @@ namespace Microsoft.UpdateServices.Storage
         /// <summary>
         /// The current serialization version of this object
         /// </summary>
-        private const int CurrentVersion = 2;
+        private const int CurrentVersion = 3;
 
         /// <summary>
         /// Flag that indicates that metadata for the contained updates has been loaded.
@@ -215,6 +215,9 @@ namespace Microsoft.UpdateServices.Storage
 
             // Initialize drivers index
             OnNewStore_InitializeDriversIndex();
+
+            // Initialize KB article index
+            OnNewStore_InitializeKbArticles();
         }
 
         /// <summary>

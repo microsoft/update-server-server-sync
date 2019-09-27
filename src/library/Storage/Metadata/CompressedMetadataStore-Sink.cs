@@ -41,6 +41,7 @@ namespace Microsoft.UpdateServices.Storage
                 SaveTitlesIndex();
                 SavePrerequisitesIndex();
                 SaveBundlesIndex();
+                SaveKbArticleIndex();
                 SaveProductClassificationIndex();
                 SaveFilesIndex();
                 SaveSupersededndex();
@@ -177,6 +178,8 @@ namespace Microsoft.UpdateServices.Storage
             {
                 ExtractAndIndexDriverMetadata(newUpdateIndex, updateXmlDoc);
             }
+
+            ExtractAndIndexKbArticle(newUpdateIndex, updateXmlDoc, update);
 
             return newUpdateIndex;
         }

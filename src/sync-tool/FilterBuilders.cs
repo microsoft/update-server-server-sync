@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using Microsoft.UpdateServices.Metadata;
-using Microsoft.UpdateServices.Storage;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.UpdateServices.Tools.UpdateRepo
 {
@@ -35,6 +35,7 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
             {
                 TitleFilter = filterOptions.TitleFilter,
                 HardwareIdFilter = filterOptions.HardwareIdFilter,
+                KbArticleFilter = filterOptions.KbArticleFilter.ToList()
             };
 
             if (!string.IsNullOrEmpty(filterOptions.ComputerHardwareIdFilter))

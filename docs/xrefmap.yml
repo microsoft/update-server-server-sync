@@ -862,6 +862,19 @@ references:
   commentId: T:Microsoft.UpdateServices.Metadata.Identity
   fullName: Microsoft.UpdateServices.Metadata.Identity
   nameWithType: Identity
+- uid: Microsoft.UpdateServices.Metadata.Identity.#ctor(System.Guid,System.Int32)
+  name: Identity(Guid, Int32)
+  href: api/Microsoft.UpdateServices.Metadata.Identity.html#Microsoft_UpdateServices_Metadata_Identity__ctor_System_Guid_System_Int32_
+  commentId: M:Microsoft.UpdateServices.Metadata.Identity.#ctor(System.Guid,System.Int32)
+  fullName: Microsoft.UpdateServices.Metadata.Identity.Identity(System.Guid, System.Int32)
+  nameWithType: Identity.Identity(Guid, Int32)
+- uid: Microsoft.UpdateServices.Metadata.Identity.#ctor*
+  name: Identity
+  href: api/Microsoft.UpdateServices.Metadata.Identity.html#Microsoft_UpdateServices_Metadata_Identity__ctor_
+  commentId: Overload:Microsoft.UpdateServices.Metadata.Identity.#ctor
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Metadata.Identity.Identity
+  nameWithType: Identity.Identity
 - uid: Microsoft.UpdateServices.Metadata.Identity.CompareTo(System.Object)
   name: CompareTo(Object)
   href: api/Microsoft.UpdateServices.Metadata.Identity.html#Microsoft_UpdateServices_Metadata_Identity_CompareTo_System_Object_
@@ -1028,6 +1041,12 @@ references:
   commentId: F:Microsoft.UpdateServices.Metadata.MetadataFilter.IdFilter
   fullName: Microsoft.UpdateServices.Metadata.MetadataFilter.IdFilter
   nameWithType: MetadataFilter.IdFilter
+- uid: Microsoft.UpdateServices.Metadata.MetadataFilter.KbArticleFilter
+  name: KbArticleFilter
+  href: api/Microsoft.UpdateServices.Metadata.MetadataFilter.html#Microsoft_UpdateServices_Metadata_MetadataFilter_KbArticleFilter
+  commentId: F:Microsoft.UpdateServices.Metadata.MetadataFilter.KbArticleFilter
+  fullName: Microsoft.UpdateServices.Metadata.MetadataFilter.KbArticleFilter
+  nameWithType: MetadataFilter.KbArticleFilter
 - uid: Microsoft.UpdateServices.Metadata.MetadataFilter.ProductFilter
   name: ProductFilter
   href: api/Microsoft.UpdateServices.Metadata.MetadataFilter.html#Microsoft_UpdateServices_Metadata_MetadataFilter_ProductFilter
@@ -1963,6 +1982,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetIndex
   nameWithType: CompressedMetadataStore.GetIndex
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetKbArticle(Microsoft.UpdateServices.Metadata.Identity)
+  name: GetKbArticle(Identity)
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_GetKbArticle_Microsoft_UpdateServices_Metadata_Identity_
+  commentId: M:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetKbArticle(Microsoft.UpdateServices.Metadata.Identity)
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetKbArticle(Microsoft.UpdateServices.Metadata.Identity)
+  nameWithType: CompressedMetadataStore.GetKbArticle(Identity)
+- uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetKbArticle*
+  name: GetKbArticle
+  href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_GetKbArticle_
+  commentId: Overload:Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetKbArticle
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetKbArticle
+  nameWithType: CompressedMetadataStore.GetKbArticle
 - uid: Microsoft.UpdateServices.Storage.CompressedMetadataStore.GetLeafUpdates
   name: GetLeafUpdates()
   href: api/Microsoft.UpdateServices.Storage.CompressedMetadataStore.html#Microsoft_UpdateServices_Storage_CompressedMetadataStore_GetLeafUpdates
@@ -2836,6 +2868,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.UpdateServices.Storage.IMetadataSource.GetIndex
   nameWithType: IMetadataSource.GetIndex
+- uid: Microsoft.UpdateServices.Storage.IMetadataSource.GetKbArticle(Microsoft.UpdateServices.Metadata.Identity)
+  name: GetKbArticle(Identity)
+  href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_GetKbArticle_Microsoft_UpdateServices_Metadata_Identity_
+  commentId: M:Microsoft.UpdateServices.Storage.IMetadataSource.GetKbArticle(Microsoft.UpdateServices.Metadata.Identity)
+  fullName: Microsoft.UpdateServices.Storage.IMetadataSource.GetKbArticle(Microsoft.UpdateServices.Metadata.Identity)
+  nameWithType: IMetadataSource.GetKbArticle(Identity)
+- uid: Microsoft.UpdateServices.Storage.IMetadataSource.GetKbArticle*
+  name: GetKbArticle
+  href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_GetKbArticle_
+  commentId: Overload:Microsoft.UpdateServices.Storage.IMetadataSource.GetKbArticle
+  isSpec: "True"
+  fullName: Microsoft.UpdateServices.Storage.IMetadataSource.GetKbArticle
+  nameWithType: IMetadataSource.GetKbArticle
 - uid: Microsoft.UpdateServices.Storage.IMetadataSource.GetLeafUpdates
   name: GetLeafUpdates()
   href: api/Microsoft.UpdateServices.Storage.IMetadataSource.html#Microsoft_UpdateServices_Storage_IMetadataSource_GetLeafUpdates

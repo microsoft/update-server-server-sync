@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>Microsoft.UpdateServices</RootNamespace>
-    <Version>2.5.3</Version>
+    <Version>2.5.6</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AssemblyVersion>2.5.3.0</AssemblyVersion>
-    <FileVersion>2.5.3.0</FileVersion>
+    <AssemblyVersion>2.5.6.0</AssemblyVersion>
+    <FileVersion>2.5.6.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

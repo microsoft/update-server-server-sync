@@ -28,6 +28,8 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         string TitleFilter { get; }
 
         bool SkipSuperseded { get; }
+
+        IEnumerable<string> KbArticleFilter { get; }
     }
 
     public interface ISyncQueryFilter
@@ -115,6 +117,9 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         [Option("computer-hwid-filter", Required = false, HelpText = "Computer hardware ID filter")]
         public string ComputerHardwareIdFilter { get; set; }
 
+        [Option("kbarticle-filter", Required = false, Separator = '+', HelpText = "KB article filter (numbers only)")]
+        public IEnumerable<string> KbArticleFilter { get; set; }
+
         [Option("skip-superseded", Required = false, Default = false, HelpText = "Do not consider superseded updates for download")]
         public bool SkipSuperseded { get; set; }
     }
@@ -182,6 +187,9 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         [Option("classification-filter", Required = false, Separator = '+', HelpText = "Classification filter")]
         public IEnumerable<string> ClassificationsFilter { get; set; }
 
+        [Option("kbarticle-filter", Required = false, Separator = '+', HelpText = "KB article filter (numbers only)")]
+        public IEnumerable<string> KbArticleFilter { get; set; }
+
         [Option("skip-superseded", Required = false, Default = false, HelpText = "Ignore superseded updates")]
         public bool SkipSuperseded { get; set; }
 
@@ -242,6 +250,9 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
         [Option("computer-hwid-filter", Required = false, HelpText = "Computer hardware ID filter")]
         public string ComputerHardwareIdFilter { get; set; }
 
+        [Option("kbarticle-filter", Required = false, Separator = '+', HelpText = "KB article filter (numbers only)")]
+        public IEnumerable<string> KbArticleFilter { get; set; }
+
         [Option("skip-superseded", Required = false, Default = false, HelpText = "Do not export superseded updates")]
         public bool SkipSuperseded { get; set; }
     }
@@ -278,6 +289,9 @@ namespace Microsoft.UpdateServices.Tools.UpdateRepo
 
         [Option("product-filter", Required = false, Separator = '+', HelpText = "Product filter")]
         public IEnumerable<string> ProductsFilter { get; set; }
+
+        [Option("kbarticle-filter", Required = false, Separator = '+', HelpText = "KB article filter (numbers only)")]
+        public IEnumerable<string> KbArticleFilter { get; set; }
 
         [Option("classification-filter", Required = false, Separator = '+', HelpText = "Classification filter")]
         public IEnumerable<string> ClassificationsFilter { get; set; }

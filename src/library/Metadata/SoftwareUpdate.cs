@@ -64,16 +64,7 @@ namespace Microsoft.UpdateServices.Metadata
         /// KB article ID string
         /// </value>
         [JsonIgnore]
-        public string KBArticleId
-        {
-            get
-            {
-                LoadAttributesFromMetadataSource();
-                return _KBArticleId;
-            }
-        }
-
-        private string _KBArticleId;
+        public string KBArticleId => MetadataSource.GetKbArticle(this.Identity);
 
         /// <summary>
         /// Gets the OsUpgrade type ("swap" etc.)
@@ -85,7 +76,15 @@ namespace Microsoft.UpdateServices.Metadata
         /// OS upgrade type string
         /// </value>
         [JsonIgnore]
-        public string OsUpgrade { get; private set; }
+        public string OsUpgrade
+        {
+            get
+            {
+                LoadAttributesFromMetadataSource();
+                return _OsUpgrade;
+            }
+        }
+        private string _OsUpgrade;
 
         internal SoftwareUpdate(Identity id, IMetadataSource source) : base(id, source)
         {
@@ -115,7 +114,9 @@ namespace Microsoft.UpdateServices.Metadata
                         var xdoc = XDocument.Parse(metadataReader.ReadToEnd(), LoadOptions.None);
                         GetDescriptionFromXml(xdoc);
 
-                        GetPropertiesFromXml(xdoc);
+                        var properties = GetPropertiesFromXml(xdoc);
+                        _OsUpgrade = properties.osUpgrade;
+                        _SupportUrl = properties.supportUrl;
                     }
 
                     AttributesLoaded = true;
@@ -127,7 +128,7 @@ namespace Microsoft.UpdateServices.Metadata
         /// Decode SoftwareUpdate specific properties
         /// </summary>
         /// <param name="xdoc"></param>
-        private void GetPropertiesFromXml(XDocument xdoc)
+        internal static (string kbArticle, string supportUrl, string osUpgrade) GetPropertiesFromXml(XDocument xdoc)
         {
             // Parse the Properties node from the XML
             var propertiesNodes = xdoc.Descendants(XName.Get("Properties", "http://schemas.microsoft.com/msus/2002/12/Update"));
@@ -142,24 +143,27 @@ namespace Microsoft.UpdateServices.Metadata
                 throw new Exception("Missing attributes in Properties node");
             }
 
+            string osUpgrade = null, supportUrl = null, kbArticle = null;
             try
             {
                 var osUpgradeAttribute = propertyNode.Attribute("OSUpgrade");
-                OsUpgrade = osUpgradeAttribute.Value;
+                osUpgrade = osUpgradeAttribute.Value;
             }
             catch (Exception) { }
 
             var supportUrlNodes = propertyNode.Descendants(XName.Get("SupportUrl", "http://schemas.microsoft.com/msus/2002/12/Update"));
             if (supportUrlNodes.Count() > 0)
             {
-                _SupportUrl = supportUrlNodes.First().Value;
+                supportUrl = supportUrlNodes.First().Value;
             }
 
             var KBArticleIDNodes = propertyNode.Descendants(XName.Get("KBArticleID", "http://schemas.microsoft.com/msus/2002/12/Update"));
             if (KBArticleIDNodes.Count() > 0)
             {
-                _KBArticleId = KBArticleIDNodes.First().Value;
+                kbArticle = KBArticleIDNodes.First().Value;
             }
+
+            return (kbArticle, supportUrl, osUpgrade);
         }
     }
 }
