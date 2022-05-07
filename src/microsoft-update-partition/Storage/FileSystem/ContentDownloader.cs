@@ -10,10 +10,23 @@ using System.Threading;
 
 namespace Microsoft.PackageGraph.Storage.Local
 {
-    class ContentDownloader
+    /// <summary>
+    /// Simple HTTP content downloader implementation
+    /// </summary>
+    public class ContentDownloader
     {
+        /// <summary>
+        /// Provides progress notifications during download
+        /// </summary>
         public event EventHandler<ContentOperationProgress> OnDownloadProgress;
 
+        /// <summary>
+        /// Downloads data to a stream
+        /// </summary>
+        /// <param name="source">Data source URL</param>
+        /// <param name="destination">Target stream</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>True on success, false otherwise</returns>
         public static bool DownloadToStream(
             string source,
             Stream destination,
@@ -21,7 +34,6 @@ namespace Microsoft.PackageGraph.Storage.Local
         {
             using (var client = new HttpClient())
             {
-                // Build the range request for the download
                 using var updateRequest = new HttpRequestMessage { RequestUri = new Uri(source), Method = HttpMethod.Get };
                 // Stream the file
                 using HttpResponseMessage response = client
@@ -161,7 +173,15 @@ namespace Microsoft.PackageGraph.Storage.Local
             }
         }
 
-        public static long GetFileSizeOnServer(HttpClient client, string url, CancellationToken cancellationToken)
+        /// <summary>
+        /// Retrieves the size of HTTP resource using a HEAD request.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="url"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private static long GetFileSizeOnServer(HttpClient client, string url, CancellationToken cancellationToken)
         {
             // First get the HEAD to check the server's size for the file
             long fileSizeOnServer;

@@ -285,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.html",
-          "hash": "+HhYQodMphxl/1cb+putpH1jSAmxoBsqnGvjkeH5T4w="
+          "hash": "qn/nwyITBd4u9HkR4K7G5FpEUVVMyrm8afqQXh6J8Uk="
         }
       },
       "is_incremental": false,
@@ -1025,6 +1025,18 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Microsoft.PackageGraph.Storage.Local.ContentDownloader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Microsoft.PackageGraph.Storage.Local.ContentDownloader.html",
+          "hash": "74px9pXlI9ReQk/WFOQUKah2t9cahL1GtSjWFGq+MD8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.yml",
       "output": {
         ".html": {
@@ -1053,7 +1065,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.Storage.Local.html",
-          "hash": "ylCjFXP2b+2YJ0t6yI6BJTHJFbiddazR6i0Tmy17+Ns="
+          "hash": "z8gwjVjtIvm/ZK6udd5cwbnaE901akapZqNz/JOpGo0="
         }
       },
       "is_incremental": false,
@@ -1095,7 +1107,7 @@
           "hash": "90Yrszt5z8OI2rPHc0ZnyJeh9Ob6bngWsVTsB6Z/n8E="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1104,7 +1116,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "HCnObr7QYXNbwfYMEWf8oMeuTXQuDR0GRryEovoduE0="
+          "hash": "ZzWHJ4BZK/6Kqf0vhcfWInuGJ6aeC5NnvTt94HgqZjw="
         }
       },
       "is_incremental": false,
@@ -1134,7 +1146,7 @@
           "hash": "kFuSGL4sg82bP9Ui79DnTAwEy5i0irMVjEdLRmXlVao="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1244,13 +1256,13 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 8,
-          "skipped_file_count": 7
+          "skipped_file_count": 8
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 90,
-          "skipped_file_count": 14
+          "total_file_count": 91,
+          "skipped_file_count": 88
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

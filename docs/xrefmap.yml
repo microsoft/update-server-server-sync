@@ -1964,6 +1964,19 @@ references:
   commentId: T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile
   fullName: Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile
   nameWithType: UpdateFile
+- uid: Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.#ctor
+  name: UpdateFile()
+  href: api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.html#Microsoft_PackageGraph_MicrosoftUpdate_Metadata_Content_UpdateFile__ctor
+  commentId: M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.#ctor
+  fullName: Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.UpdateFile()
+  nameWithType: UpdateFile.UpdateFile()
+- uid: Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.#ctor*
+  name: UpdateFile
+  href: api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.html#Microsoft_PackageGraph_MicrosoftUpdate_Metadata_Content_UpdateFile__ctor_
+  commentId: Overload:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.#ctor
+  isSpec: "True"
+  fullName: Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.UpdateFile
+  nameWithType: UpdateFile.UpdateFile
 - uid: Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.Digest
   name: Digest
   href: api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.html#Microsoft_PackageGraph_MicrosoftUpdate_Metadata_Content_UpdateFile_Digest
@@ -5535,6 +5548,50 @@ references:
   commentId: N:Microsoft.PackageGraph.Storage.Local
   fullName: Microsoft.PackageGraph.Storage.Local
   nameWithType: Microsoft.PackageGraph.Storage.Local
+- uid: Microsoft.PackageGraph.Storage.Local.ContentDownloader
+  name: ContentDownloader
+  href: api/Microsoft.PackageGraph.Storage.Local.ContentDownloader.html
+  commentId: T:Microsoft.PackageGraph.Storage.Local.ContentDownloader
+  fullName: Microsoft.PackageGraph.Storage.Local.ContentDownloader
+  nameWithType: ContentDownloader
+- uid: Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToFile(System.String,Microsoft.PackageGraph.ObjectModel.IContentFile,System.Threading.CancellationToken)
+  name: DownloadToFile(String, IContentFile, CancellationToken)
+  href: api/Microsoft.PackageGraph.Storage.Local.ContentDownloader.html#Microsoft_PackageGraph_Storage_Local_ContentDownloader_DownloadToFile_System_String_Microsoft_PackageGraph_ObjectModel_IContentFile_System_Threading_CancellationToken_
+  commentId: M:Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToFile(System.String,Microsoft.PackageGraph.ObjectModel.IContentFile,System.Threading.CancellationToken)
+  fullName: Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToFile(System.String, Microsoft.PackageGraph.ObjectModel.IContentFile, System.Threading.CancellationToken)
+  nameWithType: ContentDownloader.DownloadToFile(String, IContentFile, CancellationToken)
+- uid: Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToFile*
+  name: DownloadToFile
+  href: api/Microsoft.PackageGraph.Storage.Local.ContentDownloader.html#Microsoft_PackageGraph_Storage_Local_ContentDownloader_DownloadToFile_
+  commentId: Overload:Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToFile
+  isSpec: "True"
+  fullName: Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToFile
+  nameWithType: ContentDownloader.DownloadToFile
+- uid: Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToStream(System.IO.Stream,Microsoft.PackageGraph.ObjectModel.IContentFile,System.Int64,System.Threading.CancellationToken)
+  name: DownloadToStream(Stream, IContentFile, Int64, CancellationToken)
+  href: api/Microsoft.PackageGraph.Storage.Local.ContentDownloader.html#Microsoft_PackageGraph_Storage_Local_ContentDownloader_DownloadToStream_System_IO_Stream_Microsoft_PackageGraph_ObjectModel_IContentFile_System_Int64_System_Threading_CancellationToken_
+  commentId: M:Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToStream(System.IO.Stream,Microsoft.PackageGraph.ObjectModel.IContentFile,System.Int64,System.Threading.CancellationToken)
+  fullName: Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToStream(System.IO.Stream, Microsoft.PackageGraph.ObjectModel.IContentFile, System.Int64, System.Threading.CancellationToken)
+  nameWithType: ContentDownloader.DownloadToStream(Stream, IContentFile, Int64, CancellationToken)
+- uid: Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToStream(System.String,System.IO.Stream,System.Threading.CancellationToken)
+  name: DownloadToStream(String, Stream, CancellationToken)
+  href: api/Microsoft.PackageGraph.Storage.Local.ContentDownloader.html#Microsoft_PackageGraph_Storage_Local_ContentDownloader_DownloadToStream_System_String_System_IO_Stream_System_Threading_CancellationToken_
+  commentId: M:Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToStream(System.String,System.IO.Stream,System.Threading.CancellationToken)
+  fullName: Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToStream(System.String, System.IO.Stream, System.Threading.CancellationToken)
+  nameWithType: ContentDownloader.DownloadToStream(String, Stream, CancellationToken)
+- uid: Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToStream*
+  name: DownloadToStream
+  href: api/Microsoft.PackageGraph.Storage.Local.ContentDownloader.html#Microsoft_PackageGraph_Storage_Local_ContentDownloader_DownloadToStream_
+  commentId: Overload:Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToStream
+  isSpec: "True"
+  fullName: Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToStream
+  nameWithType: ContentDownloader.DownloadToStream
+- uid: Microsoft.PackageGraph.Storage.Local.ContentDownloader.OnDownloadProgress
+  name: OnDownloadProgress
+  href: api/Microsoft.PackageGraph.Storage.Local.ContentDownloader.html#Microsoft_PackageGraph_Storage_Local_ContentDownloader_OnDownloadProgress
+  commentId: E:Microsoft.PackageGraph.Storage.Local.ContentDownloader.OnDownloadProgress
+  fullName: Microsoft.PackageGraph.Storage.Local.ContentDownloader.OnDownloadProgress
+  nameWithType: ContentDownloader.OnDownloadProgress
 - uid: Microsoft.PackageGraph.Storage.Local.FileSystemContentStore
   name: FileSystemContentStore
   href: api/Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.html

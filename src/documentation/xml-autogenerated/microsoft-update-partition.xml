@@ -829,6 +829,11 @@
             </summary>
             <value>Content file digest.</value>
         </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.#ctor">
+            <summary>
+            Create a new UpdateFile
+            </summary>
+        </member>
         <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.Equals(System.Object)">
             <summary>
             Override equality method; two UpdateFile are equal if they have the same content hash.
@@ -2670,6 +2675,25 @@
             <param name="container">Container name that contains the metadata store</param>
             <returns>True if the metadata store exists, false otherwise</returns>
         </member>
+        <member name="T:Microsoft.PackageGraph.Storage.Local.ContentDownloader">
+            <summary>
+            Simple HTTP content downloader implementation
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.Storage.Local.ContentDownloader.OnDownloadProgress">
+            <summary>
+            Provides progress notifications during download
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToStream(System.String,System.IO.Stream,System.Threading.CancellationToken)">
+            <summary>
+            Downloads data to a stream
+            </summary>
+            <param name="source">Data source URL</param>
+            <param name="destination">Target stream</param>
+            <param name="cancellationToken">Cancellation token</param>
+            <returns>True on success, false otherwise</returns>
+        </member>
         <member name="M:Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToFile(System.String,Microsoft.PackageGraph.ObjectModel.IContentFile,System.Threading.CancellationToken)">
             <summary>
             Downloads a single file belonging to an update package. Supports resuming a partial download
@@ -2686,6 +2710,16 @@
             <param name="updateFile">The update to download</param>
             <param name="startOffset">Offset to resume download at</param>
             <param name="cancellationToken">Cancellation token</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.ContentDownloader.GetFileSizeOnServer(System.Net.Http.HttpClient,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Retrieves the size of HTTP resource using a HEAD request.
+            </summary>
+            <param name="client"></param>
+            <param name="url"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
         </member>
         <member name="T:Microsoft.PackageGraph.Storage.Local.ContentHash">
             <summary>

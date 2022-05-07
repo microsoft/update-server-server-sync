@@ -72,8 +72,11 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content
         [JsonIgnore]
         public IContentFileDigest Digest => Digests.First();
 
+        /// <summary>
+        /// Create a new UpdateFile
+        /// </summary>
         [JsonConstructor]
-        internal UpdateFile() { }
+        public UpdateFile() { }
 
         /// <summary>
         /// Override equality method; two UpdateFile are equal if they have the same content hash.
