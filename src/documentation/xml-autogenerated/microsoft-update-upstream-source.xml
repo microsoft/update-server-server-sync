@@ -1,0 +1,634 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>package-graph-microsoftupdate-source</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.ClientAuthenticator">
+            <summary>
+            Implements authentication with an upstream update server.
+            <para>
+            Use the ClientAuthenticator to obtain an access token for accessing metadata and content on an upstream update server.
+            </para>
+            </summary>
+            <example>
+            <code>
+            var authenticator = new ClientAuthenticator(Endpoint.Default);
+            var accessToken = await authenticator.Authenticate();
+            </code>
+            </example>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.ClientAuthenticator.UpstreamEndpoint">
+            <summary>
+            Gets the update server endpoint this instance of ClientAuthenticator authenticates with.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.ClientAuthenticator.#ctor(Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint)">
+            <summary>
+            Initializes a new instance of the ClientAuthenticator class to authenticate with the specified endpoint.
+            </summary>
+            <param name="endpoint">The endpoint to authenticate with.</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.ClientAuthenticator.#ctor">
+            <summary>
+            Initializes a new instance of the ClientAuthenticator that authenticates with the official
+            Microsoft upstream update server.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.ClientAuthenticator.AccountName">
+            <summary>
+            Account name used when authenticating. If null, a random GUID string is used.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.ClientAuthenticator.AccountGuid">
+            <summary>
+            Account GUID used for authenticating. If null, a random GUID is used
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.ClientAuthenticator.#ctor(Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint,System.String,System.Guid)">
+            <summary>
+            Initializes a new instance of the ClientAuthenticator class to authenticate with the specified endpoint, using
+            specified credentials.
+            </summary>
+            <param name="endpoint">The endpoint to authenticate with.</param>
+            <param name="accountName">Account name.</param>
+            <param name="accountGuid">Account GUID.</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.ClientAuthenticator.Authenticate(Microsoft.PackageGraph.MicrosoftUpdate.Source.ServiceAccessToken)">
+            <summary>
+            Performs authentication with an upstream update server, using a previously issued service access token.
+            </summary>
+            <remarks>
+            Refreshing an old token with this method is faster than obtaining a new token as it requires fewer server roundtrips.
+            
+            If the access cookie does not expire within 30 minutes, the function succeeds and the old token is returned.
+            </remarks>
+            <param name="cachedAccessToken">The previously issued access token.</param>
+            <returns>The new ServiceAccessToken</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.ClientAuthenticator.Authenticate">
+            <summary>
+            Performs authentication with an upstream update service.
+            </summary>
+            <returns>A new access token.</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.ClientAuthenticator.GetAuthenticationInfo">
+            <summary>
+            Retrieves authentication information from a WSUS server.
+            </summary>
+            <returns>List of supported authentication methods</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.ClientAuthenticator.GetAuthorizationCookie(Microsoft.UpdateServices.WebServices.ServerSync.AuthPlugInInfo)">
+            <summary>
+            Retrieves an authentication cookie from a DSS service.
+            </summary>
+            <returns>An authentication cookie</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.ClientAuthenticator.GetServerAccessCookie(Microsoft.UpdateServices.WebServices.DssAuthentication.AuthorizationCookie)">
+            <summary>
+            Retrieves a server access cookie based on an authentication cookie.
+            </summary>
+            <param name="authCookie">The auth cookie to use when requesting the access cookie</param>
+            <returns>An access cookie</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint">
+            <summary>
+            Identifies an Upstream Update Server.
+            <para>
+            Use <see cref="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint.Default"/> to get the endpoint of the official Microsoft Upstream Update Server.
+            </para>
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint.MicrosoftUpstreamRoot">
+            <summary>
+            The Microsoft upstream server root address. Used to construct the default endpoint.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint.URI">
+            <summary>
+            Gets the absolute URI of the upstream server.
+            </summary>
+            <value>
+            Absolute URI string to upstream server.
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint.ServerSyncURI">
+            <summary>
+            Gets the absolute URI of the server-to-server sync webservice.
+            </summary>
+            <value>
+            Absolute URI string to server-server sync webservice.
+            </value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the Endpoint class, with the specified URI to the upstream update server
+            </summary>
+            <param name="uri">Absolute URI of the upstream update server</param>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint.Default">
+            <summary>
+            Gets the endpoint of the official Microsoft upstream update server
+            </summary>
+            <value>
+            Upstream update server endpoint
+            </value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint.GetAuthenticationEndpointFromRelativeUrl(System.String)">
+            <summary>
+            Creates a complete URL to a DSS authentication web service based on the upstream URL and the DSS relative URL
+            </summary>
+            <param name="serviceRelativeUrl">The DSS service URL (relative)</param>
+            <returns>The complete URL to the DSS authentication endpoint</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage">
+            <summary>
+            The MetadataQueryStage enumeration represents, for reporting purposes, the possible execution states of an update metadata query.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage.Unknown">
+            <summary>
+            The query is being prepared.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage.AuthenticateStart">
+            <summary>
+            Authentication is starting.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage.AuthenticateEnd">
+            <summary>
+            Authentication ended.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage.GetServerConfigStart">
+            <summary>
+            Retrieving server configuration. The server configuration is required before retrieving updates metadata.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage.GetServerConfigEnd">
+            <summary>
+            Server configuration retrieval is complete.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage.GetRevisionIdsStart">
+            <summary>
+            Getting the list of update IDs (or category IDs).
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage.GetRevisionIdsEnd">
+            <summary>
+            The list of update IDs has been retrieved
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage.GetUpdateMetadataStart">
+            <summary>
+            Start getting metadata for all retrieved updated IDs
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage.GetUpdateMetadataProgress">
+            <summary>
+            Progress while getting update metadata. Reports percent progress.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage.GetUpdateMetadataEnd">
+            <summary>
+            Metadata retrieval is complete
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryProgress">
+            <summary>
+            Provides progress data for a metadata query.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryProgress.PercentDone">
+            <summary>
+            Percent done. Not all query stages support progress reporting.
+            </summary>
+            <value>
+            Percent done value, in the [0,100] range.
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryProgress.Maximum">
+            <summary>
+            Number of work items in a stage. Reported only for stages that support percent done reporting. 
+            </summary>
+            <value>
+            Number of work items (updates, etc.) to process
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryProgress.Current">
+            <summary>
+            Number of work items processed. Reported only for stages that support percent done reporting.
+            </summary>
+            <value>
+            Number of work items (updates, etc.) processed so far.</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryProgress.CurrentTask">
+            <summary>
+            The current stage in the query.
+            </summary>
+            <value>One of the possible stages from <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage"/></value>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.ServiceAccessToken">
+            <summary>
+            Grants access to an upstream update server. Requried for most requests to an update server.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.ServiceAccessToken.AuthenticationInfo">
+            <summary>
+            Authentication data received from an update server
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.ServiceAccessToken.AuthCookie">
+            <summary>
+            Authorization cookie received from a DSS
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.ServiceAccessToken.AccessCookie">
+            <summary>
+            Access cookie received from the upstream update server
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.ServiceAccessToken.Expired">
+            <summary>
+            Check if the access token is expired
+            </summary>
+            <value>True is expired, false otherwise</value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.ServiceAccessToken.ExpiresIn(System.TimeSpan)">
+            <summary>
+            Check if the access token will expire within the specified time span
+            </summary>
+            <param name="timeSpan">Time span from current time.</param>
+            <returns>True if the token will expire before the timespan passes, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.ServiceAccessToken.ToJson">
+            <summary>
+            Serializes an instance of <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.ServiceAccessToken"/> to JSON
+            </summary>
+            <returns>JSON string</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.ServiceAccessToken.FromJson(System.String)">
+            <summary>
+            Deserialize an instance of <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.ServiceAccessToken"/> from a JSON string.
+            </summary>
+            <param name="json">The JSON string containing the serialized ServiceAccessToken</param>
+            <returns>Deserialiazed ServiceAccessToken</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerClient">
+            <summary>
+            <para>
+            Retrieves update metadata for expired updates from an upstream update server.
+            </para>
+            <para>
+            This class should only be used for retrieving individual expired updates when their ID is known. For querying updates use <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource"/>. 
+            For querying products and classifications, use <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource"/>
+            </para>
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerClient.UpstreamEndpoint">
+            <summary>
+            Gets the update server <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint"/> this client connects to.
+            </summary>
+            <value>
+            Update server <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint"/>
+            </value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerClient.ServerSyncClient">
+            <summary>
+            Client used to issue SOAP requests
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerClient.AccessToken">
+            <summary>
+            Cached access cookie. If not set in the constructor, a new access token will be obtained
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerClient.ConfigData">
+            <summary>
+            Service configuration data. Contains maximum query limits, etc.
+            If not passed to the constructor, this class will retrieve it from the service
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerClient.MetadataQueryProgress">
+            <summary>
+            Raised on progress during a metadata query. Reports the current query stage.
+            </summary>
+            <value>Progress data</value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerClient.#ctor(Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint)">
+            <summary>
+            Initializes a new instance of UpstreamServerClient.
+            </summary>
+            <param name="upstreamEndpoint">The server endpoint this client will connect to.</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerClient.GetServerConfigData">
+            <summary>
+            Retrieves configuration data from the upstream server.
+            </summary>
+            <returns>Server configuration data</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerClient.TryGetExpiredUpdate(System.Guid,System.Int32,System.Int32)">
+            <summary>
+            Attempts to retrieve metadata for an update that has expired and was removed from the update catalog index.
+            Sometimes, the metadata for the expired update can still be retrieved.
+            This method takes the update ID (without revision), a starting revision and a maximum range of revisions to attempt retrieval for. This method returns the metadata corresponding to the first revision found.
+            </summary>
+            <param name="partialId">The update ID, without the revision part.</param>
+            <param name="revisionHint">The revision at which to start the search.</param>
+            <param name="searchSpaceWindow">The range of revisions to attempt retrieval for.</param>
+            <returns>An update if a revision was found, null otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerClient.GetUpdateDataForIds(System.Collections.Generic.List{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity})">
+            <summary>
+            Retrieves update data for the list of update ids
+            </summary>
+            <param name="updateIds">The ids to retrieve data for</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerClient.CreateBatchedListFromFlatList``1(System.Collections.Generic.List{``0},System.Int32)">
+            <summary>
+            Breaks down a flat list of objects in a list of batches, each batch having a maximum allowed size
+            </summary>
+            <typeparam name="T">The type of objects to batch</typeparam>
+            <param name="flatList">The flat list of objects to break down</param>
+            <param name="maxBatchSize">The maximum size of a batch</param>
+            <returns>The batched list</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerErrorCode">
+            <summary>
+            The UpstreamServerErrorCode enumeration contains errors than an upstream server can return with a SOAP reply.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerErrorCode.InvalidAuthorizationCookie">
+            <summary>
+            The authorization cookie was invalid
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerErrorCode.IncompatibleProtocolVersion">
+            <summary>
+            The protocol version is not compatible with the server
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerErrorCode.InternalServerError">
+            <summary>
+            Internal server error
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerErrorCode.InvalidParameters">
+            <summary>
+            The parametes sent to the server are invalid
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerErrorCode.Unknown">
+            <summary>
+            Unknown other errors
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerException">
+            <summary>
+            The exception that is thrown when an error code is received from an upstream update server.
+            It contains an inner SOAP FaultException.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerException.ErrorCode">
+            <summary>
+            Gets the UpstreamServerErrorCode received over SOAP from the server
+            </summary>
+            <value>
+            Error code reported by the upstream server.
+            </value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerException.#ctor(System.ServiceModel.FaultException)">
+            <summary>
+            Initialize a new instance of UpstreamServerException from a SOAP FaultException.
+            </summary>
+            <param name="soapException">The inner SOAP exception.</param>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource">
+            <summary>
+            Retrieves all available categories from the Microsoft Update catalog.
+            <para>
+            Categories consist of Detectoids, Products and Classifications.
+            </para>
+            <para>
+            Products and classifications are used to categorize updates; they are useful as filters for selectively
+            sync'ing updates from an upstream server.
+            </para>
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.MetadataCopyProgress">
+            <summary>
+            Progress indicator during metadata copy operations
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.OpenProgress">
+            <summary>
+            Progress indicator during source open operations. Not used by UpstreamCategoriesSource.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.#ctor(Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint)">
+            <summary>
+            Create a new MicrosoftUpdate package source that retrieves updates from the specified endpoint
+            </summary>
+            <param name="upstreamEndpoint">Endpoint to get updates from</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.CreateBatchedListFromFlatList``1(System.Collections.Generic.List{``0},System.Int32)">
+            <summary>
+            Breaks down a flat list of objects in a list of batches, each batch having a maximum allowed size
+            </summary>
+            <typeparam name="T">The type of objects to batch</typeparam>
+            <param name="flatList">The flat list of objects to break down</param>
+            <param name="maxBatchSize">The maximum size of a batch</param>
+            <returns>The batched list</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.CopyTo(Microsoft.PackageGraph.Storage.IMetadataSink,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IMetadataSource.CopyTo(Microsoft.PackageGraph.Storage.IMetadataSink,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.CopyTo(Microsoft.PackageGraph.Storage.IMetadataSink,Microsoft.PackageGraph.Storage.IMetadataFilter,System.Threading.CancellationToken)">
+            <summary>
+            Filtered copy not implemented for the categories source as categories cannot be filtered when
+            sync'ing from an upstream server.
+            </summary>
+            <param name="destination">Destination store for the retrieved metadata</param>
+            <param name="filter">Filter to apply during the copy operation</param>
+            <param name="cancelToken">Cancellation token</param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.GetMetadata(Microsoft.PackageGraph.ObjectModel.IPackageIdentity)">
+            <summary>
+            Not implemented for an upstream categories source
+            </summary>
+            <param name="packageIdentity">Identity of the category to retrieve</param>
+            <returns>Category metadata as stream</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.ContainsMetadata(Microsoft.PackageGraph.ObjectModel.IPackageIdentity)">
+            <summary>
+            Not implemented for an upstream categories source
+            </summary>
+            <param name="packageIdentity">Indentity of category to lookup</param>
+            <returns>True if found, false otherwise</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.GetFiles``1(Microsoft.PackageGraph.ObjectModel.IPackageIdentity)">
+            <summary>
+            Not implemented for an upstream update source. Also, do not contain files.
+            </summary>
+            <typeparam name="T">Type of file to retrieve.</typeparam>
+            <param name="packageIdentity">Identity of the category to retrieve files for.</param>
+            <returns>List of files in the category</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter">
+            <summary>
+            Implements a filter for updates based by product and/or classification.
+            <para>
+            The filter is used for selectively sync'ing updates from an upstream update server through <see cref="T:Microsoft.PackageGraph.Storage.IMetadataSource"/>
+            </para>
+            <para>
+            The filter can also be used to selectively copy updates between <see cref="T:Microsoft.PackageGraph.Storage.IMetadataStore"/>. The more versatile <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter"/> should be used for this scenario instead.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.ProductsFilter">
+            <summary>
+            Gets the list of products allowed by the filter.
+            If this list if empty, no updates will match the filter. Add product IDs to this list to have them match the filter.
+            </summary>
+            <value>List of product identities.</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.ClassificationsFilter">
+            <summary>
+            Gets the list of classifications allowed by the filter.
+            If this list if empty, no updates will match the filter. Add classification IDs to this list to have them match the filter.
+            </summary>
+            <value>List of classification identities.</value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.#ctor">
+            <summary>
+            Creates an empty filter.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.#ctor(System.Collections.Generic.IEnumerable{System.Guid},System.Collections.Generic.IEnumerable{System.Guid})">
+            <summary>
+            Initialize a new SourceFilter from the specified products and classifications.
+            </summary>
+            <param name="products">The products to match</param>
+            <param name="classifications">The classifications to match</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.ToServerSyncFilter(System.String)">
+            <summary>
+            Creates a ServerSyncFilter object to be used with GetRevisionIdListAsync
+            </summary>
+            <returns>A ServerSyncFilter instance</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.Equals(System.Object)">
+            <summary>
+            Override Equals for 2 SourceFilter objects
+            </summary>
+            <param name="obj">Other SourceFilter</param>
+            <returns>
+            <para>True if the two SourceFilter are identical (same product and classification filters).</para>
+            <para>False otherwise</para>
+            </returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.op_Equality(Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter,Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter)">
+            <summary>
+            Override equality operator SourceFilter objects
+            </summary>
+            <param name="lhs">Left SourceFilter</param>
+            <param name="rhs">Right SourceFilter</param>
+            <returns>
+            <para>True if both lhs and rhs are SourceFilter and they contain the same classification and product filters</para>
+            <para>False otherwise</para>
+            </returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.op_Inequality(Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter,Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter)">
+            <summary>
+            Override inequality operator SourceFilter objects
+            </summary>
+            <param name="lhs">Left SourceFilter</param>
+            <param name="rhs">Right SourceFilter</param>
+            <returns>
+            <para>True if both lhs and rhs are not QueryFilter or they contain different classification and product filters</para>
+            <para>False otherwise</para>
+            </returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.GetHashCode">
+            <summary>
+            Returns a hash code based on the hash codes of the contained classification and products
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.Apply(Microsoft.PackageGraph.Storage.IMetadataStore)">
+            <summary>
+            Applies the filter to a <see cref="T:Microsoft.PackageGraph.Storage.IMetadataStore"/> and returns the matched packages
+            </summary>
+            <param name="source">The metadata <see cref="T:Microsoft.PackageGraph.Storage.IMetadataStore"/> to filter</param>
+            <returns>List of packages that match the filter</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource">
+            <summary>
+            Retrieves updates from the Microsoft Update catalog or a WSUS upstream server.
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.MetadataCopyProgress">
+            <summary>
+            Progress indicator during metadata copy operations
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.OpenProgress">
+            <summary>
+            Progress indicator during source open operations. Not used by UpstreamUpdatesSource.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.#ctor(Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint,Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter)">
+            <summary>
+            Create a new MicrosoftUpdate package source that retrieves updates from the specified endpoint
+            </summary>
+            <param name="upstreamEndpoint">Endpoint to get updates from</param>
+            <param name="filter">Filter to apply when retrieving updates from this source.</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.CreateBatchedListFromFlatList``1(System.Collections.Generic.List{``0},System.Int32)">
+            <summary>
+            Breaks down a flat list of objects in a list of batches, each batch having a maximum allowed size
+            </summary>
+            <typeparam name="T">The type of objects to batch</typeparam>
+            <param name="flatList">The flat list of objects to break down</param>
+            <param name="maxBatchSize">The maximum size of a batch</param>
+            <returns>The batched list</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.CopyTo(Microsoft.PackageGraph.Storage.IMetadataSink,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IMetadataSource.CopyTo(Microsoft.PackageGraph.Storage.IMetadataSink,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.CopyTo(Microsoft.PackageGraph.Storage.IMetadataSink,Microsoft.PackageGraph.Storage.IMetadataFilter,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IMetadataSource.CopyTo(Microsoft.PackageGraph.Storage.IMetadataSink,Microsoft.PackageGraph.Storage.IMetadataFilter,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.GetMetadata(Microsoft.PackageGraph.ObjectModel.IPackageIdentity)">
+            <summary>
+            Not implemented for an upstream update source
+            </summary>
+            <param name="packageIdentity">Identity of update to retrieve</param>
+            <returns>Update metadata as stream</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.ContainsMetadata(Microsoft.PackageGraph.ObjectModel.IPackageIdentity)">
+            <summary>
+            Not implemented for an upstream update source
+            </summary>
+            <param name="packageIdentity">Indentity of package to lookup</param>
+            <returns>True if found, false otherwise</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.GetFiles``1(Microsoft.PackageGraph.ObjectModel.IPackageIdentity)">
+            <summary>
+            Not implemented for an upstream update source
+            </summary>
+            <typeparam name="T">Type of file to retrieve.</typeparam>
+            <param name="packageIdentity">Identity of the package to retrieve files for.</param>
+            <returns>List of files in the package</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+    </members>
+</doc>

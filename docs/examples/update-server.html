@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content=" ">
+    <meta name="generator" content="docfx 2.59.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+
+<p>This sample runs a a MUv6 update server.</p>
+<p>The update server delivers updates to Windows Update clients that have been configured through group policy to connect to it. For more information, see <a href="https://docs.microsoft.com/en-us/windows/deployment/update/waas-wu-settings#specify-intranet-microsoft-update-service-location">Specify intranet Microsoft update service location</a></p>
+<p>Fetch some Windows updates before running this sample. A good starting point is to sync classification &quot;Security Updates&quot; for the &quot;Windows 11&quot; product.</p>
+<pre><code>// Load the default configuration for the MUv6 server
+// The default configuration JSON file is stored with the upsync tool code
+var serviceConfigurationJson = File.ReadAllText(&quot;./update-server-config.json&quot;);
+var metadataPath = &quot;./store&quot;;
+var contentPath = &quot;./content&quot;;
+// Do not use localhost; bind to an endpoint accessible
+// to the devices you want to update.
+var bindEndpoint = &quot;localhost;
+var bindPort = 40080;
+
+var host = new WebHostBuilder()
+    // Bind to an IP address of HOST NAME
+    // Use the same endpoint information when configuring update group policy on the devices
+    // that should get updates from this server
+    .UseUrls($&quot;http://{bindEndpoint}:{bindPort}&quot;)
+    // Use the sample MUv6 server startup. Use the sample startup code as a starting 
+    // point for customization
+    .UseStartup&lt;UpdateServerStartup&gt;()
+    .UseKestrel()
+    .ConfigureKestrel((context, opts) =&gt; { })
+    .ConfigureLogging((hostingContext, logging) =&gt;
+    {
+        logging.AddConfiguration(hostingContext.Configuration.GetSection(&quot;Logging&quot;));
+        logging.AddConsole();
+        logging.AddDebug();
+        logging.AddEventSourceLogger();
+    })
+    .ConfigureAppConfiguration((hostingContext, config) =&gt;
+    {
+        var configDictionary = new Dictionary&lt;string, string&gt;()
+        {
+            // Local path of update metadata
+            { 
+                &quot;metadata-path&quot;, 
+                metadataPath 
+            },
+
+            // Local path of update content
+            { 
+                &quot;content-path&quot;, 
+                contentPath 
+            },
+
+            // The MUv6 service configuration to use. 
+            // Windows Update clients download this configuration.
+            { 
+                &quot;service-config-json&quot;, 
+                serviceConfigurationJson 
+            },
+
+            // The URL where update content will be served from.
+            // This path match with the path used in ASP.NETCore to serve content
+            // In this case, we use the sample MicrosoftUpdateContentController, 
+            // which serves content from /microsoftupdate/content
+            { 
+                &quot;content-http-root&quot;, $&quot;http://{bindEndpoint}:{bindPort}/microsoftupdate/content&quot; 
+            },
+        };
+
+        config.AddInMemoryCollection(configDictionary);
+    })
+    .Build();
+
+host.Run();
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/documentation/docfx-config/examples/update-server.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

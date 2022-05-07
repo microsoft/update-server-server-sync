@@ -1,0 +1,756 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class FileSystemContentStore
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class FileSystemContentStore
+   ">
+    <meta name="generator" content="docfx 2.59.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore">
+  
+  
+  <h1 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore" class="text-break">Class FileSystemContentStore
+  </h1>
+  <div class="markdown level0 summary"><p>Downloads and stores update content as files on the local file system.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">FileSystemContentStore</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.PackageGraph.Storage.IContentStore.html">IContentStore</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.PackageGraph.Storage.Local.html">Microsoft.PackageGraph.Storage.Local</a></h6>
+  <h6><strong>Assembly</strong>: package-graph-microsoft-update.dll</h6>
+  <h5 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class FileSystemContentStore : IContentStore</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore__ctor_System_String_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.%23ctor(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L48">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore__ctor_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.#ctor*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore__ctor_System_String_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.#ctor(System.String)">FileSystemContentStore(String)</h4>
+  <div class="markdown level1 summary"><p>Opens or creates a new file system based content store.
+If the specified directory does not exist, it will be created.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FileSystemContentStore(string path)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>Path where to create the store</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_DownloadedSize.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.DownloadedSize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L38">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_DownloadedSize_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.DownloadedSize*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_DownloadedSize" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.DownloadedSize">DownloadedSize</h4>
+  <div class="markdown level1 summary"><p>The size in bytes of content downloaded during the current download operation</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long DownloadedSize { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int64</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_QueuedCount.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.QueuedCount%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L41">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_QueuedCount_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.QueuedCount*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_QueuedCount" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.QueuedCount">QueuedCount</h4>
+  <div class="markdown level1 summary"><p>The count of content files left to be downloaded in the current download operation</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int QueuedCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_QueuedSize.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.QueuedSize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L35">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_QueuedSize_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.QueuedSize*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_QueuedSize" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.QueuedSize">QueuedSize</h4>
+  <div class="markdown level1 summary"><p>The size in bytes of content left to be downloaded in the current download operation</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long QueuedSize { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int64</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Contains_Microsoft_PackageGraph_ObjectModel_IContentFile_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFile)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L122">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Contains_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Contains*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Contains_Microsoft_PackageGraph_ObjectModel_IContentFile_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFile)">Contains(IContentFile)</h4>
+  <div class="markdown level1 summary"><p>Checks if a content file has been downloaded</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(IContentFile file)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.ObjectModel.IContentFile.html">IContentFile</a></td>
+        <td><span class="parametername">file</span></td>
+        <td><p>File to check if it was downloaded</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the file was downloaded, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Contains_Microsoft_PackageGraph_ObjectModel_IContentFileDigest_System_String__.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFileDigest%2CSystem.String%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L188">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Contains_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Contains*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Contains_Microsoft_PackageGraph_ObjectModel_IContentFileDigest_System_String__" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFileDigest,System.String@)">Contains(IContentFileDigest, out String)</h4>
+  <div class="markdown level1 summary"><p>Checks if an update file (by hash) has been downloaded</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(IContentFileDigest fileDigest, out string fileName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.ObjectModel.IContentFileDigest.html">IContentFileDigest</a></td>
+        <td><span class="parametername">fileDigest</span></td>
+        <td><p>File hash to check if it was downloaded</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>If the store contains the file by hash, this parameter receives the original file name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the file was downloaded, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Download_System_Collections_Generic_IEnumerable_Microsoft_PackageGraph_ObjectModel_IContentFile__System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Download(System.Collections.Generic.IEnumerable%7BMicrosoft.PackageGraph.ObjectModel.IContentFile%7D%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L59">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Download_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Download*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Download_System_Collections_Generic_IEnumerable_Microsoft_PackageGraph_ObjectModel_IContentFile__System_Threading_CancellationToken_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Download(System.Collections.Generic.IEnumerable{Microsoft.PackageGraph.ObjectModel.IContentFile},System.Threading.CancellationToken)">Download(IEnumerable&lt;IContentFile&gt;, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Downloads the specified update content files.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Download(IEnumerable&lt;IContentFile&gt; files, CancellationToken cancelToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.PackageGraph.ObjectModel.IContentFile.html">IContentFile</a>&gt;</td>
+        <td><span class="parametername">files</span></td>
+        <td><p>List of update content files to download</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><span class="parametername">cancelToken</span></td>
+        <td><p>Cancellation token for aborting the operation</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_DownloadAsync_Microsoft_PackageGraph_ObjectModel_IContentFile_System_Threading_CancellationToken_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.DownloadAsync(Microsoft.PackageGraph.ObjectModel.IContentFile%2CSystem.Threading.CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L182">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_DownloadAsync_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.DownloadAsync*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_DownloadAsync_Microsoft_PackageGraph_ObjectModel_IContentFile_System_Threading_CancellationToken_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.DownloadAsync(Microsoft.PackageGraph.ObjectModel.IContentFile,System.Threading.CancellationToken)">DownloadAsync(IContentFile, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Downloads the specified update content file</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task DownloadAsync(IContentFile file, CancellationToken cancelToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.ObjectModel.IContentFile.html">IContentFile</a></td>
+        <td><span class="parametername">file</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><span class="parametername">cancelToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Get_Microsoft_PackageGraph_ObjectModel_IContentFile_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFile)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L128">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Get_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Get*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Get_Microsoft_PackageGraph_ObjectModel_IContentFile_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFile)">Get(IContentFile)</h4>
+  <div class="markdown level1 summary"><p>Gets a read only stream for an update content file</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Stream Get(IContentFile updateFile)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.ObjectModel.IContentFile.html">IContentFile</a></td>
+        <td><span class="parametername">updateFile</span></td>
+        <td><p>The update file to open</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IO.Stream</span></td>
+        <td><p>Read only stream for the requested update content file</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Get_Microsoft_PackageGraph_ObjectModel_IContentFileDigest_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L206">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Get_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Get*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Get_Microsoft_PackageGraph_ObjectModel_IContentFileDigest_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)">Get(IContentFileDigest)</h4>
+  <div class="markdown level1 summary"><p>Gets a read only stream for an update content file (by hash)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Stream Get(IContentFileDigest fileDigest)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.ObjectModel.IContentFileDigest.html">IContentFileDigest</a></td>
+        <td><span class="parametername">fileDigest</span></td>
+        <td><p>The update file (by hash) to open</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IO.Stream</span></td>
+        <td><p>Read only stream for the requested update content file</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_GetContentDirectoryName_Microsoft_PackageGraph_ObjectModel_IContentFileDigest_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetContentDirectoryName(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L175">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_GetContentDirectoryName_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetContentDirectoryName*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_GetContentDirectoryName_Microsoft_PackageGraph_ObjectModel_IContentFileDigest_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetContentDirectoryName(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)">GetContentDirectoryName(IContentFileDigest)</h4>
+  <div class="markdown level1 summary"><p>Returns the directory name under which an update file would be stored on disk.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string GetContentDirectoryName(IContentFileDigest fileDigest)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.ObjectModel.IContentFileDigest.html">IContentFileDigest</a></td>
+        <td><span class="parametername">fileDigest</span></td>
+        <td><p>The update content digest.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Content parent directory name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_GetUri_Microsoft_PackageGraph_ObjectModel_IContentFile_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFile)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L150">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_GetUri_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetUri*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_GetUri_Microsoft_PackageGraph_ObjectModel_IContentFile_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFile)">GetUri(IContentFile)</h4>
+  <div class="markdown level1 summary"><p>Gets the source URI for the update content file</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string GetUri(IContentFile updateFile)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.ObjectModel.IContentFile.html">IContentFile</a></td>
+        <td><span class="parametername">updateFile</span></td>
+        <td><p>The update file</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Source Uri for the content file</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_GetUri_Microsoft_PackageGraph_ObjectModel_IContentFileDigest_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L163">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_GetUri_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetUri*"></a>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_GetUri_Microsoft_PackageGraph_ObjectModel_IContentFileDigest_" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)">GetUri(IContentFileDigest)</h4>
+  <div class="markdown level1 summary"><p>Gets an URI for the content file (by hash)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string GetUri(IContentFileDigest fileDigest)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.ObjectModel.IContentFileDigest.html">IContentFileDigest</a></td>
+        <td><span class="parametername">fileDigest</span></td>
+        <td><p>The update file hash</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Uri to content file</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Progress.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Progress%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L20">View Source</a>
+  </span>
+  <h4 id="Microsoft_PackageGraph_Storage_Local_FileSystemContentStore_Progress" data-uid="Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Progress">Progress</h4>
+  <div class="markdown level1 summary"><p>Raised on progress for long running content store operations</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ContentOperationProgress&gt; Progress</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="Microsoft.PackageGraph.ObjectModel.ContentOperationProgress.html">ContentOperationProgress</a>&gt;</td>
+        <td><p>Progress data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.PackageGraph.Storage.IContentStore.html">IContentStore</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_Storage_Local_FileSystemContentStore.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.Storage.Local.FileSystemContentStore%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Storage/FileSystem/FileSystemContentStore.cs/#L17" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

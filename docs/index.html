@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Microsoft.UpdateServices Server Sync </title>
+    <title>Microsoft.UpdateServices </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Microsoft.UpdateServices Server Sync ">
-    <meta name="generator" content="docfx 2.43.2.0">
+    <meta name="title" content="Microsoft.UpdateServices ">
+    <meta name="generator" content="docfx 2.59.2.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -60,12 +60,26 @@
         <div class="article row grid">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="microsoftupdateservices-server-sync">Microsoft.UpdateServices Server Sync</h1>
+<h1 id="microsoftupdateservices">Microsoft.UpdateServices</h1>
 
-<p>This code library provides a C# implementation (.NET Core) of the Microsoft Update Server-Server sync protocol, for both the client and server roles.</p>
-<p>Use the <a href="api/index.html#the-upstreamserverclient">client implementation</a> to programmatically browse the Microsoft Update catalog, sync updates locally and run advanced queries on update metadata.</p>
-<p>Use the <a href="api/index.html#the-upsteam-server">server implementation</a> to distribute updates to downstream servers, like <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-server-update-services/get-started/windows-server-update-services-wsus">WSUS</a> or server clients built with this library.</p>
-<p>To deploy Microsoft updates fetched with this library to Windows client PCs, use the <a href="https://microsoft.github.io/update-client-server-sync/">Microsoft Update Client Sync library</a> and <a href="https://github.com/microsoft/update-client-server-sync">GitHub repo</a>.</p>
+<h4 id="overview">Overview</h4>
+<p>This library provides:</p>
+<ul>
+<li>C# implementation (.NET Core) of the Microsoft Update Server-Server sync protocol, for both the client and server roles.</li>
+<li>C# implementation (.NET Core) of the server side of the Microsoft Update Client-Server sync protocol (MUv6)</li>
+<li>An object model for updates in the Microsoft Update Catalog</li>
+</ul>
+<h4 id="use-cases-for-this-library">Use cases for this library</h4>
+<h5 id="retrieve-and-inspect-update-metadata-from-the-microsoft-update-catalog">Retrieve and inspect update metadata from the Microsoft Update Catalog</h5>
+<p>Use the update source interfaces, <a href="api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.html">UpstreamCategoriesSource</a> and <a href="api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.html">UpstreamUpdatesSource</a>, to retrieve updates from Microsoft Update Catalog (or upstream WSUS server), then use the provided <a href="api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.html">object model</a> to inspect the metadata.</p>
+<p>Optionally, you can use a <a href="api/Microsoft.PackageGraph.Storage.IMetadataStore.html">IMetadataStore</a> to store update metadata locally. This enables incremental update synchronization with the upstream server and indexed fast queries on update metadata.</p>
+<h5 id="serve-updates-to-downstream-wsus-servers-or-windows-update-clients">Serve updates to downstream WSUS servers or Windows Update clients</h5>
+<p>Use <a href="api/Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.UpstreamServerStartup.html">UpstreamServerStartup</a> in a ASP.NETCore web app to serve updates to other downstream WSUS servers.</p>
+<p>Use <a href="api/Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.UpdateServerStartup.html">UpdateServerStartup</a> in a ASP.NETCore web app to serve Windows Update clients over the MUv6 protocol.</p>
+<p>First retrieve updates from the Microsoft Update Catalog (or other upstream servers) and store them in a <a href="api/Microsoft.PackageGraph.Storage.IMetadataStore.html">IMetadataStore</a>,</p>
+<h5 id="customize-the-update-metadata-storage">Customize the update metadata storage</h5>
+<p>Implement custom <a href="api/Microsoft.PackageGraph.Storage.IMetadataStore.html">IMetadataStore</a>, <a href="api/Microsoft.PackageGraph.Storage.IMetadataSink.html">IMetadataSink</a>  or <a href="api/Microsoft.PackageGraph.Storage.IMetadataSource.html">IMetadataSource</a> for specialized storage of update metadata.</p>
+<h4 id="additional-resources">Additional resources</h4>
 <p>See <a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wsusss/f49f0c3e-a426-4b4b-b401-9aeb2892815c">MS-WSUSSS</a> for the complete technical documentation of the protocol.</p>
 <p>See <a href="https://docs.microsoft.com/en-us/windows-server/administration/windows-server-update-services/get-started/windows-server-update-services-wsus">Windows Server Update Server</a> for an introduction to WSUS.</p>
 </article>
@@ -75,10 +89,14 @@
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/documentation/docfx-config/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

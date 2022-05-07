@@ -1,0 +1,162 @@
+{
+  "LastChange": "2017-03-08T21:07:43.58Z",
+  "IsRegistrationRequired": false,
+  "AuthInfo": [
+    {
+      "PlugInID": "PidValidator",
+      "ServiceUrl": "",
+      "Parameter": ""
+    },
+    {
+      "PlugInID": "Anonymous",
+      "ServiceUrl": "",
+      "Parameter": ""
+    }
+  ],
+  "Properties": [
+    {
+      "Name": "MaxExtendedUpdatesPerRequest",
+      "Value": "50"
+    },
+    {
+      "Name": "ODFFileURL",
+      "Value": "http://www.update.microsoft.com/odf/v6odf.xml"
+    },
+    {
+      "Name": "ProtocolVersion",
+      "Value": "4.2"
+    },
+    {
+      "Name": "AllowUninstall",
+      "Value": "0"
+    },
+    {
+      "Name": "AutoAcceptEula",
+      "Value": "0"
+    },
+    {
+      "Name": "AllowDeadline",
+      "Value": "0"
+    },
+    {
+      "Name": "ProvideFeaturedUpdate",
+      "Value": "1"
+    },
+    {
+      "Name": "ReportBundledPerUpdateEvent",
+      "Value": "1"
+    },
+    {
+      "Name": "EventBatchFlushAgeMin",
+      "Value": "539"
+    },
+    {
+      "Name": "EventBatchFlushAgeMax",
+      "Value": "540"
+    },
+    {
+      "Name": "ReportRetryWaitTimeMin",
+      "Value": "3600"
+    },
+    {
+      "Name": "ReportRetryWaitTimeMax",
+      "Value": "86400"
+    },
+    {
+      "Name": "EventSamplingThreshold",
+      "Value": "50"
+    },
+    {
+      "Name": "DetectEventSamplingThreshold",
+      "Value": "20"
+    },
+    {
+      "Name": "CompressBundleEvents",
+      "Value": "1"
+    },
+    {
+      "Name": "ReportAURebootCompletedEvent",
+      "Value": "0"
+    },
+    {
+      "Name": "ReportMachineInfoExtension",
+      "Value": "1"
+    },
+    {
+      "Name": "ReportDetectionEventExtension",
+      "Value": "1"
+    },
+    {
+      "Name": "ReportPredeploymentCheck",
+      "Value": "0"
+    },
+    {
+      "Name": "AllowExternalEvents",
+      "Value": "0"
+    },
+    {
+      "Name": "CanContentChange",
+      "Value": "1"
+    },
+    {
+      "Name": "IsHostingExpressContentConfigurable",
+      "Value": "0"
+    },
+    {
+      "Name": "RefreshFileLocationsWhenRefreshCache",
+      "Value": "0"
+    },
+    {
+      "Name": "MaxExternalEventPayloadSize",
+      "Value": "0"
+    },
+    {
+      "Name": "PerformDriverSync",
+      "Value": "1"
+    },
+    {
+      "Name": "MicrosoftPreferredCategoryIds",
+      "Value": "0FA1201D-4330-4FA8-8AE9-B877473B6441;E0789628-CE08-4437-BE74-2495B842F43B"
+    },
+    {
+      "Name": "DownloadsLimitedBySizeOnRestrictedNetworks",
+      "Value": "0"
+    },
+    {
+      "Name": "ServiceSupportsPerUpdateSampling",
+      "Value": "1"
+    },
+    {
+      "Name": "DualStackDownloadPrefix",
+      "Value": ""
+    },
+    {
+      "Name": "IPv4OnlyDownloadPrefix",
+      "Value": ""
+    },
+    {
+      "Name": "BackgroundClientPrefix",
+      "Value": ""
+    },
+    {
+      "Name": "AcquisitionClientPrefix",
+      "Value": ""
+    },
+    {
+      "Name": "InteractiveUpdateClientPrefix",
+      "Value": ""
+    },
+    {
+      "Name": "MSPreferredContentPrefix",
+      "Value": ""
+    },
+    {
+      "Name": "SyncUpdatesSupportsTreatAppCategoryIdsAsInstalled",
+      "Value": "0"
+    },
+    {
+      "Name": "SyncUpdatesSupportsAdditionalFragments",
+      "Value": "0"
+    }
+  ]
+}

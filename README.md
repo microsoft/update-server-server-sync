@@ -7,34 +7,27 @@ Use this library to
 * sync updates locally and run advanced queries on update metadata
 * export updates to WSUS
 * run an upstream update server in ASP.NET Core and serve updates to downstream WSUS servers
+* run an update server in ASP.NET Core and serve updates Windows Update clients
 
 ## Reference the library in your project
 
-The easiest way is to use the published NuGet package. In your .NET Core project, add a reference to the [UpdateServices.ServerServerSync NuGet package](https://www.nuget.org/packages/UpdateServices.ServerServerSync). Make sure to check "Include prerelease" if searching for the NuGet package in Visual Studio.
-
-Alternatively, you can compile the code yourself. Visual Studio 2017 with .Net Core development tools is required to build the solution provided at build\server-server-update-sync.sln
+Visual Studio 2022 with .Net Core development tools is required to build the solution provided at build\microsoft-update.sln
 
 ## Use the library
 
 Please refer to the [API documentation](https://microsoft.github.io/update-server-server-sync/) for help on using the library.
 
-[Get started with the updates sync client](https://microsoft.github.io/update-server-server-sync/api/index.html#the-upstreamserverclient)
-
-[Get started with the updates sync server](https://microsoft.github.io/update-server-server-sync/api/index.html#the-upsteam-server)
-
-[Code Examples](https://microsoft.github.io/update-server-server-sync/examples/repository_basic.html)
+[Code samples](https://microsoft.github.io/update-server-server-sync/examples/categories-fetch.html)
 
 
 ## Use the upsync utility
-The upsync command line utility is provided as a sample for using the library. Upsync can be used to browse Microsoft's update catalog, sync updates and export updates to a WSUS server.
+The upsync command line utility is provided as a sample for using the library. Upsync can be used to browse Microsoft's update catalog, sync updates locally and serve them to Windows Update clients or downstream WSUS servers.
 
 You can build upsync in Visual Studio; it builds from the same solution as the library.
 
 Or download and unzip upsync from [https://github.com/microsoft/update-server-server-sync/releases](https://github.com/microsoft/update-server-server-sync/releases)
 
-See [upsync command line options reference](https://github.com/microsoft/update-server-server-sync/wiki/UpSync-command-line-options)
-
-See [upsync examples](https://github.com/microsoft/update-server-server-sync/wiki/UpSync-examples)
+See [upsync examples](https://github.com/microsoft/update-server-server-sync/wiki/UpSync-V3-examples)
 
 # Contributing
 

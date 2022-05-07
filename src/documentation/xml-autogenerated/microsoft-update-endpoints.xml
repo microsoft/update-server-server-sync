@@ -1,0 +1,895 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>package-graph-endpoints-microsoft-update</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService">
+            <summary>
+            Update server implementation. Provides updates to Windows Update clients.
+            <para>The communication protocol with clients is SOAP.</para>
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.MetadataSource">
+            <summary>
+            The local repository from where updates are served.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.MetadataSourceIndex">
+            <summary>
+            Mapping of update index to its identity
+            Update indexes are used when communicating with clients, as they are smaller that full Identities
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.SetContentURLBase(System.String)">
+            <summary>
+            Sets the host name for the server that serves the update content
+            </summary>
+            <param name="hostName"></param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.SetServiceConfiguration(Microsoft.UpdateServices.WebServices.ClientSync.Config)">
+            <summary>
+            Sets the service configuratoin
+            </summary>
+            <param name="serviceConfiguration">Service configuration</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.SetPackageStore(Microsoft.PackageGraph.Storage.IMetadataStore)">
+            <summary>
+            Sets the source of update metadata
+            </summary>
+            <param name="metadataSource">The source for updates metadata</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.GetConfig2Async(Microsoft.UpdateServices.WebServices.ClientSync.ClientConfiguration)">
+            <summary>
+            Handle get configuration requests from clients
+            </summary>
+            <param name="clientConfiguration">The client configuration as received from a Windows client</param>
+            <returns>The server configuration to be sent to a Windows client</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.GetConfigAsync(System.String)">
+            <summary>
+            Handle get configuration requests from clients
+            </summary>
+            <param name="protocolVersion">The version of the Windows client connecting to this server</param>
+            <returns>The server configuration to be sent to a Windows client</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.GetCookieAsync(Microsoft.UpdateServices.WebServices.ClientSync.AuthorizationCookie[],Microsoft.UpdateServices.WebServices.ClientSync.Cookie,System.DateTime,System.DateTime,System.String)">
+            <summary>
+            Handle get cookie requests. All requests are all granted access and a cookie is issued.
+            </summary>
+            <param name="authCookies">Authorization cookies received from the client</param>
+            <param name="oldCookie">Old cookie from client</param>
+            <param name="lastChange"></param>
+            <param name="currentTime"></param>
+            <param name="protocolVersion">Client supported protocol version</param>
+            <returns>A new cookie</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.GetExtendedUpdateInfo2Async(Microsoft.UpdateServices.WebServices.ClientSync.Cookie,Microsoft.UpdateServices.WebServices.ClientSync.UpdateIdentity[],Microsoft.UpdateServices.WebServices.ClientSync.XmlUpdateFragmentType[],System.String[],System.String)">
+            <summary>
+            Not implemented.
+            </summary>
+            <param name="cookie">Not implemented</param>
+            <param name="updateIDs">Not implemented</param>
+            <param name="infoTypes">Not implemented</param>
+            <param name="locales">Not implemented</param>
+            <param name="deviceAttributes">Not implemented</param>
+            <returns>Not implemented</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.GetExtendedUpdateInfoAsync(Microsoft.UpdateServices.WebServices.ClientSync.Cookie,System.Int32[],Microsoft.UpdateServices.WebServices.ClientSync.XmlUpdateFragmentType[],System.String[],System.String)">
+            <summary>
+            Handle requests for extended update information. The extended information is extracted from update metadata.
+            Extended information also includes file URLs
+            </summary>
+            <param name="cookie">Access cookie</param>
+            <param name="revisionIDs">Revision Ids for which to get extended information</param>
+            <param name="infoTypes">The type of extended information requested</param>
+            <param name="locales">The language to use when getting language dependent extended information</param>
+            <param name="deviceAttributes">Device attributes; unused</param>
+            <returns>Extended update information response.</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.GetFileLocationsAsync(Microsoft.UpdateServices.WebServices.ClientSync.Cookie,System.Byte[][])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="fileDigests"></param>
+            <returns>Not implemented</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.GetTimestampsAsync(Microsoft.UpdateServices.WebServices.ClientSync.GetTimestampsRequest)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="request"></param>
+            <returns>Not implemented</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.RefreshCacheAsync(Microsoft.UpdateServices.WebServices.ClientSync.Cookie,Microsoft.UpdateServices.WebServices.ClientSync.UpdateIdentity[],System.String)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="globalIDs"></param>
+            <param name="deviceAttributes"></param>
+            <returns>Not implemented</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.RegisterComputerAsync(Microsoft.UpdateServices.WebServices.ClientSync.Cookie,Microsoft.UpdateServices.WebServices.ClientSync.ComputerInfo)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="computerInfo"></param>
+            <returns>Not implemented</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.StartCategoryScanAsync(Microsoft.UpdateServices.WebServices.ClientSync.StartCategoryScanRequest)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="request"></param>
+            <returns>Not implemented</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.SyncPrinterCatalogAsync(Microsoft.UpdateServices.WebServices.ClientSync.Cookie,System.Int32[],System.Int32[],System.String)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="installedNonLeafUpdateIDs"></param>
+            <param name="printerUpdateIDs"></param>
+            <param name="deviceAttributes"></param>
+            <returns>Not implemented</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.SyncUpdatesAsync(Microsoft.UpdateServices.WebServices.ClientSync.Cookie,Microsoft.UpdateServices.WebServices.ClientSync.SyncUpdateParameters)">
+            <summary>
+            Handle requests to sync updates. A client presents the list of installed updates and detectoids and the server
+            replies with a list of more applicable updates, if any.
+            </summary>
+            <param name="cookie">Access cookie</param>
+            <param name="parameters">Request parameters: list of installed updates, list of known updates, etc.</param>
+            <returns>SyncInfo containing updates applicable to the caller.</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.GetUpdateIdentitiesFromClientIndexes(System.Int32[])">
+            <summary>
+            Converts the a list of client supplied update indexes into a list of update identities
+            </summary>
+            <param name="clientIndexes">Client update indexes (ints)</param>
+            <returns>List of update identities that correspond to the client's indexes</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.GetInstalledNotLeafGuidsFromSyncParameters(Microsoft.UpdateServices.WebServices.ClientSync.SyncUpdateParameters)">
+            <summary>
+            Extract installed non-leaf updates from the response and maps them to a GUID
+            </summary>
+            <param name="parameters">Sync parameters</param>
+            <returns>List of update GUIDs</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.GetOtherCachedUpdateGuidsFromSyncParameters(Microsoft.UpdateServices.WebServices.ClientSync.SyncUpdateParameters)">
+            <summary>
+            Extract list of other known updates from the client and maps them to a  GUID
+            </summary>
+            <param name="parameters">Sync parameters</param>
+            <returns>List of update GUIDs</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.UnApprovedUpdatesRequestedDelegate">
+            <summary>
+            Delegate method called to report updates applicable to a client but which are not approved and thus not offered
+            </summary>
+            <param name="requestedUnapprovedUpdates"></param>
+        </member>
+        <member name="E:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.OnUnApprovedSoftwareUpdatesRequested">
+            <summary>
+            Event raised when software updates are applicable to a client but are not approved for distribution
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.OnUnApprovedDriverUpdatesRequested">
+            <summary>
+            Event raised when driver updates are applicable to a client but are not approved for distribution
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.AddApprovedSoftwareUpdate(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity)">
+            <summary>
+            Adds an update identity to the list of approved software updates.
+            Approved updates are made available to clients connecting to this service.
+            </summary>
+            <param name="approvedUpdate">Approved update</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.AddApprovedSoftwareUpdates(System.Collections.Generic.IEnumerable{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity})">
+            <summary>
+            Adds a list of update identities to the list of approved software updates.
+            Approved updates are made available to clients connecting to this service.
+            </summary>
+            <param name="approvedUpdates">List of approved updates</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.AddApprovedDriverUpdate(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity)">
+            <summary>
+            Adds an update identities to the list of approved driver updates.
+            Approved updates are made available to clients connecting to this service.
+            </summary>
+            <param name="approvedUpdate">Approved driver update</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.AddApprovedDriverUpdates(System.Collections.Generic.IEnumerable{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity})">
+            <summary>
+            Adds a list of update identities to the list of approved driver updates.
+            Approved updates are made available to clients connecting to this service.
+            </summary>
+            <param name="approvedUpdates"></param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.RemoveApprovedSoftwareUpdate(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity)">
+            <summary>
+            Removes an approved software update from the list of approved software updates.
+            The software update will not be given to connecting clients anymore.
+            </summary>
+            <param name="updateIdentity">Identity of update to un-approve</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.RemoveApprovedDriverUpdate(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity)">
+            <summary>
+            Removes an approved software update from the list of approved software updates.
+            The software update will not be given to connecting clients anymore.
+            </summary>
+            <param name="updateIdentity">Identity of update to un-approve</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.ClearApprovedDriverUpdates">
+            <summary>
+            Clears the list of approved driver updates.
+            Un-approved updates are not made available to connecting clients.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.ClearApprovedSoftwareUpdates">
+            <summary>
+            Clears the list of approved software updates.
+            Un-approved updates are not made available to connecting clients.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.DoDriversSync(Microsoft.UpdateServices.WebServices.ClientSync.SyncUpdateParameters)">
+            <summary>
+            Handle driver sync requests
+            </summary>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.IsInstalledDriverBetterMatch(Microsoft.UpdateServices.WebServices.ClientSync.InstalledDriver,Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMatchResult,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Guid})">
+            <summary>
+            Check if the currently installed driver is a better match than the best driver we found in the updates source
+            </summary>
+            <param name="installedDriver">The installed driver</param>
+            <param name="matchResult">The best driver match found in the updates source</param>
+            <param name="hardwareIdList">The list of hardware ids for the device</param>
+            <param name="computerHardwareIds">List of computer hardware ids</param>
+            <returns>True if the installed driver is a better match, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.DoSoftwareUpdateSync(Microsoft.UpdateServices.WebServices.ClientSync.SyncUpdateParameters)">
+            <summary>
+            Handle software sync request from a client
+            </summary>
+            <param name="parameters">Sync parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.AddMissingRootUpdatesToSyncUpdatesResponse(System.Collections.Generic.List{System.Guid},System.Collections.Generic.List{System.Guid},Microsoft.UpdateServices.WebServices.ClientSync.SyncInfo,System.Boolean@)">
+            <summary>
+            For a client request, gathers applicable root updates (detectoids, categories, etc.) that the client does not have yet
+            </summary>
+            <param name="installedNonLeaf">List of non leaf updates installed on the client</param>
+            <param name="otherCached">List of other updates known to the client</param>
+            <param name="response">The response  to append new updates to</param>
+            <param name="updatesAdded">On return: true of updates were added to the response, false otherwise</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.AddMissingNonLeafUpdatesToSyncUpdatesResponse(System.Collections.Generic.List{System.Guid},System.Collections.Generic.List{System.Guid},Microsoft.UpdateServices.WebServices.ClientSync.SyncInfo,System.Boolean@)">
+            <summary>
+            For a client request, gathers applicable software updates that are not leafs in the prerequisite tree; 
+            </summary>
+            <param name="installedNonLeaf">List of non leaf updates installed on the client</param>
+            <param name="otherCached">List of other updates known to the client</param>
+            <param name="response">The response  to append new updates to</param>
+            <param name="updatesAdded">On return: true of updates were added to the response, false otherwise</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.AddMissingBundleUpdatesToSyncUpdatesResponse(System.Collections.Generic.List{System.Guid},System.Collections.Generic.List{System.Guid},Microsoft.UpdateServices.WebServices.ClientSync.SyncInfo,System.Boolean@)">
+            <summary>
+            For a client request, gathers applicable leaf bundle updates that the client does not have yet
+            </summary>
+            <param name="installedNonLeaf">List of non leaf updates installed on the client</param>
+            <param name="otherCached">List of other updates known to the client</param>
+            <param name="response">The response  to append new updates to</param>
+            <param name="updatesAdded">On return: true of updates were added to the response, false otherwise</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.AddMissingSoftwareUpdatesToSyncUpdatesResponse(System.Collections.Generic.List{System.Guid},System.Collections.Generic.List{System.Guid},Microsoft.UpdateServices.WebServices.ClientSync.SyncInfo,System.Boolean@)">
+            <summary>
+            For a client sync request, gathers applicable software updates that the client does not have yet
+            </summary>
+            <param name="installedNonLeaf">List of non leaf updates installed on the client</param>
+            <param name="otherCached">List of other updates known to the client</param>
+            <param name="response">The response  to append new updates to</param>
+            <param name="updatesAdded">On return: true of updates were added to the response, false otherwise</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.CreateUpdateInfoListFromSoftwareUpdate(System.Collections.Generic.List{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.SoftwareUpdate})">
+            <summary>
+            Creates a list of updates to be sent to the client, based on the specified list of software updates.
+            The update information sent to the client contains a deployment field and a core XML fragment extracted
+            from the full metadata of the update
+            </summary>
+            <param name="softwareUpdates">List of software updates to send to the client</param>
+            <returns>List of updates that can be appended to a SyncUpdates SOAP response to a client</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.CreateUpdateInfoListFromNonLeafUpdates(System.Collections.Generic.List{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage})">
+            <summary>
+            Creates a list of updates to be sent to the client, based on the specified list of category updates.
+            The update information sent to the client contains a deployment field and a core XML fragment extracted
+            from the full metadata of the update
+            </summary>
+            <param name="nonLeafUpdates">List of non-software updates to send to the client. These are usually detectoids, categories and classifications</param>
+            <returns>List of updates that can be appended to a SyncUpdates SOAP response to a client</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.IClientSyncWebService">
+            <summary>
+            Declare an interface for the ClientSoap (WCF) service that can be used in AspNetCore with slight modifications.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.IReportingWebService">
+            <summary>
+            Declare an interface for the IReportingWebService (WCF) service that can be used in AspNetCore with slight modifications.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ISimpleAuthenticationWebService">
+            <summary>
+            Declare an interface for the SimpleAuthSoap (WCF) service that can be used in AspNetCore with slight modifications.
+            GetAuthorizationCookieAsync returns AuthorizationCookie instead of the nested GetAuthorizationCookieResult\GetAuthorizationResultBody
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ReportingWebService">
+            <summary>
+            Reporting web service implementation. Placeholder only.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ReportingWebService.GetOutOfSyncComputersAsync(Microsoft.UpdateServices.WebServices.ClientReporting.Cookie,System.Guid,Microsoft.UpdateServices.WebServices.ClientReporting.ComputerLastRollupNumber[])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="parentServerId"></param>
+            <param name="lastRollupNumbers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ReportingWebService.GetRequiredInventoryTypeAsync(Microsoft.UpdateServices.WebServices.ClientReporting.Cookie,System.Guid,System.String)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="rulesId"></param>
+            <param name="rulesVersion"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ReportingWebService.GetRollupConfigurationAsync(Microsoft.UpdateServices.WebServices.ClientReporting.Cookie)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ReportingWebService.ReportEventBatch2Async(System.String,System.DateTime,Microsoft.UpdateServices.WebServices.ClientReporting.ReportingEvent[])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="computerId"></param>
+            <param name="clientTime"></param>
+            <param name="eventBatch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ReportingWebService.ReportEventBatchAsync(Microsoft.UpdateServices.WebServices.ClientReporting.Cookie,System.DateTime,Microsoft.UpdateServices.WebServices.ClientReporting.ReportingEvent[])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="clientTime"></param>
+            <param name="eventBatch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ReportingWebService.ReportInventoryAsync(Microsoft.UpdateServices.WebServices.ClientReporting.Cookie,System.DateTime,Microsoft.UpdateServices.WebServices.ClientReporting.ReportingInventory)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="clientTime"></param>
+            <param name="inventory"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ReportingWebService.RollupComputersAsync(Microsoft.UpdateServices.WebServices.ClientReporting.Cookie,System.DateTime,Microsoft.UpdateServices.WebServices.ClientReporting.ComputerRollupInfo[])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="clientTime"></param>
+            <param name="computers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ReportingWebService.RollupComputerStatusAsync(Microsoft.UpdateServices.WebServices.ClientReporting.Cookie,System.DateTime,System.Guid,Microsoft.UpdateServices.WebServices.ClientReporting.ComputerStatusRollupInfo[])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="clientTime"></param>
+            <param name="parentServerId"></param>
+            <param name="computers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ReportingWebService.RollupDownstreamServersAsync(Microsoft.UpdateServices.WebServices.ClientReporting.Cookie,System.DateTime,Microsoft.UpdateServices.WebServices.ClientReporting.DownstreamServerRollupInfo[])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="clientTime"></param>
+            <param name="downstreamServers"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.SimpleAuthenticationWebService">
+            <summary>
+            Authentication service implementation. Reference implementation: all requests are authenticated and a token issued.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.SimpleAuthenticationWebService.GetAuthorizationCookieAsync(Microsoft.UpdateServices.WebServices.ClientAuthentication.GetAuthorizationCookieRequest)">
+            <summary>
+            Handle requests for a authorization token. This implementation issues tokens for all requests without performing any checks.
+            </summary>
+            <param name="request">The request paramerets. Not used in this implementation.</param>
+            <returns>Authorization cookie</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.UpdateServerStartup">
+            <summary>
+            Startup class for a ASP.NET Core web service that implements the Client-Server sync protocol.
+            This startup runs a SOAP web service that serves updates to Windows Update clients
+            <para>This startup configures the required SOAP adapter required for the SOAP based Client-Server sync protocol.</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.UpdateServerStartup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Creates the update server startup using the specified configuration an update metadata store
+            </summary>
+            <param name="config">Startup configuration
+            <para>ASP.NET configuration.</para>
+            
+            <para>Must contain a string entry "metadata-path" with the path to the metadata source to use</para>
+            
+            <para>Must contain a string entry "service-config-json" with the service configuration JSON</para>
+            
+            <para>Can contain a string entry "content-path" with the path to the content store to use if serving update content</para>
+            </param>
+            <exception cref="T:System.Exception">If the content store specified in the configuration cannot be opened</exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.UpdateServerStartup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Called by ASP.NET to configure services
+            </summary>
+            <param name="services">Service collection.
+            <para>The client-server sync and simple authentication services are added to this list.</para>
+            </param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.UpdateServerStartup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Called by ASP.NET to configure a web app's application pipeline
+            </summary>
+            <param name="app">App builder to configure</param>
+            <param name="env">Hosting environment</param>
+            <param name="loggerFactory">Logging factory</param>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.UpdateXmlTransformer">
+            <summary>
+            Convert the update XML into various fragments to be sent to clients.
+            See https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wusp/7b42ccc2-770b-4452-a0f8-e731474ad619
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.UpdateXmlTransformer.GetCoreFragmentFromMetadataXml(System.String)">
+            <summary>
+            Gets a core XML fragment from full update metadata XML.
+            See: https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wusp/7b42ccc2-770b-4452-a0f8-e731474ad619
+            </summary>
+            <param name="metadataXml">Complete update XML</param>
+            <returns>Core fragment</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.UpdateXmlTransformer.GetExtendedFragmentFromMetadataXml(System.String)">
+            <summary>
+            Get an extended fragment from full update metadata
+            See https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-wusp/7b42ccc2-770b-4452-a0f8-e731474ad619
+            </summary>
+            <param name="metadataXml">Update metadata XML</param>
+            <returns>Extended fragment</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.UpdateXmlTransformer.GetLocalizedPropertiesFromMetadataXml(System.String,System.String[])">
+            <summary>
+            Gets localized properties fragment from full update metadata
+            </summary>
+            <param name="metadataXml">Update metadata XML</param>
+            <param name="languages">Language to get the localized properties for</param>
+            <returns>Localized properties fragment</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.Content.MicrosoftUpdateContentController">
+            <summary>
+            ASP.NET controller; handles web requests for Microsoft Update content.
+            <para>When added to a ASP.NETCore instance, routes and handles requests for Microsoft Update content</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.Content.MicrosoftUpdateContentController.#ctor(Microsoft.PackageGraph.Storage.IContentStore,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Create a new Microsoft Update content controller from the specified content store
+            </summary>
+            <param name="contentStore">The content store that has the update content</param>
+            <param name="loggerFactory">Logger factory</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.Content.MicrosoftUpdateContentController.GetMicrosoftUpdateContent(System.String)">
+            <summary>
+            Handles HTTP GET requests for update content.
+            </summary>
+            <param name="contentHash">The hash of the content being requested</param>
+            <returns>Standard HTTP action result</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.Content.MicrosoftUpdateContentController.GetMicrosoftUpdateContentHead(System.String)">
+            <summary>
+            Handles HTTP HEAD request for update content. HEAD requests are send by clients to discover the size
+            of the update content before proceeding with the download
+            </summary>
+            <param name="contentHash"></param>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.AuthenticationWebService">
+            <summary>
+            Authentication service implementation; mock implementation, all requests get an authorization cookie, regardless of credentials
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.AuthenticationWebService.GetAuthorizationCookieAsync(Microsoft.UpdateServices.WebServices.DssAuthentication.GetAuthorizationCookieRequest)">
+            <summary>
+            Return a mock cookie
+            </summary>
+            <param name="request">The SOAP request for an authorization cookie</param>
+            <returns>The authorization cookie</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.AuthenticationWebService.PingAsync(Microsoft.UpdateServices.WebServices.DssAuthentication.PingRequest)">
+            <summary>
+            Handles ping requests from clients.
+            </summary>
+            <param name="request">PingRequest</param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException">Always throws not implemented</exception>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.IDSSAuthAspNetCore">
+            <summary>
+            Declare an interface for the DSSAuthWebService (WCF) that can be used in AspNetCore with slight modifications.
+            GetAuthorizationCookieAsync returns AuthorizationCookie instead of the nested GetAuthorizationCookieResult\GetAuthorizationResultBody
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.IReportingServiceAspNetCore">
+            <summary>
+            Declare an interface for the reporting web service (WCF) that can be used in AspNetCore with slight modifications.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.IServerSyncAspNetCore">
+            <summary>
+            Declare an interface for the ServerSyncWebService (WCF) that can be used in AspNetCore with slight modifications.
+            SOAP operations that return *Response\*ResponseBody are modified to return the actual data in the *ResponseBody data contract. This
+            ensures proper serialization with SoapCore
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ReportingWebService">
+            <summary>
+            Reporting service implementation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ReportingWebService.GetOutOfSyncComputersAsync(Microsoft.UpdateServices.WebServices.ServerReporting.Cookie,System.Guid,Microsoft.UpdateServices.WebServices.ServerReporting.ComputerLastRollupNumber[])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="parentServerId"></param>
+            <param name="lastRollupNumbers"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ReportingWebService.GetRequiredInventoryTypeAsync(Microsoft.UpdateServices.WebServices.ServerReporting.Cookie,System.Guid,System.String)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="rulesId"></param>
+            <param name="rulesVersion"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ReportingWebService.GetRollupConfigurationAsync(Microsoft.UpdateServices.WebServices.ServerReporting.Cookie)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ReportingWebService.PingAsync(Microsoft.UpdateServices.WebServices.ServerReporting.PingRequest)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ReportingWebService.ReportEventBatch2Async(System.String,System.DateTime,Microsoft.UpdateServices.WebServices.ServerReporting.ReportingEvent[])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="computerId"></param>
+            <param name="clientTime"></param>
+            <param name="eventBatch"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ReportingWebService.ReportEventBatchAsync(Microsoft.UpdateServices.WebServices.ServerReporting.Cookie,System.DateTime,Microsoft.UpdateServices.WebServices.ServerReporting.ReportingEvent[])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="clientTime"></param>
+            <param name="eventBatch"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ReportingWebService.ReportInventoryAsync(Microsoft.UpdateServices.WebServices.ServerReporting.Cookie,System.DateTime,Microsoft.UpdateServices.WebServices.ServerReporting.ReportingInventory)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="clientTime"></param>
+            <param name="inventory"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ReportingWebService.RollupComputersAsync(Microsoft.UpdateServices.WebServices.ServerReporting.Cookie,System.DateTime,Microsoft.UpdateServices.WebServices.ServerReporting.ComputerRollupInfo[])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="clientTime"></param>
+            <param name="computers"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ReportingWebService.RollupComputerStatusAsync(Microsoft.UpdateServices.WebServices.ServerReporting.Cookie,System.DateTime,System.Guid,Microsoft.UpdateServices.WebServices.ServerReporting.ComputerStatusRollupInfo[])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="clientTime"></param>
+            <param name="parentServerId"></param>
+            <param name="computers"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ReportingWebService.RollupDownstreamServersAsync(Microsoft.UpdateServices.WebServices.ServerReporting.Cookie,System.DateTime,Microsoft.UpdateServices.WebServices.ServerReporting.DownstreamServerRollupInfo[])">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="cookie"></param>
+            <param name="clientTime"></param>
+            <param name="downstreamServers"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService">
+            <summary>
+            Upstream update server implementation. Provides updates over the ServerSync protocol to downstream servers.
+            <para>The communication protocol with clients is SOAP</para>
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.PackageStore">
+            <summary>
+            The source of upate metadata that this server serves.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.ServiceConfiguration">
+            <summary>
+            Cached service configuration
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.SetServerConfiguration(Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)">
+            <summary>
+            ASP.NET extension method for setting service configuration
+            </summary>
+            <param name="serviceConfig"></param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.SetPackageStore(Microsoft.PackageGraph.Storage.IMetadataStore)">
+            <summary>
+            Sets the package store for this instance of the server
+            </summary>
+            <param name="packageSource">The package store to server updates from</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.GetAuthConfigAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetAuthConfigRequest)">
+            <summary>
+            Handle authentication data requests
+            </summary>
+            <param name="request">The request data. Not used</param>
+            <returns>Exactly one canned authentication method</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.GetConfigDataAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetConfigDataRequest)">
+            <summary>
+            Handle service configuration requests
+            </summary>
+            <param name="request">Service configuration request</param>
+            <returns>Returns the cached service configuration of the upstream server the local repo is tracking</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.GetCookieAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetCookieRequest)">
+            <summary>
+            Handle request for a cookie
+            </summary>
+            <param name="request">Cookie request. Not used; all requests are granted</param>
+            <returns>A cookie that expires in 5 days.</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.GetRevisionIdListAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetRevisionIdListRequest)">
+            <summary>
+            Return a list of update ids
+            </summary>
+            <param name="request">Request data. Can specify categories or updates, filters, etc.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.GetUpdateDataAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDataRequest)">
+            <summary>
+            Return metadata for updates
+            </summary>
+            <param name="request">The request; contains IDs for updates to retrieve metadata for</param>
+            <returns>Update metadata for requested updates</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.GetUpdateDecryptionDataAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetUpdateDecryptionDataRequest)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.PingAsync(Microsoft.UpdateServices.WebServices.ServerSync.PingRequest)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.GetDeploymentsAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetDeploymentsRequest)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.GetDriverIdListAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetDriverIdListRequest)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.GetDriverSetDataAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetDriverSetDataRequest)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.GetRelatedRevisionsForUpdatesAsync(Microsoft.UpdateServices.WebServices.ServerSync.GetRelatedRevisionsForUpdatesRequest)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.DownloadFilesAsync(Microsoft.UpdateServices.WebServices.ServerSync.DownloadFilesRequest)">
+            <summary>
+            Not implemented
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.UpstreamServerStartup">
+            <summary>
+            Startup class for a ASP.NET Core web service that implements the Server-Server sync protocol.
+            <para>A web service started with UpstreamServerStartup can act as an upstream server for WSUS.</para>
+            <para>This startup configures the required SOAP adapter required for the SOAP based Server-Server sync protocol.</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.UpstreamServerStartup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initialize a new instance of UpstreamServerStartup.
+            </summary>
+            <param name="config">
+            <para>ASP.NET configuration.</para>
+            
+            <para>Must contain a string entry "metadata-path" with the path to the metadata source to use</para>
+            
+            <para>Must contain a string entry "service-config" with the service configuration JSON</para>
+            
+            <para>Can contain a string entry "content-path" with the path to the content store to use if serving update content</para>
+            </param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.UpstreamServerStartup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Called by ASP.NET to configure services
+            </summary>
+            <param name="services">Service collection.
+            <para>The server-server sync and authentication services are added to this list.</para>
+            </param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.UpstreamServerStartup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            Called by ASP.NET to configure a web app's application pipeline
+            </summary>
+            <param name="app">Applicatin to configure.
+            <para>A SOAP endpoint is configured for this app.</para>
+            </param>
+            <param name="env">Hosting environment.</param>
+            <param name="loggerFactory">Logging factory.</param>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.WsusExporter">
+            <summary>
+            Exports updates from <see cref="T:Microsoft.PackageGraph.Storage.IMetadataSource"/> to a WSUS compatible format
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.WsusExporter.#ctor(Microsoft.PackageGraph.Storage.IMetadataStore,Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)">
+            <summary>
+            Create a new exporter object from the specified store.
+            </summary>
+            <param name="source">The store that contains the updates to export</param>
+            <param name="serviceConfiguration">The configuration of the service from where the updates were obtained.</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.WsusExporter.Export(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter,System.String)">
+            <summary>
+            Exports the specified updates from a local update metadata source to a format compatible with WSUS 2016
+            </summary>
+            <param name="filter">The filter to apply during the export operation</param>
+            <param name="exportFilePath">The export destination file (CAB)</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.WsusExporter.WriteMetadataFile(System.Collections.Generic.IEnumerable{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage},System.String)">
+            <summary>
+            Creates the metadata.txt file for a list of updates to export.
+            Copies update IDs and XML data to this file
+            </summary>
+            <param name="updatesToExport">The updates to export</param>
+            <param name="metadataTextFile">Destination metadata file</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.WsusExporter.WritePackagesXml(System.Collections.Generic.IEnumerable{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage},System.String)">
+            <summary>
+            Writes the packages.xml file for a list of updates to export
+            </summary>
+            <param name="updates">The updates to export</param>
+            <param name="packagesFilePath">Destination file to write the XML to</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.WsusExporter.CreateLanguagesElement(Microsoft.UpdateServices.WebServices.ServerSync.ServerSyncConfigData)">
+            <summary>
+            Creates the languages XML node from supported server languages in the configuration
+            </summary>
+            <param name="serverConfig">The server configuration. Contains supported languages</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.WsusExporter.CreateCategoriesElements">
+            <summary>
+            Adds categories to the export XML (detectoids, classifications and products)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.WsusExporter.CreateUpdatesElements(System.Collections.Generic.IEnumerable{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage})">
+            <summary>
+            Adds updates to the export XML (software, updates, etc.)
+            </summary>
+            <param name="updates">The updates to export</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.WsusExporter.CompleteTheListOfExportUpdates(System.Collections.Generic.List{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage},Microsoft.PackageGraph.Storage.IMetadataStore)">
+            <summary>
+            Given a list of updates to export, it finds all updates bundled with updates to be exported and adds them
+            to the list as well. This is done recursively, until all bundled updates have been included
+            </summary>
+            <param name="updatesToExport">The updates to export. Bundled updates are added to this list</param>
+            <param name="source">The update metadata to export from.</param>
+        </member>
+    </members>
+</doc>

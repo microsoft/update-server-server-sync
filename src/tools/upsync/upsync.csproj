@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Microsoft.PackageGraph.Utilitites.Upsync</RootNamespace>
+    <AssemblyName>upsync</AssemblyName>
+    <Company>upsync</Company>
+    <Authors>upsync</Authors>
+    <Description></Description>
+    <BaseOutputPath>..\..\..\out\upsync</BaseOutputPath>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <FileVersion>3.0.0.0</FileVersion>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <ProductVersion>3.0.0.0</ProductVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\microsoft-update-endpoints\microsoft-update-endpoints.csproj" />
+    <ProjectReference Include="..\..\microsoft-update-partition\microsoft-update-partition.csproj" />
+    <ProjectReference Include="..\..\microsoft-update-upstream-package-source\microsoft-update-upstream-source.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="update-server-config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="upstream-server-config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

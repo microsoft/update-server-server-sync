@@ -1,0 +1,690 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MicrosoftUpdatePackage
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MicrosoftUpdatePackage
+   ">
+    <meta name="generator" content="docfx 2.59.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage">
+  
+  
+  <h1 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage" class="text-break">Class MicrosoftUpdatePackage
+  </h1>
+  <div class="markdown level0 summary"><p>A base class for all updates stored on an upstream Microsoft Update server.</p>
+<p>
+Stores generic update metadata applicable to both categories (classifications, products, detectoids) and updates (software and driver updates).
+</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">MicrosoftUpdatePackage</span></div>
+      <div class="level2"><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.ClassificationCategory.html">ClassificationCategory</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.DetectoidCategory.html">DetectoidCategory</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.DriverUpdate.html">DriverUpdate</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.ProductCategory.html">ProductCategory</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.SoftwareUpdate.html">SoftwareUpdate</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.PackageGraph.ObjectModel.IPackage.html">IPackage</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.html">Microsoft.PackageGraph.MicrosoftUpdate.Metadata</a></h6>
+  <h6><strong>Assembly</strong>: package-graph-microsoft-update.dll</h6>
+  <h5 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class MicrosoftUpdatePackage : IPackage</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_ApplicabilityRules.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.ApplicabilityRules%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L237">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_ApplicabilityRules_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.ApplicabilityRules*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_ApplicabilityRules" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.ApplicabilityRules">ApplicabilityRules</h4>
+  <div class="markdown level1 summary"><p>Gets the applicability rules for an update</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;ApplicabilityRule&gt; ApplicabilityRules { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRule.html">ApplicabilityRule</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Categories.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Categories%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L80">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Categories_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Categories*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Categories" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Categories">Categories</h4>
+  <div class="markdown level1 summary"><p>The list of category IDs associated to this update</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;Guid&gt; Categories { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Description.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Description%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L162">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Description_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Description*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Description" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Description">Description</h4>
+  <div class="markdown level1 summary"><p>Get the category or update description</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public string Description { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Files.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Files%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L186">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Files_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Files*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Files" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Files">Files</h4>
+  <div class="markdown level1 summary"><p>Gets the list of files (content) for update</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IContentFile&gt; Files { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.PackageGraph.ObjectModel.IContentFile.html">IContentFile</a>&gt;</td>
+        <td><p>List of content files</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Handler.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Handler%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L215">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Handler_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Handler*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Handler" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Handler">Handler</h4>
+  <div class="markdown level1 summary"><p>Gets the handler that can apply this update to a Windows device</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HandlerMetadata Handler { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.HandlerMetadata.html">HandlerMetadata</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Id.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Id%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L39">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Id_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Id*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Id" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Id">Id</h4>
+  <div class="markdown level1 summary"><p>Returns the identity of this Microsoft Update package</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MicrosoftUpdatePackageIdentity Id { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.html">MicrosoftUpdatePackageIdentity</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Prerequisites.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Prerequisites%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L128">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Prerequisites_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Prerequisites*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Prerequisites" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Prerequisites">Prerequisites</h4>
+  <div class="markdown level1 summary"><p>Get the list of prerequisites</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;IPrerequisite&gt; Prerequisites { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.IPrerequisite.html">IPrerequisite</a>&gt;</td>
+        <td><p>List of prerequisites</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Title.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Title%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L49">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Title_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Title*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Title" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Title">Title</h4>
+  <div class="markdown level1 summary"><p>Get the category or update title</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Title { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_FromMetadataXml_System_Byte___System_Collections_Generic_Dictionary_System_String_Microsoft_PackageGraph_MicrosoftUpdate_Metadata_Content_UpdateFileUrl__.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.FromMetadataXml(System.Byte%5B%5D%2CSystem.Collections.Generic.Dictionary%7BSystem.String%2CMicrosoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L313">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_FromMetadataXml_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.FromMetadataXml*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_FromMetadataXml_System_Byte___System_Collections_Generic_Dictionary_System_String_Microsoft_PackageGraph_MicrosoftUpdate_Metadata_Content_UpdateFileUrl__" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.FromMetadataXml(System.Byte[],System.Collections.Generic.Dictionary{System.String,Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl})">FromMetadataXml(Byte[], Dictionary&lt;String, UpdateFileUrl&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a MicrosoftUpdatePackage from raw metadata and a list of content files associated with the package</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static MicrosoftUpdatePackage FromMetadataXml(byte[] metadata, Dictionary&lt;string, UpdateFileUrl&gt; filesCollection)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">metadata</span></td>
+        <td><p>RAW metadata. Expected to be UTF8 encoded XML</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.Dictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl.html">UpdateFileUrl</a>&gt;</td>
+        <td><span class="parametername">filesCollection</span></td>
+        <td><p>List of URLs for content files</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.html">MicrosoftUpdatePackage</a></td>
+        <td><p>Rehydrated MicrosoftUpdatePackage object</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_GetCategories_System_Linq_ILookup_System_Guid_Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage__.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.GetCategories(System.Linq.ILookup%7BSystem.Guid%2CMicrosoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L105">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_GetCategories_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.GetCategories*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_GetCategories_System_Linq_ILookup_System_Guid_Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage__" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.GetCategories(System.Linq.ILookup{System.Guid,Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage})">GetCategories(ILookup&lt;Guid, MicrosoftUpdatePackage&gt;)</h4>
+  <div class="markdown level1 summary"><p>The list of categories associated with this update.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;MicrosoftUpdatePackage&gt; GetCategories(ILookup&lt;Guid, MicrosoftUpdatePackage&gt; knownCategories)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Linq.ILookup</span>&lt;<span class="xref">System.Guid</span>, <a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.html">MicrosoftUpdatePackage</a>&gt;</td>
+        <td><span class="parametername">knownCategories</span></td>
+        <td><p>List of known categories. The updates's category IDs will be resolved from this list.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.html">MicrosoftUpdatePackage</a>&gt;</td>
+        <td><p>List of categories for the update</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_GetMetadataStream.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.GetMetadataStream%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L271">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_GetMetadataStream_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.GetMetadataStream*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_GetMetadataStream" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.GetMetadataStream">GetMetadataStream()</h4>
+  <div class="markdown level1 summary"><p>Returns the XML metadata stream from which this update metadata was created.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Stream GetMetadataStream()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.IO.Stream</span></td>
+        <td><p>XML stream, UTF8 encoded</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_IsApplicable_System_Collections_Generic_List_System_Guid__.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.IsApplicable(System.Collections.Generic.List%7BSystem.Guid%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L154">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_IsApplicable_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.IsApplicable*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_IsApplicable_System_Collections_Generic_List_System_Guid__" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.IsApplicable(System.Collections.Generic.List{System.Guid})">IsApplicable(List&lt;Guid&gt;)</h4>
+  <div class="markdown level1 summary"><p>Determines if the update is applicable based on its list of prerequisites and the list of installed updates (prerequisites) on a computer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsApplicable(List&lt;Guid&gt; installedPrerequisites)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><span class="parametername">installedPrerequisites</span></td>
+        <td><p>List of installed updates on a computer</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if all prerequisites are met, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_MatchTitle_System_String___.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.MatchTitle(System.String%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L294">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_MatchTitle_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.MatchTitle*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_MatchTitle_System_String___" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.MatchTitle(System.String[])">MatchTitle(String[])</h4>
+  <div class="markdown level1 summary"><p>Matches keywords in the title of the update</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool MatchTitle(string[] keywords)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">keywords</span></td>
+        <td><p>List of keywords to match. All keywords must match</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if all keywords match, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_ReleaseMetadataBytes.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.ReleaseMetadataBytes%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L262">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_ReleaseMetadataBytes_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.ReleaseMetadataBytes*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_ReleaseMetadataBytes" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.ReleaseMetadataBytes">ReleaseMetadataBytes()</h4>
+  <div class="markdown level1 summary"><p>Releases raw metadata cached in memory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ReleaseMetadataBytes()</code></pre>
+  </div>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Microsoft_PackageGraph_ObjectModel_IPackage_Id.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Microsoft%23PackageGraph%23ObjectModel%23IPackage%23Id%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L44">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Microsoft_PackageGraph_ObjectModel_IPackage_Id_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Microsoft#PackageGraph#ObjectModel#IPackage#Id*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage_Microsoft_PackageGraph_ObjectModel_IPackage_Id" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Microsoft#PackageGraph#ObjectModel#IPackage#Id">IPackage.Id</h4>
+  <div class="markdown level1 summary"><p>Returns the identity of this Microsoft Update package</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IPackageIdentity IPackage.Id { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.ObjectModel.IPackageIdentity.html">IPackageIdentity</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.PackageGraph.ObjectModel.IPackage.html">IPackage</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MicrosoftUpdatePackage.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Metadata/UpdateBase.cs/#L28" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

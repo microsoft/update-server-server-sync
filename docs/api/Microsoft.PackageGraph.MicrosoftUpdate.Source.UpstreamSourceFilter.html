@@ -1,0 +1,530 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class UpstreamSourceFilter
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class UpstreamSourceFilter
+   ">
+    <meta name="generator" content="docfx 2.59.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter">
+  
+  
+  <h1 id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter" class="text-break">Class UpstreamSourceFilter
+  </h1>
+  <div class="markdown level0 summary"><p>Implements a filter for updates based by product and/or classification.</p>
+<p>
+The filter is used for selectively sync&apos;ing updates from an upstream update server through <a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataSource.html">IMetadataSource</a>
+</p>
+<p>
+The filter can also be used to selectively copy updates between <a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataStore.html">IMetadataStore</a>. The more versatile <a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.html">MetadataFilter</a> should be used for this scenario instead.
+</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">UpstreamSourceFilter</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataFilter.html">IMetadataFilter</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Source.html">Microsoft.PackageGraph.MicrosoftUpdate.Source</a></h6>
+  <h6><strong>Assembly</strong>: package-graph-microsoftupdate-source.dll</h6>
+  <h5 id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class UpstreamSourceFilter : IMetadataFilter</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter__ctor.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-upstream-package-source/Sources/UpstreamSourceFilter.cs/#L47">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter__ctor_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.#ctor*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter__ctor" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.#ctor">UpstreamSourceFilter()</h4>
+  <div class="markdown level1 summary"><p>Creates an empty filter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonConstructor]
+public UpstreamSourceFilter()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter__ctor_System_Collections_Generic_IEnumerable_System_Guid__System_Collections_Generic_IEnumerable_System_Guid__.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.%23ctor(System.Collections.Generic.IEnumerable%7BSystem.Guid%7D%2CSystem.Collections.Generic.IEnumerable%7BSystem.Guid%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-upstream-package-source/Sources/UpstreamSourceFilter.cs/#L59">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter__ctor_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.#ctor*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter__ctor_System_Collections_Generic_IEnumerable_System_Guid__System_Collections_Generic_IEnumerable_System_Guid__" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.#ctor(System.Collections.Generic.IEnumerable{System.Guid},System.Collections.Generic.IEnumerable{System.Guid})">UpstreamSourceFilter(IEnumerable&lt;Guid&gt;, IEnumerable&lt;Guid&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initialize a new SourceFilter from the specified products and classifications.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public UpstreamSourceFilter(IEnumerable&lt;Guid&gt; products, IEnumerable&lt;Guid&gt; classifications)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><span class="parametername">products</span></td>
+        <td><p>The products to match</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><span class="parametername">classifications</span></td>
+        <td><p>The classifications to match</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_ClassificationsFilter.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.ClassificationsFilter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-upstream-package-source/Sources/UpstreamSourceFilter.cs/#L40">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_ClassificationsFilter_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.ClassificationsFilter*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_ClassificationsFilter" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.ClassificationsFilter">ClassificationsFilter</h4>
+  <div class="markdown level1 summary"><p>Gets the list of classifications allowed by the filter.
+If this list if empty, no updates will match the filter. Add classification IDs to this list to have them match the filter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public List&lt;Guid&gt; ClassificationsFilter { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><p>List of classification identities.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_ProductsFilter.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.ProductsFilter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-upstream-package-source/Sources/UpstreamSourceFilter.cs/#L32">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_ProductsFilter_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.ProductsFilter*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_ProductsFilter" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.ProductsFilter">ProductsFilter</h4>
+  <div class="markdown level1 summary"><p>Gets the list of products allowed by the filter.
+If this list if empty, no updates will match the filter. Add product IDs to this list to have them match the filter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty]
+public List&lt;Guid&gt; ProductsFilter { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><p>List of product identities.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_Apply_Microsoft_PackageGraph_Storage_IMetadataStore_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.Apply(Microsoft.PackageGraph.Storage.IMetadataStore)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-upstream-package-source/Sources/UpstreamSourceFilter.cs/#L185">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_Apply_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.Apply*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_Apply_Microsoft_PackageGraph_Storage_IMetadataStore_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.Apply(Microsoft.PackageGraph.Storage.IMetadataStore)">Apply(IMetadataStore)</h4>
+  <div class="markdown level1 summary"><p>Applies the filter to a <a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataStore.html">IMetadataStore</a> and returns the matched packages</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IPackage&gt; Apply(IMetadataStore source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataStore.html">IMetadataStore</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The metadata <a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataStore.html">IMetadataStore</a> to filter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.PackageGraph.ObjectModel.IPackage.html">IPackage</a>&gt;</td>
+        <td><p>List of packages that match the filter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_Equals_System_Object_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-upstream-package-source/Sources/UpstreamSourceFilter.cs/#L114">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_Equals_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.Equals*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_Equals_System_Object_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Override Equals for 2 SourceFilter objects</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>Other SourceFilter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two SourceFilter are identical (same product and classification filters).</p>
+<p>False otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.Equals(System.Object)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_GetHashCode.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-upstream-package-source/Sources/UpstreamSourceFilter.cs/#L171">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_GetHashCode_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.GetHashCode*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_GetHashCode" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Returns a hash code based on the hash codes of the contained classification and products</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>Hash code</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.GetHashCode()</span></div>
+  <h3 id="operators">Operators
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_op_Equality_Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.op_Equality(Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter%2CMicrosoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-upstream-package-source/Sources/UpstreamSourceFilter.cs/#L141">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_op_Equality_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.op_Equality*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_op_Equality_Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.op_Equality(Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter,Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter)">Equality(UpstreamSourceFilter, UpstreamSourceFilter)</h4>
+  <div class="markdown level1 summary"><p>Override equality operator SourceFilter objects</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(UpstreamSourceFilter lhs, UpstreamSourceFilter rhs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.html">UpstreamSourceFilter</a></td>
+        <td><span class="parametername">lhs</span></td>
+        <td><p>Left SourceFilter</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.html">UpstreamSourceFilter</a></td>
+        <td><span class="parametername">rhs</span></td>
+        <td><p>Right SourceFilter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if both lhs and rhs are SourceFilter and they contain the same classification and product filters</p>
+<p>False otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_op_Inequality_Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.op_Inequality(Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter%2CMicrosoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-upstream-package-source/Sources/UpstreamSourceFilter.cs/#L162">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_op_Inequality_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.op_Inequality*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_op_Inequality_Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.op_Inequality(Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter,Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter)">Inequality(UpstreamSourceFilter, UpstreamSourceFilter)</h4>
+  <div class="markdown level1 summary"><p>Override inequality operator SourceFilter objects</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(UpstreamSourceFilter lhs, UpstreamSourceFilter rhs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.html">UpstreamSourceFilter</a></td>
+        <td><span class="parametername">lhs</span></td>
+        <td><p>Left SourceFilter</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.html">UpstreamSourceFilter</a></td>
+        <td><span class="parametername">rhs</span></td>
+        <td><p>Right SourceFilter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if both lhs and rhs are not QueryFilter or they contain different classification and product filters</p>
+<p>False otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataFilter.html">IMetadataFilter</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamSourceFilter.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-upstream-package-source/Sources/UpstreamSourceFilter.cs/#L25" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

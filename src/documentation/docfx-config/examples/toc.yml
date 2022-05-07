@@ -1,0 +1,17 @@
+- name: Fetch update categories
+  href: categories-fetch.md
+
+- name: Fetch Windows cumulative updates
+  href: windows-updates-fetch.md
+
+- name: Object model query
+  href: store-query.md
+
+- name: Fetch update content
+  href: content-store.md
+
+- name: Run an upstream server
+  href: upstream-server.md
+
+- name: Run an update server
+  href: update-server.md

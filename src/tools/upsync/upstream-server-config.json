@@ -1,0 +1,19 @@
+{
+  "CatalogOnlySync": true,
+  "LazySync": true,
+  "ServerHostsPsfFiles": true,
+  "MaxNumberOfUpdatesPerRequest": 100,
+  "MaxNumberOfDriverSetsPerRequest": 100,
+  "MaxNumberOfComputerIdsInRequest": 200,
+  "MaxNumberOfPnpHardwareIdsInRequest": 450,
+  "ProtocolVersion": "1.21",
+  "LanguageUpdateList": [
+    {
+      "LanguageID": 1033,
+      "ShortLanguage": "en",
+      "LongLanguage": "English",
+      "Enabled": false
+    }
+  ],
+  "MaxUpdatesPerRequestInGetUpdateDecryptionData": 500
+}

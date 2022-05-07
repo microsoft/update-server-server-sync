@@ -1,0 +1,614 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MetadataFilter
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MetadataFilter
+   ">
+    <meta name="generator" content="docfx 2.59.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter">
+  
+  
+  <h1 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter" class="text-break">Class MetadataFilter
+  </h1>
+  <div class="markdown level0 summary"><p>
+A filter that can be applied to Microsoft updates based on their metadata: title, hardware id, KB article, etc.
+</p>
+<p>
+Use this filter to filter updates when copying updates between <a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataSource.html">IMetadataSource</a> and <a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataStore.html">IMetadataStore</a>
+</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">MetadataFilter</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataFilter.html">IMetadataFilter</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.html">Microsoft.PackageGraph.MicrosoftUpdate.Metadata</a></h6>
+  <h6><strong>Assembly</strong>: package-graph-microsoft-update.dll</h6>
+  <h5 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class MetadataFilter : IMetadataFilter</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter__ctor.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L74">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter__ctor_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.#ctor*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter__ctor" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.#ctor">MetadataFilter()</h4>
+  <div class="markdown level1 summary"><p>Initialize a new filter. An empty filter matches all updates or categories.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MetadataFilter()</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_CategoryFilter.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.CategoryFilter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L27">View Source</a>
+  </span>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_CategoryFilter" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.CategoryFilter">CategoryFilter</h4>
+  <div class="markdown level1 summary"><p>Get or set the Classification or Product filter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;Guid&gt; CategoryFilter</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><p>List of classification or product IDs (ID only, no revision)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_ComputerHardwareIdFilter.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.ComputerHardwareIdFilter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L63">View Source</a>
+  </span>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_ComputerHardwareIdFilter" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.ComputerHardwareIdFilter">ComputerHardwareIdFilter</h4>
+  <div class="markdown level1 summary"><p>Returns only driver updates that target this computer hardware ID</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Guid ComputerHardwareIdFilter</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Guid</span></td>
+        <td><p>Computer hardware ID (GUID)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_FirstX.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.FirstX%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L51">View Source</a>
+  </span>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_FirstX" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.FirstX">FirstX</h4>
+  <div class="markdown level1 summary"><p>Returns the first X results only</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int FirstX</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>0 to include all updates, greater than 0 value to limit output.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_HardwareIdFilter.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.HardwareIdFilter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L57">View Source</a>
+  </span>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_HardwareIdFilter" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.HardwareIdFilter">HardwareIdFilter</h4>
+  <div class="markdown level1 summary"><p>Returns only driver updates that match this hardware ID.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string HardwareIdFilter</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Hardware id string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_IdFilter.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.IdFilter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L33">View Source</a>
+  </span>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_IdFilter" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.IdFilter">IdFilter</h4>
+  <div class="markdown level1 summary"><p>Get or set the ID filter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;Guid&gt; IdFilter</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.Guid</span>&gt;</td>
+        <td><p>List of update IDs (ID only, no revision)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_KbArticleFilter.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.KbArticleFilter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L69">View Source</a>
+  </span>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_KbArticleFilter" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.KbArticleFilter">KbArticleFilter</h4>
+  <div class="markdown level1 summary"><p>Get or set the KB article filter</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;string&gt; KbArticleFilter</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><p>List of KB article ids - numbers only</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_SkipSuperseded.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.SkipSuperseded%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L45">View Source</a>
+  </span>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_SkipSuperseded" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.SkipSuperseded">SkipSuperseded</h4>
+  <div class="markdown level1 summary"><p>Get or set whether to filter out superseded updates</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SkipSuperseded</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True to skip superseded updates, false otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_TitleFilter.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.TitleFilter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L39">View Source</a>
+  </span>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_TitleFilter" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.TitleFilter">TitleFilter</h4>
+  <div class="markdown level1 summary"><p>Get or set the title filter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string TitleFilter</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Title filter string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_Apply_Microsoft_PackageGraph_Storage_IMetadataStore_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.Apply(Microsoft.PackageGraph.Storage.IMetadataStore)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L193">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_Apply_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.Apply*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_Apply_Microsoft_PackageGraph_Storage_IMetadataStore_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.Apply(Microsoft.PackageGraph.Storage.IMetadataStore)">Apply(IMetadataStore)</h4>
+  <div class="markdown level1 summary"><p>Apply the filter to a <a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataSource.html">IMetadataSource</a> and returns matching packages of type <a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.html">MicrosoftUpdatePackage</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IPackage&gt; Apply(IMetadataStore source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataStore.html">IMetadataStore</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The metadata store to filter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="Microsoft.PackageGraph.ObjectModel.IPackage.html">IPackage</a>&gt;</td>
+        <td><p>Matching packages</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_Apply__1_Microsoft_PackageGraph_Storage_IMetadataStore_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.Apply%60%601(Microsoft.PackageGraph.Storage.IMetadataStore)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L104">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_Apply_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.Apply*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_Apply__1_Microsoft_PackageGraph_Storage_IMetadataStore_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.Apply``1(Microsoft.PackageGraph.Storage.IMetadataStore)">Apply&lt;T&gt;(IMetadataStore)</h4>
+  <div class="markdown level1 summary"><p>Apply the filter to a <a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataSource.html">IMetadataSource</a> and returns the matching packages of the specified type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;T&gt; Apply&lt;T&gt;(IMetadataStore source)
+    where T : MicrosoftUpdatePackage</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataStore.html">IMetadataStore</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The metadata store to filter</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;T&gt;</td>
+        <td><p>Matching packages</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Package type to query. The type must inherit <a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.html">MicrosoftUpdatePackage</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_FromJson_System_String_.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.FromJson(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L84">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_FromJson_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.FromJson*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_FromJson_System_String_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.FromJson(System.String)">FromJson(String)</h4>
+  <div class="markdown level1 summary"><p>Create a filter from JSON</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static MetadataFilter FromJson(string source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The JSON string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.html">MetadataFilter</a></td>
+        <td><p>A filter for metadata in a updates metadata source</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_ToJson.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.ToJson%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L93">View Source</a>
+  </span>
+  <a id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_ToJson_" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.ToJson*"></a>
+  <h4 id="Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter_ToJson" data-uid="Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.ToJson">ToJson()</h4>
+  <div class="markdown level1 summary"><p>Serializes this filter to JSON</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToJson()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>The JSON string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.PackageGraph.Storage.IMetadataFilter.html">IMetadataFilter</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/update-server-server-sync/new/develop/update-documentation/apiSpec/new?filename=Microsoft_PackageGraph_MicrosoftUpdate_Metadata_MetadataFilter.md&amp;value=---%0Auid%3A%20Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/microsoft-update-partition/Filters/MetadataFilter.cs/#L21" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

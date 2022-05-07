@@ -1,0 +1,2806 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>package-graph-microsoft-update</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Compression.CabinetUtility">
+            <summary>
+            Performs CAB compression and decompression. On Linux, it requires the cabextract; on windows it requires expand.exe
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Compression.CabinetUtility.RecompressUnicodeData(System.Byte[])">
+            <summary>
+            Recompress the given bytes
+            </summary>
+            <param name="compressedData">Data to compress</param>
+            <returns>Compressed data</returns>
+            <exception cref="T:System.NotImplementedException">If not implemented on the current platform</exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Compression.CabinetUtility.CompressFiles(System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Compress a list of files
+            </summary>
+            <param name="filePaths">Files to compress</param>
+            <param name="outFile">Destination cab file</param>
+            <returns>True on success, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Compression.CabinetUtility.CreateMakeCabDirective(System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Creates a directive file for compressing multiple files
+            </summary>
+            <param name="files">List of files to add to the directive file</param>
+            <param name="outFile">Ouput file to set in the directive file</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter">
+            <summary>
+            <para>
+            A filter that can be applied to Microsoft updates based on their metadata: title, hardware id, KB article, etc.
+            </para>
+            <para>
+            Use this filter to filter updates when copying updates between <see cref="T:Microsoft.PackageGraph.Storage.IMetadataSource"/> and <see cref="T:Microsoft.PackageGraph.Storage.IMetadataStore"/>
+            </para>
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.CategoryFilter">
+            <summary>
+            Get or set the Classification or Product filter. 
+            </summary>
+            <value>List of classification or product IDs (ID only, no revision)</value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.IdFilter">
+            <summary>
+            Get or set the ID filter.
+            </summary>
+            <value>List of update IDs (ID only, no revision)</value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.TitleFilter">
+            <summary>
+            Get or set the title filter.
+            </summary>
+            <value>Title filter string</value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.SkipSuperseded">
+            <summary>
+            Get or set whether to filter out superseded updates
+            </summary>
+            <value>True to skip superseded updates, false otherwise</value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.FirstX">
+            <summary>
+            Returns the first X results only
+            </summary>
+            <value>0 to include all updates, greater than 0 value to limit output.</value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.HardwareIdFilter">
+            <summary>
+            Returns only driver updates that match this hardware ID.
+            </summary>
+            <value>Hardware id string</value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.ComputerHardwareIdFilter">
+            <summary>
+            Returns only driver updates that target this computer hardware ID
+            </summary>
+            <value>Computer hardware ID (GUID)</value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.KbArticleFilter">
+            <summary>
+            Get or set the KB article filter
+            </summary>
+            <value>List of KB article ids - numbers only</value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.#ctor">
+            <summary>
+            Initialize a new filter. An empty filter matches all updates or categories.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.FromJson(System.String)">
+            <summary>
+            Create a filter from JSON
+            </summary>
+            <param name="source">The JSON string</param>
+            <returns>A filter for metadata in a updates metadata source</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.ToJson">
+            <summary>
+            Serializes this filter to JSON
+            </summary>
+            <returns>The JSON string</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.Apply``1(Microsoft.PackageGraph.Storage.IMetadataStore)">
+            <summary>
+            Apply the filter to a <see cref="T:Microsoft.PackageGraph.Storage.IMetadataSource"/> and returns the matching packages of the specified type.
+            </summary>
+            <typeparam name="T">Package type to query. The type must inherit <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage"/></typeparam>
+            <param name="source">The metadata store to filter</param>
+            <returns>Matching packages</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.Apply(Microsoft.PackageGraph.Storage.IMetadataStore)">
+            <summary>
+            Apply the filter to a <see cref="T:Microsoft.PackageGraph.Storage.IMetadataSource"/> and returns matching packages of type <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage"/>
+            </summary>
+            <param name="source">The metadata store to filter</param>
+            <returns>Matching packages</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRule">
+            <summary>
+            Describes an applicability expression that gets evaluate by a Microsoft Update agent on a device during an update operation
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRule.RuleType">
+            <summary>
+            The type of applicability rule
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRule.ExpressionGroups">
+            <summary>
+            List of expression groups. Rules are joined together by boolean operators in a group; a rule can have multiple groups.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRule.Expression">
+            <summary>
+            A single expression to evaluate.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRule.IsMetadataOnlyRule">
+            <summary>
+            Set to true if this rule only stores metadata for other rules
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRuleType">
+            <summary>
+            Possible types of applicability rules used by Microsoft Update
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRuleType.IsInstalled">
+            <summary>
+            Checks if an update is installed
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRuleType.IsInstallable">
+            <summary>
+            Checks if an update is installable
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRuleType.CbsPackageApplicabilityMetadata">
+            <summary>
+            This rules stores metadata used by CBS-based rules.
+            <para>
+            This rule is expected to exist when a CBS rule is present
+            </para>
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRuleType.MsiPatchMetadata">
+            <summary>
+            This rules only stores metadata used by the MSI-based rules.
+            <para>
+            This rule is expected to exist when a MSI rule is present
+            </para>
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRuleType.MsiApplicationMetadata">
+            <summary>
+            This rules only stores metadata used by the MSI-based rules.
+            <para>
+            This rule is expected to exist when a MSI rule is present
+            </para>
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRuleType.WindowsDriverMetadata">
+            <summary>
+            This rules only stores metadata used by the driver-based rules.
+            <para>
+            This rule is expected to always exists when a driver rule is present
+            </para>
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRuleType.WindowsDriver">
+            <summary>
+            Evaluates applicability for a driver
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRuleType.WindowsVersion">
+            <summary>
+            Checks applicability based on windows version
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRuleType.IsSuperseded">
+            <summary>
+            Checks applicability based on superseded state
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ComparisonOperator">
+            <summary>
+            Comparison operators used in Microsoft Update applicability expressions
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ComparisonOperator.LessThan">
+            <summary>
+            Less than
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ComparisonOperator.GreaterThanOrEqualTo">
+            <summary>
+            Greater or equal to
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ComparisonOperator.EqualTo">
+            <summary>
+            Equal to
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ComparisonOperator.GreaterThan">
+            <summary>
+            Greater than
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ComparisonOperator.LessThanOrEqualTo">
+            <summary>
+            Less or equal to
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ComparisonOperator.Contains">
+            <summary>
+            String contains
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType">
+            <summary>
+            Microsoft Update applicability expression types
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.Processor">
+            <summary>
+            Processor type queries
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.WindowsVersion">
+            <summary>
+            Windows version expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.PlatformVersion">
+            <summary>
+            Platform version expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.Platform">
+            <summary>
+            Platform type expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.WindowsLanguage">
+            <summary>
+            Windows language expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.MuiInstalled">
+            <summary>
+            MUI language installed expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.RegValueExists">
+            <summary>
+            Registry value exists expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.RegSzToVersion">
+            <summary>
+            Convert registry string to version string
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.RegSz">
+            <summary>
+            Registry string value expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.RegExpandSz">
+            <summary>
+            Expandable registry string expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.RegDword">
+            <summary>
+            Registry DWORD expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.RegKeyExists">
+            <summary>
+            Registry key exists expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.RegKeyLoop">
+            <summary>
+            Multi registry key expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.WUv4RegKeySubstring">
+            <summary>
+            Substring in registry string expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.WUv4RegKeyValue">
+            <summary>
+            Generic registry value expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.FileVersion">
+            <summary>
+            File version expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.FileSize">
+            <summary>
+            File size expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.FileSizePrependRegSz">
+            <summary>
+            File size, with the file name prefix coming from a registry string value
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.FileExists">
+            <summary>
+            File exists expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.FileExistsPrependRegSz">
+            <summary>
+            File exists expression, with file name prefix coming fom a registry string value
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.FileCreated">
+            <summary>
+            File create expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.FileCreatedPrependRegSz">
+            <summary>
+            File create expression, with file name prefix coming fom a registry string value
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.FileVersionPrependRegSz">
+            <summary>
+            File create expression, with file version prefix coming fom a registry string value
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.FileModified">
+            <summary>
+            File modified expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.FileModifiedPrependRegSz">
+            <summary>
+            File modified expression, with file name prefix coming fom a registry string value
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.WmiQuery">
+            <summary>
+            WMI query expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.LicenseDword">
+            <summary>
+            Windows license expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.CbsPackageInstalledByIdentity">
+            <summary>
+            CBS package installed expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.CbsPackageInstalled">
+            <summary>
+            CBS package installed expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.CbsPackageInstallable">
+            <summary>
+            CBS package installable expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.CbsPackageApplicabilityMetadata">
+            <summary>
+            This expression stores metadata used by the CBS package-level expressions
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.MsiComponentInstalledForProduct">
+            <summary>
+            MSI component installed by product
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.Component">
+            <summary>
+            Component metadata expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.Product">
+            <summary>
+            Product metadata expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.ProductCode">
+            <summary>
+            Product code based expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.Feature">
+            <summary>
+            Feature name based expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.MsiPatchInstalledForProduct">
+            <summary>
+            MSI patch installed by product name expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.MsiPatchInstalled">
+            <summary>
+            MSI patch installed expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.MsiPatchSuperseded">
+            <summary>
+            Msi patch superseded expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.MsiPatchInstallable">
+            <summary>
+            MSI patch installable expression
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.MsiPatchMetadata">
+            <summary>
+            This expression stores metadata used by the MSI patch based expressions
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.MsiApplicationMetadata">
+            <summary>
+            This expression stores metadata used by the MSI based expressions
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.MsiProductInstalled">
+            <summary>
+            MSI product installed expression. Detects installed MSI products
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.MsiFeatureInstalledForProduct">
+            <summary>
+            MSI feature installed expression. Detects installed features for a product
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.MsiApplicationInstalled">
+            <summary>
+            MSI app installed expression. Detects installed MSI applications
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.MsiApplicationInstallable">
+            <summary>
+            MSI app installable expression. Detected whether a MSI application can be installed
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.False">
+            <summary>
+            Constant rule that always evaluates to false
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.True">
+            <summary>
+            Constant rule that always evaluates to true
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.SystemMetric">
+            <summary>
+            Expression that evaluates based on data from GetSystemMetric API
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.Direct3D">
+            <summary>
+            Expression that evaluates based on D3D version available
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.VideoMemory">
+            <summary>
+            Expression that evaluates the mount of video memory available
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.SensorById">
+            <summary>
+            Expression that evaluates the presence of a specified hardware sensor (accelerometer, etc.)
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.Memory">
+            <summary>
+            Expression that evaluates the amount of total RAM present on a device
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.NFC">
+            <summary>
+            Expression that evaluates the presence of NFC capabilities
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.Camera">
+            <summary>
+            Expression that evaluates the presence of a camera
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.ProductReleaseInstalled">
+            <summary>
+            Expression that evaluates whether a release is installed
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.ProductReleaseVersion">
+            <summary>
+            Expression that evaluates the version of the release installed
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.WindowsDriverInstalled">
+            <summary>
+            Evaluates whether a driver is installed
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.WindowsDriverSuperseded">
+            <summary>
+            Expression for determining driver supersedence
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.WindowsDriverInstallable">
+            <summary>
+            Expression for evaluating whether a driver can be installed on a device
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.WindowsDriverMetaData">
+            <summary>
+            Expression that stores metadata for other driver-metadata based expressions
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.FeatureScore">
+            <summary>
+            Expression the evaluates the feature score of the device
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.DistributionComputerHardwareId">
+            <summary>
+            Expression that evaluates distribution hardware ids
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.TargetComputerHardwareId">
+            <summary>
+            Expression that evaluates target hardware IDs
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.CompatibleProvider">
+            <summary>
+            N/A
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.WindowsDriver">
+            <summary>
+            N/A
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.InstalledVersionRange">
+            <summary>
+            Expression that checks if the version of Windows is within a range
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.ClusteredOS">
+            <summary>
+            Expression that evaluates if running on a cluster
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.ClusterResourceOwner">
+            <summary>
+            Expression that evaluates if running on a cluster owner
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.Expression">
+            <summary>
+            Represents an individual expression that is part of a rule or rule group
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.Expression.Attributes">
+            <summary>
+            List expression attributes; attributes are key-value pairs
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.Expression.SubExpressions">
+            <summary>
+            List of sub-expressions of this expression
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.Expression.SubGroups">
+            <summary>
+            List of sub-groups in this expression
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.Expression.ExpressionType">
+            <summary>
+            Expression type
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionGroup">
+            <summary>
+            Represents a group of expressions evaluated with a specified boolean operator
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionGroup.Expressions">
+            <summary>
+            List of expressions in the group
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionGroup.SubGroups">
+            <summary>
+            Sub-groups of this group
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionGroup.GroupType">
+            <summary>
+            The type of boolean operator to apply between expressions in this group
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionGroupType">
+            <summary>
+            Represents the type of boolean logic to apply to expressions within a group
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionGroupType.True">
+            <summary>
+            Evaluate to always true
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionGroupType.False">
+            <summary>
+            Evaluate to always false
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionGroupType.Not">
+            <summary>
+            Negate the evaluated value of an expression or group
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionGroupType.Or">
+            <summary>
+            OR the evaluated expressions
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionGroupType.And">
+            <summary>
+            AND the evaluated expressions
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken">
+            <summary>
+            Stores Microsoft Update expression tokens as key-value pairs.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.Name">
+            <summary>
+            The token name
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.RawValue">
+            <summary>
+            The string value of the token, as read from the metadata XML
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.ValueType">
+            <summary>
+            The typed value of the token
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.op_Implicit(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken)~System.Int32">
+            <summary>
+            Implicit cast to int value
+            </summary>
+            <param name="token">The token to cast</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.op_Implicit(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken)~System.Int16">
+            <summary>
+            Implicit cast to Int16
+            </summary>
+            <param name="token">The token to cast</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.op_Implicit(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken)~System.UInt16">
+            <summary>
+            Implicit cast to UInt16
+            </summary>
+            <param name="token">The token to cast</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.op_Implicit(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken)~System.Byte">
+            <summary>
+            Implicit cast to byte
+            </summary>
+            <param name="token">The token to cast</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.op_Implicit(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken)~System.UInt32">
+            <summary>
+            Implicit cast to UInt36
+            </summary>
+            <param name="token">The token to cast</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.op_Implicit(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken)~System.String">
+            <summary>
+            Implicit cast to string
+            </summary>
+            <param name="token">The token to cast</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.op_Implicit(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken)~System.Version">
+            <summary>
+            Implicit cast to Version object
+            </summary>
+            <param name="token">The token to cast</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.op_Implicit(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken)~Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ComparisonOperator">
+            <summary>
+            Implicit cast to comparison operator. Converts from string comparison operator (e.g. "LessThan") to comparison operator
+            </summary>
+            <param name="token">The token to cast</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.op_Implicit(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken)~System.Boolean">
+            <summary>
+            Implicit cast to bool
+            </summary>
+            <param name="token">The token to cast</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.ToString">
+            <summary>
+            Override ToString
+            </summary>
+            <returns>string representation for the token value</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.GetHashCode">
+            <summary>
+            Override GetHashCode. Uses the token value for the hash code.
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.ClassificationCategory">
+            <summary>
+            Represents a classification in the Microsoft Update catalog. 
+            Software or driver updates have a classification: "update", "critical update", etc.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.DetectoidCategory">
+            <summary>
+            Represents a detectoid in the Microsoft Update catalog. Most software or driver update have one or more corresponding detectoids that
+            check applicability of an update to a device.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.ProductCategory">
+            <summary>
+            Represents a product category in the Microsoft Update catalog. 
+            Software or driver updates have one or more corresponding categories: "SQL Server [x]", "Visual Studio [x]", "Windows 1903 and later", etc.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile">
+            <summary>
+            Represents a content file for an update.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.FileName">
+            <summary>
+            Gets the name of the file
+            </summary>
+            <value>
+            File name
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.Size">
+            <summary>
+            Ges the file size, in bytes.
+            </summary>
+            <value>File size</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.ModifiedDate">
+            <summary>
+            Gets the last modified timestamp for the file
+            </summary>
+            <value>Last modified DateTime</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.Digests">
+            <summary>
+            Gets the list of file digests. Multiple hashing algorithms might be used.
+            </summary>
+            <value>List of file digests, one per algorithm.</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.PatchingType">
+            <summary>
+            Gets the type of patching this file provides
+            </summary>
+            <value>Patchin type string</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.Urls">
+            <summary>
+            Gets the list of URLs for the file.
+            </summary>
+            <value>List of URLs.</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.Source">
+            <summary>
+            Gets the default download URL for a file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.Digest">
+            <summary>
+            Gets the primary digest of a content file. 
+            </summary>
+            <value>Content file digest.</value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.Equals(System.Object)">
+            <summary>
+            Override equality method; two UpdateFile are equal if they have the same content hash.
+            </summary>
+            <param name="obj">Other UpdateFile</param>
+            <returns>True if the two objects are equal, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.GetHashCode">
+            <summary>
+            Return a hash code based on the hash of the file content.
+            </summary>
+            <returns>UpdateFile hash code</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl">
+            <summary>
+            Represents source information for an update file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl.DigestBase64">
+            <summary>
+            Gets the digest of the file content
+            </summary>
+            <value>SHA256 digest, base64 encoded string.</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl.MuUrl">
+            <summary>
+            Gets the Microsoft Update URL to the file.
+            <para>This property is set if the update containing this file was queries from the official
+            Microsoft upstream server.</para>
+            </summary>
+            <value>URL string</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl.UssUrl">
+            <summary>
+            Gets the upstream server URL to the file.
+            <para>This property is set if the update containing his file was queries from a WSUS upstream server.</para>
+            </summary>
+            <value>URL string</value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl.#ctor">
+            <summary>
+            Private constructor for deserialization
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Instantiate a new update file URL using the specified attributes
+            </summary>
+            <param name="digest">File digest in base64 format</param>
+            <param name="muUrl">The MU URL.</param>
+            <param name="ussUrl">The USS URL.</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl.Equals(System.Object)">
+            <summary>
+            Override equality comparison. Two UpdateFileUrl are equal if they have the same content hash.
+            </summary>
+            <param name="obj">The other UpdateFileUrl</param>
+            <returns>True if the two UpdateFileUrl have the same content hash, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl.GetHashCode">
+            <summary>
+            Returns a hash code based on the content hash.
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl.CompareTo(System.Object)">
+            <summary>
+            Checks if two file URLs point to the same content.
+            </summary>
+            <param name="obj">The other update content URL</param>
+            <returns>True if both URLs point to the same content (by hash), false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl.op_Equality(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl,Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl)">
+            <summary>
+            Override equality operator to match Equals method.
+            </summary>
+            <param name="lhs">Left UpdateFileUrl</param>
+            <param name="rhs">Right UpdateFileUrl</param>
+            <returns>True if the two UpdateFileUrl have the same content hash, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl.op_Inequality(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl,Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl)">
+            <summary>
+            Override inequality operator to match Equals method
+            </summary>
+            <param name="lhs">Left UpdateFileUrl</param>
+            <param name="rhs">Right UpdateFileUrl</param>
+            <returns>False if the two UpdateFileUrl have the same content hash, true otherwise</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverFeatureScore">
+            <summary>
+            Stores driver feature score.
+            <para>
+            For more information, see <see href="https://docs.microsoft.com/en-us/windows-hardware/drivers/install/feature-score--windows-vista-and-later-">driver feature score documentation</see>
+            </para>
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverFeatureScore.OperatingSystem">
+            <summary>
+            Operating system
+            </summary>
+            <value>
+            Operating system or processor architecture
+            </value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverFeatureScore.Score">
+            <summary>
+            FeatureScore; higher is better when comparing two drivers that match the same HW ID
+            </summary>
+            <value>
+            Value between 0 and 255; lower is better
+            </value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverFeatureScore.CompareTo(System.Object)">
+            <summary>
+            Compare two driver feature scores
+            <para>
+            A smaller feature score is better; if sorting feature scores, take the smaller value as the better driver
+            </para>
+            </summary>
+            <param name="obj">Other object</param>
+            <returns>-1 if other feature score is lower (better), 0 if equal and 1 if higher (worse)</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMatchResult">
+            <summary>
+            The result of finding the best driver update for a device. 
+            <para>
+            Contains ranking information that can be used to determine if the matched driver update is better than an installed driver.
+            </para>
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMatchResult.Driver">
+            <summary>
+            The matched driver
+            </summary>
+            <value>
+            An update of type Driver
+            </value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMatchResult.MatchedVersion">
+            <summary>
+            The version of the matched driver
+            </summary>
+            <value>
+            Driver version consisting of timestamp and 4 part version
+            </value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMatchResult.MatchedFeatureScore">
+            <summary>
+            The feature score of the matched driver if available; null otherwise
+            </summary>
+            <value>
+            Driver feature score
+            </value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMatchResult.MatchedHardwareId">
+            <summary>
+            The most specific device hardwared ID that was matched
+            </summary>
+            <value>
+            Hardware ID string
+            </value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMatchResult.MatchedComputerHardwareId">
+            <summary>
+            The computer hardware ID that was matched, if any. Null otherwise
+            </summary>
+            <value>
+            Computer hardware ID (GUID)
+            </value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMatchResult.#ctor(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.DriverUpdate)">
+            <summary>
+            Create a driver match result for a device
+            </summary>
+            <param name="driver">The driver that matched a device hardware id</param>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata">
+            <summary>
+            Extended information about a hardware ID handled by a driver update.
+            A driver update matches one or more hardware ids; each match has its own metadata that describes it.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata.HardwareID">
+            <summary>
+            Gets the hardware IDs this driver update is applicable to
+            </summary>
+            <value>
+            Hardware ID string
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata.WhqlDriverID">
+            <summary>
+            Gets the Windows Hardware Quality Lab driver ID
+            </summary>
+            <value>
+            WHQL driver ID string
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata.Manufacturer">
+            <summary>
+            Gets the driver manufacturer
+            </summary>
+            <value>
+            Manufacturer name
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata.Company">
+            <summary>
+            Gets the Company that created the driver
+            </summary>
+            <value>
+            Company name
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata.Provider">
+            <summary>
+            Gets the entity that provided the driver.
+            </summary>
+            <value>
+            Driver provider name
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata.Versioning">
+            <summary>
+            Gets driver vesion information
+            </summary>
+            <value>
+            Driver version
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata.Class">
+            <summary>
+            Gets the driver class type
+            </summary>
+            <value>
+            Driver class (graphics, USB, etc.)
+            </value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata.FeatureScores">
+            <summary>
+            List of driver feature scores.
+            <para>
+            See <see href="https://docs.microsoft.com/en-us/windows-hardware/drivers/install/feature-score--windows-vista-and-later-">feature score documentation</see> for more information.
+            </para>
+            </summary>
+            <value>
+            List of feature scores
+            </value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata.DistributionComputerHardwareId">
+            <summary>
+            List of distribution computer hardware ids. A driver update that contains distribution computer hardware ids is only offered to computers that match the computer hardware id, regardless of device hardware id matching.
+            <para>
+            See the <see href="http://download.microsoft.com/download/B/A/8/BA89DCE0-DB25-4425-9EFF-1037E0BA06F9/windows10_driver_publishing_workflow.docx">driver publishing manual</see> for information on how this field is used
+            for device matching.
+            </para>
+            </summary>
+            <value>
+            List of distribution computer hardware ids.
+            </value>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata.TargetComputerHardwareId">
+            <summary>
+            List of target computer hardware ids. A driver update that contains target computer hardware ids is only offered to computers that match the computer hardware id, regardless of device hardware id matching.
+            <para>
+            See the <see href="http://download.microsoft.com/download/B/A/8/BA89DCE0-DB25-4425-9EFF-1037E0BA06F9/windows10_driver_publishing_workflow.docx">driver publishing manual</see> for information on hwo this field is used
+            for device matching.
+            </para>
+            </summary>
+            <value>
+            List of target computer hardware ids.
+            </value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata.CompareTo(System.Object)">
+            <summary>
+            Compare two DriverMetadata by their date and version
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching">
+            <summary>
+            Indexes driver matching metadata from a metadata store.
+            Efficiently checks if a driver is available in the metadata store for a specific hardware ID.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.DriverMetadataStore">
+            <summary>
+            Driver metadata serialized as JSON for quick reading.
+            The data in this list is parsed from driver update metadata XML
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.FromPackageSource(Microsoft.PackageGraph.Storage.IMetadataStore)">
+            <summary>
+            Loads driver update matching metadata from a metadata store.
+            </summary>
+            <param name="packageSource"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.ExtractAndIndexDriverMetadata(System.Int32,System.Collections.Generic.List{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata})">
+            <summary>
+            Extract driver metadata from an update XML and added relevant information to indexes and maps
+            for quick retrieval
+            </summary>
+            <param name="updateIndex">The index of the update to parse.</param>
+            <param name="driverMetadata"></param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.AddDriverFeatureScoreToIndex(System.Collections.Generic.List{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata},System.Int32)">
+            <summary>
+            Index feature scores from the list of drivers metadata
+            </summary>
+            <param name="driverMetadata">List of driver metadata</param>
+            <param name="startIndexInMetadataStore">The index of the first update in this list when added to the metadata store</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.AddDriverVersionToIndex(System.Collections.Generic.List{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata},System.Int32)">
+            <summary>
+            Index driver versions from the driver metadata list
+            </summary>
+            <param name="driverMetadata">List of driver metadata to add</param>
+            <param name="startIndexInMetadataStore">The index of the first update in this list when added to the metadata store</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.AddDriverMetadataToHWIDIndex(System.Collections.Generic.List{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata},System.Int32)">
+            <summary>
+            Index hardware ids from the driver metadata list
+            </summary>
+            <param name="driverMetadata">List of driver metadata to add</param>
+            <param name="startIndexInMetadataStore">The index of the first update in this list when added to the metadata store</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.AddDriverMetadataToComputerHwIdIndex(System.Collections.Generic.List{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata},System.Int32)">
+            <summary>
+            Index computer hardware ids from the driver metadata list
+            </summary>
+            <param name="driverMetadata">List of driver metadata to add</param>
+            <param name="startIndexInMetadataStore">The index of the first update in this list when added to the metadata store</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.MatchDriver(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Guid},System.Collections.Generic.List{System.Guid})">
+            <summary>
+            Finds the best match for a driver update that matches the specified hardware ids and computer hardware ids
+            </summary>
+            <param name="hardwareIds">Device hardware ids, sorted from specific to generic</param>
+            <param name="computerHardwareIds">List of computer hardware ids</param>
+            <param name="installedPrerequisites">List of prerequisites installed on the target computer. Used to filter updates to just those applicable to a system</param>
+            <returns>If a driver match is found, matching information; null otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.MatchDriverMetadata(System.String,System.Collections.Generic.IEnumerable{System.Guid},System.Collections.Generic.List{System.Guid})">
+            <summary>
+            Finds the best match for a hardware id and computer hardware ids
+            </summary>
+            <param name="hardwareId">Device hardware id</param>
+            <param name="computerHardwareIds">List of computer hardware ids</param>
+            <param name="installedPrerequisites">List of prerequisites installed on the target computer. Used to filter updates to just those applicable to a system</param>
+            <returns>Best matched driver</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.MatchByComputerHardwareId(System.Collections.Generic.List{System.Int32},System.Collections.Generic.IEnumerable{System.Guid})">
+            <summary>
+            From the list of drivers matched to a device on hardware id, attempts to match by computer hardware id
+            </summary>
+            <param name="metadataMatchedByHwId">List of driver metadata that was matched by a hardware id</param>
+            <param name="computerHardwareIds">List of computer hardware ids compatible with a system</param>
+            <returns>Best driver match based on computer hardware id matching</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.MatchBySimpleHardwareId(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Finds the best match for a driver that was matched by just hardware ID matching (no computer hardware id or feature score available)
+            </summary>
+            <param name="metadataMatchedByHwId">The list of drivers matched by hardware id</param>
+            <returns>Best driver match based on device hardware id</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.GetDriverMetadataForHardwareId(System.String)">
+            <summary>
+            Gets driver metadata entries that match the specified HW ID. This method is recursive across all delta baselines.
+            </summary>
+            <param name="hardwareId">Device hardware id</param>
+            <returns>List of driver metadata indexes that match the device hardware id</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.GetDriverUpdateFromMetadataIndex(System.Int32)">
+            These getters recusively go into all delta baselines for a metadata source and retrieve driver metadata
+            Recursive getters are prefered to avoid having to accumulate driver indexes into the latest delta source - it can lead to huge memory utilization over time.
+            Instead, each incremental metadata source contains its own complete set of driver metadata and we query recursively across all deltas
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverVersion">
+            <summary>
+            Stores driver versioning data, comprised of driver date and 4 part version.
+            Implements custom comparison and equality check for driver version
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverVersion.Date">
+            <summary>
+            Drive date
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverVersion.Version">
+            <summary>
+            Driver version; 4 part version
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverVersion.VersionString">
+            <summary>
+            Gets the driver version in 4 part string format
+            </summary>
+            <value>
+            Driver version in 4 part format</value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverVersion.ParseDateFromString(System.String)">
+            <summary>
+            Parses a driver date string into a DateTime. The date string is expected to be in the format yyyy-mm-dd
+            </summary>
+            <param name="dateString">Date string</param>
+            <returns>DateTime parsed from the input string</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverVersion.ParseVersionFromString(System.String)">
+            <summary>
+            Parses a 4-part version string x.y.z.y into a 64 bit version
+            </summary>
+            <param name="versionString">4 part version string</param>
+            <returns>64 bit version</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverVersion.CompareTo(System.Object)">
+            <summary>
+            Compare two driver versions by date and version
+            </summary>
+            <param name="obj">Other driver version to compare to</param>
+            <returns>-1, 0, 1 for less than, equal and greated than respectively</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverVersion.Equals(System.Object)">
+            <summary>
+            Equality override for driver versions.
+            </summary>
+            <param name="obj">Other driver version to check equality with</param>
+            <returns>True if versions match (same date and version), false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverVersion.GetHashCode">
+            <summary>
+            GetHashCode override
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.DriverUpdate">
+            <summary>
+            Represents a driver update from the Microsoft Update catalog
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.DriverUpdate.GetDriverMetadata">
+            <summary>
+            Gets a list of driver specific metadata associated with this driver update.
+            </summary>
+            <returns>List of driver specific metadata</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CategoryHandler">
+            <summary>
+            Stores metadata specific to categories (products and classifications) in the Microsoft Update catalog
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CategoryHandler.CategoryType">
+            <summary>
+            Category type
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CategoryHandler.ProhibitsSubcategories">
+            <summary>
+            Sub-categories are prohibited for this category
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CategoryHandler.ProhibitsUpdates">
+            <summary>
+            Does not have carry updates
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CategoryHandler.DisplayOrder">
+            <summary>
+            Display order
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CategoryHandler.ExcludedByDefault">
+            <summary>
+            Excluded by default
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CbsHandler">
+            <summary>
+            Microsoft Update handler for updating individual Windows CBS packages
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CbsHandler.PackageIdentity">
+            <summary>
+            The identity of the package being updated
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CommandLineHandler">
+            <summary>
+            Metadata for the command line update handler. This handler applies updates by running various scripts on a device.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CommandLineHandler.Program">
+            <summary>
+            The program to invoke in order to perform the updates
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CommandLineHandler.Arguments">
+            <summary>
+            The arguments to pass to the update program
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CommandLineHandler.RebootByDefault">
+            <summary>
+            Whether to reboot the device, regardless of the return code
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CommandLineHandler.DefaultResult">
+            <summary>
+            The default result code expected from the update program
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CommandLineHandler.ReturnCodes">
+            <summary>
+            Expected result codes
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.UpdateHandlerType">
+            <summary>
+            Possible types of update handlers used by Microsoft Update
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.UpdateHandlerType.CommandLine">
+            <summary>
+            Command line handler; installs updates by executing local scripts or programs
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.UpdateHandlerType.OS">
+            <summary>
+            OS update handler; installs cumulative updates through CBS
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.UpdateHandlerType.CBS">
+            <summary>
+            OS update handler; installs individual packages through CBS
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.UpdateHandlerType.MSI">
+            <summary>
+            MSI update handler; installs updates through MSI
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.UpdateHandlerType.Category">
+            <summary>
+            No information available.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.UpdateHandlerType.WindowsPatch">
+            <summary>
+            No information available.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.UpdateHandlerType.WindowsSetup">
+            <summary>
+            OS update handler; installs Windows feature updates
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.UpdateHandlerType.WindowsInstaller">
+            <summary>
+            No information available
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.HandlerMetadata">
+            <summary>
+            Base class for update handler metadata classes.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.HandlerMetadata.HandlerType">
+            <summary>
+            The handler type.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.MsiHandler">
+            <summary>
+            Metadata for the MSI install handler
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.MsiHandler.ProductCode">
+            <summary>
+            Product code being installed
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.MsiHandler.MsiFile">
+            <summary>
+            Main MSI file to be installed
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.MsiHandler.CommandLine">
+            <summary>
+            Command line for launching MSI installation
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.OsInstallerHandler">
+            <summary>
+            Represents metadata for the Windows installer handler. This handler is responsible for installing cumulative updates.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.OsInstallerHandler.InitialModule">
+            <summary>
+            The initial module to load in order to start the update process
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.ReturnCode">
+            <summary>
+            Metadata for representing the expected return codes of various update handlers
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.ReturnCode.Reboot">
+            <summary>
+            Whether a return code indicates reboot required
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.ReturnCode.Code">
+            <summary>
+            The numerical return code
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.ReturnCode.Result">
+            <summary>
+            Corresponding result string
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.ReturnCode.DefaultLocalizedDescription">
+            <summary>
+            Localized result string
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsInstallerHandler">
+            <summary>
+            Metadata fo the windows installer handler
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsInstallerHandler.CommandLine">
+            <summary>
+            Install command line
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsInstallerHandler.UninstallCommandLine">
+            <summary>
+            Uninstall command line
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsInstallerHandler.FullFilePatchCode">
+            <summary>
+            Full file patch code
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsInstallerHandler.PatchCode">
+            <summary>
+            Patch code
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsPatchHandler">
+            <summary>
+            Metadata for a Windows patch handler
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsPatchHandler.InstallParameters">
+            <summary>
+            Install parameters for the patch
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsPatchHandler.UnpackParameters">
+            <summary>
+            Unpacking parameters for the patch
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsSetupHandler">
+            <summary>
+            Metadata for the handler responsible with Windows feature updates.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsSetupHandler.Program">
+            <summary>
+            The entry point for starting the windows feature update process
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsSetupHandler.IsSetup360">
+            <summary>
+            Whether this feature update is setup360 or not
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Parsers.BundlesUpdatesParser">
+            <summary>
+            Parses bundled updates information from update XML blob
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Parsers.SupersededUpdatesParser">
+            <summary>
+            Parses superseded updates information from update XML blob
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Parsers.UpdateFileParser">
+            <summary>
+            Parses file information from update XML blob
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.AtLeastOne">
+            <summary>
+            A collection of prerequisites, of which at least one must be met for the AtLeastOne prerequisite to be satisfied.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.AtLeastOne.Simple">
+            <summary>
+            Get the list of simple prerequisites that are part of the group
+            </summary>
+            <value>
+            List of simple prerequisites
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.AtLeastOne.IsCategory">
+            <summary>
+            Check if the AtLestOne prerequisite is a "category" prerequisite. Category prerequisites are not true prerequisites,
+            just a way to encode a product and classification for an update.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.CategoryResolver">
+            <summary>
+            Resolves "IsCategory" prerequisites to a category.
+            This is needed because the category and classification for an update is encoded as a prerequisite
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.CategoryResolver.ResolveProductFromPrerequisites(System.Collections.Generic.List{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.IPrerequisite},System.Collections.Generic.IReadOnlyList{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity})">
+            <summary>
+            Resolve product from prerequisites and list of all known products
+            </summary>
+            <param name="prerequisites">Update prerequisites</param>
+            <param name="allProducts">All known products</param>
+            <returns>All products that were found in the prerequisites list</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.CategoryResolver.ResolveClassificationFromPrerequisites(System.Collections.Generic.List{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.IPrerequisite},System.Collections.Generic.HashSet{Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity})">
+            <summary>
+            Resolve classification from prerequisites and list of all known classifications
+            </summary>
+            <param name="prerequisites">Update prerequisites</param>
+            <param name="allClassifications">All known classifications</param>
+            <returns>On success, the GUID of the classification, empty guid otherwise</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.IPrerequisite">
+            <summary>
+            Base, abstract class for update prerequisites.
+            <para>See <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.Simple"/> and <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.AtLeastOne"/> for possible prerequisite classes.</para>
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.PrerequisitesGraph">
+            <summary>
+            Models the prerequisite graph for all packages contained within a metadata store
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.PrerequisitesGraph.FromIndexedPackageSource(Microsoft.PackageGraph.Storage.IMetadataStore)">
+            <summary>
+            Creates a prerequisite graph for all the packages contained in the specified store
+            </summary>
+            <param name="source">Package metadata store</param>
+            <returns></returns>
+            <exception cref="T:System.Exception">If an unknown prerequisite type is encountered</exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.PrerequisitesGraph.GetLeafUpdates">
+            <summary>
+            Gets updates that have prerequisites but no other update depends on them
+            </summary>
+            <returns>List of GUIDS of leaf updates</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.PrerequisitesGraph.GetNonLeafUpdates">
+            <summary>
+            Gets updates that have prerequisites and also have other updates depend on them
+            </summary>
+            <returns>List of GUIDS of non leaf updates</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.PrerequisitesGraph.GetRootUpdates">
+            <summary>
+            Get updates with no prerequisites
+            </summary>
+            <returns>List of GUIDS of root updates</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.Simple">
+            <summary>
+            Simple prerequisite: a single update ID.
+            <para>The update ID contained in a simple prerequisite must be installed before the update that has this prerequisite can be installed.</para>
+            <para>The detectoid ID contained in a simple prerequisite must evaluate to true before the update that has this prerequisite can be installed. See <see cref="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.DetectoidCategory"/> for more details.</para>
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.Simple.UpdateId">
+            <summary>
+            The update ID or detectoid ID that is required before an update can be installed.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.SoftwareUpdate">
+            <summary>
+            Represents a software update in the Microsoft Update catalog.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.SoftwareUpdate.SupportUrl">
+            <summary>
+            Software update support URL, if available
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.SoftwareUpdate.KBArticleId">
+            <summary>
+            KB article ID associated with this software update
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.SoftwareUpdate.OsUpgrade">
+            <summary>
+            Whether this software update is an OS upgrade
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.SoftwareUpdate.IsSupersededBy">
+            <summary>
+            List of software updates that supersede this update
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.SoftwareUpdate.SupersededUpdates">
+            <summary>
+            List of Update Ids superseded by this update.
+            </summary>
+            <value>List of update ids (GUID)</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.SoftwareUpdate.BundledUpdates">
+            <summary>
+            List of updates bundled within this update. Software updates can bundle 1 or more updates together in an update bundle.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.SoftwareUpdate.BundledWithUpdates">
+            <summary>
+            List of updates within which this updates is bundled. An update can belong to multiple, distinct bundles
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage">
+            <summary>
+            A base class for all updates stored on an upstream Microsoft Update server.
+            <para>
+            Stores generic update metadata applicable to both categories (classifications, products, detectoids) and updates (software and driver updates).
+            </para>
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Id">
+            <summary>
+            Returns the identity of this Microsoft Update package
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Microsoft#PackageGraph#ObjectModel#IPackage#Id">
+            <summary>
+            Returns the identity of this Microsoft Update package
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Title">
+            <summary>
+            Get the category or update title
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Categories">
+            <summary>
+            The list of category IDs associated to this update
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.GetCategories(System.Linq.ILookup{System.Guid,Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage})">
+            <summary>
+            The list of categories associated with this update.
+            </summary>
+            <param name="knownCategories">List of known categories. The updates's category IDs will be resolved from this list.</param>
+            <returns>List of categories for the update</returns>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Prerequisites">
+            <summary>
+            Get the list of prerequisites
+            </summary>
+            <value>
+            List of prerequisites
+            </value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.IsApplicable(System.Collections.Generic.List{System.Guid})">
+            <summary>
+            Determines if the update is applicable based on its list of prerequisites and the list of installed updates (prerequisites) on a computer
+            </summary>
+            <param name="installedPrerequisites">List of installed updates on a computer</param>
+            <returns>True if all prerequisites are met, false otherwise</returns>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Description">
+            <summary>
+            Get the category or update description
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Files">
+            <summary>
+            Gets the list of files (content) for update
+            </summary>
+            <value>
+            List of content files
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Handler">
+            <summary>
+            Gets the handler that can apply this update to a Windows device
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.ApplicabilityRules">
+            <summary>
+            Gets the applicability rules for an update
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.ReleaseMetadataBytes">
+            <summary>
+            Releases raw metadata cached in memory.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.GetMetadataStream">
+            <summary>
+            Returns the XML metadata stream from which this update metadata was created.
+            </summary>
+            <returns>XML stream, UTF8 encoded</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.MatchTitle(System.String[])">
+            <summary>
+            Matches keywords in the title of the update
+            </summary>
+            <param name="keywords">List of keywords to match. All keywords must match</param>
+            <returns>True if all keywords match, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.FromMetadataXml(System.Byte[],System.Collections.Generic.Dictionary{System.String,Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl})">
+            <summary>
+            Creates a MicrosoftUpdatePackage from raw metadata and a list of content files associated with the package
+            </summary>
+            <param name="metadata">RAW metadata. Expected to be UTF8 encoded XML</param>
+            <param name="filesCollection">List of URLs for content files</param>
+            <returns>Rehydrated MicrosoftUpdatePackage object</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.LoadNonIndexedMetadata(System.Xml.XPath.XPathNavigator,System.Xml.XmlNamespaceManager)">
+            <summary>
+            Implemented in derived classes; Retrieves metadata not indexed by the base Microsoft Update Package class.
+            </summary>
+            <param name="metadataNavigator">XPath navigator</param>
+            <param name="namespaceManager">XML namespace manager</param>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity">
+            <summary>
+            Represents the identity of a Microsoft Update package (update)
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.ID">
+            <summary>
+            Gets the ID part of the identity
+            </summary>
+            <value>GUID identity</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.Revision">
+            <summary>
+            Gets the revision part of the identity
+            </summary>
+            <value>Revision integer</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.Partition">
+            <inheritdoc cref="P:Microsoft.PackageGraph.ObjectModel.IPackageIdentity.Partition"/>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.OpenId">
+            <inheritdoc cref="P:Microsoft.PackageGraph.ObjectModel.IPackageIdentity.OpenId"/>
+        </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.OpenIdHex">
+            <inheritdoc cref="P:Microsoft.PackageGraph.ObjectModel.IPackageIdentity.OpenIdHex"/>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.Key1">
+            <summary>
+            Last 64 bits of the ID guid
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.Key2">
+            <summary>
+            First 64 bits of the ID guid
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.Key3">
+            <summary>
+            Revision number
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.#ctor(System.Guid,System.Int32)">
+            <summary>
+            Create an update identity from GUID and revision
+            </summary>
+            <param name="id">Update GUID</param>
+            <param name="revision">Update revision</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.OnDeserializedMethod(System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Re-creates the quick lookup keys after this object is deserialized. The keys are not serialized to save storage space
+            </summary>
+            <param name="context">Deserialization context. Not used.</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.GenerateQuickLookupKeys">
+            <summary>
+            Packs the GUID and Revision into integer values for quick comparison
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.CompareTo(System.Object)">
+            <summary>
+            Comparison override. 
+            </summary>
+            <param name="obj">The other Identity object</param>
+            <returns>
+            <para>-1 if this instance precedes obj in the sort order</para>
+            <para>0 if this instance occurs in the same position in the sort order as obj</para>
+            <para>1 if this instance follows obj in the sort order. </para>
+            </returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.Equals(System.Object)">
+            <summary>
+            Equals override. Checks that both ID and Revision match
+            </summary>
+            <param name="obj">The other Identity</param>
+            <returns>True if identities are equal, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.op_Equality(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity,Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity)">
+            <summary>
+            Equality operator override. Matches Equals return value;
+            </summary>
+            <param name="lhs"></param>
+            <param name="rhs"></param>
+            <returns>True if the two Identity objects are equal, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.op_Inequality(Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity,Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity)">
+            <summary>
+            Inequality operator override. The reverse of Equals.
+            </summary>
+            <param name="lhs">Left Identity</param>
+            <param name="rhs">Right Identity</param>
+            <returns>True if the two Identity objects are not equal, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.GetHashCode">
+            <summary>
+            Returns a hash code based on both ID and Revision.
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.ToString">
+            <summary>
+            Returns a string representation of the Identity, based on ID and Revision
+            </summary>
+            <returns>Identity string</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.FromString(System.String)">
+            <summary>
+            Create update identity from string representation
+            </summary>
+            <param name="packageIdentityString">Update ID in string form</param>
+            <returns>Microsoft update package identity</returns>
+            <exception cref="T:System.FormatException">If the string does not have the required format</exception>
+        </member>
+        <member name="T:Microsoft.PackageGraph.MicrosoftUpdate.MicrosoftUpdatePartitionRegistration">
+            <summary>
+            Registers Microsoft Update as a source for packages metadata.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.ObjectModel.ContentFileDigest">
+            <summary>
+            An implementation for <see cref="T:Microsoft.PackageGraph.ObjectModel.IContentFileDigest"/> for an update content file.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.ContentFileDigest.Algorithm">
+            <inheritdoc cref="P:Microsoft.PackageGraph.ObjectModel.IContentFileDigest.Algorithm"/>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.ContentFileDigest.DigestBase64">
+            <inheritdoc cref="P:Microsoft.PackageGraph.ObjectModel.IContentFileDigest.DigestBase64"/>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.ContentFileDigest.HexString">
+            <inheritdoc cref="P:Microsoft.PackageGraph.ObjectModel.IContentFileDigest.HexString"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.ObjectModel.ContentFileDigest.#ctor(System.String,System.String)">
+            <summary>
+            Creates update content digest from a hash algorithm and value
+            </summary>
+            <param name="algorithm">Algorithm used to generate the digest</param>
+            <param name="digestBase64">Digest value as base64 string</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.ObjectModel.ContentFileDigest.Equals(System.Object)">
+            <summary>
+            Equality override between two content digest objects.
+            </summary>
+            <param name="obj">Other digest</param>
+            <returns>True if algorigthms and values match for the two digests</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.ObjectModel.ContentFileDigest.ToString">
+            <summary>
+            String formatting override.
+            </summary>
+            <returns>String formatted object as hash_algorithm:hex_value</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.ObjectModel.ContentFileDigest.GetHashCode">
+            <summary>
+            Override for getting the object's hash code
+            </summary>
+            <returns>Int hash code</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.ObjectModel.IContentFile">
+            <summary>
+            Represents a content file for an update.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IContentFile.FileName">
+            <summary>
+            Gets the name of the file
+            </summary>
+            <value>
+            File name
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IContentFile.Size">
+            <summary>
+            Ges the file size, in bytes.
+            </summary>
+            <value>File size</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IContentFile.Digest">
+            <summary>
+            Gets the primary digest of a content file. 
+            </summary>
+            <value>Content file digest.</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IContentFile.Source">
+            <summary>
+            Gets the default download URL for a file.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.ObjectModel.IContentFileDigest">
+            <summary>
+            Represents digest information for an update content file
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IContentFileDigest.Algorithm">
+            <summary>
+            Gets the digest algorithm used
+            </summary>
+            <value>Digest algorithm name</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IContentFileDigest.DigestBase64">
+            <summary>
+            Gets the base64 encoded digest
+            </summary>
+            <value>Base64 encoded string</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IContentFileDigest.HexString">
+            <summary>
+            Gets the HEX string representation of the digest 
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.ObjectModel.IPackage">
+            <summary>
+            Generic interface for inspecting metadata associated with updates originating from Microsoft Update.
+            Objects that implement this interfaces should be cast to their specialized types to obtain type specific metadata.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IPackage.Id">
+            <summary>
+            Get the package's identity
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IPackage.Title">
+            <summary>
+            Get the package title
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IPackage.Description">
+            <summary>
+            Get the package description
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IPackage.Files">
+            <summary>
+            Gets the list of files (content) for a package
+            </summary>
+            <value>
+            List of content files
+            </value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.ObjectModel.IPackage.GetMetadataStream">
+            <summary>
+            Package extended metadata
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.ObjectModel.IPackageIdentity">
+            <summary>
+            Interface that represents the unique identity of a package (update) in the object model.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IPackageIdentity.Partition">
+            <summary>
+            The partition to which the update belongs. Possible values are Linux, Microsoft, Nuget, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IPackageIdentity.OpenId">
+            <summary>
+            A unique ID for a package across all partitions.
+            Implementations of this interface expose a partition specific ID as well.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IPackageIdentity.OpenIdHex">
+            <summary>
+            HEX representation of the unique ID.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.ObjectModel.PackagesOperationType">
+            <summary>
+            The OperationType enumeration represents, for reporting purposes, the possible sub states of an operation on a metadata source
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.ObjectModel.PackagesOperationType.Unknown">
+            <summary>
+            Operation initializing
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.ObjectModel.PackagesOperationType.DownloadFileStart">
+            <summary>
+            Started downloading a file
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.ObjectModel.PackagesOperationType.DownloadFileProgress">
+            <summary>
+            Progress for downloading a file
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.ObjectModel.PackagesOperationType.DownloadFileEnd">
+            <summary>
+            Finished downloading a file
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.ObjectModel.PackagesOperationType.HashFileStart">
+            <summary>
+            Started checking the hash on a file
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.ObjectModel.PackagesOperationType.HashFileProgress">
+            <summary>
+            Progress of hash checking
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.ObjectModel.PackagesOperationType.HashFileEnd">
+            <summary>
+            Completed the hash check for a file
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.ObjectModel.PackagesOperationProgress">
+            <summary>
+            Represents progress data for operations on local repositories
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.PackagesOperationProgress.PercentDone">
+            <summary>
+            Percent done. Not all operation types support progress reporting.
+            </summary>
+            <value>
+            Percent done value, in the [0,100] range.
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.PackagesOperationProgress.Maximum">
+            <summary>
+            Number of work items. Reported only for operations types that support percent done reporting. 
+            </summary>
+            <value>
+            Number of work items (updates, etc.) to process
+            </value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.PackagesOperationProgress.Current">
+            <summary>
+            Number of work items processed. Reported only for operations that support percent done reporting.
+            </summary>
+            <value>
+            Number of work items (updates, etc.) processed so far.</value>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.PackagesOperationProgress.CurrentOperation">
+            <summary>
+            The operation that is currently executing.
+            </summary>
+            <value>One of the possible operations from <see cref="T:Microsoft.PackageGraph.ObjectModel.PackagesOperationType"/></value>
+        </member>
+        <member name="T:Microsoft.PackageGraph.ObjectModel.ContentOperationProgress">
+            <summary>
+            Represents progress data for operations that process files
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.ContentOperationProgress.File">
+            <summary>
+             The file being processed
+            </summary>
+            <value>Update file processed</value>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Partitions.IIndexFactory">
+            <summary>
+            Interface for creation of indexes for a <see cref="T:Microsoft.PackageGraph.Storage.IMetadataSource"/>
+            This interface must be implemented by a partition to enable indexing of updates (packages) originating
+            from the partition
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Partitions.IIndexFactory.CreateIndex(Microsoft.PackageGraph.Storage.Index.IndexDefinition,Microsoft.PackageGraph.Storage.Index.IIndexContainer)">
+            <summary>
+            Creates an index that will be attached to a <see cref="T:Microsoft.PackageGraph.Storage.IMetadataSource"/>
+            </summary>
+            <param name="definition">The index definition</param>
+            <param name="container">The container that will contain the newly created index</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Partitions.IPackageFactory">
+            <summary>
+            <para>
+            Interface that allows creation of <see cref="T:Microsoft.PackageGraph.ObjectModel.IPackage"/> from raw metadata or from metadata stores.
+            </para>
+            <para>
+            This interface allows extending the package graph object model to any package source: Microsoft Update, Linux Repo, NuGet, NPM, etc.
+            Each such "partition" will implement its own package factory, capable of creating IPackage from metadata.
+            If a partition implements this interface, other interfaces that handle query and storage of packages will automatically be able to handle packages from the partition.
+            </para>
+            <para>
+            Package graph partitions implement this interface. Implement this partition when extending the package graph to
+            other partitions (nuget, npm, etc.)
+            </para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Partitions.IPackageFactory.FromStream(System.IO.Stream,Microsoft.PackageGraph.Storage.IMetadataSource)">
+            <summary>
+            Creates an <see cref="T:Microsoft.PackageGraph.ObjectModel.IPackage"/> from the raw stream. The package will be associated with a specified metadata store
+            </summary>
+            <param name="metadataStream">The raw metadata.</param>
+            <param name="backingMetadataStore">The store that contains the metadata.</param>
+            <returns><see cref="T:Microsoft.PackageGraph.ObjectModel.IPackage"/></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Partitions.IPackageFactory.FromStore(System.Int32,Microsoft.PackageGraph.ObjectModel.IPackageIdentity,Microsoft.PackageGraph.Storage.IMetadataLookup,Microsoft.PackageGraph.Storage.IMetadataSource)">
+            <summary>
+            Creates an <see cref="T:Microsoft.PackageGraph.ObjectModel.IPackage"/> by rehydrating it from a backing metadata store
+            </summary>
+            <param name="updateType">The update type. The type is opaque and partition specific.</param>
+            <param name="id">The package identity.</param>
+            <param name="store">Store where to lookup the package</param>
+            <param name="metadataSource">Store that contains the raw metadata for the package</param>
+            <returns><see cref="T:Microsoft.PackageGraph.ObjectModel.IPackage"/></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Partitions.IPackageFactory.FromSource(System.String)">
+            <summary>
+            Creates a <see cref="T:Microsoft.PackageGraph.ObjectModel.IPackage"/> from a URI.
+            </summary>
+            <param name="sourceUri">URI to the update raw metadata</param>
+            <returns><see cref="T:Microsoft.PackageGraph.ObjectModel.IPackage"/></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Partitions.IPackageFactory.CanCreatePackageFromSource(System.String)">
+            <summary>
+            Checks if a package can be created from the specified URI
+            </summary>
+            <param name="sourceUri">URI to the update raw metadata</param>
+            <returns>True if a package graph partition can create a package from the URI, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Partitions.IPackageFactory.IdentitiesFromJson(System.IO.StreamReader)">
+            <summary>
+            Rehydrates a mapping of package identity to int index that was serialized to JSON.
+            </summary>
+            <param name="jsonStream">JSON stream</param>
+            <returns>List of package identity to index mappings</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Partitions.IPackageFactory.IdentityFromString(System.String)">
+            <summary>
+            Rehydrates a package identity from string.
+            </summary>
+            <param name="packageIdentityString">The string representation of the package id.</param>
+            <returns>Rehydrated package identity</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Partitions.IPackageFactory.FilterPartitionIdentities(System.Collections.Generic.Dictionary{System.Int32,Microsoft.PackageGraph.ObjectModel.IPackageIdentity})">
+            <summary>
+            Filters the list of package identities to only those identities that belong to a partition.
+            </summary>
+            <param name="packageIdentities">List of package identities</param>
+            <returns>List of package identities that are handled by a package graph partition.</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Partitions.IPackageFactory.GetPackageType(Microsoft.PackageGraph.ObjectModel.IPackage)">
+            <summary>
+            Retrieves the partition-specific package type.
+            </summary>
+            <param name="package">IPackage</param>
+            <returns>Package type; int; partition specific.</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Partitions.PartitionDefinition">
+            <summary>
+            Definition for a partition in package graph. 
+            Each partition in package graph handles packages (updates) from specific sources: Microsoft Update, Linux, Nuget, etc.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.Partitions.PartitionDefinition.Name">
+            <summary>
+            The name of the partition
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.Partitions.PartitionDefinition.Factory">
+            <summary>
+            Partition factory for creating packages from raw metadata and other sources
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.Partitions.PartitionDefinition.HasExternalContentFileMetadata">
+            <summary>
+            True if packages from this partition have side-car metadata files that is not captured in IPackage
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.Partitions.PartitionDefinition.Indexes">
+            <summary>
+            List of indexes that this partition can have over contained packages
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.Partitions.PartitionDefinition.HandlesIdentities">
+            <summary>
+            True if the partition can map package identities to an integer index for quick lookup
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Storage.IContentStore">
+            <summary>
+            Download, storage and retrieval for package content (update content). Stores <see cref="T:Microsoft.PackageGraph.ObjectModel.IContentFile"/>
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.Storage.IContentStore.Progress">
+            <summary>
+            Raised on progress for long running content store operations
+            </summary>
+            <value>
+            Progress data.
+            </value>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFile)">
+            <summary>
+            Checks if a content file has been downloaded
+            </summary>
+            <param name="file">File to check if it was downloaded</param>
+            <returns>True if the file was downloaded, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFileDigest,System.String@)">
+            <summary>
+            Checks if an update file (by hash) has been downloaded
+            </summary>
+            <param name="fileDigest">File hash to check if it was downloaded</param>
+            <param name="fileName">If the store contains the file by hash, this parameter receives the original file name</param>
+            <returns>True if the file was downloaded, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFile)">
+            <summary>
+            Gets a read only stream for an update content file
+            </summary>
+            <param name="updateFile">The update file to open</param>
+            <returns>Read only stream for the requested update content file</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)">
+            <summary>
+            Gets a read only stream for an update content file (by hash)
+            </summary>
+            <param name="fileDigest">The update file (by hash) to open</param>
+            <returns>Read only stream for the requested update content file</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)">
+            <summary>
+            Gets an URI for the content file (by hash)
+            </summary>
+            <param name="fileDigest">The update file hash</param>
+            <returns>Uri to content file</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFile)">
+            <summary>
+            Gets the source URI for the update content file
+            </summary>
+            <param name="updateFile">The update file</param>
+            <returns>Source Uri for the content file</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IContentStore.Download(System.Collections.Generic.IEnumerable{Microsoft.PackageGraph.ObjectModel.IContentFile},System.Threading.CancellationToken)">
+            <summary>
+            Downloads the specified update content files.
+            </summary>
+            <param name="files">List of update content files to download</param>
+            <param name="cancelToken">Cancellation token for aborting the operation</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IContentStore.DownloadAsync(Microsoft.PackageGraph.ObjectModel.IContentFile,System.Threading.CancellationToken)">
+            <summary>
+            Downloads the specified update content file
+            </summary>
+            <param name="file"></param>
+            <param name="cancelToken"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.IContentStore.QueuedSize">
+            <summary>
+            The size in bytes of content left to be downloaded in the current download operation
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.IContentStore.DownloadedSize">
+            <summary>
+            The size in bytes of content downloaded during the current download operation
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.IContentStore.QueuedCount">
+            <summary>
+            The count of content files left to be downloaded in the current download operation
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Storage.IMetadataFilter">
+            <summary>
+            Interface for filtering packages from a <see cref="T:Microsoft.PackageGraph.Storage.IMetadataSource"/> or for selectively quering packages from a <see cref="T:Microsoft.PackageGraph.Storage.IMetadataSource"/>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataFilter.Apply(Microsoft.PackageGraph.Storage.IMetadataStore)">
+            <summary>
+            Apply the filter to a <see cref="T:Microsoft.PackageGraph.Storage.IMetadataSource"/> and returns the matching packages
+            </summary>
+            <param name="source">The metadata store to filter</param>
+            <returns>Matching packages</returns>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Storage.IMetadataLookup">
+            <summary>
+            Interface implemented by metadata stores that support metadata indexed lookups.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataLookup.TrySimpleKeyLookup``1(Microsoft.PackageGraph.ObjectModel.IPackageIdentity,System.String,``0@)">
+            <summary>
+            Query an index by package identity for simple typed data.
+            </summary>
+            <typeparam name="T">Simple type</typeparam>
+            <param name="packageIdentity">The package identity to query for</param>
+            <param name="indexName">The name of the index</param>
+            <param name="value">Retrieved value, if found</param>
+            <returns>True if the package was found in the index, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataLookup.TryListKeyLookup``1(Microsoft.PackageGraph.ObjectModel.IPackageIdentity,System.String,System.Collections.Generic.List{``0}@)">
+            <summary>
+            Query an index by package identity. Returns list data 
+            </summary>
+            <typeparam name="T">Element type for the list</typeparam>
+            <param name="packageIdentity">The package identity to query for</param>
+            <param name="indexName">The name of the index</param>
+            <param name="value">Retrieved value, if found</param>
+            <returns>True if the package was found in the index, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataLookup.TryPackageLookupByCustomKey``1(``0,System.String,Microsoft.PackageGraph.ObjectModel.IPackageIdentity@)">
+            <summary>
+            Query a package identity from an index by a custom key.
+            </summary>
+            <typeparam name="T">Key type</typeparam>
+            <param name="key">Query key</param>
+            <param name="indexName">The name of the index</param>
+            <param name="value">The package identity associated with the key</param>
+            <returns>True if the key was found in the index, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataLookup.TryPackageListLookupByCustomKey``1(``0,System.String,System.Collections.Generic.List{Microsoft.PackageGraph.ObjectModel.IPackageIdentity}@)">
+            <summary>
+            Queries a list of package identities from an index by a custom key
+            </summary>
+            <typeparam name="T">Key type</typeparam>
+            <param name="key">Query key</param>
+            <param name="indexName">The name of the index</param>
+            <param name="value">List of packages found for the specified query key.</param>
+            <returns>True if the key was found, false otherwise.</returns>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.IMetadataLookup.IsReindexingRequired">
+            <summary>
+            True if re-indexing is required in a metadata source, false otherwise
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataLookup.ReIndex">
+            <summary>
+            Re-indexes the metadata source
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.Storage.IMetadataLookup.PackageIndexingProgress">
+            <summary>
+            Progress reporting for a long-running reindexing operation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Storage.IMetadataSink">
+            <summary>
+            Interface for an object that can store packages metadata
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataSink.AddPackages(System.Collections.Generic.IEnumerable{Microsoft.PackageGraph.ObjectModel.IPackage})">
+            <summary>
+            Adds a list of packages to the packages collection
+            </summary>
+            <param name="packages">The packages to add to this sink</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataSink.AddPackage(Microsoft.PackageGraph.ObjectModel.IPackage)">
+            <summary>
+            Adds a package to the packages collection
+            </summary>
+            <param name="package">The package to add</param>
+        </member>
+        <member name="E:Microsoft.PackageGraph.Storage.IMetadataSink.PackagesAddProgress">
+            <summary>
+            Provides progress notifications for the AddPackages operation
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Storage.PackageStoreEventArgs">
+            <summary>
+            Progress base class for various operations in a metadata store
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.PackageStoreEventArgs.Total">
+            <summary>
+            Operation total value
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.PackageStoreEventArgs.Current">
+            <summary>
+            Operation current value
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.PackageStoreEventArgs.#ctor">
+            <summary>
+            Constructor for a package store event
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Storage.IMetadataSource">
+            <summary>
+            <para>
+            Interface implemented by update metadata sources. Metadata sources retrieve
+            raw metadata to be ingested into the package graph object model and subsequently 
+            stored locally and queries.
+            </para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataSource.GetMetadata(Microsoft.PackageGraph.ObjectModel.IPackageIdentity)">
+            <summary>
+            Get raw metadata for a package identity
+            </summary>
+            <param name="packageIdentity">Package identity</param>
+            <returns>Package raw metadata.</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataSource.ContainsMetadata(Microsoft.PackageGraph.ObjectModel.IPackageIdentity)">
+            <summary>
+            Checks if the source has metadata for a specific package ID
+            </summary>
+            <param name="packageIdentity">Package identity</param>
+            <returns>True if the source has raw metadata</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataSource.GetFiles``1(Microsoft.PackageGraph.ObjectModel.IPackageIdentity)">
+            <summary>
+            Retrieves content files associated with a package
+            </summary>
+            <typeparam name="T">The type of content file applicable to the package, depending on the partition</typeparam>
+            <param name="packageIdentity">The identity of the package</param>
+            <returns>List of content files associated with the package</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataSource.CopyTo(Microsoft.PackageGraph.Storage.IMetadataSink,System.Threading.CancellationToken)">
+            <summary>
+            Copies all package metadata from this source to the target metadata sink
+            </summary>
+            <param name="destination">Metadata destination</param>
+            <param name="cancelToken">Cancellation token</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataSource.CopyTo(Microsoft.PackageGraph.Storage.IMetadataSink,Microsoft.PackageGraph.Storage.IMetadataFilter,System.Threading.CancellationToken)">
+            <summary>
+            Copies select package metadata from this source to the target metadata sink
+            </summary>
+            <param name="destination">Metadata destination</param>
+            <param name="filter">Filter to apply during copy</param>
+            <param name="cancelToken">Cancellation token</param>
+        </member>
+        <member name="E:Microsoft.PackageGraph.Storage.IMetadataSource.MetadataCopyProgress">
+            <summary>
+            Progress notification during metadata copy operations
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.Storage.IMetadataSource.OpenProgress">
+            <summary>
+            Progress notifications during opening the metadata source
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Storage.IMetadataStore">
+            <summary>
+            <para>
+            Store containing metadata for <see cref="T:Microsoft.PackageGraph.ObjectModel.IPackage"/> originating from any partition of the package graph.
+            </para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataStore.ContainsPackage(Microsoft.PackageGraph.ObjectModel.IPackageIdentity)">
+            <summary>
+            Checks if the store contains a package by identity
+            </summary>
+            <param name="packageIdentity">Package identity</param>
+            <returns>True if the store contains the package, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataStore.GetPackageIdentities">
+            <summary>
+            Retrieves a list of all package identities in the store
+            </summary>
+            <returns>List of package identities</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataStore.GetPackageIndex(Microsoft.PackageGraph.ObjectModel.IPackageIdentity)">
+            <summary>
+            Gets a integer index for a package. This index is unique only in the context of the metadata source that retrieved it.
+            </summary>
+            <param name="packageIdentity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataStore.GetPackage(Microsoft.PackageGraph.ObjectModel.IPackageIdentity)">
+            <summary>
+            Retrieves a package by package identity
+            </summary>
+            <param name="packageIdentity">Package identity</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataStore.GetPackage(System.Int32)">
+            <summary>
+            Retrieves a package by package index. The package index must originate from this store instance.
+            </summary>
+            <param name="packageIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataStore.Flush">
+            <summary>
+            Flush the store to its underlying storage
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataStore.GetPendingPackages">
+            <summary>
+            Gets a list of packages pending indexing
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.IMetadataStore.IsReindexingRequired">
+            <summary>
+            True if re-indexing is required in a metadata store, false otherwise
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.IMetadataStore.IsMetadataIndexingSupported">
+            <summary>
+            True if the metadata in this store is indexed for fast queries; false otherwise
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.IMetadataStore.ReIndex">
+            <summary>
+            Re-indexes the metadata store, if supported.
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.Storage.IMetadataStore.PackageIndexingProgress">
+            <summary>
+            Progress reporting for a long-running reindexing operation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Storage.Azure.BlobContentStore">
+            <summary>
+            Implementation of <see cref="T:Microsoft.PackageGraph.Storage.IContentStore"/> that downloads and stores update content in Azure Blob Storage
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.Progress">
+            <inheritdoc cref="E:Microsoft.PackageGraph.Storage.IContentStore.Progress"/>
+        </member>
+        <member name="F:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.PendingFileDownloads">
+            <summary>
+            List of pending downloads
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.QueuedSize">
+            <inheritdoc cref="P:Microsoft.PackageGraph.Storage.IContentStore.QueuedSize"/>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.DownloadedSize">
+            <inheritdoc cref="P:Microsoft.PackageGraph.Storage.IContentStore.DownloadedSize"/>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.QueuedCount">
+            <inheritdoc cref="P:Microsoft.PackageGraph.Storage.IContentStore.QueuedCount"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.OpenOrCreate(Microsoft.Azure.Storage.Blob.CloudBlobClient,System.String)">
+            <summary>
+            Opens an exiting or creates a new <see cref="T:Microsoft.PackageGraph.Storage.IContentStore"/> with storage in the specified Azure Blob account and container
+            </summary>
+            <param name="client">The Azure Blob client to use</param>
+            <param name="containerName">The container name where to store update content</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.Download(System.Collections.Generic.IEnumerable{Microsoft.PackageGraph.ObjectModel.IContentFile},System.Threading.CancellationToken)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.Download(System.Collections.Generic.IEnumerable{Microsoft.PackageGraph.ObjectModel.IContentFile},System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFile)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFile)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFile)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFile)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFile)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFile)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.DownloadAsync(Microsoft.PackageGraph.ObjectModel.IContentFile,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.DownloadAsync(Microsoft.PackageGraph.ObjectModel.IContentFile,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFileDigest,System.String@)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFileDigest,System.String@)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.BlobContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)"/>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.Azure.ContainerPackageStore.IsReindexingRequired">
+            <inheritdoc cref="P:Microsoft.PackageGraph.Storage.IMetadataStore.IsReindexingRequired"/>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.Azure.ContainerPackageStore.IsMetadataIndexingSupported">
+            <inheritdoc cref="P:Microsoft.PackageGraph.Storage.IMetadataStore.IsMetadataIndexingSupported"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.ContainerPackageStore.ReIndex">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IMetadataStore.ReIndex"/>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Storage.Azure.PackageStore">
+            <summary>
+            Creates an instance of <see cref="T:Microsoft.PackageGraph.Storage.IMetadataStore"/> that stores metadata in Azure Blob Storage
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.PackageStore.Open(Microsoft.Azure.Storage.Blob.CloudBlobClient,System.String)">
+            <summary>
+            Opens an existing <see cref="T:Microsoft.PackageGraph.Storage.IMetadataStore"/> from the specified Blob storage account and container name
+            </summary>
+            <param name="client">Azure blob client</param>
+            <param name="containerName">Container name that contains the metadata store</param>
+            <returns>An instance of IMetadataStore</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.PackageStore.Erase(Microsoft.Azure.Storage.Blob.CloudBlobClient,System.String)">
+            <summary>
+            Permanently deletes a <see cref="T:Microsoft.PackageGraph.Storage.IMetadataStore"/> stored in the specified Azure Blob account and container
+            </summary>
+            <param name="client">Azure blob client</param>
+            <param name="containerName">Container name that contains the metadata store</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.PackageStore.Open(Microsoft.Azure.Storage.Blob.CloudBlobContainer)">
+            <summary>
+            Opens an existing <see cref="T:Microsoft.PackageGraph.Storage.IMetadataStore"/> from the specified blob storage container reference
+            </summary>
+            <param name="storeContainer">Reference to the container from which to open the metadata store</param>
+            <returns>An instance of IMetadataStore</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.PackageStore.OpenOrCreate(Microsoft.Azure.Storage.Blob.CloudBlobClient,System.String)">
+            <summary>
+            Opens or create a <see cref="T:Microsoft.PackageGraph.Storage.IMetadataStore"/> from the specified blob storage container reference
+            </summary>
+            <param name="client">Azure blob client</param>
+            <param name="containerName">Container name that contains the metadata store</param>
+            <returns>An instance of IMetadataStore</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Azure.PackageStore.Exists(Microsoft.Azure.Storage.Blob.CloudBlobClient,Microsoft.Azure.Storage.Blob.CloudBlobContainer)">
+            <summary>
+            Checks if a <see cref="T:Microsoft.PackageGraph.Storage.IMetadataStore"/> exists in the specified Azure Blob account and container
+            </summary>
+            <param name="client">Azure blob client</param>
+            <param name="container">Container name that contains the metadata store</param>
+            <returns>True if the metadata store exists, false otherwise</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToFile(System.String,Microsoft.PackageGraph.ObjectModel.IContentFile,System.Threading.CancellationToken)">
+            <summary>
+            Downloads a single file belonging to an update package. Supports resuming a partial download
+            </summary>
+            <param name="destinationFilePath">Download destination file.</param>
+            <param name="updateFile">The update file to download.</param>
+            <param name="cancellationToken">Cancellation token</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.ContentDownloader.DownloadToStream(System.IO.Stream,Microsoft.PackageGraph.ObjectModel.IContentFile,System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            Downloads the specified URL to the destination file stream
+            </summary>
+            <param name="destination">The file stream to write content to</param>
+            <param name="updateFile">The update to download</param>
+            <param name="startOffset">Offset to resume download at</param>
+            <param name="cancellationToken">Cancellation token</param>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Storage.Local.ContentHash">
+            <summary>
+            Hashes file contents and checks hashes with value expected from update file metadata
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.Local.DirectoryPackageStore.IsReindexingRequired">
+            <inheritdoc cref="P:Microsoft.PackageGraph.Storage.IMetadataStore.IsReindexingRequired"/>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.Local.DirectoryPackageStore.IsMetadataIndexingSupported">
+            <inheritdoc cref="P:Microsoft.PackageGraph.Storage.IMetadataStore.IsMetadataIndexingSupported"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.DirectoryPackageStore.ReIndex">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IMetadataStore.ReIndex"/>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore">
+            <summary>
+            Downloads and stores update content as files on the local file system.
+            </summary>
+        </member>
+        <member name="E:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Progress">
+            <inheritdoc cref="E:Microsoft.PackageGraph.Storage.IContentStore.Progress"/>
+        </member>
+        <member name="F:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.LocalPath">
+            <summary>
+            Directory under which the store structure is created
+            </summary>
+        </member>
+        <member name="F:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.ContentDirectoryName">
+            <summary>
+            Root content directory name
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.QueuedSize">
+            <inheritdoc cref="P:Microsoft.PackageGraph.Storage.IContentStore.QueuedSize"/>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.DownloadedSize">
+            <inheritdoc cref="P:Microsoft.PackageGraph.Storage.IContentStore.DownloadedSize"/>
+        </member>
+        <member name="P:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.QueuedCount">
+            <inheritdoc cref="P:Microsoft.PackageGraph.Storage.IContentStore.QueuedCount"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.#ctor(System.String)">
+            <summary>
+            Opens or creates a new file system based content store.
+            If the specified directory does not exist, it will be created.
+            </summary>
+            <param name="path">Path where to create the store</param>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Download(System.Collections.Generic.IEnumerable{Microsoft.PackageGraph.ObjectModel.IContentFile},System.Threading.CancellationToken)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.Download(System.Collections.Generic.IEnumerable{Microsoft.PackageGraph.ObjectModel.IContentFile},System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFile)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFile)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFile)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFile)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetUpdateFileMarkerPath(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)">
+            <summary>
+            Returns the path to the file that marks whether an update content file was successfully downloaded.
+            The marker file is written after the update content file is downloaded and its hash verified
+            </summary>
+            <param name="fileDigest">Update content digest for which to retrieve the marker file path</param>
+            <returns>The marker file path. This file might not exist.</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFile)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFile)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.GetUri(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.GetContentDirectoryName(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)">
+            <summary>
+            Returns the directory name under which an update file would be stored on disk.
+            </summary>
+            <param name="fileDigest">The update content digest.</param>
+            <returns>Content parent directory name</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.DownloadAsync(Microsoft.PackageGraph.ObjectModel.IContentFile,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.DownloadAsync(Microsoft.PackageGraph.ObjectModel.IContentFile,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFileDigest,System.String@)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.Contains(Microsoft.PackageGraph.ObjectModel.IContentFileDigest,System.String@)"/>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)">
+            <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IContentStore.Get(Microsoft.PackageGraph.ObjectModel.IContentFileDigest)"/>
+        </member>
+        <member name="T:Microsoft.PackageGraph.Storage.Local.PackageStore">
+            <summary>
+            Creates an instance of <see cref="T:Microsoft.PackageGraph.Storage.IMetadataStore"/> that stores update metadata locally in a specified directory.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.PackageStore.Open(System.String)">
+            <summary>
+            Opens an exiting IMetadataStore from the specified directory.
+            </summary>
+            <param name="path">Path to the directory containing the IMetadataStore to open.</param>
+            <returns>An instance of IMetadataStore</returns>
+            <exception cref="T:System.IO.DirectoryNotFoundException">If the directory does not exist or does not contain a valid IMetadataStore.</exception>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.PackageStore.OpenOrCreate(System.String)">
+            <summary>
+            Opens an existing IMetadataStore from the specified directory. If a store does not exist,
+            or the directory does not exist, a new store is created.
+            </summary>
+            <param name="path">Path to the directory to open or create</param>
+            <returns>An instance of IMetadataStore</returns>
+        </member>
+        <member name="M:Microsoft.PackageGraph.Storage.Local.PackageStore.Exists(System.String)">
+            <summary>
+            Checks if a IMetadataStore exists in the specified directory
+            </summary>
+            <param name="path">Path to the directory to check.</param>
+            <returns>True if a store exists under the directory, false otherwise</returns>
+        </member>
+    </members>
+</doc>
