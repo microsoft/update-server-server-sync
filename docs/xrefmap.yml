@@ -4056,6 +4056,19 @@ references:
   isSpec: "True"
   fullName: Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.CopyTo
   nameWithType: UpstreamCategoriesSource.CopyTo
+- uid: Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.GetCategories(System.Threading.CancellationToken)
+  name: GetCategories(CancellationToken)
+  href: api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.html#Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamCategoriesSource_GetCategories_System_Threading_CancellationToken_
+  commentId: M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.GetCategories(System.Threading.CancellationToken)
+  fullName: Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.GetCategories(System.Threading.CancellationToken)
+  nameWithType: UpstreamCategoriesSource.GetCategories(CancellationToken)
+- uid: Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.GetCategories*
+  name: GetCategories
+  href: api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.html#Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamCategoriesSource_GetCategories_
+  commentId: Overload:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.GetCategories
+  isSpec: "True"
+  fullName: Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.GetCategories
+  nameWithType: UpstreamCategoriesSource.GetCategories
 - uid: Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.GetFiles*
   name: GetFiles
   href: api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.html#Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamCategoriesSource_GetFiles_
@@ -4392,19 +4405,6 @@ references:
   isSpec: "True"
   fullName: Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.CopyTo
   nameWithType: UpstreamUpdatesSource.CopyTo
-- uid: Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.GetCategories(System.Threading.CancellationToken)
-  name: GetCategories(CancellationToken)
-  href: api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.html#Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamUpdatesSource_GetCategories_System_Threading_CancellationToken_
-  commentId: M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.GetCategories(System.Threading.CancellationToken)
-  fullName: Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.GetCategories(System.Threading.CancellationToken)
-  nameWithType: UpstreamUpdatesSource.GetCategories(CancellationToken)
-- uid: Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.GetCategories*
-  name: GetCategories
-  href: api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.html#Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamUpdatesSource_GetCategories_
-  commentId: Overload:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.GetCategories
-  isSpec: "True"
-  fullName: Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.GetCategories
-  nameWithType: UpstreamUpdatesSource.GetCategories
 - uid: Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.GetFiles*
   name: GetFiles
   href: api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.html#Microsoft_PackageGraph_MicrosoftUpdate_Source_UpstreamUpdatesSource_GetFiles_
