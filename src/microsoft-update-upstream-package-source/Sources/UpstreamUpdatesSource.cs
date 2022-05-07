@@ -87,6 +87,44 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Source
             return batches;
         }
 
+        /// <summary>
+        /// Retrieves categories from the upstream source
+        /// </summary>
+        /// <param name="cancelToken">Cancellation token</param>
+        /// <returns>List of Microsoft Update categories</returns>
+        public List<MicrosoftUpdatePackage> GetCategories(CancellationToken cancelToken)
+        {
+            var categoriesList = new List<MicrosoftUpdatePackage>();
+
+            RetrievePackageIdentities();
+
+            var batches = CreateBatchedListFromFlatList(_Identities, 50);
+
+            var progressArgs = new PackageStoreEventArgs() { Total = _Identities.Count, Current = 0 };
+            batches.ForEach(batch =>
+            {
+                if (cancelToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                var retrievedBatch = _Client.GetUpdateDataForIds(batch.ToList());
+
+                lock (categoriesList)
+                {
+                    categoriesList.AddRange(retrievedBatch);
+                }
+
+                lock (progressArgs)
+                {
+                    progressArgs.Current++;
+                    MetadataCopyProgress?.Invoke(this, progressArgs);
+                }
+            });
+
+            return categoriesList;
+        }
+
         /// <inheritdoc cref="IMetadataSource.CopyTo(IMetadataSink, CancellationToken)"/>
         public void CopyTo(IMetadataSink destination, CancellationToken cancelToken)
         {

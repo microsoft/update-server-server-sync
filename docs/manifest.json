@@ -9,10 +9,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.UnApprovedUpdatesRequestedDelegate.html",
-          "hash": "C2SOT0PqjaMiCrVgjY7MO3aV2gR5UudWavIWx1LaIfI="
+          "hash": "bnyOGF8225g9eS9iSAPslLjJwhzsYGDRTLjkPhiBinQ="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -21,10 +21,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ClientSyncWebService.html",
-          "hash": "pnhXxTjqnTo6j6tiDthW5ahSZOuLM4y/TQ/HB9ZrXPs="
+          "hash": "/nBUIiBtfnpn2Ku8+mmd/7jKOzLoBiSLo8Dzn4ISGcg="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -33,10 +33,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.ReportingWebService.html",
-          "hash": "t+AOQ0x0m0VLy+vTlsaW5RTmDFIegFVGM4azY4kRhG0="
+          "hash": "GilOSFlvMMzYelcsIq1pgmzkXAMMjf/C6EseFYMm3rc="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -45,10 +45,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.SimpleAuthenticationWebService.html",
-          "hash": "on1sEBnwem1Ku1PvR5JzlKYufR8ilnJkuJQPt2ioCrQ="
+          "hash": "q2C2VdQqHOjOoRji/AurH922ypqSoYlA2nxm5KE2fQI="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -57,10 +57,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ClientSync.UpdateServerStartup.html",
-          "hash": "BOA4lgewNjYAtqZGduI5wU4AoM8u+SlqnbHvOePWKXY="
+          "hash": "xXrULKLHE/lJZY9lFPJhARYp16nls5Xpdpd/qiF4res="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -72,7 +72,7 @@
           "hash": "khLmf0DM84ihR0SCk1pXJf42v0Uxfcr9l20jv8u9IrA="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -81,10 +81,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.Content.MicrosoftUpdateContentController.html",
-          "hash": "zOyLhiKQiMrrTiOUvJN14Phk3VWv4bHyjr3LTwskQUw="
+          "hash": "fH4NOtSQcw+DENMM8os1XxqR4uvuRb5ZcC5EyYsAong="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -96,7 +96,7 @@
           "hash": "Yb6Wx9AG5kXRz5Ji3pFz/uffadGh+GLAwWLM4fbnxw8="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -105,10 +105,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.AuthenticationWebService.html",
-          "hash": "z2ibzWqVbt7wRNffIUTFt8xAPYr6wz9mvGahGtpz45o="
+          "hash": "5dI/MAUnNjqp21FlzsUPB+ntfAJh8a5osLUxilc4KSk="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -117,10 +117,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ReportingWebService.html",
-          "hash": "nrQmAVPMMUpF5Z4PtKUaY6Kvx6HoS1cSXtN8VDM734Y="
+          "hash": "avUo2cDQUy4QWdbrxIyYq5qvZyWKjjBLSiRUYXjnpgM="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -129,10 +129,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.ServerSyncWebService.html",
-          "hash": "nyerJaV2qFQkpNlktJEc1Y7vF+CEyiPqkg1fRjW9VX0="
+          "hash": "o55EEAoD6QT54ujTUt05CyywEMG02bm14DHgVYVAgWQ="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -141,10 +141,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Endpoints.ServerSync.UpstreamServerStartup.html",
-          "hash": "p1ngGLrzTN8+x8Z4K3KK6e+Mfg3iTI5ATC8LUE7bxkE="
+          "hash": "X0cPdo4zXURG3Tf26DQ6qm8E9eCwqRD4BG6MishB8dw="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -156,7 +156,7 @@
           "hash": "WHWW07kk446w+ZhfcMP+XkhZvacgSslHD95b9s/ExmY="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -165,10 +165,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRule.html",
-          "hash": "AGiiQMLM2K564RmFVxN5X0S8M9SffsbnudTLTnETxAE="
+          "hash": "mkkfyXkbj196WtrJpnWNIzkW6aix0YVZq9JGB15TC/g="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -177,10 +177,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ApplicabilityRuleType.html",
-          "hash": "2s/8EYGsMQ5Bgco9CrmY2R01HHgb7q9DMdMoU4zVjlA="
+          "hash": "i2xQs5swJVoG2d4VW4RepDENhJi6UFro0Akg8j8kcKU="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -189,10 +189,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ComparisonOperator.html",
-          "hash": "sY7Scvtt7yAHbMVjQrzYLJ/WBLdymNqfVDHEW3/x5as="
+          "hash": "TH0F4Jp2xk13C5tlOqecG2nyq/XoA6ZRV/sCfxwFgw8="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -201,10 +201,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.Expression.html",
-          "hash": "C2hAgxB0CsRYCebPTZLQ35yfRNHHoN2Y91i0s8g0Ew0="
+          "hash": "pOhv7U0E95H848Df1zNWoiaxZ+jXkXPrKU9l7rGzH3I="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -213,10 +213,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionGroup.html",
-          "hash": "mEFhsr/mdQztl9XSQkWVcYJs3hhgVNB5qQgAWcjuMik="
+          "hash": "6eZbtm49j0uHuN5+bNFKTfNw238ciBWJFhE5s8VEPK8="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -225,10 +225,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionGroupType.html",
-          "hash": "X8ckKD4h8Rn9MI//RP62IG1fuQTywg+DXJEtR29K71c="
+          "hash": "toiXr1j52Ce86SzXUwC7UohFRs5KM9T+brtCsMMfX1s="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -237,10 +237,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionToken.html",
-          "hash": "8IbeyyDLemrb6VXUhE3Y1fChvn66lDGIXhTwsn+0IXw="
+          "hash": "cm/8g7arQYCN/kd5li8KdtBY/JXF5l2JaFALGKdEhB0="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -249,10 +249,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Applicability.ExpressionType.html",
-          "hash": "GToiCX23CPIy9b4tfgwBLS++Lxq6MCLzYppNzAFDPII="
+          "hash": "j5YZp019+s3e10NyTIbTMIj8VlKPeCzb54oXePqqIpw="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -264,7 +264,7 @@
           "hash": "3FhLzccrRD79LVy+DH8tazhlGA/h5WDZE+V2sXVqIw4="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -273,10 +273,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.ClassificationCategory.html",
-          "hash": "G1QX158qafocSZPJmSl7jSjypU0sX1GuPqYENXHfZhs="
+          "hash": "nGh6Yz4sPYt/kT6ksebO624lHOmsPtNYOuVh2L10VCk="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -285,10 +285,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFile.html",
-          "hash": "X7S8dIu1vZp2liFmuoKSNlJCmOm4/6cf70T3kQjNdPg="
+          "hash": "+HhYQodMphxl/1cb+putpH1jSAmxoBsqnGvjkeH5T4w="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -297,10 +297,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content.UpdateFileUrl.html",
-          "hash": "f+EyRCI1Lw5Dcv6ACOyvu5GcJj07FkKAXfr/zwRZt2s="
+          "hash": "fM4I68exCbH8ubR1DLDKxa0CcrVBi08nhLgeKRNDQt8="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -312,7 +312,7 @@
           "hash": "mBIDRQSloI/4iyrqY8h+ierOFVOJtY/OfckpSoptjgk="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -321,10 +321,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.DetectoidCategory.html",
-          "hash": "zKj/K/8GRddu3lR67t5zE2advTMWsvbmLT6rWxoZSxk="
+          "hash": "GM4r+HJ52cEqPFgGrhfORokZNf6rB6aP5TIlaqIwDmE="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -333,10 +333,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.DriverUpdate.html",
-          "hash": "Sdgi+NU/jiDZxEfrJfgqZ9BbYc6T8qP1AS1Ab7uOsxs="
+          "hash": "rdnK2Lq1qf1Lb77Xd1GrbmtOdZUTdYMAB3P7MNnqVqU="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -345,10 +345,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverFeatureScore.html",
-          "hash": "jCc0IEbUg5mq12f6HlaVLrYBAn2mLGUFlmweogPIcdM="
+          "hash": "dLlwOH9HLi+3/MDYlqyRxAesnG1zOdoIXX+P0vDHZps="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -357,10 +357,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMatchResult.html",
-          "hash": "4VJaOaZSQoxU2dR0tTZrVQ7IpNVHP2RSjZqZGYakVYs="
+          "hash": "o8p1T0uDsDbeiZTsnbFEzjBCGuRW/iMlpKy8BG+WjSw="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -369,10 +369,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverMetadata.html",
-          "hash": "/RbC/fY0kcJcxberQTjNPZRPiDedNmU8thJZddkq50I="
+          "hash": "6FiJMyWNj8Htapz1xm5BnRgJDk69A8PwQeh/APvP5x0="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -381,10 +381,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverUpdateMatching.html",
-          "hash": "FKnq6Xllx52cX4foTuFIjsJ/vdocoHlFGfxBPTvzJDo="
+          "hash": "mmjBxsSkUj/AsRkAGTkC86lw9DXz//PAN8hRiRkBwUM="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -393,10 +393,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Drivers.DriverVersion.html",
-          "hash": "gnK6tU7VeI3H+JmEpAQLfBY509s7ApRvi0JS4bm2n20="
+          "hash": "i8FBzIDvVGfFyTRJnF6YBT2Ug4s0sQVxtqWNZx5FoYk="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -408,7 +408,7 @@
           "hash": "L/CVqjvvbRwd4Z6q+8U8833BHuDytRKtkIZTOgo1+EM="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -417,10 +417,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CategoryHandler.html",
-          "hash": "Zq55ewlfRDgTiHdnHsleUYUQxVXG82fArvGQbb0x0A0="
+          "hash": "TFBl43CoU3fgZslMRZMEUSbBSkoq0lR4PuMwKmyOGL8="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -429,10 +429,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CbsHandler.html",
-          "hash": "k8RHixuXAdlsntRBxnz8o0UZAzQAttbGpkz+xhg3zlM="
+          "hash": "0EciRclAyYRGygJqEAQM+iBA8hscBCQT8uYE3XiclrI="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -441,10 +441,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.CommandLineHandler.html",
-          "hash": "86/BEdh9oEWPSRTcxeX94h80SBqWONyB7xISv8Xdu8c="
+          "hash": "d89k5+sbsLAVA4r+y1dYZ1T0HyWBOA3LTP3XtnqGlfQ="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -453,10 +453,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.HandlerMetadata.html",
-          "hash": "3suVMYv8hztFmb3WXsko9XXs6Y/nDwb1KiIebehFHM8="
+          "hash": "ERPQZ0tq8GiHpgZOvqWzwXAYKe3zkVjOVNVwZl0FfY8="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -465,10 +465,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.MsiHandler.html",
-          "hash": "pG1FIeuF1L+hB220sbNzsY+ufSdOig3AiM34Mr5ANcs="
+          "hash": "8fU3qX/mqZkWQBB36wkZi8GtIUJmzpXjHMZMhdyyVak="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -477,10 +477,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.OsInstallerHandler.html",
-          "hash": "ElaKAcspC6pt54vq4+jppSoN09TsNJTode2tECpBCb4="
+          "hash": "6QqLbR0nRVUPRseI+JopCztoDSjuNs6ZpPUUtdRuUb0="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -489,10 +489,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.ReturnCode.html",
-          "hash": "iCpyJOWW1E9xS/5kAjkuN3toh0488u0BfBxSy7ZqWmc="
+          "hash": "5uaReC6Omh0QNf+84oamIu+gBfYGIfRddYhg/oJDgnc="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -501,10 +501,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.UpdateHandlerType.html",
-          "hash": "2T1VEuBkPpQfw8vskHb2j6rHBb2qF1GNJeKOfp5BO/s="
+          "hash": "g17BFf8MJ83TTb/HZHcDky7wZYp72v7CYPqrgtxpbig="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -513,10 +513,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsInstallerHandler.html",
-          "hash": "Cb6kCKb8mclIbsycw/Rinnq6HF899Rs6Q1Z2prjFa/4="
+          "hash": "oqnjtvCIJ7M/EtoLAO5+k4aow/bVTwx1fICpBUaV9NE="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -525,10 +525,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsPatchHandler.html",
-          "hash": "V+F70+MbhxTeAIhJkc7mB2Eg3asc7pv0ydolIX2yOmk="
+          "hash": "dk7ZkC25KyaoFmsmSV2efPrHArCE8i8p2VNkkJwizts="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -537,10 +537,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers.WindowsSetupHandler.html",
-          "hash": "H3im/Z7aZpFW+OMyUHnDx7zvOnjgEig9kXZm0jS0WyQ="
+          "hash": "vWzQaTzNiYdBWLvdDufRkgHc1AEnSEMudQrp9vAGKOg="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -552,7 +552,7 @@
           "hash": "tA77pzHBbk/LTM44Xdd8JfFd27Ma7izRVSSrv/ilnVg="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -561,10 +561,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MetadataFilter.html",
-          "hash": "Iksj9D4p3mfeIgjxYHPZZCmDzrQwxleV2AnANLonPh0="
+          "hash": "WhCDpVuqqfHp49a0tO2l5oaPWOLbjHpHdC+eCKEfXsA="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -573,10 +573,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.html",
-          "hash": "b7pR8hrn8I4O59SJcp9s5JrHuqHaP4jSYQR++4vPevo="
+          "hash": "9eqNBP9zjBUlFCCTacLh/8Cg0j/EDRXUj3M6yvTMtss="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -585,10 +585,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackageIdentity.html",
-          "hash": "pSBhe+NI/pCsYVfqlif3gMelLgSSEWXwvx4ZaPvGAoo="
+          "hash": "ZEHlcAyw0SdPfYLHBjIhnv2LQCn8ZAOl6FIYlMuMk+U="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -597,10 +597,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.AtLeastOne.html",
-          "hash": "EB8PZauL0A8pXR1J1gjo2+aUPMoNSNR1z7zP6gNp3Qk="
+          "hash": "zCgAqF6IOYvw3v2fSnur8+bh55hzrR2P8ODN8KUtJ4E="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -609,10 +609,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.IPrerequisite.html",
-          "hash": "lA9p+SU9RvtybYigLgoAvlN7EDt5jFVYglNSgIx1ESU="
+          "hash": "lIUR4YKHjh/m14a/kVZapOIhdxeh/ViYBW34zrwBnhU="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -621,10 +621,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.PrerequisitesGraph.html",
-          "hash": "i+oeNacGvbOPkkS95BZsg5y8Wc2KgXyfaQbJfYHda8o="
+          "hash": "7o6fyzxS3+dQjG0l0aYGDiaR4TTFNeu3m661v4ntA6M="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -633,10 +633,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites.Simple.html",
-          "hash": "dla5x7XeE94qcrJmRbK3UFV12I5Rajk2lBcoVGoNCB0="
+          "hash": "GW1a+9oL4RcL14as3wC340b25DOQ+S4mKd+F29vppQ8="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -648,7 +648,7 @@
           "hash": "hDwIxwkaxX/vachA0o4BVffF52TApExwIyYFWXbtjOA="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -657,10 +657,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.ProductCategory.html",
-          "hash": "h6ZGaasruBK8TQarkOTmItQF8jMKtQ76jDq25DvWgZc="
+          "hash": "OT3KSbjAMswBpuKb2t7+8UtFCqDumNNJw5kGQgo70B8="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -669,10 +669,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.SoftwareUpdate.html",
-          "hash": "OmUcLeaXvDxG9J1aGkTgCOXaifrfhl0/OfzTecOdjKo="
+          "hash": "BONPuXdq1caWA61WpErrWSN92Ox+DSbPG0nnlWN1xwg="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -681,10 +681,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Metadata.WsusExporter.html",
-          "hash": "7SPCi8hmTFyUn8Vk13AKredCLP+EyG/Zwg0IKW/m1Hc="
+          "hash": "itYhWsUuKrQ+tyI6CgEdT75e+mSlTqAVduMg3qmMnT0="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -696,7 +696,7 @@
           "hash": "Kb76UYbGvip4BdVSzMUoy7+N1PwjPbFk+J8INsRDN24="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -705,10 +705,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Source.Endpoint.html",
-          "hash": "fJ+A3rge62XyZ9VjEX/HP34VdSCPv4DuwhSHKW+4fkY="
+          "hash": "9ZQ0MJ4YWqfAC2Zmc6lm3zqDeCIzaKyeacEy+CxikjQ="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -717,10 +717,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryProgress.html",
-          "hash": "OrI7t+Vn5NSFRS4lWtYJcFppqEU0xq8dIpEbPlkQYa8="
+          "hash": "gFelf3EiBY3Gl8YelEEFJi0P164K4kn3KoiCOuV78cM="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -729,10 +729,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Source.MetadataQueryStage.html",
-          "hash": "PcV6mEtONC932Qec10QDwI5m07O+xkyMiuypm+L7DJo="
+          "hash": "9kIuNvYVysYc17u9/UGjUAahERtTyC2T/goQbxXY+gw="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -741,10 +741,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.html",
-          "hash": "8bae44r4lX3Cs8mWD6SvVVPReHdzSrNQZQKdshSDbsU="
+          "hash": "42asJ52nY4vba/keC7E5G3nF1gThj/ALwTrFrMWfF5A="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -753,10 +753,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerClient.html",
-          "hash": "8BHia8UC28cTVlXNNItycC8jeivd4YMZf/OgIJtHw7w="
+          "hash": "J2LR8ugrdDPIT5uMxMkc27GFwyC8mx6SCQtLLfs/chw="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -765,10 +765,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerErrorCode.html",
-          "hash": "BmJ/P5vQLgZuoHgOvuW4UFCHxQErQLb4UAaE//nlBDc="
+          "hash": "7pkEqxrjzEQ79Q5XQV5SF+SUAKf46eMt43+2keRNbbA="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -777,10 +777,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamServerException.html",
-          "hash": "liTGtCTMSuqnH33TSgAla6zOzftN8UQA0v1XfPhc14I="
+          "hash": "LdezFc16n41fs9/f96TGix56vReLSBl0Npo2BMO3hPo="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -789,10 +789,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamSourceFilter.html",
-          "hash": "NJNcDI1m3dNZtQmOBgJaaQ0qHgNDYS2thR7yKLzvy8I="
+          "hash": "1hqf9LR3XA1kj6ue8nqhmvet23kF7NpaktRxEEJ+tL4="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -801,10 +801,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamUpdatesSource.html",
-          "hash": "K4xITd+C10sdPfyRyLE5wpWEgNdW63ArnowkQ4IsevI="
+          "hash": "+K3L98mXyEJDqvqIlMpOZTNdkh/OLUCG24BxLt4ySJw="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -816,7 +816,7 @@
           "hash": "ofUK25d2N/P6k8jIibz8S2WtD4Y5QJHxssk9WSjB3Cw="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -825,10 +825,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.ObjectModel.ContentFileDigest.html",
-          "hash": "vmjOA+d8OcpzXpk2CjZMtepjJikut2540aUu24Dm+YE="
+          "hash": "nXgNXx3YP69vJur+0mT55KbwTlPjYVvBa0vBnnk95sU="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -837,10 +837,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.ObjectModel.ContentOperationProgress.html",
-          "hash": "ngSDwQs5LJDb2C/R4DqrjcgZ2NQS63XtHEEOSOfdeaI="
+          "hash": "Yv9EckhAceffKEXfTw8fxnf5wPTFvLR13WNeQHGBVNY="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -849,10 +849,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.ObjectModel.IContentFile.html",
-          "hash": "O1oS4yekTfAZZFGZ+EtMlj+TsAnqAZF660s/Iknekd8="
+          "hash": "IYhzJxaKuciW+TAXCau4jrk/lav1hRI1lot0bhoiQx4="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -861,10 +861,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.ObjectModel.IContentFileDigest.html",
-          "hash": "rJimVHlNiYMv9G+aGHxC/g4qZJQlg9o1V0tUWAOeFlU="
+          "hash": "OB9gk51p7n8dSdAwE6DUphrWb9PE3zyqtWfghRNVFEI="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -873,10 +873,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.ObjectModel.IPackage.html",
-          "hash": "BrQKjMKLytDfTzZQfYFnykelk4d1yejQX8tKM2z5cM0="
+          "hash": "Wv+B+no4k4qZ7qkjvlEwk+MZzJGXY8B6iI8TM9soA28="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -885,10 +885,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.ObjectModel.IPackageIdentity.html",
-          "hash": "4/DyTy9QLznCtO4zmWYyD9rHDr0wchy3SUE9ZgWv9vA="
+          "hash": "ckgbTVmjYKV3yGu/mbBolqtM0Provhh+2GkukRyLvVc="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -897,10 +897,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.ObjectModel.PackagesOperationProgress.html",
-          "hash": "qng2l7M1+Fi8mShazFAk3LvjoA/tA//Nb+X3zVsWDuk="
+          "hash": "47MnbwxAl/G7z/d23Xl4rjHVU6XaNx5vhbpGKGjVo8w="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -909,10 +909,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.ObjectModel.PackagesOperationType.html",
-          "hash": "szmdwRnNiAZvQBwFRmLH+fMLXKK2sRl33al+i8KIbyQ="
+          "hash": "nBAzvPswSUF/qZfrqqtXGMRqVMZlM1CEj9fRY7UWgJ0="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -924,7 +924,7 @@
           "hash": "biDXi+L9psxoeClTrWAM/rmXVyZOw7QAHuWn7TfsBQ0="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -933,10 +933,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.Storage.Azure.BlobContentStore.html",
-          "hash": "ZacqmcQVZtQahKpslNqeUf9XNVRLTDi7j6ChMjCmnlw="
+          "hash": "OUw8PiAT6uXaOwkgHOFX15TDkxnHdGKjMbN0hB/33r0="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -945,10 +945,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.Storage.Azure.PackageStore.html",
-          "hash": "NyrQTeWsH7fvEPh0tN8ItK4BZFidHUYptpMhG5wdFRY="
+          "hash": "DG759NSj8CgMtsV+udE9u/Sv0mVDvoO28XmCaSQsRtg="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -960,7 +960,7 @@
           "hash": "jvEyo22jp8DxKzSl84nmsHbxuPVInSPLFHZzqL2oVjY="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -969,10 +969,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.Storage.IContentStore.html",
-          "hash": "wx8zluf30I827Zm2LS73kji4DK/909dmY/dI2aorO+s="
+          "hash": "7UYiJEb0+gkjfgvXqjXPJp3T5ZiZ79zat6rMXFBYb2Q="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -981,10 +981,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.Storage.IMetadataFilter.html",
-          "hash": "5rdSRvE5MOZKnfeMe0nJt7ndUvQV1H7isWZqrwp92nI="
+          "hash": "1ch2dGe7xF47kxM0h3cZcydIG7AvJWrXWQQaE5cxRQY="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -993,10 +993,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.Storage.IMetadataSink.html",
-          "hash": "DvmZEVXTBu3haG/UNmiCSQ8CRPQ5qc78V2Y8DgZjwSw="
+          "hash": "c0lg5KYdx6f8ALmO3dO/Hs92ZFsEUnIBbEjGhby52sE="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1005,10 +1005,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.Storage.IMetadataSource.html",
-          "hash": "LFtYeyVParcAObW/j2yjUtzDLWpF723h8LgltsYXi38="
+          "hash": "Rgke9aH6HBVMgycyA5xMR7vxSGFnPic7jO4ILioNVEU="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1017,10 +1017,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.Storage.IMetadataStore.html",
-          "hash": "ZUsbeeTcWmOX7hvS8SKA70PJlKqMQhFCRPLSLnRa1/w="
+          "hash": "kXCxylxeaoZqQMjaS0ipKYuqz87Eb1Jc4sgd/2V4JBU="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1029,10 +1029,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.Storage.Local.FileSystemContentStore.html",
-          "hash": "JvTciOt3DyEjy4V4VUIakorEMyL5xeVSIAQ6bzOooew="
+          "hash": "Mo2yPOrKxBoI4I5wG64jwRB+m8dCUA6ybFeB1+rU+VI="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1041,10 +1041,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.Storage.Local.PackageStore.html",
-          "hash": "3jqWLHYs4V3itsjCrXmfnbvURj+lAL8Jq9G9kU8z8uQ="
+          "hash": "qL1zT+uH6umOpFe5bDqTy/PVIa1YZioT/Z3d5tPQmSI="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1056,7 +1056,7 @@
           "hash": "ylCjFXP2b+2YJ0t6yI6BJTHJFbiddazR6i0Tmy17+Ns="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1065,10 +1065,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.PackageGraph.Storage.PackageStoreEventArgs.html",
-          "hash": "aIqS8wn1iQTd6ge0GBUS+oSiz12qcl9vygS5tymuX3I="
+          "hash": "qrio47Y0hlEwq4DNghW4QY8ZHdVl/nTAgkmAgCjtR6A="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1080,7 +1080,7 @@
           "hash": "4f2WNtprt9IxkIYmAE2fkI8ldbUARazNHk57yQ9i7es="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1131,10 +1131,10 @@
       "output": {
         ".html": {
           "relative_path": "examples/content-store.html",
-          "hash": "412oGeEyHQbZIblk31RUyQzqSF86I/jgtnL/cazd8Xw="
+          "hash": "kFuSGL4sg82bP9Ui79DnTAwEy5i0irMVjEdLRmXlVao="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1149,7 +1149,7 @@
           "hash": "igaHU0suB7tc89yLEDnxZczrirgOvYByT15o/v1IwOc="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1173,7 +1173,7 @@
           "hash": "AJTwpphKHWXYWHGab4+hXKY/r9kx/sM5ppPik5M4b90="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1185,7 +1185,7 @@
           "hash": "zTnB5nYjqnxgvmzpA/0NaAF18Sb65cO8h/FH0QPeLyY="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1244,13 +1244,13 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 8,
-          "skipped_file_count": 5
+          "skipped_file_count": 7
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 90,
-          "skipped_file_count": 90
+          "skipped_file_count": 14
         },
         "TocDocumentProcessor": {
           "can_incremental": false,

@@ -70,7 +70,7 @@
 
 <h5 id="fetch-update-content-from-the-microsoft-update-catalog">Fetch update content from the Microsoft Update Catalog</h5>
 <p>This code sample shows how to use the <a href="/api/Microsoft.PackageGraph.Storage.IMetadataStore.html">IMetadataStore</a> to query for updates that have content and <a href="/api/Microsoft.PackageGraph.Storage.IContentStore.html">IContentStore</a> to download and store update content locally.</p>
-<p>Run the <a href="windows-updates-fetch.html">windows updates fetch sample</a> before to populate the metadata store with some updates.</p>
+<p>Run the <a href="windows-updates-fetch.html">windows updates fetch sample</a> first to populate the metadata store with some updates.</p>
 <pre><code>// Open the local updates store
 // Make sure some updates have been fetched prior
 using var packageStore = PackageStore.Open(&quot;./store&quot;);
@@ -103,7 +103,7 @@ contentStore.Download(
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/update-server-server-sync/blob/develop/update-documentation/src/documentation/docfx-config/examples/content-store.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/microsoft/update-server-server-sync/blob/master/src/documentation/docfx-config/examples/content-store.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
