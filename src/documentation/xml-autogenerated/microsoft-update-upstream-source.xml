@@ -442,6 +442,13 @@
             <param name="maxBatchSize">The maximum size of a batch</param>
             <returns>The batched list</returns>
         </member>
+        <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.GetCategories(System.Threading.CancellationToken)">
+            <summary>
+            Retrieves categories from the upstream source
+            </summary>
+            <param name="cancelToken">Cancellation token</param>
+            <returns>List of Microsoft Update categories</returns>
+        </member>
         <member name="M:Microsoft.PackageGraph.MicrosoftUpdate.Source.UpstreamCategoriesSource.CopyTo(Microsoft.PackageGraph.Storage.IMetadataSink,System.Threading.CancellationToken)">
             <inheritdoc cref="M:Microsoft.PackageGraph.Storage.IMetadataSource.CopyTo(Microsoft.PackageGraph.Storage.IMetadataSink,System.Threading.CancellationToken)"/>
         </member>

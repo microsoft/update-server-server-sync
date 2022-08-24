@@ -9,9 +9,6 @@
 
 namespace Microsoft.UpdateServices.WebServices.ClientSync
 {
-#pragma warning disable 1591
-    using System.Runtime.Serialization;
-
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService", ConfigurationName = "IClientWebService", SessionMode = System.ServiceModel.SessionMode.NotAllowed)]
     public interface IClientWebService
@@ -104,23 +101,23 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
             "UpdateInfo", ReplyAction = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService/GetExtended" +
             "UpdateInfoResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        ExtendedUpdateInfo GetExtendedUpdateInfo(Cookie cookie, int[] revisionIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes);
+        ExtendedUpdateInfo GetExtendedUpdateInfo(Cookie cookie, int[] revisionIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes, string GeoId);
 
         [System.ServiceModel.OperationContractAttribute(Action = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService/GetExtended" +
             "UpdateInfo", ReplyAction = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService/GetExtended" +
             "UpdateInfoResponse")]
-        System.Threading.Tasks.Task<ExtendedUpdateInfo> GetExtendedUpdateInfoAsync(Cookie cookie, int[] revisionIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes);
+        System.Threading.Tasks.Task<ExtendedUpdateInfo> GetExtendedUpdateInfoAsync(Cookie cookie, int[] revisionIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes, string GeoId);
 
         [System.ServiceModel.OperationContractAttribute(Action = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService/GetExtended" +
             "UpdateInfo2", ReplyAction = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService/GetExtended" +
             "UpdateInfo2Response")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        ExtendedUpdateInfo2 GetExtendedUpdateInfo2(Cookie cookie, UpdateIdentity[] updateIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes);
+        ExtendedUpdateInfo2 GetExtendedUpdateInfo2(Cookie cookie, UpdateIdentity[] updateIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes, string callerAttributes);
 
         [System.ServiceModel.OperationContractAttribute(Action = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService/GetExtended" +
             "UpdateInfo2", ReplyAction = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService/GetExtended" +
             "UpdateInfo2Response")]
-        System.Threading.Tasks.Task<ExtendedUpdateInfo2> GetExtendedUpdateInfo2Async(Cookie cookie, UpdateIdentity[] updateIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes);
+        System.Threading.Tasks.Task<ExtendedUpdateInfo2> GetExtendedUpdateInfo2Async(Cookie cookie, UpdateIdentity[] updateIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes, string callerAttributes);
 
         [System.ServiceModel.OperationContractAttribute(Action = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService/GetFileLoca" +
             "tions", ReplyAction = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService/GetFileLoca" +
@@ -147,7 +144,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -237,7 +234,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -295,7 +292,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -337,7 +334,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -348,6 +345,12 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         private byte[] fileDigestField;
 
         private string urlField;
+
+        private string piecesHashUrlField;
+
+        private string blockMapUrlField;
+
+        private string esrpDecryptionInformationField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary", Order = 0)]
@@ -376,10 +379,52 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
                 this.urlField = value;
             }
         }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        public string PiecesHashUrl
+        {
+            get
+            {
+                return this.piecesHashUrlField;
+            }
+            set
+            {
+                this.piecesHashUrlField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        public string BlockMapUrl
+        {
+            get
+            {
+                return this.blockMapUrlField;
+            }
+            set
+            {
+                this.blockMapUrlField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        public string EsrpDecryptionInformation
+        {
+            get
+            {
+                return this.esrpDecryptionInformationField;
+            }
+            set
+            {
+                this.esrpDecryptionInformationField = value;
+            }
+        }
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -421,7 +466,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -479,7 +524,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -488,8 +533,6 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     {
 
         private byte[] fileDigestField;
-
-        private byte[] decryptionKeyField;
 
         private byte[][] securityDataField;
 
@@ -508,21 +551,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary", Order = 1)]
-        public byte[] DecryptionKey
-        {
-            get
-            {
-                return this.decryptionKeyField;
-            }
-            set
-            {
-                this.decryptionKeyField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 2)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 1)]
         public byte[][] SecurityData
         {
             get
@@ -537,7 +566,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -595,7 +624,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -686,7 +715,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -744,7 +773,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -818,7 +847,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -914,7 +943,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -956,7 +985,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -980,6 +1009,8 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
 
         private DriverMetadata driverMetadataField;
 
+        private DeploymentDriverMetadata[] additionalDriverMetadataField;
+
         private string autoSelectField;
 
         private string autoDownloadField;
@@ -999,6 +1030,8 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         private string targetingVersionField;
 
         private string flightIdField;
+
+        private ClientMetadata[] clientBehaviorsField;
 
         private System.Nullable<ushort> cacheLifetimeMinutesField;
 
@@ -1119,7 +1152,21 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 8)]
+        public DeploymentDriverMetadata[] AdditionalDriverMetadata
+        {
+            get
+            {
+                return this.additionalDriverMetadataField;
+            }
+            set
+            {
+                this.additionalDriverMetadataField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         public string AutoSelect
         {
             get
@@ -1133,7 +1180,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         public string AutoDownload
         {
             get
@@ -1147,7 +1194,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         public string SupersedenceBehavior
         {
             get
@@ -1161,7 +1208,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         public string FlagBitmask
         {
             get
@@ -1175,7 +1222,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
         public string Priority
         {
             get
@@ -1189,7 +1236,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         public string HandlerSpecificAction
         {
             get
@@ -1203,7 +1250,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 14)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 15)]
         public System.Nullable<System.Guid> TargetGroupId
         {
             get
@@ -1231,7 +1278,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         public string TargetingVersion
         {
             get
@@ -1245,7 +1292,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         public string FlightId
         {
             get
@@ -1259,7 +1306,21 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 17)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 18)]
+        public ClientMetadata[] ClientBehaviors
+        {
+            get
+            {
+                return this.clientBehaviorsField;
+            }
+            set
+            {
+                this.clientBehaviorsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 19)]
         public System.Nullable<ushort> CacheLifetimeMinutes
         {
             get
@@ -1287,7 +1348,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         public string FlightMetadata
         {
             get
@@ -1302,11 +1363,14 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService")]
     public enum DeploymentAction
     {
+
+        /// <remarks/>
+        OptionalInstall,
 
         /// <remarks/>
         Install,
@@ -1328,7 +1392,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1370,7 +1434,140 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService")]
+    public partial class DeploymentDriverMetadata
+    {
+
+        private string[] hardwareIdsField;
+
+        private string modelField;
+
+        private string manufacturerField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 0)]
+        public string[] HardwareIds
+        {
+            get
+            {
+                return this.hardwareIdsField;
+            }
+            set
+            {
+                this.hardwareIdsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        public string Model
+        {
+            get
+            {
+                return this.modelField;
+            }
+            set
+            {
+                this.modelField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        public string Manufacturer
+        {
+            get
+            {
+                return this.manufacturerField;
+            }
+            set
+            {
+                this.manufacturerField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService")]
+    public partial class ClientMetadata
+    {
+
+        private MetadataType metadataTypeField;
+
+        private string metadataField;
+
+        private Verification verificationField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        public MetadataType MetadataType
+        {
+            get
+            {
+                return this.metadataTypeField;
+            }
+            set
+            {
+                this.metadataTypeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        public string Metadata
+        {
+            get
+            {
+                return this.metadataField;
+            }
+            set
+            {
+                this.metadataField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        public Verification Verification
+        {
+            get
+            {
+                return this.verificationField;
+            }
+            set
+            {
+                this.verificationField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService")]
+    public enum MetadataType
+    {
+
+        /// <remarks/>
+        Audience,
+
+        /// <remarks/>
+        Update,
+
+        /// <remarks/>
+        Admin,
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1429,7 +1626,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1541,7 +1738,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1695,7 +1892,49 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService")]
+    public partial class UpdateDeploymentIdentifier
+    {
+
+        private int updateIdField;
+
+        private int deploymentIdField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        public int UpdateId
+        {
+            get
+            {
+                return this.updateIdField;
+            }
+            set
+            {
+                this.updateIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        public int DeploymentId
+        {
+            get
+            {
+                return this.deploymentIdField;
+            }
+            set
+            {
+                this.deploymentIdField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1769,7 +2008,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1811,7 +2050,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1822,6 +2061,8 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         private XmlUpdateFragmentType[] xmlUpdateFragmentTypesField;
 
         private string[] localesField;
+
+        private string geoIdField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order = 0)]
@@ -1850,10 +2091,24 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
                 this.localesField = value;
             }
         }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        public string GeoId
+        {
+            get
+            {
+                return this.geoIdField;
+            }
+            set
+            {
+                this.geoIdField = value;
+            }
+        }
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService")]
     public enum XmlUpdateFragmentType
@@ -1897,7 +2152,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1923,7 +2178,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1949,7 +2204,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1964,6 +2219,12 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         private long driverVerVersionField;
 
         private string classField;
+
+        private int driverRankField;
+
+        private System.Nullable<System.Guid> matchingComputerHWIDField;
+
+        private bool matchingComputerHWIDFieldSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
@@ -2020,10 +2281,52 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
                 this.classField = value;
             }
         }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        public int DriverRank
+        {
+            get
+            {
+                return this.driverRankField;
+            }
+            set
+            {
+                this.driverRankField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true, Order = 5)]
+        public System.Nullable<System.Guid> MatchingComputerHWID
+        {
+            get
+            {
+                return this.matchingComputerHWIDField;
+            }
+            set
+            {
+                this.matchingComputerHWIDField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MatchingComputerHWIDSpecified
+        {
+            get
+            {
+                return this.matchingComputerHWIDFieldSpecified;
+            }
+            set
+            {
+                this.matchingComputerHWIDFieldSpecified = value;
+            }
+        }
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2257,7 +2560,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2272,6 +2575,12 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         private InstalledDriver installedDriverField;
 
         private ExtensionDriver[] extensionDriversField;
+
+        private string[] driverRecoveryIDsField;
+
+        private byte deviceFlagsField;
+
+        private bool deviceFlagsFieldSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order = 0)]
@@ -2328,10 +2637,53 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
                 this.extensionDriversField = value;
             }
         }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 4)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("DriverRecoveryID")]
+        public string[] DriverRecoveryIDs
+        {
+            get
+            {
+                return this.driverRecoveryIDsField;
+            }
+            set
+            {
+                this.driverRecoveryIDsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        public byte DeviceFlags
+        {
+            get
+            {
+                return this.deviceFlagsField;
+            }
+            set
+            {
+                this.deviceFlagsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DeviceFlagsSpecified
+        {
+            get
+            {
+                return this.deviceFlagsFieldSpecified;
+            }
+            set
+            {
+                this.deviceFlagsFieldSpecified = value;
+            }
+        }
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2380,6 +2732,10 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
         private SyncProductsParameters productsParametersField;
 
         private int[] pendingUpdateIDsField;
+
+        private UpdateDeploymentIdentifier[] otherCachedUpdateDeploymentIDsField;
+
+        private UpdateDeploymentIdentifier[] cachedDriverUpdateDeploymentIDsField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
@@ -2674,10 +3030,40 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
                 this.pendingUpdateIDsField = value;
             }
         }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 19)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("Update")]
+        public UpdateDeploymentIdentifier[] OtherCachedUpdateDeploymentIDs
+        {
+            get
+            {
+                return this.otherCachedUpdateDeploymentIDsField;
+            }
+            set
+            {
+                this.otherCachedUpdateDeploymentIDsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 20)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("Update")]
+        public UpdateDeploymentIdentifier[] CachedDriverUpdateDeploymentIDs
+        {
+            get
+            {
+                return this.cachedDriverUpdateDeploymentIDsField;
+            }
+            set
+            {
+                this.cachedDriverUpdateDeploymentIDsField = value;
+            }
+        }
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2719,7 +3105,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3145,7 +3531,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3187,7 +3573,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3277,7 +3663,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3367,7 +3753,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService")]
     public enum Architecture
@@ -3393,7 +3779,7 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
     }
 
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("svcutil", "4.8.3928.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3641,24 +4027,24 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
             return base.Channel.RefreshCacheAsync(cookie, globalIDs, deviceAttributes);
         }
 
-        public ExtendedUpdateInfo GetExtendedUpdateInfo(Cookie cookie, int[] revisionIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes)
+        public ExtendedUpdateInfo GetExtendedUpdateInfo(Cookie cookie, int[] revisionIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes, string GeoId)
         {
-            return base.Channel.GetExtendedUpdateInfo(cookie, revisionIDs, infoTypes, locales, deviceAttributes);
+            return base.Channel.GetExtendedUpdateInfo(cookie, revisionIDs, infoTypes, locales, deviceAttributes, GeoId);
         }
 
-        public System.Threading.Tasks.Task<ExtendedUpdateInfo> GetExtendedUpdateInfoAsync(Cookie cookie, int[] revisionIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes)
+        public System.Threading.Tasks.Task<ExtendedUpdateInfo> GetExtendedUpdateInfoAsync(Cookie cookie, int[] revisionIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes, string GeoId)
         {
-            return base.Channel.GetExtendedUpdateInfoAsync(cookie, revisionIDs, infoTypes, locales, deviceAttributes);
+            return base.Channel.GetExtendedUpdateInfoAsync(cookie, revisionIDs, infoTypes, locales, deviceAttributes, GeoId);
         }
 
-        public ExtendedUpdateInfo2 GetExtendedUpdateInfo2(Cookie cookie, UpdateIdentity[] updateIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes)
+        public ExtendedUpdateInfo2 GetExtendedUpdateInfo2(Cookie cookie, UpdateIdentity[] updateIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes, string callerAttributes)
         {
-            return base.Channel.GetExtendedUpdateInfo2(cookie, updateIDs, infoTypes, locales, deviceAttributes);
+            return base.Channel.GetExtendedUpdateInfo2(cookie, updateIDs, infoTypes, locales, deviceAttributes, callerAttributes);
         }
 
-        public System.Threading.Tasks.Task<ExtendedUpdateInfo2> GetExtendedUpdateInfo2Async(Cookie cookie, UpdateIdentity[] updateIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes)
+        public System.Threading.Tasks.Task<ExtendedUpdateInfo2> GetExtendedUpdateInfo2Async(Cookie cookie, UpdateIdentity[] updateIDs, XmlUpdateFragmentType[] infoTypes, string[] locales, string deviceAttributes, string callerAttributes)
         {
-            return base.Channel.GetExtendedUpdateInfo2Async(cookie, updateIDs, infoTypes, locales, deviceAttributes);
+            return base.Channel.GetExtendedUpdateInfo2Async(cookie, updateIDs, infoTypes, locales, deviceAttributes, callerAttributes);
         }
 
         public GetFileLocationsResults GetFileLocations(Cookie cookie, byte[][] fileDigests)
@@ -3698,5 +4084,5 @@ namespace Microsoft.UpdateServices.WebServices.ClientSync
             return ((IClientWebService)(this)).GetTimestampsAsync(inValue);
         }
     }
-#pragma warning restore 1591
+
 }
