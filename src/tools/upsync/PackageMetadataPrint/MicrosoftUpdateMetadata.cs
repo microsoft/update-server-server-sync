@@ -6,8 +6,11 @@ using Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Content;
 using Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Handlers;
 using Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Prerequisites;
 using Microsoft.PackageGraph.Storage;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using System.IO;
 using System.Linq;
 
 namespace Microsoft.PackageGraph.Utilitites.Upsync
@@ -27,7 +30,7 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
             }
 
             // Apply filters specified on the command line
-            IEnumerable<MicrosoftUpdatePackage> packagesList;
+            IEnumerable<MicrosoftUpdatePackage> filteredPackages;
             var allCategories = new List<MicrosoftUpdatePackage>();
             allCategories.AddRange(metadataStore.OfType<ClassificationCategory>());
             allCategories.AddRange(metadataStore.OfType<ProductCategory>());
@@ -35,47 +38,60 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
 
             if (packageType == PackageType.MicrosoftUpdateClassification)
             {
-                packagesList = filter.Apply<ClassificationCategory>(metadataStore);
+                filteredPackages = filter.Apply<ClassificationCategory>(metadataStore);
             }
             else if (packageType == PackageType.MicrosoftUpdateProduct)
             {
-                packagesList = filter.Apply<ProductCategory>(metadataStore);
+                filteredPackages = filter.Apply<ProductCategory>(metadataStore);
             }
             else if (packageType == PackageType.MicrosoftUpdateDetectoid)
             {
-                packagesList = filter.Apply<DetectoidCategory>(metadataStore);
+                filteredPackages = filter.Apply<DetectoidCategory>(metadataStore);
             }
             else if (packageType == PackageType.MicrosoftUpdateUpdate)
             {
-                packagesList = filter.Apply<SoftwareUpdate>(metadataStore);
+                filteredPackages = filter.Apply<SoftwareUpdate>(metadataStore);
             }
             else if (packageType == PackageType.MicrosoftUpdateDriver)
             {
-                packagesList = filter.Apply<DriverUpdate>(metadataStore);
+                filteredPackages = filter.Apply<DriverUpdate>(metadataStore);
             }
             else
             {
-                packagesList = filter.Apply<MicrosoftUpdatePackage>(metadataStore);
+                filteredPackages = filter.Apply<MicrosoftUpdatePackage>(metadataStore);
             }
 
-            var categoriesLookup = allCategories.ToLookup(package => package.Id.ID);
-
-            Console.Write("\r\nQuery results:\r\n-----------------------------");
-            int counter = 0;
-
-            var allUpdatesLookup = metadataStore.OfType<MicrosoftUpdatePackage>().ToLookup(package => package.Id.ID);
-            foreach (var update in packagesList)
+            if (!string.IsNullOrEmpty(options.JsonOutPath))
             {
-                counter++;
+                var packagesList = filteredPackages.ToList();
 
-                if (!options.CountOnly)
-                {
-                    PrintMicrosoftUpdateMetadata(update, metadataStore, categoriesLookup, allUpdatesLookup);
-                }
+                File.WriteAllText(options.JsonOutPath, JsonConvert.SerializeObject(packagesList, Formatting.Indented));
+
+                Console.WriteLine("-----------------------------");
+                Console.WriteLine($"Query returned {packagesList.Count} entries.");
+                Console.WriteLine($"Query result saved to {options.JsonOutPath}.");
             }
+            else
+            {
+                var categoriesLookup = allCategories.ToLookup(package => package.Id.ID);
 
-            Console.WriteLine("-----------------------------");
-            Console.WriteLine($"Returned {counter} entries");
+                Console.Write("\r\nQuery results:\r\n-----------------------------");
+                int counter = 0;
+
+                var allUpdatesLookup = metadataStore.OfType<MicrosoftUpdatePackage>().ToLookup(package => package.Id.ID);
+                foreach (var update in filteredPackages)
+                {
+                    counter++;
+
+                    if (!options.CountOnly)
+                    {
+                        PrintMicrosoftUpdateMetadata(update, metadataStore, categoriesLookup, allUpdatesLookup);
+                    }
+                }
+
+                Console.WriteLine("-----------------------------");
+                Console.WriteLine($"Returned {counter} entries");
+            }
         }
 
         /// <summary>

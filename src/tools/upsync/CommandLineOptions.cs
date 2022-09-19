@@ -280,6 +280,9 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
 
         [Option("first", Required = false, Default = 0, HelpText = "Display first x updates only")]
         public int FirstX { get; set; }
+
+        [Option("json-out-path", Required = false, HelpText = "Save results as JSON to the specified path")]
+        public string JsonOutPath { get; set; }
     }
 
     [Verb("match-driver", HelpText = "Find drivers")]
