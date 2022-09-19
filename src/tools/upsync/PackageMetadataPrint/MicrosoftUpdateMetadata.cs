@@ -180,27 +180,25 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
             }
         }
 
-        static void PrintBundleChainRecursive(SoftwareUpdate softwareUpdate, IMetadataStore source, int recursionIndex)
+        static void PrintBundleChainRecursive(SoftwareUpdate softwareUpdate, IMetadataStore source, string recursiveWhiteSpaceIndent)
         {
-            const int indentSize = 4;
+            const string localWhiteSpaceIndent = "    ";
 
             if (softwareUpdate.BundledWithUpdates != null)
             {
                 foreach (var parentBundleID in softwareUpdate.BundledWithUpdates)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    Console.CursorLeft = indentSize * recursionIndex + indentSize;
-                    Console.WriteLine($"    Bundled with   :");
+                    Console.WriteLine($"{recursiveWhiteSpaceIndent}{localWhiteSpaceIndent}Bundled with   :");
                     Console.ResetColor();
-                    Console.CursorLeft = indentSize * recursionIndex + indentSize + 8;
-                    Console.WriteLine(parentBundleID);
-                    Console.CursorLeft = indentSize * recursionIndex + indentSize + 8;
+
+                    Console.WriteLine($"{recursiveWhiteSpaceIndent}{localWhiteSpaceIndent}{localWhiteSpaceIndent}{parentBundleID}");
 
                     if (source.ContainsPackage(parentBundleID))
                     {
                         var parentBundle = source.GetPackage(parentBundleID);
-                        Console.WriteLine(parentBundle.Title);
-                        PrintBundleChainRecursive(parentBundle as SoftwareUpdate, source, recursionIndex + 1);
+                        Console.WriteLine($"{recursiveWhiteSpaceIndent}{localWhiteSpaceIndent}{localWhiteSpaceIndent}{parentBundle.Title}");
+                        PrintBundleChainRecursive(parentBundle as SoftwareUpdate, source, recursiveWhiteSpaceIndent + localWhiteSpaceIndent);
 
                         Console.WriteLine();
                     }
@@ -362,7 +360,7 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
                 }
             }
 
-            PrintBundleChainRecursive(softwareUpdate, source, 0);
+            PrintBundleChainRecursive(softwareUpdate, source, "");
         }
 
         static void PrintPrerequisites(MicrosoftUpdatePackage update, ILookup<Guid, MicrosoftUpdatePackage> updatesLookup)
