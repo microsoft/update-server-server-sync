@@ -65,10 +65,22 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
             {
                 var packagesList = filteredPackages.ToList();
 
-                File.WriteAllText(options.JsonOutPath, JsonConvert.SerializeObject(packagesList, Formatting.Indented));
-
                 Console.WriteLine("-----------------------------");
                 Console.WriteLine($"Query returned {packagesList.Count} entries.");
+
+                Console.WriteLine($"Writing results to {options.JsonOutPath}.");
+
+                using (var targetJsonFile = File.Create(options.JsonOutPath))
+                {
+                    var serializer = JsonSerializer.Create(new JsonSerializerSettings() { Formatting = Formatting.Indented });
+                    using (var jsonWriter = new StreamWriter(targetJsonFile))
+                    {
+                        serializer.Serialize(jsonWriter, packagesList);
+                    }
+                        
+                }
+
+                
                 Console.WriteLine($"Query result saved to {options.JsonOutPath}.");
             }
             else
