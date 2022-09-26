@@ -65,23 +65,32 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
             {
                 var packagesList = filteredPackages.ToList();
 
+                if (!options.IncludeExtendedMetadata)
+                {
+                    // Remove extended metadata unless explicitly requested.
+                    // Applicability rules can be very large but of little interest
+                    packagesList.ForEach(p => p.ApplicabilityRules.Clear());
+                }
+
                 Console.WriteLine("-----------------------------");
                 Console.WriteLine($"Query returned {packagesList.Count} entries.");
 
-                Console.WriteLine($"Writing results to {options.JsonOutPath}.");
-
-                using (var targetJsonFile = File.Create(options.JsonOutPath))
+                if (!options.CountOnly)
                 {
-                    var serializer = JsonSerializer.Create(new JsonSerializerSettings() { Formatting = Formatting.Indented });
-                    using (var jsonWriter = new StreamWriter(targetJsonFile))
-                    {
-                        serializer.Serialize(jsonWriter, packagesList);
-                    }
-                        
-                }
+                    Console.WriteLine($"Writing results to {options.JsonOutPath}.");
 
-                
-                Console.WriteLine($"Query result saved to {options.JsonOutPath}.");
+                    using (var targetJsonFile = File.Create(options.JsonOutPath))
+                    {
+                        var serializer = JsonSerializer.Create(new JsonSerializerSettings() { Formatting = Formatting.Indented });
+                        using (var jsonWriter = new StreamWriter(targetJsonFile))
+                        {
+                            serializer.Serialize(jsonWriter, packagesList);
+                        }
+
+                    }
+
+                    Console.WriteLine($"Query result saved to {options.JsonOutPath}.");
+                }
             }
             else
             {

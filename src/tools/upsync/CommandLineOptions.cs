@@ -283,6 +283,9 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
 
         [Option("json-out-path", Required = false, HelpText = "Save results as JSON to the specified path")]
         public string JsonOutPath { get; set; }
+
+        [Option("include-extended-metadata", Required = false, Default = false, HelpText = "Include extended metadata when saving to JSON query result.")]
+        public bool IncludeExtendedMetadata { get; set; }
     }
 
     [Verb("match-driver", HelpText = "Find drivers")]

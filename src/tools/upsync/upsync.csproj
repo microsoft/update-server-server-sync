@@ -10,9 +10,9 @@
     <Description></Description>
     <BaseOutputPath>..\..\..\out\upsync</BaseOutputPath>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-    <FileVersion>3.0.2.0</FileVersion>
-    <AssemblyVersion>3.0.2.0</AssemblyVersion>
-    <ProductVersion>3.0.2.0</ProductVersion>
+    <FileVersion>3.0.3.0</FileVersion>
+    <AssemblyVersion>3.0.3.0</AssemblyVersion>
+    <ProductVersion>3.0.3.0</ProductVersion>
   </PropertyGroup>
 
   <ItemGroup>
