@@ -49,11 +49,23 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
 
         private static readonly object ConsoleWriteLock = new();
 
+        private static void UpdateConsoleForMessageRefresh()
+        {
+            if (!Console.IsOutputRedirected)
+            {
+                Console.CursorLeft = 0;
+            }
+            else
+            {
+                Console.WriteLine();
+            }
+        }
+
         public static void OnPackageCopyProgress(object sender, PackageStoreEventArgs e)
         {
             lock (ConsoleWriteLock)
             {
-                Console.CursorLeft = 0;
+                UpdateConsoleForMessageRefresh();
 
                 if (e.Total == 0)
                 {
@@ -70,7 +82,7 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
         {
             lock (ConsoleWriteLock)
             {
-                Console.CursorLeft = 0;
+                UpdateConsoleForMessageRefresh();
 
                 if (e.Total == 0)
                 {
@@ -87,7 +99,9 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
         {
             lock(ProgressLock)
             {
-                Console.CursorLeft = 0;
+                UpdateConsoleForMessageRefresh();
+
+
                 if (e.Total == 0)
                 {
                     Console.Write($"Indexing {e.Total} package(s)");

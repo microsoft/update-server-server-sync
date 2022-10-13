@@ -87,6 +87,18 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
 
         static string ContentSyncLastFileDigest = "";
 
+        private static void UpdateConsoleForMessageRefresh()
+        {
+            if (!Console.IsOutputRedirected)
+            {
+                Console.CursorLeft = 0;
+            }
+            else
+            {
+                Console.WriteLine();
+            }
+        }
+
         private static void ContentStore_Progress(object sender, ObjectModel.ContentOperationProgress e)
         {
             if (e.File.Digest.DigestBase64 != ContentSyncLastFileDigest)
@@ -98,7 +110,7 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
             switch(e.CurrentOperation)
             {
                 case ObjectModel.PackagesOperationType.DownloadFileProgress:
-                    Console.CursorLeft = 0;
+                    UpdateConsoleForMessageRefresh();
                     Console.Write("Sync'ing update content [{0}]: {1:000.00}%", e.Maximum, e.PercentDone);
                     break;
             }

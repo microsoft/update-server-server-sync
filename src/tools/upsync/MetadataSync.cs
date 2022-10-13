@@ -201,6 +201,18 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
             }
         }
 
+        private static void UpdateConsoleForMessageRefresh()
+        {
+            if (!Console.IsOutputRedirected)
+            {
+                Console.CursorLeft = 0;
+            }
+            else
+            {
+                Console.WriteLine();
+            }
+        }
+
         /// <summary>
         /// Handles progress notifications from a metadata query on an upstream server.
         /// Prints progress information to the console
@@ -234,13 +246,13 @@ namespace Microsoft.PackageGraph.Utilitites.Upsync
                     break;
 
                 case MetadataQueryStage.GetUpdateMetadataEnd:
-                    Console.CursorLeft = 0;
+                    UpdateConsoleForMessageRefresh();
                     Console.Write("Retrieving updates metadata [{0}]: 100.00%", e.Maximum);
                     ConsoleOutput.WriteGreen(" Done!");
                     break;
 
                 case MetadataQueryStage.GetUpdateMetadataProgress:
-                    Console.CursorLeft = 0;
+                    UpdateConsoleForMessageRefresh();
                     Console.Write("Retrieving updates metadata [{0}]: {1:000.00}%", e.Maximum, e.PercentDone);
                     break;
             }
