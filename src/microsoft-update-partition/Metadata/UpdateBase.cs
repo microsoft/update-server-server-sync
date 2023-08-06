@@ -484,7 +484,8 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata
             _TitleLoaded = true;
 
             _Description = UpdateParser.GetDescription(metadataNavigator, namespaceManager);
-            _MetadataLoaded = true;
+			_CreationDate = UpdateParser.GetCreationDate(metadataNavigator, namespaceManager);
+			_MetadataLoaded = true;
 
             _Prerequisites = PrerequisiteParser.FromXml(metadataNavigator, namespaceManager);
             _PrerequisitesLoaded = true;
@@ -605,7 +606,8 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata
                     manager.AddNamespace("wsi", "http://schemas.microsoft.com/msus/2002/12/UpdateHandlers/WindowsSetup");
                 
                     _Description = UpdateParser.GetDescription(navigator, manager);
-                    _Title = UpdateParser.GetTitle(navigator, manager);
+					_CreationDate = UpdateParser.GetCreationDate(navigator, manager);
+					_Title = UpdateParser.GetTitle(navigator, manager);
 
                     LoadNonIndexedMetadata(navigator, manager);
                 }
