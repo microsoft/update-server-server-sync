@@ -177,13 +177,33 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata
         }
         private string _Description = null;
 
-        /// <summary>
-        /// Gets the list of files (content) for update
-        /// </summary>
-        /// <value>
-        /// List of content files
-        /// </value>
-        public IEnumerable<IContentFile> Files
+		/// <summary>
+		/// Get the category or update creation date
+		/// </summary>
+		public DateTime CreationDate
+		{
+			get
+			{
+				if (_MetadataLoaded)
+				{
+					return _CreationDate;
+				}
+				else
+				{
+					LoadNonIndexedMetadataBase();
+					return _CreationDate;
+				}
+			}
+		}
+		private string _CreationDate = null;
+
+		/// <summary>
+		/// Gets the list of files (content) for update
+		/// </summary>
+		/// <value>
+		/// List of content files
+		/// </value>
+		public IEnumerable<IContentFile> Files
         {
             get
             {
