@@ -180,21 +180,32 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata
 		/// <summary>
 		/// Get the category or update creation date
 		/// </summary>
-		public DateTime CreationDate
+		public string CreationDate
 		{
 			get
 			{
-				if (_MetadataLoaded)
+				if (_CreationDateLoaded)
 				{
+					return _CreationDate;
+				}
+				else if (_FastLookupSource != null)
+				{
+					_FastLookupSource.TrySimpleKeyLookup<string>(_Id, Storage.Index.AvailableIndexes.CreationDatesIndexName, out string creationdate);
+					return creationdate;
+				}
+				else if (_MetadataSource != null)
+				{
+					LoadNonIndexedMetadataBase();
+					_CreationDateLoaded = true;
 					return _CreationDate;
 				}
 				else
 				{
-					LoadNonIndexedMetadataBase();
-					return _CreationDate;
+                    return null;
 				}
 			}
 		}
+        private bool _CreationDateLoaded;
 		private string _CreationDate = null;
 
 		/// <summary>
@@ -484,7 +495,10 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata
             _TitleLoaded = true;
 
             _Description = UpdateParser.GetDescription(metadataNavigator, namespaceManager);
+
 			_CreationDate = UpdateParser.GetCreationDate(metadataNavigator, namespaceManager);
+            _CreationDateLoaded = true;
+
 			_MetadataLoaded = true;
 
             _Prerequisites = PrerequisiteParser.FromXml(metadataNavigator, namespaceManager);

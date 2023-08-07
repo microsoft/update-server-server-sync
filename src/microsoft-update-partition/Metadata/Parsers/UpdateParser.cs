@@ -26,7 +26,7 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Parsers
             }
         }
 
-		public static DateTime GetCreationDate(XPathNavigator metadataNavigator, XmlNamespaceManager namespaceManager)
+		public static string GetCreationDate(XPathNavigator metadataNavigator, XmlNamespaceManager namespaceManager)
 		{
 			XPathExpression updateTypeQuery = metadataNavigator.Compile("upd:Update/upd:Properties/@CreationDate");
 			updateTypeQuery.SetContext(namespaceManager);
@@ -39,7 +39,7 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Parsers
 			}
 
 			result.MoveNext();
-			return DateTime.Parse(result.Current.Value);
+			return result.Current.Value;
 		}
 
 		public static string GetTitle(XPathNavigator metadataNavigator, XmlNamespaceManager namespaceManager)
