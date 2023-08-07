@@ -1718,6 +1718,11 @@
             Get the category or update description
             </summary>
         </member>
+        <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.CreationDate">
+            <summary>
+            Get the category or update creation date
+            </summary>
+        </member>
         <member name="P:Microsoft.PackageGraph.MicrosoftUpdate.Metadata.MicrosoftUpdatePackage.Files">
             <summary>
             Gets the list of files (content) for update
@@ -1998,6 +2003,11 @@
         <member name="P:Microsoft.PackageGraph.ObjectModel.IPackage.Description">
             <summary>
             Get the package description
+            </summary>
+        </member>
+        <member name="P:Microsoft.PackageGraph.ObjectModel.IPackage.CreationDate">
+            <summary>
+            Get the package creation date
             </summary>
         </member>
         <member name="P:Microsoft.PackageGraph.ObjectModel.IPackage.Files">

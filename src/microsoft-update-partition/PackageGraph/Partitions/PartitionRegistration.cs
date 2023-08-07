@@ -20,7 +20,7 @@ namespace Microsoft.PackageGraph.Partitions
                     {
                         Factory = null,
                         HasExternalContentFileMetadata = false,
-                        Indexes = new List<IndexDefinition>() { TitlesIndex.TitlesIndexDefinition },
+                        Indexes = new List<IndexDefinition>() { TitlesIndex.TitlesIndexDefinition, DescriptionsIndex.DescriptionsIndexDefinition, CreationDatesIndex.CreationDatesIndexDefinition },
                         HandlesIdentities = false,
                     }
                 },

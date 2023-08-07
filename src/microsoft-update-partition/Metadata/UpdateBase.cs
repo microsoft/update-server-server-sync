@@ -164,26 +164,68 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata
         {
             get
             {
-                if (_MetadataLoaded)
+                if (_DescriptionLoaded)
                 {
                     return _Description;
                 }
-                else
-                {
-                    LoadNonIndexedMetadataBase();
-                    return _Description;
-                }
-            }
+				else if (_FastLookupSource != null)
+				{
+					_FastLookupSource.TrySimpleKeyLookup<string>(_Id, Storage.Index.AvailableIndexes.DescriptionsIndexName, out string description);
+					return description;
+				}
+				else if (_MetadataSource != null)
+				{
+					LoadNonIndexedMetadataBase();
+					_DescriptionLoaded = true;
+					return _Description;
+				}
+				else
+				{
+					return null;
+				}
+			}
         }
-        private string _Description = null;
+		private bool _DescriptionLoaded;
+		private string _Description = null;
 
-        /// <summary>
-        /// Gets the list of files (content) for update
-        /// </summary>
-        /// <value>
-        /// List of content files
-        /// </value>
-        public IEnumerable<IContentFile> Files
+		/// <summary>
+		/// Get the category or update creation date
+		/// </summary>
+		public string CreationDate
+		{
+			get
+			{
+				if (_CreationDateLoaded)
+				{
+					return _CreationDate;
+				}
+				else if (_FastLookupSource != null)
+				{
+					_FastLookupSource.TrySimpleKeyLookup<string>(_Id, Storage.Index.AvailableIndexes.CreationDatesIndexName, out string creationdate);
+					return creationdate;
+				}
+				else if (_MetadataSource != null)
+				{
+					LoadNonIndexedMetadataBase();
+					_CreationDateLoaded = true;
+					return _CreationDate;
+				}
+				else
+				{
+                    return null;
+				}
+			}
+		}
+        private bool _CreationDateLoaded;
+		private string _CreationDate = null;
+
+		/// <summary>
+		/// Gets the list of files (content) for update
+		/// </summary>
+		/// <value>
+		/// List of content files
+		/// </value>
+		public IEnumerable<IContentFile> Files
         {
             get
             {
@@ -464,6 +506,11 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata
             _TitleLoaded = true;
 
             _Description = UpdateParser.GetDescription(metadataNavigator, namespaceManager);
+            _DescriptionLoaded = true;
+
+            _CreationDate = UpdateParser.GetCreationDate(metadataNavigator, namespaceManager);
+            _CreationDateLoaded = true;
+
             _MetadataLoaded = true;
 
             _Prerequisites = PrerequisiteParser.FromXml(metadataNavigator, namespaceManager);
@@ -585,7 +632,8 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata
                     manager.AddNamespace("wsi", "http://schemas.microsoft.com/msus/2002/12/UpdateHandlers/WindowsSetup");
                 
                     _Description = UpdateParser.GetDescription(navigator, manager);
-                    _Title = UpdateParser.GetTitle(navigator, manager);
+					_CreationDate = UpdateParser.GetCreationDate(navigator, manager);
+					_Title = UpdateParser.GetTitle(navigator, manager);
 
                     LoadNonIndexedMetadata(navigator, manager);
                 }

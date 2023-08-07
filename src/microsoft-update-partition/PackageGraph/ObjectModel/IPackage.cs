@@ -27,6 +27,11 @@ namespace Microsoft.PackageGraph.ObjectModel
         string Description { get; }
 
         /// <summary>
+        /// Get the package creation date
+        /// </summary>
+        string CreationDate { get; }
+
+        /// <summary>
         /// Gets the list of files (content) for a package
         /// </summary>
         /// <value>

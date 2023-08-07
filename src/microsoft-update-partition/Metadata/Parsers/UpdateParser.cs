@@ -26,7 +26,23 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata.Parsers
             }
         }
 
-        public static string GetTitle(XPathNavigator metadataNavigator, XmlNamespaceManager namespaceManager)
+		public static string GetCreationDate(XPathNavigator metadataNavigator, XmlNamespaceManager namespaceManager)
+		{
+			XPathExpression updateTypeQuery = metadataNavigator.Compile("upd:Update/upd:Properties/@CreationDate");
+			updateTypeQuery.SetContext(namespaceManager);
+
+			var result = metadataNavigator.Evaluate(updateTypeQuery) as XPathNodeIterator;
+
+			if (result.Count == 0)
+			{
+				throw new Exception("Invalid XML");
+			}
+
+			result.MoveNext();
+			return result.Current.Value;
+		}
+
+		public static string GetTitle(XPathNavigator metadataNavigator, XmlNamespaceManager namespaceManager)
         {
             XPathExpression titleQuery = metadataNavigator.Compile("upd:Update/upd:LocalizedPropertiesCollection/upd:LocalizedProperties[upd:Language='en']/upd:Title");
             titleQuery.SetContext(namespaceManager);
