@@ -475,6 +475,7 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata
             _TitleLoaded = true;
 
             _Description = UpdateParser.GetDescription(metadataNavigator, namespaceManager);
+            _DescriptionLoaded = true;
             _MetadataLoaded = true;
 
             _Prerequisites = PrerequisiteParser.FromXml(metadataNavigator, namespaceManager);
