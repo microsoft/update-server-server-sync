@@ -164,18 +164,29 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata
         {
             get
             {
-                if (_MetadataLoaded)
+                if (_DescriptionLoaded)
                 {
                     return _Description;
                 }
-                else
-                {
-                    LoadNonIndexedMetadataBase();
-                    return _Description;
-                }
-            }
+				else if (_FastLookupSource != null)
+				{
+					_FastLookupSource.TrySimpleKeyLookup<string>(_Id, Storage.Index.AvailableIndexes.DescriptionsIndexName, out string description);
+					return description;
+				}
+				else if (_MetadataSource != null)
+				{
+					LoadNonIndexedMetadataBase();
+					_DescriptionLoaded = true;
+					return _Description;
+				}
+				else
+				{
+					return null;
+				}
+			}
         }
-        private string _Description = null;
+		private bool _DescriptionLoaded;
+		private string _Description = null;
 
         /// <summary>
         /// Gets the list of files (content) for update
@@ -464,6 +475,7 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Metadata
             _TitleLoaded = true;
 
             _Description = UpdateParser.GetDescription(metadataNavigator, namespaceManager);
+            _DescriptionLoaded = true;
             _MetadataLoaded = true;
 
             _Prerequisites = PrerequisiteParser.FromXml(metadataNavigator, namespaceManager);
