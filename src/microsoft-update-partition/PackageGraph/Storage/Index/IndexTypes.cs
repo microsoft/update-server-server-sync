@@ -8,6 +8,7 @@ namespace Microsoft.PackageGraph.Storage.Index
     abstract class AvailableIndexes
     {
         public const string TitlesIndexName = "titles";
+        public const string DescriptionsIndexName = "descriptions";
         public const string CreationDatesIndexName = "creationDates";
     }
 
@@ -18,6 +19,7 @@ namespace Microsoft.PackageGraph.Storage.Index
             return definition.Name switch
             {
                 AvailableIndexes.TitlesIndexName => new TitlesIndex(container),
+                AvailableIndexes.DescriptionsIndexName => new DescriptionsIndex(container),
                 AvailableIndexes.CreationDatesIndexName => new CreationDatesIndex(container),
                 _ => throw new NotImplementedException(),
             };
