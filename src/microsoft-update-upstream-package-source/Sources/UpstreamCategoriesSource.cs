@@ -121,7 +121,7 @@ namespace Microsoft.PackageGraph.MicrosoftUpdate.Source
 
                 lock (progressArgs)
                 {
-                    progressArgs.Current++;
+                    progressArgs.Current += retrievedBatch.Count;
                     MetadataCopyProgress?.Invoke(this, progressArgs);
                 }
             });
